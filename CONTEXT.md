@@ -96,6 +96,60 @@ _Avoid_: Nearest line, placeholder location
 A Finding about a security weakness that touches no single Personal Data Element but protects all of them (hard-coded secret, debug mode, open CORS); it cites Act §8(5) and Rule 6.
 _Avoid_: Generic vulnerability, non-privacy finding
 
+### Consent terms
+
+**Purpose**:
+The specified purpose a Data Fiduciary states in its notice for processing a set of Personal Data Elements (Act §2(za)); consent is given per Purpose.
+_Avoid_: Use case, scope, reason
+
+**Consent Record**:
+A stored entry proving that a Data Principal granted or withdrew consent for one Purpose, with the notice version and time.
+_Avoid_: Consent flag, opt-in, consent log
+
+**Enforcement Point**:
+A server-side check that consent for a Purpose is in force before a Processing Operation on that Purpose's Elements runs.
+_Avoid_: Consent gate, guard, middleware check
+
+**Withdrawal Path**:
+The sequence of steps a Data Principal takes to withdraw consent for one Purpose, compared in step count against the path for granting it.
+_Avoid_: Opt-out, unsubscribe flow
+
+**Consent Assessment**:
+The evaluation of whether a Target Application's consent is recorded, specific, enforced, withdrawable with comparable ease, propagated to Data Processors, preceded by notice, and parentally verified for Child Data.
+_Avoid_: Consent audit, consent check
+
+**Needs Legal Review**:
+The status of a Finding where two Provisions pull in opposite directions (e.g. erasure on withdrawal against one-year log retention); both readings are shown.
+_Avoid_: Ambiguous, uncertain, warning
+
+### Live testing terms
+
+**Live Probe**:
+A request or browser interaction sent to a running instance of a Target Application to observe how it actually handles Personal Data.
+_Avoid_: Dynamic scan, DAST, pentest, live check
+
+**Confirmed / Refuted**:
+The outcome a Live Probe attaches to a matching static Finding; the captured request and response become additional Evidence.
+_Avoid_: Verified, validated, false positive
+
+### Output terms
+
+**Fix Patch**:
+A unified diff against a Target Application that resolves one Finding, proven by a re-scan in which that Finding is gone and no new Finding appears.
+_Avoid_: Auto-fix, remediation, suggestion
+
+**Report**:
+The complete output of one scan of one Target Application: every Finding with Evidence, Provisions, Severity and Fix Patch, plus the Consent Assessment and Coverage Matrix.
+_Avoid_: Audit, results, output
+
+**Replay Mode**:
+Playback of a recorded scan at its original pace, used when a live scan cannot run.
+_Avoid_: Demo mode, cached scan, fake run
+
+**Labelled Corpus**:
+The Auditor's own set of small code fixtures, a true positive and a near-miss negative for each Rule, used to measure each Rule's precision and recall.
+_Avoid_: Test data, benchmark, ground truth
+
 ### Risk terms
 
 **Data Category**:

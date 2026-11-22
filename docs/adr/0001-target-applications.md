@@ -6,9 +6,9 @@ The Primary Target is OmkarPathak/TrackMyRupee, a maintained Indian personal-fin
 
 - Build our own seeded India-native app: exact ground truth, but open to the "you planted the bugs" objection, and it costs build time.
 - A KYC app as Primary (ai-kyc-platform, singharya): dense Aadhaar/PAN, but toy-sized with almost no consent code to audit.
-- NHA-ABDM/ABDM-wrapper: official health-consent stack, but Java-only with no front end. It would force a third language Rule set for a single target.
+- NHA-ABDM/ABDM-wrapper: official health-consent stack, but Java-only with no front end. It would add a Java Rule set for a single target; revisit once the four chosen Targets are complete.
 - youpi-pg/YouPI-PG: deep UPI coverage, but 76k LOC of JS that exercises no Issue Type the chosen set misses.
 
 ## Consequences
 
-No chosen target processes Child Data, so §9 and Rule 10 Rules will not fire on any real target.
+No chosen target processes Child Data, so §9 and Rule 10 Rules will not fire on any real target. They are exercised only by the Labelled Corpus, and the Coverage Matrix marks them "covered, not exercised on a real Target".
