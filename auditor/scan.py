@@ -10,6 +10,8 @@ from auditor.inputs import resolve_target
 from auditor.inventory import build_inventory
 from auditor.llm import LLMSession
 from auditor.mapping import assemble
+from auditor.registry import load_registry
+from auditor.report import coverage_matrix, executive_summary
 from auditor.rules import load_rules
 from auditor.rules.context import build_context
 from auditor.schema import SCHEMA_VERSION, validate_report
@@ -67,7 +69,9 @@ def run_scan(source: str, *, commit: str | None = None, provider: str | None = N
                                       for id_, text, provisions in ASSUMPTIONS],
         "personal_data_map": ctx.personal_data_map,
         "findings": assembled.findings, "observations": assembled.observations,
-        "coverage_matrix": [], "consent_assessment": None,
+        "coverage_matrix": coverage_matrix(load_registry(), rules, assembled.not_determinable, assembled.findings),
+        "consent_assessment": None,
     }
+    report["executive_summary"] = executive_summary(report)
     validate_report(report)
     return report

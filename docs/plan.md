@@ -168,6 +168,8 @@ Acceptance: every Juice Shop Finding has a Primary Provision, Penalty Ceiling, E
 
 Acceptance: `reports/juice-shop/` contains JSON, Markdown, HTML and PDF with no unmasked secret; the Rules List is committed.
 
+Commands: `dpdp-audit scan targets/juice-shop` writes `reports/juice-shop/report.{json,md,html,pdf}` from one scan (PDF via WeasyPrint, which needs the system Pango libraries); `dpdp-audit rules list > RULES.md` regenerates the Rules List, and `dpdp-audit rules list | diff -u RULES.md -` checks it is current.
+
 ## P1.6 Accuracy
 
 - **Ground truth**: hand-checked list of Juice Shop's Personal Data mishandling at `c9f99228`, built from the code. `data/static/challenges.yml` (118 challenges, about 42 involving personal data) is used only as hints.

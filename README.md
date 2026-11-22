@@ -17,7 +17,9 @@ uv venv && uv pip install -e '.[dev]'
 .venv/bin/dpdp-audit scan https://github.com/juice-shop/juice-shop --commit c9f99228d9d56afb5f5ca7925376292f7fa44b13 --out reports/juice-shop/report.json
 ```
 
-The positional input is a local directory or Git URL. Git URLs are cloned under `targets/<name>` and existing clones are reused; `--commit SHA` selects a commit for a Git URL. Local directories are not checked out or modified. `--format json` is the only supported format; `--out FILE` overrides the default `reports/<target-name>/report.json`. The command prints the Report path. `--cache-dir DIR` selects the LLM cache (default `.dpdp-cache`); `--provider P` and `--model M` override provider configuration. `--inventory-only` writes the source-anchored inventory (`reports/<target-name>/inventory.json`) without Findings or LLM calls.
+The positional input is a local directory or Git URL. Git URLs are cloned under `targets/<name>` and existing clones are reused; `--commit SHA` selects a commit for a Git URL. Local directories are not checked out or modified. One scan writes the canonical `report.json` plus `report.md`, `report.html` and `report.pdf` rendered from it (default `reports/<target-name>/`; `--out FILE` sets the JSON path and the other formats are written beside it). PDF output uses WeasyPrint, which needs the system Pango libraries. The command prints the Report path. `--cache-dir DIR` selects the LLM cache (default `.dpdp-cache`); `--provider P` and `--model M` override provider configuration. `--inventory-only` writes the source-anchored inventory (`reports/<target-name>/inventory.json`) without Findings or LLM calls.
+
+`dpdp-audit rules list` prints the Rules List generated from the Rule files; `RULES.md` is its committed output (`dpdp-audit rules list | diff -u RULES.md -` checks it is current).
 
 ## Pipeline
 

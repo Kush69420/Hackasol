@@ -110,6 +110,10 @@ def test_empty_live_report_is_valid():
     validate_report(make_report())
 
 
+def test_measured_accuracy_is_optional():
+    validate_report(make_report(accuracy={"precision": 0.9, "recall": 0.8}))
+
+
 def test_empty_cache_only_report_is_valid():
     validate_report(make_report(mode="cache-only", reason="No provider reachable; replaying cached verdicts."))
 

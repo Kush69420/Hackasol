@@ -19,7 +19,7 @@
     "consent_assessment"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "const": "1.1.0" },
     "tool": {
       "type": "object",
       "additionalProperties": false,
@@ -97,8 +97,10 @@
     "personal_data_map": { "type": "array", "items": { "$ref": "#/$defs/mapEntry" } },
     "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
     "observations": { "type": "array", "items": { "$ref": "#/$defs/observation" } },
-    "coverage_matrix": { "type": "array", "description": "Populated by P1.5", "items": { "type": "object" } },
-    "consent_assessment": { "type": ["object", "null"], "description": "Reserved for P2.1; null until then" }
+    "coverage_matrix": { "type": "array", "description": "Coverage of statutory Provisions and unresolved Gates", "items": { "type": "object" } },
+    "consent_assessment": { "type": ["object", "null"], "description": "Reserved for P2.1; null until then" },
+    "accuracy": { "type": "object", "description": "Measured accuracy figures, when supplied." },
+    "executive_summary": { "type": "object", "description": "Counts and Penalty Ceilings derived from Findings." }
   },
   "$defs": {
     "issueType": { "type": "string", "pattern": "^(SEC|CON|RET|RIG|CHI|TRF|MON)-[0-9]{2}$" },

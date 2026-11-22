@@ -6,6 +6,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+from auditor.report import write_reports
+from auditor.rules_list import generate_rules_list
 from auditor.scan import run_inventory, run_scan
 from auditor.schema import ReportValidationError
 
@@ -23,7 +25,13 @@ def main(argv: list[str] | None = None) -> int:
     scan.add_argument("--cache-dir", type=Path, default=Path(".dpdp-cache"))
     scan.add_argument("--inventory-only", action="store_true",
                       help="write the source-anchored application inventory instead of a Report")
+    rules = commands.add_parser("rules", help="Rules shipped with the Auditor")
+    rules.add_subparsers(dest="rules_command", required=True).add_parser(
+        "list", help="print the Rules List (RULES.md) generated from the Rule files")
     args = parser.parse_args(argv)
+    if args.command == "rules":
+        sys.stdout.write(generate_rules_list())
+        return 0
     try:
         if args.inventory_only:
             report = run_inventory(args.target, commit=args.commit)
@@ -34,7 +42,10 @@ def main(argv: list[str] | None = None) -> int:
             default_name = "report.json"
         destination = args.out or Path("reports") / report["target"]["name"] / default_name
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        if args.inventory_only:
+            destination.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        else:
+            write_reports(report, destination)
     except (OSError, ValueError, subprocess.CalledProcessError, ReportValidationError) as exc:
         detail = exc.stderr if isinstance(exc, subprocess.CalledProcessError) else str(exc)
         print(f"dpdp-audit: {detail.strip()}", file=sys.stderr)
