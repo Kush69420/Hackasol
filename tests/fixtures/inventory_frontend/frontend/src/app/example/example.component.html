@@ -1,0 +1,6 @@
+<form>
+  <mat-form-field><mat-label>{{ 'EMAIL' | translate }}</mat-label><input type="email" [formField]="exampleForm.email"></mat-form-field>
+  <mat-form-field><mat-label>Card</mat-label><input [formControl]="cardControl"></mat-form-field>
+  <input [formControl]="reactiveControl">
+  <input [(ngModel)]="rating">
+</form>

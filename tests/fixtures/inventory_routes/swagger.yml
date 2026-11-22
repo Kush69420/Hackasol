@@ -1,0 +1,10 @@
+openapi: 3.0.0
+servers:
+  - url: /b2b/v2
+paths:
+  /missing:
+    get:
+      summary: Missing operation
+      parameters:
+        - name: id
+          in: query

@@ -1,0 +1,10 @@
+{
+  "name": "dpdp-auditor-ts",
+  "private": true,
+  "type": "module",
+  "description": "TypeScript AST analyser for the DPDP Compliance Auditor (reads Target code; never executes it)",
+  "dependencies": {
+    "typescript": "^5.6.0",
+    "yaml": "^2.5.0"
+  }
+}

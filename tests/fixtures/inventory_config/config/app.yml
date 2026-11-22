@@ -1,0 +1,9 @@
+# fixture configuration
+application:
+  domain: example.test
+  port: 3000
+  cookie:
+    secret: "fixture-cookie-secret-0123456789"
+  features:
+    - name: alpha
+      enabled: true

@@ -1,0 +1,10 @@
+{
+  "name": "fixture-app",
+  "engines": {
+    "node": "24.x"
+  },
+  "keywords": [
+    "fixture",
+    "inventory"
+  ]
+}

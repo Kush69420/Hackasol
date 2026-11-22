@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-from auditor.scan import run_scan
+from auditor.scan import run_inventory, run_scan
 from auditor.schema import ReportValidationError
 
 
@@ -21,11 +21,18 @@ def main(argv: list[str] | None = None) -> int:
     scan.add_argument("--provider", choices=["anthropic", "openai", "gemini", "ollama", "omp"])
     scan.add_argument("--model")
     scan.add_argument("--cache-dir", type=Path, default=Path(".dpdp-cache"))
+    scan.add_argument("--inventory-only", action="store_true",
+                      help="write the source-anchored application inventory instead of a Report")
     args = parser.parse_args(argv)
     try:
-        report = run_scan(args.target, commit=args.commit, provider=args.provider,
-                          model=args.model, cache_dir=args.cache_dir)
-        destination = args.out or Path("reports") / report["target"]["name"] / "report.json"
+        if args.inventory_only:
+            report = run_inventory(args.target, commit=args.commit)
+            default_name = "inventory.json"
+        else:
+            report = run_scan(args.target, commit=args.commit, provider=args.provider,
+                              model=args.model, cache_dir=args.cache_dir)
+            default_name = "report.json"
+        destination = args.out or Path("reports") / report["target"]["name"] / default_name
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     except (OSError, ValueError, subprocess.CalledProcessError, ReportValidationError) as exc:
