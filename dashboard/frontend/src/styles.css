@@ -1,0 +1,26 @@
+body { font-family: system-ui, sans-serif; margin: 0; background: #f6f7f9; color: #1b1f24; }
+main { max-width: 1000px; margin: 0 auto; padding: 1rem; }
+.row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+.row input { flex: 1; min-width: 260px; padding: .5rem; }
+button { padding: .5rem .8rem; cursor: pointer; }
+button.active { outline: 2px solid #2457d6; }
+.badge { padding: .1rem .5rem; border-radius: 4px; font-size: .8rem; color: #fff; background: #555; text-transform: capitalize; }
+.badge-live { background: #1a7f37; } .badge-cache-only { background: #9a6700; } .badge-recorded { background: #6639ba; }
+.sev-critical { background: #82071e; } .sev-high { background: #cf222e; } .sev-medium { background: #bc4c00; } .sev-low { background: #57606a; }
+.stages li.done { color: #1a7f37; } .stages li.pending { color: #888; }
+.failed { color: #82071e; font-weight: 600; }
+.band { margin: .5rem 0; padding: .3rem .8rem; background: #fff; border-left: 4px solid #888; }
+.band-critical { border-color: #82071e; } .band-high { border-color: #cf222e; } .band-medium { border-color: #bc4c00; }
+.band h3 { text-transform: capitalize; margin: .3rem 0; }
+.band ul { list-style: none; padding: 0; margin: 0 0 .3rem; }
+.band li button { width: 100%; text-align: left; margin: 2px 0; }
+.evidence { margin: .5rem 0; } .evidence figcaption { font-family: monospace; font-weight: 600; }
+.evidence pre { background: #fff; border: 1px solid #d0d7de; overflow-x: auto; margin: 0; }
+.hl { background: #fff8c5; white-space: pre; } .ln { display: inline-block; width: 3.5em; color: #888; user-select: none; }
+.flow { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; }
+.flow li { background: #fff; border: 1px solid #2457d6; border-radius: 6px; padding: .4rem .6rem; display: flex; flex-direction: column; position: relative; }
+.flow li:not(:last-child)::after { content: "→"; position: absolute; right: -.8rem; top: .6rem; }
+.anchor { font-family: monospace; font-size: .8rem; }
+.provision blockquote { margin: .3rem 0 .8rem 1rem; color: #444; border-left: 3px solid #ccc; padding-left: .6rem; }
+table { border-collapse: collapse; width: 100%; background: #fff; }
+th, td { border: 1px solid #d0d7de; padding: .3rem .5rem; text-align: left; }
