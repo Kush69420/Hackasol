@@ -73,7 +73,11 @@ def test_case_reported_with_legal_and_severity_fields(report, issue_type, rules,
 
 def test_report_runs_cache_only_and_llm_never_invents_findings(report):
     assert report["llm"]["mode"] == "cache-only"
-    assert {r for f in report["findings"] for r in f["rules_fired"]} <= {r for _, rs, _ in CASES for r in rs}
+    from auditor.rules import load_rules
+
+    fired = {r for f in report["findings"] for r in f["rules_fired"]}
+    assert fired and fired <= set(load_rules())
+    assert {r for _, rs, _ in CASES for r in rs} <= fired
 
 
 def test_trf02_is_disclosure_capped_and_needs_legal_review(report):

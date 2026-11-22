@@ -48,7 +48,24 @@ Card.init({ cardNum: { type: DataTypes.INTEGER } }, { sequelize })
 
 ## SEC-03 — Aadhaar number stored outside a vault or displayed unmasked
 
-No Rule implemented at this slice.
+### SEC-03-sequelize-aadhaar-storage — Aadhaar stored outside a vault
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: Section 29; Aadhaar (Sharing of Information) Regulations 2016
+- CWE: None
+
+Labelled Corpus example: `corpus/SEC-03-sequelize-aadhaar-storage/positive/models/person.ts`
+
+```
+import { Model, DataTypes } from 'sequelize'
+class Person extends Model {}
+Person.init({ aadhaar: { type: DataTypes.STRING } }, { sequelize })
+```
 
 ## SEC-04 — Weak or missing password hashing
 
@@ -93,7 +110,26 @@ export const authorize = (account: object) => jwt.sign(account, signingKey)
 
 ## SEC-06 — Debug mode or verbose errors exposing Personal Data
 
-No Rule implemented at this slice.
+### SEC-06-express-error-disclosure — Verbose error response exposing Personal Data
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-489; CWE-209
+- CWE: CWE-209, CWE-489
+
+Labelled Corpus example: `corpus/SEC-06-express-error-disclosure/positive/server.ts`
+
+```
+import express from 'express'
+const app = express()
+app.get('/account', (req, res) => {
+  try { throw new Error(req.body.email) } catch (error) { res.send(error.message) }
+})
+```
 
 ## SEC-07 — Missing authentication or ownership check on a route returning Personal Data
 
@@ -262,7 +298,24 @@ app.get('/records', listMemories())
 
 ## SEC-12 — No access logging on reads of Personal Data
 
-No Rule implemented at this slice.
+### SEC-12-express-access-logging — Personal Data reads without access logging
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: compliance-gap
+- Gate: no request or access logger configured anywhere
+- Primary Provision: Rule 6(1)(c) (`DPDP-Rule-6(1)(c)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/SEC-12-express-access-logging/positive/server.ts`
+
+```
+import express from 'express'
+import { User } from './models/user'
+const app = express()
+app.get('/accounts', async (req, res) => { const records = await User.findAll(); res.json(records) })
+```
 
 ## SEC-13 — Logs of Personal Data processing kept under one year
 
@@ -288,51 +341,306 @@ app.get('/password', change())
 
 ## SEC-14 — No backup for Personal Data stores
 
-No Rule implemented at this slice.
+### SEC-14-terraform-store-backup — Persistent Personal Data store without configured backup
+
+- Engine: config
+- Languages / file kind: terraform
+- Classification: compliance-gap
+- Gate: deployment config for a persistent store exists and no backup is configured
+- Primary Provision: Rule 6(1)(d) (`DPDP-Rule-6(1)(d)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/SEC-14-terraform-store-backup/positive/main.tf`
+
+```
+resource "aws_efs_file_system" "data" {
+  encrypted = true
+}
+resource "aws_ecs_task_definition" "app" {
+  container_definitions = jsonencode([{ mountPoints = [{ sourceVolume = "data", containerPath = "/app/sqlite" }] }])
+  volume {
+    name = "data"
+    efs_volume_configuration { file_system_id = aws_efs_file_system.data.id }
+  }
+}
+```
 
 ## SEC-15 — Real Personal Data committed (fixtures, ID images, logs, DB dumps)
 
-No Rule implemented at this slice.
+### SEC-15-committed-personal-data — Validated committed Personal Data
+
+- Engine: config
+- Languages / file kind: yaml, json, csv, sql, sqlite, log
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: values pass validators and are not seed or demo data (reserved or app-demo domains, placeholder names, documented test numbers); committed ID document images, logs and DB dumps always qualify
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: Section 29
+- CWE: None
+
+Labelled Corpus example: `corpus/SEC-15-committed-personal-data/positive/access.log`
+
+```
+login synthetic.person@acme-corp.com
+```
 
 ## SEC-16 — Infrastructure misconfiguration exposing Personal Data stores (container as root, DB port public, public bucket)
 
-No Rule implemented at this slice.
+### SEC-16-docker-root-container — Root container serving a Personal Data store
+
+- Engine: config
+- Languages / file kind: dockerfile, terraform
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-250
+- CWE: CWE-250
+
+Labelled Corpus example: `corpus/SEC-16-docker-root-container/positive/main.tf`
+
+```
+resource "null_resource" "build" {
+  provisioner "local-exec" {
+    command = "docker build -f ${path.module}/Dockerfile ."
+  }
+}
+resource "aws_efs_file_system" "data" { encrypted = true }
+resource "aws_ecs_task_definition" "app" {
+  container_definitions = jsonencode([{ mountPoints = [{ sourceVolume = "data", containerPath = "/app/sqlite" }] }])
+  volume {
+    name = "data"
+    efs_volume_configuration { file_system_id = aws_efs_file_system.data.id }
+  }
+```
+
+### SEC-16-terraform-public-storage — Public Personal Data object store
+
+- Engine: config
+- Languages / file kind: terraform
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-250
+- CWE: CWE-250
+
+Labelled Corpus example: `corpus/SEC-16-terraform-public-storage/positive/main.tf`
+
+```
+resource "aws_s3_bucket" "records" {
+  bucket = "records"
+}
+resource "aws_s3_bucket_acl" "records" {
+  bucket = aws_s3_bucket.records.id
+  acl = "public-read"
+}
+resource "aws_ecs_task_definition" "app" {
+  container_definitions = jsonencode([{ name = "app", environment = [{ name = "RECORDS_BUCKET", value = aws_s3_bucket.records.id }] }])
+}
+```
+
+### SEC-16-terraform-public-store — Public Personal Data store
+
+- Engine: config
+- Languages / file kind: terraform
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-250
+- CWE: CWE-250
+
+Labelled Corpus example: `corpus/SEC-16-terraform-public-store/positive/main.tf`
+
+```
+resource "aws_db_instance" "accounts" {
+  engine = "postgres"
+  publicly_accessible = true
+  vpc_security_group_ids = [aws_security_group.database.id]
+}
+resource "aws_security_group" "database" {
+  ingress {
+    from_port = 5432
+    to_port = 5432
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+```
 
 ## CON-01 — Processing without an Enforcement Point, or with client-side gating only
 
-No Rule implemented at this slice.
+### CON-01-express-enforcement — Processing without an Enforcement Point
+
+- Engine: ts-ast
+- Languages / file kind: typescript, html
+- Classification: compliance-gap
+- Gate: processing not covered by a §7 legitimate use
+- Primary Provision: Section 4(1) (`DPDP-Act-4(1)`)
+- Related Provisions: Section 6(1); Section 7
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-01-express-enforcement/positive/server.ts`
+
+```
+import express from 'express'
+const app = express()
+app.post('/marketing', (req, res) => { User.create({ email: req.body.email }); res.send('ok') })
+```
 
 ## CON-02 — Consent bundled across Purposes
 
-No Rule implemented at this slice.
+### CON-02-angular-bundled-purposes — Consent bundled across Purposes
+
+- Engine: ts-ast
+- Languages / file kind: typescript, html
+- Classification: compliance-gap
+- Gate: more than one Purpose found
+- Primary Provision: Section 6(1) (`DPDP-Act-6(1)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-02-angular-bundled-purposes/positive/frontend/src/index.html`
+
+```
+<form><label><input name="consent" type="checkbox"> I agree to marketing and analytics</label></form>
+```
 
 ## CON-03 — Pre-ticked or default-true consent
 
-No Rule implemented at this slice.
+### CON-03-angular-default-true — Consent selected by default
+
+- Engine: ts-ast
+- Languages / file kind: typescript, html
+- Classification: compliance-gap
+- Gate: a consent control exists
+- Primary Provision: Section 6(1) (`DPDP-Act-6(1)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-03-angular-default-true/positive/frontend/src/index.html`
+
+```
+<form><input name="consent" type="checkbox" checked></form>
+```
 
 ## CON-04 — No Withdrawal Path, or one harder than the grant
 
-No Rule implemented at this slice.
+### CON-04-express-withdrawal-path — Missing or harder Withdrawal Path
+
+- Engine: ts-ast
+- Languages / file kind: typescript, html
+- Classification: compliance-gap
+- Gate: a consent grant exists
+- Primary Provision: Section 6(4) (`DPDP-Act-6(4)`)
+- Related Provisions: Rule 3(c)(i)
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-04-express-withdrawal-path/positive/server.ts`
+
+```
+import express from 'express'
+const app = express()
+app.post('/consent', (req, res) => { Consent.create({ granted: true }); res.send('ok') })
+```
 
 ## CON-05 — Withdrawal not propagated to Data Processors
 
-No Rule implemented at this slice.
+### CON-05-express-processor-withdrawal — Withdrawal not propagated to a Data Processor
+
+- Engine: ts-ast
+- Languages / file kind: typescript, html
+- Classification: compliance-gap
+- Gate: a Data Processor receives Personal Data
+- Primary Provision: Section 6(6) (`DPDP-Act-6(6)`)
+- Related Provisions: Section 8(7)(b)
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-05-express-processor-withdrawal/positive/server.ts`
+
+```
+import express from 'express'
+const app = express()
+app.post('/marketing', (req, res) => { fetch('https://processor.example/send', { body: req.body.email }); res.send('ok') })
+app.delete('/consent', (req, res) => { Consent.update({ granted: false }); res.send('ok') })
+```
 
 ## CON-06 — Consent Record missing, or without Purpose, notice reference or time
 
-No Rule implemented at this slice.
+### CON-06-sequelize-consent-record — Incomplete Consent Record
+
+- Engine: ts-ast
+- Languages / file kind: typescript, html
+- Classification: compliance-gap
+- Gate: a consent grant exists
+- Primary Provision: Section 6(10) (`DPDP-Act-6(10)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-06-sequelize-consent-record/positive/server.ts`
+
+```
+import express from 'express'
+const app = express()
+app.post('/consent', (req, res) => { Consent.create({ granted: true }); res.send('ok') })
+```
 
 ## CON-07 — Notice not itemised, or no English/Eighth Schedule language option
 
-No Rule implemented at this slice.
+### CON-07-angular-consent-notice — Incomplete consent notice
+
+- Engine: ts-ast
+- Languages / file kind: typescript, html
+- Classification: compliance-gap
+- Gate: consent is requested
+- Primary Provision: Section 5(1) (`DPDP-Act-5(1)`)
+- Related Provisions: Section 5(3); Section 6(3); Rule 3(a); Rule 3(b)
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-07-angular-consent-notice/positive/frontend/src/index.html`
+
+```
+<form><input name="consent" type="checkbox"></form>
+```
 
 ## CON-08 — Personal Data Elements collected beyond the Purpose
 
-No Rule implemented at this slice.
+### CON-08-angular-excess-elements — Personal Data Elements beyond the stated Purpose
+
+- Engine: ts-ast
+- Languages / file kind: typescript, html
+- Classification: compliance-gap
+- Gate: a Purpose is stated
+- Primary Provision: Section 6(1) (`DPDP-Act-6(1)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-08-angular-excess-elements/positive/frontend/src/index.html`
+
+```
+<form><p>To send the newsletter we only need your email</p><input name="email" type="email"><input name="phone" type="tel"></form>
+```
 
 ## RET-01 — No erasure once the Purpose is served
 
-No Rule implemented at this slice.
+### RET-01-express-purpose-end — No erasure at the end of a Purpose
+
+- Engine: ts-ast
+- Languages / file kind: typescript
+- Classification: compliance-gap
+- Gate: an account-closure or end-of-purpose event exists
+- Primary Provision: Section 8(7)(a) (`DPDP-Act-8(7)(a)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/RET-01-express-purpose-end/positive/server.ts`
+
+```
+import express from 'express'
+const app = express()
+app.post('/account/close', async (req, res) => { await User.update({ closed: true }); res.send('closed') })
+```
 
 ## RET-02 — Erasure request that does not erase (flag only, soft delete, Elements or Data Processors skipped)
 
@@ -356,7 +664,23 @@ app.post('/dataerasure', async (req, res) => { await PrivacyRequestModel.create(
 
 ## RET-03 — No 48-hour notice before erasure
 
-No Rule implemented at this slice.
+### RET-03-express-erasure-notice — No 48-hour notice before erasure
+
+- Engine: ts-ast
+- Languages / file kind: typescript
+- Classification: compliance-gap
+- Gate: Third Schedule class (conditional; not assumed)
+- Primary Provision: Rule 8(2) (`DPDP-Rule-8(2)`)
+- Related Provisions: Rule 8(1); Third Schedule
+- CWE: None
+
+Labelled Corpus example: `corpus/RET-03-express-erasure-notice/positive/server.ts`
+
+```
+import express from 'express'
+const app = express()
+app.delete('/account/delete', async (req, res) => { await User.destroy({ where: { id: req.body.id } }); res.send('deleted') })
+```
 
 ## RIG-01 — Access summary missing, or omitting Personal Data Elements the app processes for that Data Principal; omitting the Data Fiduciaries and Data Processors it shared data with counts only where a sharing flow is evidenced
 
@@ -400,23 +724,98 @@ app.post('/profile', async (req, res) => { await user.update({ username: req.bod
 
 ## RIG-03 — No grievance mechanism or contact for Personal Data queries
 
-No Rule implemented at this slice.
+### RIG-03-express-grievance — No grievance mechanism or contact
+
+- Engine: ts-ast
+- Languages / file kind: typescript
+- Classification: compliance-gap
+- Gate: user accounts exist
+- Primary Provision: Section 8(10) (`DPDP-Act-8(10)`)
+- Related Provisions: Section 8(9); Section 13; Rule 9; Rule 14(3)
+- CWE: None
+
+Labelled Corpus example: `corpus/RIG-03-express-grievance/positive/models/user.ts`
+
+```
+import { Model, DataTypes } from 'sequelize'
+class User extends Model {}
+User.init({ email: { type: DataTypes.STRING } }, { sequelize })
+```
 
 ## RIG-04 — No nomination
 
-No Rule implemented at this slice.
+### RIG-04-rights-notice — DPDP rights notice omits nomination
+
+- Engine: config
+- Languages / file kind: json, html, markdown
+- Classification: compliance-gap
+- Gate: an in-repo notice or rights page lists Data Principal rights under the DPDP Act and omits nomination; otherwise not determinable
+- Primary Provision: Section 14 (`DPDP-Act-14`)
+- Related Provisions: Rule 14(4)
+- CWE: None
+
+Labelled Corpus example: `corpus/RIG-04-rights-notice/positive/notice.html`
+
+```
+<p>Under the Digital Personal Data Protection Act, your rights include access, correction and erasure.</p>
+```
 
 ## CHI-01 — No age gate or verifiable parental consent
 
-No Rule implemented at this slice.
+### CHI-01-age-parental-consent — Age gate or verifiable parental consent not evidenced
+
+- Engine: ts-ast
+- Languages / file kind: typescript, html
+- Classification: compliance-gap
+- Gate: the app collects age or DOB, or targets children (education, school, games)
+- Primary Provision: Section 9(1) (`DPDP-Act-9(1)`)
+- Related Provisions: Rule 10
+- CWE: None
+
+Labelled Corpus example: `corpus/CHI-01-age-parental-consent/positive/audience.html`
+
+```
+<p>This service is designed for children.</p>
+```
 
 ## CHI-02 — Tracking, behavioural monitoring or targeted ads with no exclusion for Child Data
 
-No Rule implemented at this slice.
+### CHI-02-child-tracking — Tracking without excluding Child Data
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript, html
+- Classification: compliance-gap
+- Gate: CHI-01 gate met and tracking present
+- Primary Provision: Section 9(3) (`DPDP-Act-9(3)`)
+- Related Provisions: Rule 12; Fourth Schedule
+- CWE: None
+
+Labelled Corpus example: `corpus/CHI-02-child-tracking/positive/audience.html`
+
+```
+<p>This service is designed for children.</p>
+<script>analytics.track('view');</script>
+```
 
 ## TRF-01 — Personal Data shared with an SDK or API operated by a Data Processor without disclosure to the Data Principal (disclosure; capped at Medium)
 
-No Rule implemented at this slice.
+### TRF-01-undisclosed-processor-transfer — Undisclosed Personal Data Transfer to a Data Processor
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: disclosure
+- Gate: an outbound flow of Personal Data exists
+- Primary Provision: Section 11(1)(b) (`DPDP-Act-11(1)(b)`)
+- Related Provisions: Section 8(2)
+- CWE: None
+
+Labelled Corpus example: `corpus/TRF-01-undisclosed-processor-transfer/positive/models/user.ts`
+
+```
+import { Model, DataTypes } from 'sequelize'
+class User extends Model {}
+User.init({ email: { type: DataTypes.STRING } }, { sequelize })
+```
 
 ## TRF-02 — Personal Data sent or stored outside India (disclosure, capped at Medium; Needs Legal Review unless the destination is restricted under §16)
 
@@ -446,4 +845,18 @@ resource "aws_efs_file_system" "data" {
 
 ## MON-01 — No monitoring or review of access logs to detect unauthorised access
 
-No Rule implemented at this slice.
+### MON-01-monitoring-coverage — Monitoring omits access and authentication events
+
+- Engine: config
+- Languages / file kind: json, yaml
+- Classification: compliance-gap
+- Gate: in-repo monitoring or alerting config exists and covers no access-log or authentication events; otherwise not determinable
+- Primary Provision: Rule 6(1)(c) (`DPDP-Rule-6(1)(c)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/MON-01-monitoring-coverage/positive/dashboard.json`
+
+```
+{"panels":[{"title":"HTTP Requests", "targets":[{"expr":"http_requests_count"}]}]}
+```

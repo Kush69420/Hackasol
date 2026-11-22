@@ -244,7 +244,9 @@
   title: "No erasure once the Purpose is served"
   group: "Retention, erasure and rights"
   primary: DPDP-Act-8(7)(a)
-  related: [DPDP-Rule-8(1), DPDP-Rules-Schedule-Third]
+  # Rule 8(1) / Third Schedule apply only to Third Schedule classes (Applicability Assumption AA-3);
+  # RET-03 carries them with status conditional, so they are not cited unconditionally here.
+  related: []
   ceiling_parent: DPDP-Act-Schedule-7
   gate: "an account-closure or end-of-purpose event exists"
   verify: [static]

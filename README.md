@@ -56,6 +56,19 @@ Not claimed: SEC-16 (load balancer egress and LB-only task ingress are not expos
 
 Excluded from Juice Shop scans: `data/static/codefixes/**`, `test/**`, `frontend/**/*.spec.ts`.
 
+## Slice 2 coverage
+
+Slice 2 adds a Rule, with a Labelled Corpus pair, for every remaining catalogue Issue Type. `tests/test_slice2.py` checks them: `-k pinned` scans the Primary Target, and `-k corpus` and `-k legal` need no Target.
+
+| Primary Target outcome | Issue Types |
+|---|---|
+| Finding | SEC-14 (EFS store without backup selection), MON-01 (no monitoring of Personal Data stores) |
+| Conditional (Third Schedule class, AA-3) | RET-03 |
+| Not determinable (Gate unmet) | RIG-04, CHI-01 |
+| Not raised | SEC-03, SEC-12 (morgan configured), SEC-15 (only seed data and role mailboxes committed), SEC-16, RIG-03, CON-01…CON-08 |
+
+SEC-03 and CHI-* are covered only on synthetic corpus cases; the Coverage Matrix marks them "covered, not exercised on a real Target". SEC-15 recognises validated values in committed YAML/JSON/CSV, SQL dumps, logs and SQLite files. It does not recognise Government Identifier document images, because that needs OCR.
+
 ## LLM configuration
 
 Set `DPDP_LLM_PROVIDER` to `anthropic`, `openai`, `gemini`, `ollama` or `omp`, and optionally set `DPDP_LLM_MODEL`. Hosted providers use `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` or `GEMINI_API_KEY`, respectively. Ollama uses `OLLAMA_HOST`; `omp` runs headlessly and must be available on PATH. Personal Data is masked before LLM egress.

@@ -1,0 +1,1 @@
+{"panels":[{"title":"Login failures", "targets":[{"expr":"login_failure_total"}]}]}

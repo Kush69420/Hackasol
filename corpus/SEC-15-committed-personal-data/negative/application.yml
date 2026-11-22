@@ -1,0 +1,7 @@
+application:
+  privacyContactEmail: donotreply@shop-operator.in
+ci:
+  commit_user_email: 61591748+ReleaseBot@users.noreply.github.com
+  heroku_email: maintainer.name@operator-org.in
+support:
+  email: support@shop-operator.in
