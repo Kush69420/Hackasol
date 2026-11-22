@@ -1,0 +1,268 @@
+# Allied instruments and standards cited by the Issue Types (docs/issue-types.md).
+# verified: true only where the excerpt was checked against fetched official text.
+
+- id: Aadhaar-Act-29
+  instrument: Aadhaar Act 2016
+  kind: allied
+  citation: "Section 29"
+  title: "Restriction on sharing information"
+  excerpt: "29. (1) No core biometric information, collected or created under this Act, shall be— (a) shared with anyone for any reason whatsoever; or (b) used for any purpose other than generation of Aadhaar numbers and authentication under this Act. … (4) No Aadhaar number or core biometric information collected or created under this Act in respect of an Aadhaar number holder shall be published, displayed or posted publicly, except for the purposes as may be specified by regulations."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "Aadhaar Act 2016 (UIDAI)", url: "https://uidai.gov.in/images/the_aadhaar_act_2016.pdf"}
+  verified: true
+
+- id: Aadhaar-SIR-2016
+  instrument: Aadhaar (Sharing of Information) Regulations 2016
+  kind: allied
+  citation: "Aadhaar (Sharing of Information) Regulations 2016"
+  title: "Sharing of identity information"
+  excerpt: "NOT FETCHED: official text could not be retrieved (uidai.gov.in returned HTTP 500, 404 or HTML error pages). Excerpt withheld; transcribe verbatim before setting verified: true."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "Aadhaar (Sharing of Information) Regulations 2016", url: "https://uidai.gov.in/"}
+  verified: false
+
+- id: ITAct-43A
+  instrument: IT Act 2000
+  kind: allied
+  citation: "Section 43A"
+  title: "Failure to protect sensitive personal data (descriptive title)"
+  excerpt: "NOT FETCHED: official IT Act 2000 text unavailable (indiacode.gov.in and meity.gov.in returned HTML or errors; the indiankanoon page has no s.43A text). Excerpt withheld. DPDP Act s.44(2) omits s.43A from 2027-05-14."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "Information Technology Act 2000", url: "https://www.indiacode.gov.in/bitstream/123456789/13116/1/a2000-21.pdf"}
+  verified: false
+
+- id: CWE-209
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-209"
+  title: "Generation of Error Message Containing Sensitive Information"
+  excerpt: "The product generates an error message that includes sensitive information about its environment, users, or associated data."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/209.html"}
+  verified: true
+
+- id: CWE-213
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-213"
+  title: "Exposure of Sensitive Information Due to Incompatible Policies"
+  excerpt: "The product's intended functionality exposes information to certain actors in accordance with the developer's security policy, but this information is regarded as sensitive according to the intended security policies of other stakeholders."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/213.html"}
+  verified: true
+
+- id: CWE-250
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-250"
+  title: "Execution with Unnecessary Privileges"
+  excerpt: "The product performs an operation at a privilege level that is higher than the minimum level required, which creates new weaknesses or amplifies the consequences of other weaknesses."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/250.html"}
+  verified: true
+
+- id: CWE-311
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-311"
+  title: "Missing Encryption of Sensitive Data"
+  excerpt: "The product does not encrypt sensitive or critical information before storage or transmission."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/311.html"}
+  verified: true
+
+- id: CWE-319
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-319"
+  title: "Cleartext Transmission of Sensitive Information"
+  excerpt: "The product transmits sensitive or security-critical data in cleartext in a communication channel that can be sniffed by unauthorized actors."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/319.html"}
+  verified: true
+
+- id: CWE-489
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-489"
+  title: "Active Debug Code"
+  excerpt: "The product is released with debugging code still enabled or active."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/489.html"}
+  verified: true
+
+- id: CWE-532
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-532"
+  title: "Insertion of Sensitive Information into Log File"
+  excerpt: "The product writes sensitive information to a log file."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/532.html"}
+  verified: true
+
+- id: CWE-598
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-598"
+  title: "Use of HTTP Request With Sensitive Query String"
+  excerpt: "The web application uses an HTTP method to process a request, but the request includes sensitive information in the query string."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/598.html"}
+  verified: true
+
+- id: CWE-614
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-614"
+  title: "Sensitive Cookie in HTTPS Session Without 'Secure' Attribute"
+  excerpt: "The Secure attribute for sensitive cookies in HTTPS sessions is not set."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/614.html"}
+  verified: true
+
+- id: CWE-639
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-639"
+  title: "Authorization Bypass Through User-Controlled Key"
+  excerpt: "The system's authorization functionality does not prevent one user from gaining access to another user's data or record by modifying the key value identifying the data."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/639.html"}
+  verified: true
+
+- id: CWE-798
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-798"
+  title: "Use of Hard-coded Credentials"
+  excerpt: "The product contains hard-coded credentials, such as a password or cryptographic key."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/798.html"}
+  verified: true
+
+- id: CWE-916
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-916"
+  title: "Use of Password Hash With Insufficient Computational Effort"
+  excerpt: "The product generates a hash for a password, but it uses a scheme that does not provide a sufficient level of computational effort that would make password cracking attacks infeasible or expensive."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/916.html"}
+  verified: true
+
+- id: CWE-922
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-922"
+  title: "Insecure Storage of Sensitive Information"
+  excerpt: "The product stores sensitive information without properly limiting read or write access by unauthorized actors."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/922.html"}
+  verified: true
+
+- id: CWE-942
+  instrument: CWE
+  kind: cwe
+  citation: "CWE-942"
+  title: "Permissive Cross-domain Security Policy with Untrusted Domains"
+  excerpt: "The product uses a web-client protection mechanism such as a Content Security Policy (CSP) or cross-domain policy file, but the policy includes untrusted domains with which the web client is allowed to communicate."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "MITRE CWE", url: "https://cwe.mitre.org/data/definitions/942.html"}
+  verified: true
+
+- id: OWASP-API1-2023
+  instrument: OWASP
+  kind: owasp
+  citation: "API1:2023"
+  title: "Broken Object Level Authorization"
+  excerpt: "Every API endpoint that receives an ID of an object, and performs any action on the object, should implement object-level authorization checks. The checks should validate that the logged-in user has permissions to perform the requested action on the requested object."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "OWASP API Security Top 10 2023", url: "https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/"}
+  verified: true
+
+- id: OWASP-API3-2023
+  instrument: OWASP
+  kind: owasp
+  citation: "API3:2023"
+  title: "Broken Object Property Level Authorization"
+  excerpt: "APIs tend to expose endpoints that return all object’s properties. This is particularly valid for REST APIs."
+  parent: null
+  penalty_parent: null
+  penalty_ceiling_inr_crore: null
+  enforceable_from: null
+  enforceable_basis: null
+  source: {document: "OWASP API Security Top 10 2023", url: "https://owasp.org/API-Security/editions/2023/en/0xa3-broken-object-property-level-authorization/"}
+  verified: true

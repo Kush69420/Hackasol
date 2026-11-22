@@ -1,0 +1,362 @@
+# Issue Type catalogue: one entry per Issue Type in docs/issue-types.md.
+# Provision ids follow the registry id grammar; loaded by auditor.remediation.
+- id: SEC-01
+  title: "Personal Data written to logs"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(a)
+  related: [CWE-532]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: null
+  verify: [static]
+  kind_default: security-personal-data
+  guidance: "Keep Personal Data out of application, access and error logs. Write an opaque identifier or a masked form in place of each value, and strip request bodies and query strings before a log line is written. Where a value must be recorded, apply a protection that Rule 6(1)(a) names, such as encryption, obfuscation, masking or a virtual token. Apply the same rule to logging middleware and to any external log sink."
+- id: SEC-02
+  title: "Tier A/B Personal Data Elements without field-level protection at rest; disk- or volume-level encryption lowers severity, it does not clear the Finding"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(a)
+  related: [ITAct-43A, CWE-311]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: null
+  verify: [static]
+  kind_default: security-personal-data
+  guidance: "Protect each Tier A and Tier B Personal Data Element at field or column level before it is stored, with keys held outside the data store, so that a database dump or a restored backup does not reveal the values. Disk or volume encryption protects only the storage medium, so it lowers severity without clearing the Finding. Until DPDP §44(2) omits IT Act §43A, that section's reasonable-security duty applies alongside Rule 6(1)(a)."
+- id: SEC-03
+  title: "Aadhaar number stored outside a vault or displayed unmasked"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(a)
+  related: [Aadhaar-Act-29, Aadhaar-SIR-2016]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: null
+  verify: [static, live]
+  kind_default: security-personal-data
+  guidance: "Hold the Aadhaar number only in an encrypted vault or behind a reference token, and keep it out of application tables, logs, caches and files. Where a screen or response must show the number, display only the masked form. Keep every collection, storage and sharing path within the limits of Aadhaar Act 2016 §29 and the Aadhaar (Sharing of Information) Regulations 2016."
+- id: SEC-04
+  title: "Weak or missing password hashing"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(a)
+  related: [CWE-916]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: null
+  verify: [static]
+  kind_default: security-personal-data
+  guidance: "Store Authentication Secrets with a current, salted, deliberately slow password hashing function, never with a plain or fast unsalted digest. Re-hash each existing record with the new function the next time the Data Principal authenticates. Rule 6(1)(a) requires protection of the Personal Data these secrets guard, and a weak hash removes that protection once the store is read."
+- id: SEC-05
+  title: "Hard-coded secret or committed .env protecting Personal Data"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(b)
+  related: [CWE-798]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: "nexus"
+  verify: [static]
+  kind_default: safeguard
+  guidance: "Move credentials and keys that protect Personal Data out of source files and configuration into a secret store or the runtime environment. Rotate any value that has already been committed, and exclude .env and key files from version control and build context. Restrict the secret store to the identities that need it, as Rule 6(1)(b) requires for the systems that hold Personal Data."
+- id: SEC-06
+  title: "Debug mode or verbose errors exposing Personal Data"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(b)
+  related: [CWE-489, CWE-209]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: "nexus"
+  verify: [static, live]
+  kind_default: safeguard
+  guidance: "Turn off debug modes and stack-trace output in production configuration, and return generic error responses to clients. Error and diagnostic output must not carry record contents or Personal Data Elements. Keep diagnostic endpoints behind authentication and remove them from production builds, as Rule 6(1)(b) requires for access to these resources."
+- id: SEC-07
+  title: "Missing authentication or ownership check on a route returning Personal Data"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(b)
+  related: [CWE-639, OWASP-API1-2023]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: null
+  verify: [static, live]
+  kind_default: security-personal-data
+  guidance: "Require authentication on every route that returns Personal Data, and check on each request that the authenticated Data Principal owns the record or holds a role authorised for it. Do not let an identifier supplied in the path or body decide ownership. Apply the check to every method on the route, because Rule 6(1)(b) requires access to the resources holding Personal Data to be controlled."
+- id: SEC-08
+  title: "Over-exposed responses (whole model or nested records serialised)"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(b)
+  related: [DPDP-Act-6(1), CWE-213, OWASP-API3-2023]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: null
+  verify: [static, live]
+  kind_default: security-personal-data
+  guidance: "Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control."
+- id: SEC-09
+  title: "Personal Data or Authentication Secrets in URLs or query strings"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(a)
+  related: [CWE-598]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: null
+  verify: [static, live]
+  kind_default: security-personal-data
+  guidance: "Send Personal Data and Authentication Secrets in request bodies or headers, never in the path or query string, because URLs are written to logs, caches and browser history. Where an identifier must travel in a URL, use an opaque, short-lived token that reveals nothing about the Data Principal. This keeps the Rule 6(1)(a) protection intact on links that are logged and cached."
+- id: SEC-10
+  title: "Personal Data in localStorage, sessionStorage, cookies or outbound headers"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(a)
+  related: [CWE-922]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: null
+  verify: [static, live]
+  kind_default: security-personal-data
+  guidance: "Do not write Personal Data or Authentication Secrets to localStorage, sessionStorage, cookies or outbound headers beyond what the session strictly needs. Keep identity in an opaque session identifier held server-side, and keep only non-Personal Data preferences in the browser. Where a value must be held client-side, protect it as Rule 6(1)(a) requires."
+- id: SEC-11
+  title: "Insecure transport, cookie flags or CORS wildcard on Personal Data routes"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(a)
+  related: [CWE-319, CWE-614, CWE-942]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: "nexus"
+  verify: [static, live]
+  kind_default: safeguard
+  guidance: "Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry."
+- id: SEC-12
+  title: "No access logging on reads of Personal Data"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(c)
+  related: []
+  ceiling_parent: DPDP-Act-8(5)
+  gate: "no request or access logger configured anywhere"
+  verify: [static]
+  kind_default: security-personal-data
+  guidance: "Enable request or access logging on every route and data store that reads Personal Data, recording who accessed which record and when, without writing the Personal Data itself. Make each entry attributable to an authenticated identity, and protect the log destination. Rule 6(1)(c) requires access to be visible through logs, monitoring and review, so that unauthorised access can be detected and investigated."
+- id: SEC-13
+  title: "Logs of Personal Data processing kept under one year"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(e)
+  related: [DPDP-Rule-8(3)]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: "a log retention setting exists"
+  verify: [static]
+  kind_default: security-personal-data
+  guidance: "Keep access and processing logs for Personal Data for at least one year, as Rule 6(1)(e) and Rule 8(3) require, and set that period in the log store's own retention configuration. Where an erasure would remove records that these logs must keep, send the conflict to legal review rather than deleting the logs. Confirm the retention setting in deployment configuration as well as in application code."
+- id: SEC-14
+  title: "No backup for Personal Data stores"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(d)
+  related: []
+  ceiling_parent: DPDP-Act-8(5)
+  gate: "deployment config for a persistent store exists and no backup is configured"
+  verify: [static]
+  kind_default: security-personal-data
+  guidance: "Back up every persistent store that holds Personal Data on a schedule, with encrypted copies held apart from the primary store. Test restoration before relying on the backups, and record the recovery point and recovery time each store must meet. Rule 6(1)(d) requires appropriate measures to continue processing if the data is compromised, and tested backups are the usual means of meeting it."
+- id: SEC-15
+  title: "Real Personal Data committed (fixtures, ID images, logs, DB dumps)"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(a)
+  related: [Aadhaar-Act-29]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: "values pass validators and are not seed or demo data (reserved or app-demo domains, placeholder names, documented test numbers); committed ID document images, logs and DB dumps always qualify"
+  verify: [static]
+  kind_default: security-personal-data
+  guidance: "Replace real Personal Data in fixtures, seeds, test data, screenshots and logs with synthetic values, and remove committed ID document images, log files and database dumps from the repository. Purge them from the version history as well, and review which Data Principals were affected. Add a pre-commit or CI check that blocks files matching Personal Data patterns, so the Rule 6(1)(a) protection holds for future commits."
+- id: SEC-16
+  title: "Infrastructure misconfiguration exposing Personal Data stores (container as root, DB port public, public bucket)"
+  group: "Security safeguards"
+  primary: DPDP-Rule-6(1)(b)
+  related: [CWE-250]
+  ceiling_parent: DPDP-Act-8(5)
+  gate: "nexus"
+  verify: [static]
+  kind_default: safeguard
+  guidance: "Run application containers as a non-root user, keep database ports off public interfaces and limit them to the application's network, and make object storage private by default. Each setting limits access to the stores holding Personal Data to the identities that need it, as Rule 6(1)(b) requires. Re-check these settings in deployment configuration after every change to network or storage rules."
+- id: CON-01
+  title: "Processing without an Enforcement Point, or with client-side gating only"
+  group: "Consent and notice"
+  primary: DPDP-Act-4(1)
+  related: [DPDP-Act-6(1), DPDP-Act-7]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "processing not covered by a §7 legitimate use"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Put the consent or §7 legitimate use check on the server, at the point where each processing step runs, rather than only in the user interface. Record which legitimate use or Purpose covers each processing path, and stop the path when neither applies. §4(1) ties processing to a lawful purpose backed by consent or a §7 legitimate use, so a client-side gate alone does not establish that basis."
+- id: CON-02
+  title: "Consent bundled across Purposes"
+  group: "Consent and notice"
+  primary: DPDP-Act-6(1)
+  related: []
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "more than one Purpose found"
+  verify: [static]
+  kind_default: dpdp-obligation
+  guidance: "Split the consent request so that each Purpose has its own choice, and do not make the service conditional on agreement to Purposes it does not need. Consent under §6(1) must be specific to each Purpose, so record one consent per Purpose and let the Data Principal refuse any of them. Remove bundled acceptance from the form and from the API contract."
+- id: CON-03
+  title: "Pre-ticked or default-true consent"
+  group: "Consent and notice"
+  primary: DPDP-Act-6(1)
+  related: []
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "a consent control exists"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Ship every consent control unselected, and record consent only after the Data Principal takes a clear affirmative action, such as ticking the box themselves. Do not default a consent value to true in the model, the form or the API, because §6(1) requires that clear affirmative action. Apply the same rule to any consent set during sign-up, import or migration."
+- id: CON-04
+  title: "No Withdrawal Path, or one harder than the grant"
+  group: "Consent and notice"
+  primary: DPDP-Act-6(4)
+  related: [DPDP-Rule-3(c)(i)]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "a consent grant exists"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Give the Data Principal a Withdrawal Path that is as easy to use as the grant, reached from the same screen or flow and needing no more steps than the grant did. Record each withdrawal against the Consent Record and stop the processing it covers. §6(4) requires withdrawal to be as easy as giving consent, and Rule 3(c)(i) requires the notice to say how withdrawal is made."
+- id: CON-05
+  title: "Withdrawal not propagated to Data Processors"
+  group: "Consent and notice"
+  primary: DPDP-Act-6(6)
+  related: [DPDP-Act-8(7)(b)]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "a Data Processor receives Personal Data"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "When consent is withdrawn, stop the processing for that Data Principal and send a stop-or-erase instruction to every Data Processor that received their Personal Data. Track each instruction until the Data Processor acknowledges it, and retry failures. §6(6) and §8(7)(b) require the Data Fiduciary to cause its Data Processors to act on the withdrawal."
+- id: CON-06
+  title: "Consent Record missing, or without Purpose, notice reference or time"
+  group: "Consent and notice"
+  primary: DPDP-Act-6(10)
+  related: []
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "a consent grant exists"
+  verify: [static]
+  kind_default: dpdp-obligation
+  guidance: "Write a Consent Record for every grant, capturing the Purpose, the notice version shown, and the times of grant and of any withdrawal. Write the record in the same transaction as the consent, so that a grant cannot exist without its record. §6(10) is the provision this Issue Type cites for the Consent Record, so every grant must produce one."
+- id: CON-07
+  title: "Notice not itemised, or no English/Eighth Schedule language option"
+  group: "Consent and notice"
+  primary: DPDP-Act-5(1)
+  related: [DPDP-Act-5(3), DPDP-Act-6(3), DPDP-Rule-3(a), DPDP-Rule-3(b)]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "consent is requested"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Show an itemised notice before each consent request that lists every Personal Data Element collected, the Purpose for it, and how the Data Principal can complain or exercise their rights. §5(1) requires the notice to accompany or precede the request, and Rule 3(a)–(b) governs the notice contents. Offer the notice in English and in each language listed in the Eighth Schedule, and let the Data Principal choose, as §5(3) requires."
+- id: CON-08
+  title: "Personal Data Elements collected beyond the Purpose"
+  group: "Consent and notice"
+  primary: DPDP-Act-6(1)
+  related: []
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "a Purpose is stated"
+  verify: [static]
+  kind_default: dpdp-obligation
+  guidance: "Limit each form, API payload and data model to the Personal Data Elements the stated Purpose needs, and remove any field that no processing step for that Purpose reads. §6(1) confines consent to Personal Data necessary for the specified Purpose, so collecting more does not become lawful by consent. Review each new field against the Purpose before it ships."
+- id: RET-01
+  title: "No erasure once the Purpose is served"
+  group: "Retention, erasure and rights"
+  primary: DPDP-Act-8(7)(a)
+  related: [DPDP-Rule-8(1), DPDP-Rules-Schedule-Third]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "an account-closure or end-of-purpose event exists"
+  verify: [static]
+  kind_default: dpdp-obligation
+  guidance: "Erase Personal Data once its Purpose is served, by wiring erasure into account-closure and end-of-purpose events rather than leaving the records in place. §8(7)(a) is the erasure duty this Issue Type cites for that case. Where Rule 8(1) applies to a Third Schedule class, schedule the erasure job from the retention period the Third Schedule sets."
+- id: RET-02
+  title: "Erasure request that does not erase (flag only, soft delete, Elements or Data Processors skipped)"
+  group: "Retention, erasure and rights"
+  primary: DPDP-Act-12(3)
+  related: [DPDP-Act-8(7), DPDP-Act-8(7)(b)]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "an erasure route or request exists"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Make the erasure route delete the Personal Data Elements from every store, cache and backup in scope, rather than setting a flag or hiding the records. Include the Data Processors in each erasure request, as §8(7)(b) requires, and confirm completion for each one. Keep only what a legal retention duty obliges you to keep, and erase the rest on request under §12(3)."
+- id: RET-03
+  title: "No 48-hour notice before erasure"
+  group: "Retention, erasure and rights"
+  primary: DPDP-Rule-8(2)
+  related: [DPDP-Rule-8(1), DPDP-Rules-Schedule-Third]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "Third Schedule class (conditional; not assumed)"
+  verify: [static]
+  kind_default: dpdp-obligation
+  guidance: "For a Third Schedule class, send the Data Principal a notice at least 48 hours before erasure under Rule 8(2), telling them the erasure is due and how to stop it. Build the notice into the erasure job so that it always runs ahead of deletion and cannot be skipped. Apply the requirement only where the Third Schedule class condition is met, not by default."
+- id: RIG-01
+  title: "Access summary missing, or omitting Personal Data Elements the app processes for that Data Principal; omitting the Data Fiduciaries and Data Processors it shared data with counts only where a sharing flow is evidenced"
+  group: "Retention, erasure and rights"
+  primary: DPDP-Act-11(1)(a)
+  related: [DPDP-Act-11(1)(b), DPDP-Rule-14]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "user accounts holding Personal Data exist"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Give each Data Principal a summary of the Personal Data Elements held about them and of the processing done on that data, as §11(1)(a) requires. Where a sharing flow exists, list the Data Fiduciaries and Data Processors the data was shared with and what was shared, under §11(1)(b). Serve the summary through an in-app or request route that Rule 14 describes."
+- id: RIG-02
+  title: "No route to correct, complete or update Personal Data Elements"
+  group: "Retention, erasure and rights"
+  primary: DPDP-Act-12(2)
+  related: [DPDP-Rule-14]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "user-editable Personal Data Elements exist"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Give each Data Principal a route to correct, complete or update every user-editable Personal Data Element, and apply the change in every store the value lives in, including caches and derived records. §12(2) provides the right to correction, completion and update, and Rule 14 sets how the Data Principal exercises it."
+- id: RIG-03
+  title: "No grievance mechanism or contact for Personal Data queries"
+  group: "Retention, erasure and rights"
+  primary: DPDP-Act-8(10)
+  related: [DPDP-Act-8(9), DPDP-Act-13, DPDP-Rule-9, DPDP-Rule-14(3)]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "user accounts exist"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Publish the business contact details of a person who can answer Personal Data queries, in the app and in its notices, as §8(9) and Rule 9 require. Establish an effective grievance mechanism under §8(10) and §13, and publish the response period as Rule 14(3) requires."
+- id: RIG-04
+  title: "No nomination"
+  group: "Retention, erasure and rights"
+  primary: DPDP-Act-14
+  related: [DPDP-Rule-14(4)]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "an in-repo notice or rights page lists Data Principal rights under the DPDP Act and omits nomination; otherwise not determinable"
+  verify: [static]
+  kind_default: dpdp-obligation
+  guidance: "List nomination alongside the other Data Principal rights in every in-repo notice or rights page, and provide a route for a Data Principal to nominate another individual who can exercise those rights on their behalf. §14 provides for nomination, and Rule 14(4) sets how it is made."
+- id: CHI-01
+  title: "No age gate or verifiable parental consent"
+  group: "Children, transfers and monitoring"
+  primary: DPDP-Act-9(1)
+  related: [DPDP-Rule-10]
+  ceiling_parent: DPDP-Act-9
+  gate: "the app collects age or DOB, or targets children (education, school, games)"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Ask for age or date of birth before any Personal Data is collected. Where the individual is a child, meaning under eighteen, obtain verifiable consent from a parent or lawful guardian before processing begins, as §9(1) and Rule 10 require. Block the processing path until verification succeeds, and use a verification method proportionate to the risk."
+- id: CHI-02
+  title: "Tracking, behavioural monitoring or targeted ads with no exclusion for Child Data"
+  group: "Children, transfers and monitoring"
+  primary: DPDP-Act-9(3)
+  related: [DPDP-Rule-12, DPDP-Rules-Schedule-Fourth]
+  ceiling_parent: DPDP-Act-9
+  gate: "CHI-01 gate met and tracking present"
+  verify: [static]
+  kind_default: dpdp-obligation
+  guidance: "Exclude Child Data from tracking, behavioural monitoring and targeted advertising, as §9(3) requires, unless an exemption under Rule 12 and the Fourth Schedule covers the Purpose. Gate the tracking code and the ad-targeting paths on the age flag so they never run for a child. Record which exemption, if any, each tracking flow relies on."
+- id: TRF-01
+  title: "Personal Data shared with an SDK or API operated by a Data Processor without disclosure to the Data Principal (disclosure; capped at Medium)"
+  group: "Children, transfers and monitoring"
+  primary: DPDP-Act-11(1)(b)
+  related: [DPDP-Act-8(2)]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: "an outbound flow of Personal Data exists"
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Disclose in the notice and in the access summary every SDK or API that receives Personal Data, naming the Data Processors and the data each one receives, as §11(1)(b) requires. Put a written contract in place with each processor, as §8(2) requires, and remove any SDK whose data flow cannot be disclosed. Update the disclosure whenever an SDK or API is added or changed."
+- id: TRF-02
+  title: "Personal Data sent or stored outside India (disclosure, capped at Medium; Needs Legal Review unless the destination is restricted under §16)"
+  group: "Children, transfers and monitoring"
+  primary: DPDP-Act-16(1)
+  related: [DPDP-Rule-15, DPDP-Rule-13(4)]
+  ceiling_parent: DPDP-Act-Schedule-7
+  gate: null
+  verify: [static, live]
+  kind_default: dpdp-obligation
+  guidance: "Record the destination of each outbound transfer of Personal Data, and check it against any restriction the Central Government has notified under §16(1). Rule 15 governs data made available to foreign States, and Rule 13(4) applies where a Significant Data Fiduciary is involved. Send any flow whose destination is not restricted to legal review, and state the destination in the notice."
+- id: MON-01
+  title: "No monitoring or review of access logs to detect unauthorised access"
+  group: "Children, transfers and monitoring"
+  primary: DPDP-Rule-6(1)(c)
+  related: []
+  ceiling_parent: DPDP-Act-8(5)
+  gate: "in-repo monitoring or alerting config exists and covers no access-log or authentication events; otherwise not determinable"
+  verify: [static]
+  kind_default: security-personal-data
+  guidance: "Set up alerting or scheduled review on the access logs and authentication events for every store that holds Personal Data, so unauthorised access is detected and its cause and impact can be established. Rule 6(1)(c) requires monitoring and review of this kind, and investigation depends on it. Make sure the alert rules cover authentication failures and privileged reads, not only application errors."

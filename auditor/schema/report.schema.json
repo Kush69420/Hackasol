@@ -1,0 +1,381 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Kush69420/Hackasol/auditor/schema/report.schema.json",
+  "title": "DPDP Compliance Auditor Report",
+  "description": "Contract between the engine and every output (AGENTS.md). Change deliberately and update all consumers; bump schema_version.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tool",
+    "target",
+    "scan",
+    "llm",
+    "applicability_assumptions",
+    "personal_data_map",
+    "findings",
+    "observations",
+    "coverage_matrix",
+    "consent_assessment"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "const": "dpdp-audit" },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "source", "kind", "commit"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "source": { "type": "string", "minLength": 1, "description": "Local path or Git URL as given on the command line" },
+        "kind": { "enum": ["path", "git"] },
+        "commit": { "type": ["string", "null"], "pattern": "^[0-9a-f]{40}$", "description": "Resolved commit; null for a non-Git local path" }
+      }
+    },
+    "scan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["started_at", "finished_at", "exclusions", "files_scanned", "files_excluded", "rule_count"],
+      "properties": {
+        "started_at": { "type": "string", "format": "date-time" },
+        "finished_at": { "type": "string", "format": "date-time" },
+        "exclusions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "files_scanned": { "type": "integer", "minimum": 0 },
+        "files_excluded": { "type": "integer", "minimum": 0 },
+        "rule_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "llm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "provider", "model", "prompt_versions", "cache_hits", "cache_misses", "not_assessed", "reason"],
+      "properties": {
+        "mode": { "enum": ["live", "cache-only"], "description": "cache-only: no provider reachable; only matching cached verdicts replayed" },
+        "provider": { "enum": ["anthropic", "openai", "gemini", "ollama", "omp"] },
+        "model": { "type": "string", "minLength": 1 },
+        "prompt_versions": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "classification": { "type": "string" },
+            "triage": { "type": "string" },
+            "consent": { "type": "string" },
+            "fix": { "type": "string" }
+          }
+        },
+        "cache_hits": { "type": "integer", "minimum": 0 },
+        "cache_misses": { "type": "integer", "minimum": 0 },
+        "not_assessed": { "type": "integer", "minimum": 0, "description": "LLM fields left 'not assessed' in this Report" },
+        "reason": { "type": ["string", "null"], "description": "Why the run is cache-only; null when live" }
+      },
+      "if": { "properties": { "mode": { "const": "cache-only" } } },
+      "then": { "properties": { "reason": { "type": "string", "minLength": 1 } } },
+      "else": { "properties": { "reason": { "type": "null" } } }
+    },
+    "applicability_assumptions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text", "provisions"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^AA-[0-9]+$" },
+          "text": { "type": "string", "minLength": 1 },
+          "provisions": { "type": "array", "items": { "$ref": "#/$defs/provisionId" } }
+        }
+      }
+    },
+    "personal_data_map": { "type": "array", "items": { "$ref": "#/$defs/mapEntry" } },
+    "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+    "observations": { "type": "array", "items": { "$ref": "#/$defs/observation" } },
+    "coverage_matrix": { "type": "array", "description": "Populated by P1.5", "items": { "type": "object" } },
+    "consent_assessment": { "type": ["object", "null"], "description": "Reserved for P2.1; null until then" }
+  },
+  "$defs": {
+    "issueType": { "type": "string", "pattern": "^(SEC|CON|RET|RIG|CHI|TRF|MON)-[0-9]{2}$" },
+    "provisionId": {
+      "type": "string",
+      "description": "Key in the Provision registry, e.g. 'DPDP-Act-8(5)', 'DPDP-Rule-6(1)(e)', 'CWE-532'",
+      "minLength": 1
+    },
+    "dataCategory": {
+      "enum": ["Government Identifier", "Biometric", "Financial", "Health", "Child Data", "Authentication Secret", "Contact", "Profile"]
+    },
+    "operation": { "enum": ["Collect", "Store", "Log", "Transfer", "Expose", "Erase"] },
+    "exposureLevel": { "enum": ["Public", "Cross-Border", "Third-Party", "Internal-Broad", "Internal-Restricted"] },
+    "band": { "enum": ["critical", "high", "medium", "low"] },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "start_line", "end_line", "excerpt"],
+      "properties": {
+        "file": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Target-relative POSIX path",
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(^|/)\\.\\.(/|$)).+$"
+        },
+        "start_line": { "type": "integer", "minimum": 1 },
+        "end_line": { "type": "integer", "minimum": 1 },
+        "excerpt": { "type": "string", "description": "Masked per auditor.masking.mask_for_report" }
+      }
+    },
+    "element": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "data_category", "evidence"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "data_category": { "$ref": "#/$defs/dataCategory" },
+        "evidence": { "$ref": "#/$defs/evidence" }
+      }
+    },
+    "flowStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "evidence"],
+      "properties": {
+        "operation": { "$ref": "#/$defs/operation" },
+        "evidence": { "$ref": "#/$defs/evidence" },
+        "note": { "type": "string" }
+      }
+    },
+    "mapEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["element", "operations"],
+      "properties": {
+        "element": { "$ref": "#/$defs/element" },
+        "operations": { "type": "array", "items": { "$ref": "#/$defs/flowStep" } }
+      }
+    },
+    "llmField": {
+      "description": "An LLM-produced value. 'not assessed' means no live verdict and no matching cache entry; distinct from absence (field null) and from N/A.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "value", "cache_key", "provider", "model", "prompt_version"],
+          "properties": {
+            "status": { "const": "assessed" },
+            "value": {},
+            "cache_key": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "provider": { "enum": ["anthropic", "openai", "gemini", "ollama", "omp"] },
+            "model": { "type": "string", "minLength": 1 },
+            "prompt_version": { "type": "string", "minLength": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "cache_key"],
+          "properties": {
+            "status": { "const": "not assessed" },
+            "cache_key": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+          }
+        }
+      ]
+    },
+    "triageField": {
+      "allOf": [
+        { "$ref": "#/$defs/llmField" },
+        {
+          "if": { "properties": { "status": { "const": "assessed" } } },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["verdict", "reason"],
+                "properties": {
+                  "verdict": { "enum": ["true-positive", "false-positive", "uncertain"] },
+                  "reason": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "issue_type", "rules_fired", "kind", "classification",
+        "evidence", "data_flow", "personal_data_element", "data_category", "processing_operation", "exposure",
+        "primary_provision", "other_provisions", "penalty_ceiling", "enforceable_from",
+        "cvss", "risk_matrix", "severity",
+        "recommended_fix", "status", "legal_review", "llm_triage",
+        "live_probe", "fix_patch"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^(SEC|CON|RET|RIG|CHI|TRF|MON)-[0-9]{2}-[0-9a-f]{12}$" },
+        "issue_type": { "$ref": "#/$defs/issueType" },
+        "rules_fired": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "kind": {
+          "enum": ["dpdp-obligation", "security-personal-data", "safeguard"],
+          "description": "DPDP obligation; security check that depends on Personal Data; Safeguard Finding"
+        },
+        "classification": {
+          "enum": ["technical", "compliance-gap", "disclosure"],
+          "description": "technical: CVSS-scored attack path; compliance-gap: no attack path, Risk Matrix band; disclosure: Severity never above medium"
+        },
+        "evidence": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/evidence" } },
+        "data_flow": { "type": "array", "items": { "$ref": "#/$defs/flowStep" } },
+        "personal_data_element": {
+          "oneOf": [{ "$ref": "#/$defs/element" }, { "type": "null" }],
+          "description": "null for Elementless Findings (Safeguard, absence); data_category then holds the protected category"
+        },
+        "data_category": { "$ref": "#/$defs/dataCategory" },
+        "processing_operation": { "oneOf": [{ "$ref": "#/$defs/operation" }, { "type": "null" }] },
+        "exposure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["level", "derived_from"],
+          "properties": {
+            "level": { "$ref": "#/$defs/exposureLevel" },
+            "derived_from": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/evidence" } }
+          }
+        },
+        "primary_provision": { "$ref": "#/$defs/provisionId" },
+        "other_provisions": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/provisionId" } },
+        "penalty_ceiling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["parent_section", "amount_inr_crore"],
+          "properties": {
+            "parent_section": { "$ref": "#/$defs/provisionId" },
+            "amount_inr_crore": { "enum": [250, 200, 150, 50] }
+          }
+        },
+        "enforceable_from": { "type": "string", "format": "date", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "cvss": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status", "vector", "score"],
+              "properties": {
+                "status": { "const": "scored" },
+                "vector": { "type": "string", "pattern": "^CVSS:4\\.0/AV:[NALP]/AC:[LH]/AT:[NP]/PR:[NLH]/UI:[NPA]/VC:[HLN]/VI:[HLN]/VA:[HLN]/SC:[HLN]/SI:[HLN]/SA:[HLN](/[A-Za-z]+:[A-Za-z]+)*$" },
+                "score": { "type": "number", "minimum": 0, "maximum": 10 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status", "reason"],
+              "properties": {
+                "status": { "const": "n/a" },
+                "reason": { "type": "string", "minLength": 1 }
+              }
+            }
+          ]
+        },
+        "risk_matrix": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tier", "exposure", "cell"],
+          "properties": {
+            "tier": { "enum": ["A", "B", "C"] },
+            "exposure": { "$ref": "#/$defs/exposureLevel" },
+            "cell": { "$ref": "#/$defs/band" }
+          }
+        },
+        "severity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["band", "justification"],
+          "properties": {
+            "band": { "$ref": "#/$defs/band" },
+            "justification": { "type": "string", "minLength": 1 }
+          }
+        },
+        "recommended_fix": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["guidance", "tailored"],
+          "properties": {
+            "guidance": { "type": "string", "minLength": 1, "description": "From the remediation catalogue; always present" },
+            "tailored": { "$ref": "#/$defs/llmField" }
+          }
+        },
+        "status": { "enum": ["open", "needs-legal-review", "conditional"] },
+        "legal_review": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["readings"],
+              "properties": {
+                "readings": {
+                  "type": "array",
+                  "minItems": 2,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["provision", "reading"],
+                    "properties": {
+                      "provision": { "$ref": "#/$defs/provisionId" },
+                      "reading": { "type": "string", "minLength": 1 }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "llm_triage": { "$ref": "#/$defs/triageField" },
+        "live_probe": { "type": "null", "description": "Reserved for P2.3 (Confirmed / Refuted)" },
+        "fix_patch": { "type": "null", "description": "Reserved for P2.2" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "classification": { "const": "technical" } } },
+          "then": { "properties": { "cvss": { "properties": { "status": { "const": "scored" } } } } },
+          "else": { "properties": { "cvss": { "properties": { "status": { "const": "n/a" } } } } }
+        },
+        {
+          "if": { "properties": { "classification": { "const": "disclosure" } } },
+          "then": { "properties": { "severity": { "properties": { "band": { "enum": ["medium", "low"] } } } } }
+        },
+        {
+          "if": { "properties": { "status": { "const": "needs-legal-review" } } },
+          "then": { "properties": { "legal_review": { "type": "object" } } },
+          "else": { "properties": { "legal_review": { "type": "null" } } }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "safeguard" } } },
+          "then": { "properties": { "personal_data_element": { "type": "null" } } }
+        }
+      ]
+    },
+    "observation": {
+      "description": "Security weakness with no shown link to Personal Data: reported without a DPDP Provision",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "rules_fired", "evidence", "references", "recommended_fix"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^OBS-[0-9a-f]{12}$" },
+        "title": { "type": "string", "minLength": 1 },
+        "rules_fired": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "evidence": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/evidence" } },
+        "references": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^(CWE-[0-9]+|OWASP-.+)$" }
+        },
+        "recommended_fix": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

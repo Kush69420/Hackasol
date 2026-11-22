@@ -1,0 +1,14 @@
+# Target Application clones are never committed (AGENTS.md)
+targets/
+
+# LLM verdict cache is local; masked, but per-machine
+.dpdp-cache/
+
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+dist/
+build/
+node_modules/
+.env
