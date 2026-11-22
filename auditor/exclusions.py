@@ -1,9 +1,10 @@
 """Target Application profiles applied before processing files."""
 
+from fnmatch import fnmatchcase
 from pathlib import Path
 import os
 
-ALWAYS_EXCLUDED = (".git/**", "node_modules/**")
+ALWAYS_EXCLUDED = ("**/.git/**", "**/node_modules/**")
 PROFILES = {
     "juice-shop": ("data/static/codefixes/**", "test/**", "frontend/**/*.spec.ts"),
 }
@@ -13,15 +14,18 @@ def exclusions_for(profile: str) -> list[str]:
     return [*ALWAYS_EXCLUDED, *PROFILES.get(profile, ())]
 
 
-def _excluded(relative: Path, profile: str) -> bool:
-    parts = relative.parts
-    if ".git" in parts or "node_modules" in parts:
-        return True
-    if profile == "juice-shop":
-        return (parts[:3] == ("data", "static", "codefixes")
-                or parts[:1] == ("test",)
-                or (parts[:1] == ("frontend",) and relative.name.endswith(".spec.ts")))
-    return False
+def _matches(parts: tuple[str, ...], pattern: tuple[str, ...]) -> bool:
+    """Match path segments against glob segments; `**` spans zero or more segments."""
+    if not pattern:
+        return not parts
+    if pattern[0] == "**":
+        return any(_matches(parts[i:], pattern[1:]) for i in range(len(parts) + 1))
+    return bool(parts) and fnmatchcase(parts[0], pattern[0]) and _matches(parts[1:], pattern[1:])
+
+
+def is_excluded(relative: Path, profile: str) -> bool:
+    """The globs reported in `scan.exclusions` are the only exclusion rules applied."""
+    return any(_matches(relative.parts, tuple(glob.split("/"))) for glob in exclusions_for(profile))
 
 
 def iter_target_files(root: Path, profile: str) -> tuple[list[Path], int]:
@@ -32,7 +36,7 @@ def iter_target_files(root: Path, profile: str) -> tuple[list[Path], int]:
         dirs.sort()
         for name in sorted(files):
             path = Path(directory) / name
-            if _excluded(path.relative_to(root), profile):
+            if is_excluded(path.relative_to(root), profile):
                 excluded += 1
             elif path.is_file() and not path.is_symlink():
                 included.append(path)
