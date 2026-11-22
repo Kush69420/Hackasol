@@ -1,0 +1,159 @@
+# Store: a Personal Data Element written to an ORM model, a marsdb collection, a file
+# or browser storage. Intra-function only (ADR 0003). auditor/semgrep.py links each
+# match to an Element and drops matches that name none.
+rules:
+  - id: op-store-sequelize-create
+    languages: [typescript, javascript]
+    severity: INFO
+    message: Model create() writes an object literal of attributes to the database
+    metadata:
+      kind: operation
+      operation: Store
+      stage: model
+      corpus:
+        positive: corpus/operations/op-store-sequelize-create/positive.ts
+        negative: corpus/operations/op-store-sequelize-create/negative.ts
+    patterns:
+      - pattern: '$M.create($VAR)'
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: '^\{'
+
+  - id: op-store-sequelize-update
+    languages: [typescript, javascript]
+    severity: INFO
+    message: Model or instance update() writes an object literal of attributes to the database
+    metadata:
+      kind: operation
+      operation: Store
+      stage: model
+      corpus:
+        positive: corpus/operations/op-store-sequelize-update/positive.ts
+        negative: corpus/operations/op-store-sequelize-update/negative.ts
+    patterns:
+      - pattern: '$M.update($VAR, ...)'
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: '^\{'
+      - pattern-not-regex: 'Collection\.update\('
+
+  - id: op-store-sequelize-save
+    languages: [typescript, javascript]
+    severity: INFO
+    message: Instance save() persists the attributes of the instance in $VAR
+    metadata:
+      kind: operation
+      operation: Store
+      stage: model
+      corpus:
+        positive: corpus/operations/op-store-sequelize-save/positive.ts
+        negative: corpus/operations/op-store-sequelize-save/negative.ts
+    patterns:
+      - pattern: '$VAR.save(...)'
+
+  - id: op-store-marsdb-insert
+    languages: [typescript, javascript]
+    severity: INFO
+    message: marsdb collection insert() writes an object literal document
+    metadata:
+      kind: operation
+      operation: Store
+      stage: model
+      corpus:
+        positive: corpus/operations/op-store-marsdb-insert/positive.ts
+        negative: corpus/operations/op-store-marsdb-insert/negative.ts
+    patterns:
+      - pattern: '$C.insert($VAR)'
+      - metavariable-regex:
+          metavariable: $C
+          regex: '.*Collection$'
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: '^\{'
+
+  - id: op-store-marsdb-update
+    languages: [typescript, javascript]
+    severity: INFO
+    message: marsdb collection update() writes an update document to the collection
+    metadata:
+      kind: operation
+      operation: Store
+      stage: model
+      corpus:
+        positive: corpus/operations/op-store-marsdb-update/positive.ts
+        negative: corpus/operations/op-store-marsdb-update/negative.ts
+    patterns:
+      - pattern: '$C.update($QUERY, $VAR, ...)'
+      - metavariable-regex:
+          metavariable: $C
+          regex: '.*Collection$'
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: '^\{'
+
+  - id: op-store-fs-write
+    languages: [typescript, javascript]
+    severity: INFO
+    message: fs write or append stores the data argument in a file on disk
+    metadata:
+      kind: operation
+      operation: Store
+      stage: storage
+      corpus:
+        positive: corpus/operations/op-store-fs-write/positive.ts
+        negative: corpus/operations/op-store-fs-write/negative.ts
+    patterns:
+      - pattern-either:
+          - pattern: 'fs.$WRITE($PATH, $VAR, ...)'
+          - pattern: 'fs.promises.$WRITE($PATH, $VAR, ...)'
+      - metavariable-regex:
+          metavariable: $WRITE
+          regex: '^(?:writeFile|writeFileSync|appendFile|appendFileSync)$'
+
+  - id: op-store-localstorage-set
+    languages: [typescript, javascript]
+    severity: INFO
+    message: localStorage.setItem() stores the value under the key in browser storage
+    metadata:
+      kind: operation
+      operation: Store
+      stage: storage
+      storage: localStorage
+      corpus:
+        positive: corpus/operations/op-store-localstorage-set/positive.ts
+        negative: corpus/operations/op-store-localstorage-set/negative.ts
+    patterns:
+      - pattern: 'localStorage.setItem($K, $VAR)'
+
+  - id: op-store-sessionstorage-set
+    languages: [typescript, javascript]
+    severity: INFO
+    message: sessionStorage.setItem() stores the value under the key in browser storage
+    metadata:
+      kind: operation
+      operation: Store
+      stage: storage
+      storage: sessionStorage
+      corpus:
+        positive: corpus/operations/op-store-sessionstorage-set/positive.ts
+        negative: corpus/operations/op-store-sessionstorage-set/negative.ts
+    patterns:
+      - pattern: 'sessionStorage.setItem($K, $VAR)'
+
+  - id: op-store-cookie-put
+    languages: [typescript, javascript]
+    severity: INFO
+    message: cookieService.put() stores the value in a browser cookie
+    metadata:
+      kind: operation
+      operation: Store
+      stage: storage
+      storage: cookie
+      corpus:
+        positive: corpus/operations/op-store-cookie-put/positive.ts
+        negative: corpus/operations/op-store-cookie-put/negative.ts
+    patterns:
+      - pattern: '$SVC.put($K, $VAR, ...)'
+      - metavariable-regex:
+          metavariable: $SVC
+          regex: '.*cookieService$'

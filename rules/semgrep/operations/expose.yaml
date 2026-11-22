@@ -1,0 +1,82 @@
+# Expose: a value serialised into an HTTP response, or an error page that carries the
+# error's stack or message. Intra-function only (ADR 0003). The response receiver is
+# restricted to a variable named res or response (also as ctx.res or this.res).
+rules:
+  - id: op-expose-response-json
+    languages: [typescript, javascript]
+    severity: INFO
+    message: res.json() serialises the value in $VAR into the HTTP response
+    metadata:
+      kind: operation
+      operation: Expose
+      stage: response
+      corpus:
+        positive: corpus/operations/op-expose-response-json/positive.ts
+        negative: corpus/operations/op-expose-response-json/negative.ts
+    patterns:
+      - pattern-either:
+          - pattern: '$RES.json($VAR)'
+          - pattern: '$RES.status($CODE).json($VAR)'
+      - metavariable-regex:
+          metavariable: $RES
+          regex: '(?:.*\.)?res(?:ponse)?$'
+
+  - id: op-expose-response-send
+    languages: [typescript, javascript]
+    severity: INFO
+    message: res.send() writes the value in $VAR into the HTTP response
+    metadata:
+      kind: operation
+      operation: Expose
+      stage: response
+      corpus:
+        positive: corpus/operations/op-expose-response-send/positive.ts
+        negative: corpus/operations/op-expose-response-send/negative.ts
+    patterns:
+      - pattern-either:
+          - pattern: '$RES.send($VAR)'
+          - pattern: '$RES.status($CODE).send($VAR)'
+      - metavariable-regex:
+          metavariable: $RES
+          regex: '(?:.*\.)?res(?:ponse)?$'
+
+  - id: op-expose-response-render
+    languages: [typescript, javascript]
+    severity: INFO
+    message: res.render() passes the view data in $VAR to a template rendered into the response
+    metadata:
+      kind: operation
+      operation: Expose
+      stage: response
+      corpus:
+        positive: corpus/operations/op-expose-response-render/positive.ts
+        negative: corpus/operations/op-expose-response-render/negative.ts
+    patterns:
+      - pattern: '$RES.render($TPL, $VAR, ...)'
+      - metavariable-regex:
+          metavariable: $RES
+          regex: '(?:.*\.)?res(?:ponse)?$'
+
+  - id: op-expose-error-page
+    languages: [typescript, javascript]
+    severity: INFO
+    message: Error response carries the error's stack or message, which can echo Personal Data
+    metadata:
+      kind: operation
+      operation: Expose
+      stage: response
+      corpus:
+        positive: corpus/operations/op-expose-error-page/positive.ts
+        negative: corpus/operations/op-expose-error-page/negative.ts
+    patterns:
+      - pattern-either:
+          - pattern: '$RES.send($VAR)'
+          - pattern: '$RES.status($CODE).send($VAR)'
+          - pattern: '$RES.json($VAR)'
+          - pattern: '$RES.status($CODE).json($VAR)'
+      - metavariable-regex:
+          metavariable: $RES
+          regex: '(?:.*\.)?res(?:ponse)?$'
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: '(?s).*\b(?:err|error|e)\.(?:stack|message)\b'

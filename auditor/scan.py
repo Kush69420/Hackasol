@@ -7,7 +7,11 @@ import sys
 from auditor import __version__
 from auditor.exclusions import exclusions_for, iter_target_files
 from auditor.inputs import resolve_target
+from auditor.inventory import build_inventory
 from auditor.llm import LLMSession
+from auditor.mapping import assemble
+from auditor.rules import load_rules
+from auditor.rules.context import build_context
 from auditor.schema import SCHEMA_VERSION, validate_report
 
 
@@ -23,6 +27,17 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def run_inventory(source: str, *, commit: str | None = None,
+                  targets_dir: Path = Path("targets")) -> dict:
+    """Inventory diagnostic: source-anchored facts only, no Findings and no LLM."""
+    target = resolve_target(source, commit=commit, targets_dir=targets_dir)
+    files, _ = iter_target_files(target.root, target.name)
+    return {"target": {"name": target.name, "source": target.source, "kind": target.kind,
+                       "commit": target.commit},
+            "exclusions": exclusions_for(target.name),
+            "inventory": build_inventory(target.root, files, target.commit)}
+
+
 def run_scan(source: str, *, commit: str | None = None, provider: str | None = None,
              model: str | None = None, cache_dir: Path = Path(".dpdp-cache"),
              targets_dir: Path = Path("targets")) -> dict:
@@ -31,21 +46,27 @@ def run_scan(source: str, *, commit: str | None = None, provider: str | None = N
     files, excluded = iter_target_files(target.root, target.name)
     session = LLMSession.from_env(cache_dir=cache_dir, provider=provider, model=model)
     session.probe()
-    llm = session.summary()
-    if llm["mode"] == "cache-only":
-        print(f"LLM cache-only mode: {llm['reason']}", file=sys.stderr)
-    rules_dir = Path(__file__).resolve().parent.parent / "rules" / "semgrep"
+    probed = session.summary()
+    if probed["mode"] == "cache-only":
+        print(f"LLM cache-only mode: {probed['reason']}", file=sys.stderr)
+
+    ctx = build_context(target.root, target.name, llm=session)
+    rules = load_rules()
+    matches = [m for _, detect in rules.values() for m in detect(ctx)]
+    assembled = assemble(matches, llm=session)
+
     report = {
         "schema_version": SCHEMA_VERSION,
         "tool": {"name": "dpdp-audit", "version": __version__},
         "target": {"name": target.name, "source": target.source, "kind": target.kind, "commit": target.commit},
         "scan": {"started_at": started, "finished_at": _now(),
                  "exclusions": exclusions_for(target.name), "files_scanned": len(files),
-                 "files_excluded": excluded, "rule_count": sum(1 for path in rules_dir.rglob("*.yaml") if path.is_file())},
-        "llm": llm,
+                 "files_excluded": excluded, "rule_count": len(rules)},
+        "llm": session.summary(),
         "applicability_assumptions": [{"id": id_, "text": text, "provisions": list(provisions)}
                                       for id_, text, provisions in ASSUMPTIONS],
-        "personal_data_map": [], "findings": [], "observations": [],
+        "personal_data_map": ctx.personal_data_map,
+        "findings": assembled.findings, "observations": assembled.observations,
         "coverage_matrix": [], "consent_assessment": None,
     }
     validate_report(report)

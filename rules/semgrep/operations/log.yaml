@@ -1,0 +1,56 @@
+# Log: a value written to console output, the application logger or the HTTP access
+# log. Intra-function only (ADR 0003). A call whose only argument is one string literal
+# carries no data, so it does not match.
+rules:
+  - id: op-log-console
+    languages: [typescript, javascript]
+    severity: INFO
+    message: console.log, info, warn or error writes a data argument to process output
+    metadata:
+      kind: operation
+      operation: Log
+      stage: log
+      corpus:
+        positive: corpus/operations/op-log-console/positive.ts
+        negative: corpus/operations/op-log-console/negative.ts
+    patterns:
+      - pattern: 'console.$LEVEL(..., $VAR, ...)'
+      - metavariable-regex:
+          metavariable: $LEVEL
+          regex: '^(?:log|info|warn|error)$'
+      - pattern-not-regex: "console\\.\\w+\\(\\s*(?:'[^'\\n]*'|\"[^\"\\n]*\")\\s*\\)"
+
+  - id: op-log-logger
+    languages: [typescript, javascript]
+    severity: INFO
+    message: logger or winston level method writes a data argument to the application log
+    metadata:
+      kind: operation
+      operation: Log
+      stage: log
+      corpus:
+        positive: corpus/operations/op-log-logger/positive.ts
+        negative: corpus/operations/op-log-logger/negative.ts
+    patterns:
+      - pattern: '$L.$LEVEL(..., $VAR, ...)'
+      - metavariable-regex:
+          metavariable: $L
+          regex: '(?:.*\.)?(?:logger|winston)$'
+      - metavariable-regex:
+          metavariable: $LEVEL
+          regex: '^(?:log|debug|info|warn|error|verbose|silly|http|fatal)$'
+      - pattern-not-regex: "\\.\\w+\\(\\s*(?:'[^'\\n]*'|\"[^\"\\n]*\")\\s*\\)"
+
+  - id: op-log-morgan
+    languages: [typescript, javascript]
+    severity: INFO
+    message: morgan() writes one access-log line per request in the format in $VAR
+    metadata:
+      kind: operation
+      operation: Log
+      stage: log
+      corpus:
+        positive: corpus/operations/op-log-morgan/positive.ts
+        negative: corpus/operations/op-log-morgan/negative.ts
+    patterns:
+      - pattern: 'morgan($VAR, ...)'

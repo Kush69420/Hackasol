@@ -1,0 +1,105 @@
+# Transfer: a data argument sent to an HTTP endpoint or an SDK client. The rules cannot
+# tell an internal endpoint from a Data Processor, so auditor/semgrep.py records these
+# as Transfer only where the call names an Element. Intra-function only (ADR 0003).
+#
+# Known SDK clients for op-transfer-sdk-send (keep this list short):
+#   sgMail    @sendgrid/mail default export
+#   sesClient AWS SDK v3 SESClient (@aws-sdk/client-ses)
+rules:
+  - id: op-transfer-axios
+    languages: [typescript, javascript]
+    severity: INFO
+    message: axios method sends a data or config argument to an HTTP endpoint
+    metadata:
+      kind: operation
+      operation: Transfer
+      stage: service
+      corpus:
+        positive: corpus/operations/op-transfer-axios/positive.ts
+        negative: corpus/operations/op-transfer-axios/negative.ts
+    patterns:
+      - pattern: 'axios.$METHOD($URL, $VAR, ...)'
+      - metavariable-regex:
+          metavariable: $METHOD
+          regex: '^(?:get|post|put|patch|delete)$'
+
+  - id: op-transfer-fetch
+    languages: [typescript, javascript]
+    severity: INFO
+    message: fetch() sends a request init (body or query) to an HTTP endpoint
+    metadata:
+      kind: operation
+      operation: Transfer
+      stage: service
+      corpus:
+        positive: corpus/operations/op-transfer-fetch/positive.ts
+        negative: corpus/operations/op-transfer-fetch/negative.ts
+    patterns:
+      - pattern: 'fetch($URL, $VAR, ...)'
+
+  - id: op-transfer-http-request
+    languages: [typescript, javascript]
+    severity: INFO
+    message: Node http or https request() opens an outbound request with the options in $VAR
+    metadata:
+      kind: operation
+      operation: Transfer
+      stage: service
+      corpus:
+        positive: corpus/operations/op-transfer-http-request/positive.ts
+        negative: corpus/operations/op-transfer-http-request/negative.ts
+    patterns:
+      - pattern: '$H.request($VAR, ...)'
+      - metavariable-regex:
+          metavariable: $H
+          regex: '^https?$'
+
+  - id: op-transfer-request-module
+    languages: [typescript, javascript]
+    severity: INFO
+    message: request module sends the options or form in $VAR to an HTTP endpoint
+    metadata:
+      kind: operation
+      operation: Transfer
+      stage: service
+      corpus:
+        positive: corpus/operations/op-transfer-request-module/positive.ts
+        negative: corpus/operations/op-transfer-request-module/negative.ts
+    patterns:
+      - pattern-either:
+          - pattern: 'request.$METHOD($VAR, ...)'
+          - pattern: 'request($VAR, ...)'
+
+  - id: op-transfer-needle
+    languages: [typescript, javascript]
+    severity: INFO
+    message: needle method sends the data argument to an HTTP endpoint
+    metadata:
+      kind: operation
+      operation: Transfer
+      stage: service
+      corpus:
+        positive: corpus/operations/op-transfer-needle/positive.ts
+        negative: corpus/operations/op-transfer-needle/negative.ts
+    patterns:
+      - pattern: 'needle.$METHOD($URL, $VAR, ...)'
+      - metavariable-regex:
+          metavariable: $METHOD
+          regex: '^(?:get|post|put|patch|delete)$'
+
+  - id: op-transfer-sdk-send
+    languages: [typescript, javascript]
+    severity: INFO
+    message: Known SDK client send() transmits the message in $VAR to another organisation
+    metadata:
+      kind: operation
+      operation: Transfer
+      stage: service
+      corpus:
+        positive: corpus/operations/op-transfer-sdk-send/positive.ts
+        negative: corpus/operations/op-transfer-sdk-send/negative.ts
+    patterns:
+      - pattern: '$CLIENT.send($VAR)'
+      - metavariable-regex:
+          metavariable: $CLIENT
+          regex: '(?:.*\.)?(?:sgMail|sesClient)$'
