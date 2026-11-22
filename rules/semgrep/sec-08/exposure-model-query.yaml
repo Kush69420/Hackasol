@@ -1,0 +1,7 @@
+rules:
+  - id: exposure-model-query
+    languages: [typescript, javascript]
+    severity: WARNING
+    message: Model list query
+    metadata: {kind: rule, issue_type: SEC-08}
+    pattern: $MODEL.findAll(...)

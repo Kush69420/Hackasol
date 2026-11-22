@@ -38,8 +38,14 @@ def test_fixture_frontend():
     assert set(forms) == {'signal', 'untyped', 'reactive', 'ngModel'}
     assert forms['signal']['inputs'][0] == {'name': 'email', 'input_type': 'email', 'label': 'Email address', 'i18n_key': 'EMAIL', 'source': {'file': 'frontend/src/app/example/example.component.html', 'start_line': 2, 'end_line': 2}}
     assert {call['normalised_path'] for call in inventory['service_calls']} == {'/api/Things', '/api/Things/{id}'}
-    assert inventory['outbound_headers'][0]['header'] == 'Authorization'
-    assert "localStorage.getItem('token')" in inventory['outbound_headers'][0]['value_expression']
+    headers = {header['header']: header for header in inventory['outbound_headers']}
+    assert set(headers) == {'Authorization', 'X-Guarded'}
+    assert "localStorage.getItem('token')" in headers['Authorization']['value_expression']
+    assert headers['Authorization']['origin_guard'] is False
+    assert headers['Authorization']['origin_guard_source'] is None
+    assert headers['X-Guarded']['origin_guard'] is True
+    assert headers['X-Guarded']['origin_guard_source'] == {
+        'file': 'frontend/src/app/example/guarded.ts', 'start_line': 3, 'end_line': 3}
     assert [(item['api'], item['op'], item['key']) for item in inventory['client_storage']] == [('localStorage', 'get', 'token')]
     assert next(t for t in inventory['templates'] if t['kind'] == 'hbs')['inputs'][0]['name'] == 'email'
     assert next(t for t in inventory['templates'] if t['file'].endswith('index.html'))['scripts'][0]['inline_excerpt']
@@ -66,6 +72,9 @@ def test_primary_target_frontend():
     calls = [c for c in inventory['service_calls'] if c['service'] == 'AddressService']
     assert {'/api/Addresss', '/api/Addresss/{id}'} <= {c['normalised_path'] for c in calls}
     auth = next(h for h in inventory['outbound_headers'] if h['header'] == 'Authorization')
+    assert len(inventory['outbound_headers']) == 2
+    assert auth['origin_guard'] is False
+    assert auth['origin_guard_source'] is None
     assert "localStorage.getItem('token')" in auth['value_expression']
     index = next(t for t in inventory['templates'] if t['file'] == 'frontend/src/index.html')
     assert any(script['inline_excerpt'] and script['source']['start_line'] <= 17 <= script['source']['end_line'] for script in index['scripts'])

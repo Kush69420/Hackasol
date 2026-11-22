@@ -26,6 +26,36 @@ const scriptExcerpt = code => {
   });
   return calls.join('; ') || null;
 };
+// Only treat URL predicates enclosing the header, or an earlier terminating
+// branch in the same block, as guards for that header.
+const originGuard = (header, interceptor, sf) => {
+  const request = interceptor.parameters[0]?.name;
+  if (!request || !ts.isIdentifier(request)) return null;
+  const testsUrl = expression => {
+    let found = false;
+    walk(expression, node => {
+      if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) &&
+          node.expression.text === request.text && ['url', 'urlWithParams', 'origin'].includes(node.name.text)) found = true;
+    });
+    return found;
+  };
+  const terminates = statement => {
+    if (ts.isReturnStatement(statement) || ts.isThrowStatement(statement)) return true;
+    return ts.isBlock(statement) && statement.statements.length > 0 && terminates(statement.statements.at(-1));
+  };
+  let child = header;
+  for (let parent = child.parent; parent && parent !== interceptor; child = parent, parent = parent.parent) {
+    if (ts.isIfStatement(parent) && child !== parent.expression && testsUrl(parent.expression)) return coord(sf, parent.expression);
+    if (ts.isConditionalExpression(parent) && child !== parent.condition && testsUrl(parent.condition)) return coord(sf, parent.condition);
+    if (ts.isBlock(parent)) {
+      for (const statement of parent.statements) {
+        if (statement === child) break;
+        if (ts.isIfStatement(statement) && testsUrl(statement.expression) && terminates(statement.thenStatement)) return coord(sf, statement.expression);
+      }
+    }
+  }
+  return null;
+};
 
 export function extractFrontend(project) {
   const forms = [], templates = [], service_calls = [], client_storage = [], outbound_headers = [];
@@ -79,11 +109,19 @@ export function extractFrontend(project) {
         const write = ts.isBinaryExpression(parent) && parent.left === n && parent.operatorToken.kind === ts.SyntaxKind.EqualsToken;
         client_storage.push({ api: 'cookie', op: write ? 'set' : 'get', key: null, source: coord(sf, write ? parent : n) });
       }
-      if (file === 'frontend/src/app/Services/request.interceptor.ts' && ts.isPropertyAssignment(n) && propName(n) === 'setHeaders' && ts.isObjectLiteralExpression(n.initializer)) {
-        for (const p of n.initializer.properties) if (ts.isPropertyAssignment(p) && propName(p)) {
-          // Keep storage lookup keys while redacting other literal values.
-          const expression = p.initializer.getText(sf).replace(/(['"])(?:\\.|(?!\1).)*?\1/g, s => /^(?:'token'|"token"|'email'|"email")$/.test(s) ? s : '<literal>').replace(/`[^$`]*/g, '`<literal>');
-          outbound_headers.push({ header: propName(p), value_expression: expression, source: coord(sf, p) });
+      if (ts.isPropertyAssignment(n) && propName(n) === 'setHeaders' && ts.isObjectLiteralExpression(n.initializer)) {
+        let interceptor = n.parent;
+        while (interceptor && !ts.isMethodDeclaration(interceptor)) interceptor = interceptor.parent;
+        const owner = interceptor?.parent;
+        const implementsInterceptor = owner && ts.isClassDeclaration(owner) && owner.heritageClauses?.some(clause =>
+          clause.token === ts.SyntaxKind.ImplementsKeyword && clause.types.some(type => type.expression.getText(sf).split('.').at(-1) === 'HttpInterceptor'));
+        if (interceptor && owner && ts.isClassDeclaration(owner) && propName(interceptor) === 'intercept' && (implementsInterceptor || interceptor.parameters.length >= 2)) {
+          for (const p of n.initializer.properties) if (ts.isPropertyAssignment(p) && propName(p)) {
+            // Keep storage lookup keys while redacting other literal values.
+            const expression = p.initializer.getText(sf).replace(/(['"])(?:\\.|(?!\1).)*?\1/g, s => /^(?:'token'|"token"|'email'|"email")$/.test(s) ? s : '<literal>').replace(/`[^$`]*/g, '`<literal>');
+            const guard = originGuard(p, interceptor, sf);
+            outbound_headers.push({ header: propName(p), value_expression: expression, source: coord(sf, p), origin_guard: guard !== null, origin_guard_source: guard });
+          }
         }
       }
       ts.forEachChild(n, visit);
