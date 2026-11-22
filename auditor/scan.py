@@ -1,5 +1,6 @@
 """Build the foundation Report for a Target Application."""
 
+from collections.abc import Callable
 from datetime import datetime, timezone
 from pathlib import Path
 import sys
@@ -42,7 +43,8 @@ def run_inventory(source: str, *, commit: str | None = None,
 
 def run_scan(source: str, *, commit: str | None = None, provider: str | None = None,
              model: str | None = None, cache_dir: Path = Path(".dpdp-cache"),
-             targets_dir: Path = Path("targets")) -> dict:
+             targets_dir: Path = Path("targets"),
+             on_stage: Callable[[str], None] | None = None) -> dict:
     started = _now()
     target = resolve_target(source, commit=commit, targets_dir=targets_dir)
     files, excluded = iter_target_files(target.root, target.name)
@@ -52,10 +54,12 @@ def run_scan(source: str, *, commit: str | None = None, provider: str | None = N
     if probed["mode"] == "cache-only":
         print(f"LLM cache-only mode: {probed['reason']}", file=sys.stderr)
 
-    ctx = build_context(target.root, target.name, llm=session)
+    ctx = build_context(target.root, target.name, llm=session, on_stage=on_stage)
     rules = load_rules()
     matches = [m for _, detect in rules.values() for m in detect(ctx)]
     assembled = assemble(matches, llm=session)
+    if on_stage:
+        on_stage("findings")
 
     report = {
         "schema_version": SCHEMA_VERSION,

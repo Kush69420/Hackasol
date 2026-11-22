@@ -1,0 +1,44 @@
+{
+  "format_version": 1,
+  "target": {
+    "name": "juice-shop",
+    "commit": "c9f99228d9d56afb5f5ca7925376292f7fa44b13"
+  },
+  "events": [
+    {
+      "ordinal": 0,
+      "mode": "cache-only",
+      "elapsed_ms": 784,
+      "type": "stage",
+      "stage": "inventory"
+    },
+    {
+      "ordinal": 1,
+      "mode": "cache-only",
+      "elapsed_ms": 871,
+      "type": "stage",
+      "stage": "elements"
+    },
+    {
+      "ordinal": 2,
+      "mode": "cache-only",
+      "elapsed_ms": 1312,
+      "type": "stage",
+      "stage": "data_flows"
+    },
+    {
+      "ordinal": 3,
+      "mode": "cache-only",
+      "elapsed_ms": 18787,
+      "type": "stage",
+      "stage": "findings"
+    },
+    {
+      "ordinal": 4,
+      "mode": "cache-only",
+      "elapsed_ms": 20630,
+      "type": "completed",
+      "finding_count": 21
+    }
+  ]
+}

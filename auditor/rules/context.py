@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -107,12 +108,23 @@ class ScanContext:
         return decide_exposure(authenticated=True, closed_membership=[reg, *auth[:1]])
 
 
-def build_context(root: Path, profile: str, llm=None) -> ScanContext:
-    """Run the deterministic core (inventory, Elements, Data Flows, Semgrep) for one Target."""
+def build_context(root: Path, profile: str, llm=None,
+                  on_stage: Callable[[str], None] | None = None) -> ScanContext:
+    """Run the deterministic core (inventory, Elements, Data Flows, Semgrep) for one Target.
+
+    `on_stage` is called with "inventory", "elements" and "data_flows" as each completes.
+    """
+    def stage(name: str) -> None:
+        if on_stage:
+            on_stage(name)
+
     files, _ = iter_target_files(root, profile)
     inventory = build_inventory(root, files, None)
+    stage("inventory")
     elements = classify(extract_elements(inventory), llm=llm)
+    stage("elements")
     flows = trace_flows(root, files, inventory)
+    stage("data_flows")
     rel = [p.relative_to(root).as_posix() for p in files]
     semgrep = run_semgrep(root, rel, [SEMGREP_DIR])
     steps = log_operations(inventory, elements) + operation_steps(
