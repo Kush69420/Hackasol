@@ -104,14 +104,14 @@ Every Rule ships with a Labelled Corpus pair (a true positive and a near-miss ne
 | SEC-09 + SEC-01: passwords in the URL, written to the access log | `server.ts:636`, `routes/changePassword.ts:14-15`; morgan `combined` at `server.ts:370` | depends on personal data |
 | SEC-13: access log of Personal Data kept 2 days | `server.ts:368` `max_logs: '2d'` vs Rule 6(1)(e) and Rule 8(3) | DPDP obligation |
 | SEC-08: every user's record shown to any logged-in user | `server.ts:430,640` → `routes/authenticatedUsers.ts:12-28` (email, lastLoginIp, everything but password/totpSecret) | depends on personal data |
-| SEC-08: review authors' emails public | `routes/createProductReviews.ts:26` stores the email as `author`; product reviews route returns it | depends on personal data |
-| SEC-02: no field-level protection for TOTP secrets and card numbers | `models/user.ts:109` `totpSecret`, `models/card.ts:38` `cardNum` in plain columns. The disk itself is encrypted (EFS `encrypted = var.efs_encrypted`, default true at `terraform/variables.tf:70`; `transit_encryption = "ENABLED"` at `terraform/main.tf:83`), so severity reflects that residual risk only. Card numbers are masked in API responses (`routes/payment.ts:32`) | depends on personal data |
+| SEC-08: review authors' emails public | the Angular product-details page sends the signed-in user's email as `author` (`frontend/src/app/product-details/product-details.component.ts:80,91`); `routes/createProductReviews.ts:26` stores `req.body.author`; product reviews route returns it | depends on personal data |
+| SEC-02: no field-level protection for TOTP secrets and card numbers | `models/user.ts:109` `totpSecret`, `models/card.ts:38` `cardNum` in plain columns. The disk itself is encrypted (EFS `encrypted = var.efs_encrypted` at `terraform/networking.tf:251`, default true at `terraform/variables.tf:70`; `transit_encryption = "ENABLED"` at `terraform/main.tf:84`), so severity reflects that residual risk only. Card numbers are masked in API responses (`routes/payment.ts:32`) | depends on personal data |
 | SEC-04: weak password hashing | `lib/insecurity.ts:41` MD5 | depends on personal data |
 | SEC-05: hard-coded JWT signing key protecting every session | `lib/insecurity.ts:21` | Safeguard (nexus: Authentication Secrets) |
 | SEC-10: email stored in localStorage and attached to every outgoing request with no origin check | `frontend/src/app/login/login.component.ts:105-106` (stored when "remember me" is ticked); `frontend/src/app/Services/request.interceptor.ts:23` `X-User-Email`. Delivery to another site is unproven and left for a Live Probe | depends on personal data |
-| RET-02: erasure request that only records a flag | `routes/dataErasure.ts:83` `deletionRequested: true`; `models/user.ts:120` `paranoid: true` | DPDP obligation |
-| RIG-01: data export omits most of the user's Personal Data | `routes/dataExport.ts:19-49` exports username, email, memories, orders and reviews only; addresses, cards, wallet, security answer, `lastLoginIp` and TOTP are missing, vs §11(1)(a) | DPDP obligation |
-| RIG-02: email cannot be corrected | `routes/updateUserProfile.ts:38` updates only the username, and no other route changes the email (addresses, cards and password are editable, e.g. `server.ts:482`), vs §12(2) | DPDP obligation |
+| RET-02: erasure request that only records a flag | `routes/dataErasure.ts:83-85` creates a request with `deletionRequested: true`; `models/user.ts:120` `paranoid: true` | DPDP obligation |
+| RIG-01: data export omits most of the user's Personal Data | `routes/dataExport.ts:19-45` retrieves and `:68-108` returns username, email, memories, orders and reviews only; addresses, cards, wallet, security answer, `lastLoginIp` and TOTP are missing, vs §11(1)(a) | DPDP obligation |
+| RIG-02: email cannot be corrected | `routes/updateUserProfile.ts:38` updates only the username, and no other route changes the email (addresses and password are editable, e.g. `server.ts:482`; cards can only be added or deleted), vs §12(2) | DPDP obligation |
 | TRF-02: storage outside India | `terraform/variables.tf` `aws_region` default `eu-west-1` | Needs Legal Review |
 | SEC-11: CORS wildcard on Personal Data routes | `server.ts:184-185` | Safeguard (nexus: routes above) |
 
@@ -123,7 +123,7 @@ Every Rule ships with a Labelled Corpus pair (a true positive and a near-miss ne
 - SEC-15 does not fire on `data/static/users.yml`: seeded fictional accounts are not real Personal Data (see its Gate);
 - RIG-03 not raised: a complaint route (`server.ts:413-414`) and a contact page exist;
 - RIG-04 not determinable: the erasure notice cites GDPR Art. 17, and no in-repo notice lists DPDP rights;
-- MON-01 decided by what `monitoring/grafana-dashboard.json` covers: no access or authentication panels → fires; otherwise not raised;
+- MON-01 fires: `monitoring/grafana-dashboard.json` has business, challenge and runtime panels (HTTP Requests, User Signups) but none for access-log review or authentication events;
 - CHI-01 not determinable (no age or DOB collection);
 - RET-03 conditional (not a Third Schedule class);
 - SEC-12 not raised (morgan access logging exists).
