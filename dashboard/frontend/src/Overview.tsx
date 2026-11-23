@@ -26,10 +26,13 @@ export function Overview(props: {
 
   const top = legal?.highest_applicable_ceiling ?? null;
   const next = legal?.timeline.find((p) => !p.already_enforceable) ?? null;
+  const provisionText = top
+    ? `${top.provisions.slice(0, 2).join(", ")}${top.provisions.length > 2 ? ` and ${top.provisions.length - 2} more` : ""}`
+    : "";
 
   return (
     <section id="overview" aria-label="Overview" className="panel">
-      <header className="panel-head">
+      <header className="panel-head overview-head">
         <div className="stack" style={{ gap: "0.5rem" }}>
           <h2>Overview</h2>
           <p className="lede" data-testid="overview-summary">
@@ -37,7 +40,7 @@ export function Overview(props: {
             <strong className="num">{withFinding}</strong> of <span className="num">{elements}</span> Personal Data Elements.
             {top ? (
               <>
-                {" "}The highest applicable Penalty Ceiling is <strong>{formatCrore(top.amount_inr_crore)}</strong> ({top.provisions.slice(0, 2).join(", ")}{top.provisions.length > 2 ? ` and ${top.provisions.length - 2} more` : ""}).
+                {" "}The highest applicable Penalty Ceiling is <strong>{formatCrore(top.amount_inr_crore)}</strong> ({provisionText}).
               </>
             ) : null}
             {next ? (
@@ -46,6 +49,17 @@ export function Overview(props: {
               </>
             ) : null}
           </p>
+        </div>
+        <div className="ceiling-figure" data-testid="overview-ceiling">
+          <p className="ceiling-label">Highest applicable Penalty Ceiling</p>
+          <p className={top ? "ceiling-value" : "ceiling-value absent"}>
+            {top ? formatCrore(top.amount_inr_crore) : "not assessed"}
+          </p>
+          {top && provisionText ? (
+            <p className="ceiling-caption">
+              Provisions: <span className="mono">{provisionText}</span>
+            </p>
+          ) : null}
         </div>
       </header>
       <div className="overview-grid">
@@ -102,9 +116,4 @@ export function Overview(props: {
       </div>
     </section>
   );
-}
-
-export function sortFindings(findings: Finding[]): Finding[] {
-  const rank = (f: Finding) => BANDS.indexOf(f.severity.band);
-  return [...findings].sort((a, b) => rank(a) - rank(b));
 }

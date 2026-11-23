@@ -25,7 +25,7 @@ async function replay(page: Page, top: boolean) {
       { enforceable_from: "2027-05-13", finding_ids: ["B"], basis: null, days_until: 347, already_enforceable: false },
     ],
   } }));
-  await page.goto("/");
+  await page.goto("/dashboard");
   await page.getByRole("button", { name: /Replay Mode \(recorded Juice Shop scan\)/ }).click();
   await expect(page.getByTestId("legal-view")).toBeVisible();
 }
@@ -47,13 +47,14 @@ test("Replay Mode shows applicability per Finding and the applicable ceiling", a
   await expect(row).toContainText("critical: 1, low: 1");
   await expect(view).not.toContainText(/total exposure/i);
   const phases = page.getByTestId("phase");
-  await expect(phases.nth(0)).toContainText("2025-11-13: already enforceable");
+  await expect(phases.nth(0)).toContainText("13 Nov 2025: already enforceable");
   await expect(phases.nth(1)).toContainText("enforceable in 347 days");
 });
 
 test("related and conditional Provisions do not create an applicable ceiling", async ({ page }) => {
   await replay(page, false);
-  await expect(page.getByTestId("highest-ceiling")).toContainText("Highest applicable ceiling: none");
+  await expect(page.getByTestId("highest-ceiling")).toContainText("Highest applicable Penalty Ceiling");
+  await expect(page.getByTestId("highest-ceiling")).toContainText("not assessed");
   await expect(page.getByTestId("ceiling-row")).not.toContainText("Applicable Primary Provision");
   await expect(page.getByTestId("ceiling-row")).toContainText("Conditional Provision: C");
 });

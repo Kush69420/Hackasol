@@ -7,6 +7,15 @@ function probeClass(status: string): string {
   return "chip-legal";
 }
 
+/** Step counts per path: known numbers, "unknown" where the static pass could not count, "not assessed" when no path was recorded. */
+function stepText(counts: (number | null)[]): string {
+  if (counts.length === 0) return "not assessed";
+  const known = counts.filter((n): n is number => n !== null);
+  if (known.length === counts.length) return known.join(", ");
+  if (known.length === 0) return counts.length === 1 ? "unknown" : `unknown (${counts.length} paths)`;
+  return `${known.join(", ")}, ${counts.length - known.length} unknown`;
+}
+
 export function ConsentAssessment({ assessment, replay }: { assessment: ConsentAssessmentData | null; replay: boolean }) {
   const reasoning = assessment?.llm_reasoning;
   return (
@@ -24,7 +33,11 @@ export function ConsentAssessment({ assessment, replay }: { assessment: ConsentA
               <p className="assess">Assessment: {row.assessment}</p>
               <p><span className="k">Issue Types:</span> {row.issue_types.join(", ") || "none"}</p>
               <p><span className="k">Linked identifiers:</span> {row.linked_identifiers.join(", ") || "none"}</p>
-              {row.step_counts && <p><span className="k">Static step counts:</span> <span className="mono">{JSON.stringify(row.step_counts)}</span></p>}
+              {row.step_counts && (row.step_counts.grant.length + row.step_counts.withdrawal.length === 0 ? (
+                <p><span className="k">Static step counts:</span> not assessed</p>
+              ) : (
+                <p><span className="k">Static step counts:</span> Grant {stepText(row.step_counts.grant)} · Withdrawal {stepText(row.step_counts.withdrawal)}</p>
+              ))}
               {row.evidence.map((ev, index) => (
                 <figure className="evidence" key={`${ev.file}:${ev.start_line}:${index}`}>
                   <figcaption>{ev.file}:{ev.start_line}{ev.end_line !== ev.start_line ? `-${ev.end_line}` : ""}</figcaption>

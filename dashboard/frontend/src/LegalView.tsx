@@ -1,15 +1,37 @@
-import type { CeilingRow, LegalViewData } from "./types";
+import type { ReactNode } from "react";
+import { ChevronRight } from "lucide-react";
+import { formatCrore, formatDate } from "./ui";
+import { BANDS, type CeilingRow, type LegalViewData } from "./types";
 
-const APPLICABILITY_LABELS = {
+type Applicability = keyof CeilingRow["finding_ids_by_applicability"];
+
+const APPLICABILITY_LABELS: Record<Applicability, string> = {
   applicable_primary: "Applicable Primary Provision",
   related: "Related Provision",
   conditional: "Conditional Provision",
   needs_legal_review: "Needs Legal Review (breach not established)",
-} as const;
+};
+const APPLICABILITY_KEYS = Object.keys(APPLICABILITY_LABELS) as Applicability[];
 
 function amount(row: CeilingRow): string {
-  if (row.statutory_maximum_inr_crore !== null) return `₹${row.statutory_maximum_inr_crore} crore`;
+  if (row.statutory_maximum_inr_crore !== null) return formatCrore(row.statutory_maximum_inr_crore);
   return row.statutory_maximum_text ?? "no fixed figure";
+}
+
+function findingsSummary(count: number): string {
+  return `${count} ${count === 1 ? "Finding" : "Findings"}`;
+}
+
+function Disclosure({ className, summary, children }: { className: string; summary: string; children: ReactNode }) {
+  return (
+    <details className={className}>
+      <summary>
+        <span>{summary}</span>
+        <ChevronRight size={15} aria-hidden="true" className="legal-chevron" />
+      </summary>
+      {children}
+    </details>
+  );
 }
 
 export function LegalView({ legal, error }: { legal: LegalViewData | null; error: string | null }) {
@@ -26,15 +48,25 @@ export function LegalView({ legal, error }: { legal: LegalViewData | null; error
     <section id="legal" aria-label="Statutory Penalty Ceilings and Enforcement Timeline" data-testid="legal-view" className="panel">
       <header className="panel-head">
         <h2>Statutory Penalty Ceilings and Enforcement Timeline</h2>
-        <p data-testid="ceiling-note">{legal.note}</p>
+        <p>Statutory maximums from the Schedule, not predicted amounts.</p>
       </header>
-      <div className="panel-body" style={{ paddingBottom: "0.75rem" }}>
-        <p className="lede" data-testid="highest-ceiling">
-          Highest applicable ceiling:{" "}
-          <strong>{top ? `₹${top.amount_inr_crore} crore (${top.provisions.join(", ")})` : "none"}</strong>
-        </p>
+      <div className="legal-top">
+        <div className="legal-figure-block" data-testid="highest-ceiling">
+          <p className="legal-label">Highest applicable Penalty Ceiling</p>
+          {top ? (
+            <>
+              <span className="legal-figure">{formatCrore(top.amount_inr_crore)}</span>{" "}
+              <span className="legal-figure-caption mono">({top.provisions.join(", ")})</span>
+            </>
+          ) : (
+            <span className="legal-figure is-unassessed">not assessed</span>
+          )}
+        </div>
+        <Disclosure className="legal-disclose" summary="How ceilings are read">
+          <p data-testid="ceiling-note">{legal.note}</p>
+        </Disclosure>
       </div>
-      <div className="table-wrap" style={{ maxHeight: "none" }}>
+      <div className="table-wrap legal-table-wrap">
         <table data-testid="ceiling-table">
           <thead>
             <tr>
@@ -48,20 +80,27 @@ export function LegalView({ legal, error }: { legal: LegalViewData | null; error
           <tbody>
             {legal.ceilings.map((row) => (
               <tr key={row.provision} data-testid="ceiling-row">
-                <td>{row.provision} ({row.citation})</td>
+                <td>
+                  {row.citation}
+                  <span className="legal-provision-id mono">{row.provision}</span>
+                </td>
                 <td>{row.schedule_entry ?? "none"}</td>
                 <td className="num">{amount(row)}</td>
                 <td>
-                  {(Object.keys(APPLICABILITY_LABELS) as (keyof typeof APPLICABILITY_LABELS)[]).map((key) =>
-                    row.finding_ids_by_applicability[key].length > 0 && (
-                      <div key={key}>{APPLICABILITY_LABELS[key]}: {row.finding_ids_by_applicability[key].join(", ")}</div>
-                    )
-                  )}
+                  <Disclosure className="legal-ids" summary={findingsSummary(row.finding_ids.length)}>
+                    <ul className="legal-groups">
+                      {APPLICABILITY_KEYS.filter((key) => row.finding_ids_by_applicability[key].length > 0).map((key) => (
+                        <li key={key}>
+                          <span className="legal-group-label">{APPLICABILITY_LABELS[key]}:</span>{" "}
+                          <span className="mono">{row.finding_ids_by_applicability[key].join(", ")}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </Disclosure>
                 </td>
-                <td>
-                  {Object.entries(row.severity_mix)
-                    .filter(([, n]) => n > 0)
-                    .map(([band, n]) => `${band}: ${n}`)
+                <td className="legal-mix">
+                  {BANDS.filter((band) => row.severity_mix[band] > 0)
+                    .map((band) => `${band}: ${row.severity_mix[band]}`)
                     .join(", ")}
                 </td>
               </tr>
@@ -69,19 +108,23 @@ export function LegalView({ legal, error }: { legal: LegalViewData | null; error
           </tbody>
         </table>
       </div>
-      <div className="panel-head" style={{ borderTop: "1px solid var(--line)", borderBottom: 0, paddingBottom: "0.5rem" }}>
-        <h3 style={{ fontSize: "0.9375rem", color: "var(--ink)" }}>Enforcement timeline (relative to scan date {legal.as_of})</h3>
+      <div className="panel-head legal-timeline-head">
+        <h3>Enforcement timeline (relative to scan date {formatDate(legal.as_of)})</h3>
       </div>
       <ol className="timeline" data-testid="timeline">
         {legal.timeline.map((phase) => (
           <li key={phase.enforceable_from} data-testid="phase" data-enforceable={phase.already_enforceable}>
             <span className="when">
-              {phase.enforceable_from}:{" "}
+              {formatDate(phase.enforceable_from)}:{" "}
               <span className="state">
                 {phase.already_enforceable ? "already enforceable" : `enforceable in ${phase.days_until} days`}
               </span>
             </span>
-            <span>{phase.finding_ids.length} Finding(s): <span className="mono">{phase.finding_ids.join(", ")}</span></span>
+            <div>
+              <Disclosure className="legal-ids" summary={findingsSummary(phase.finding_ids.length)}>
+                <p className="mono legal-ids-body">{phase.finding_ids.join(", ")}</p>
+              </Disclosure>
+            </div>
           </li>
         ))}
       </ol>

@@ -1,15 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  Check, Download, FileSearch, FlaskConical, Gavel, LayoutDashboard, ListChecks, Map as MapIcon,
-  Moon, ScanSearch, ShieldCheck, Sun, Type, Wrench,
+  ArrowLeft, Check, Download, FileSearch, FlaskConical, Gavel, LayoutDashboard, ListChecks, Map as MapIcon,
+  Moon, ScanSearch, ShieldCheck, Sun, Wrench,
 } from "lucide-react";
 import { Band, LegalViewData, Report, ScanEvent } from "./types";
+import { navigate, useLocation } from "./route";
 import { LiveProbes } from "./LiveProbes";
 import { FixPatches } from "./FixPatches";
 import { LegalView } from "./LegalView";
 import { ConsentAssessment } from "./ConsentAssessment";
-import { Overview, sortFindings } from "./Overview";
-import { Findings } from "./Findings";
+import { Overview } from "./Overview";
+import { Findings, pickHeadlineFinding } from "./Findings";
 import { PersonalDataMap } from "./PersonalDataMap";
 import { orderRecordings, provenance, targetLabel } from "./ui";
 
@@ -33,6 +34,9 @@ function readPref(key: string): string | null {
 function writePref(key: string, value: string) {
   try { window.localStorage.setItem(key, value); } catch { /* storage unavailable */ }
 }
+function clearPref(key: string) {
+  try { window.localStorage.removeItem(key); } catch { /* storage unavailable */ }
+}
 
 export function App() {
   const [target, setTarget] = useState("");
@@ -48,17 +52,21 @@ export function App() {
   const [activeReplay, setActiveReplay] = useState<string | null>(null);
   const [recordings, setRecordings] = useState<string[]>([]);
   const [theme, setTheme] = useState<Theme>(() => (readPref("dpdp-theme") === "dark" ? "dark" : "light"));
-  const [large, setLarge] = useState<boolean>(() => readPref("dpdp-scale") === "large");
+  const [compact, setCompact] = useState<boolean>(() => readPref("dpdp-type-scale") === "compact");
   const source = useRef<EventSource | null>(null);
+  const runIdRef = useRef<string | null>(null);
+  const location = useLocation();
+  const runParam = new URLSearchParams(location.search).get("run");
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     writePref("dpdp-theme", theme);
   }, [theme]);
   useEffect(() => {
-    document.documentElement.dataset.scale = large ? "large" : "normal";
-    writePref("dpdp-scale", large ? "large" : "normal");
-  }, [large]);
+    document.documentElement.dataset.scale = compact ? "compact" : "presentation";
+    writePref("dpdp-type-scale", compact ? "compact" : "presentation");
+  }, [compact]);
+  useEffect(() => clearPref("dpdp-scale"), []); // retired large-type preference
 
   useEffect(() => () => source.current?.close(), []);
   useEffect(() => {
@@ -80,7 +88,7 @@ export function App() {
     let cancelled = false;
     fetch(`/api/scans/${runId}/legal`)
       .then(async (response) => {
-        if (!response.ok) throw new Error(`Legal view unavailable (${response.status})`);
+        if (!response.ok) throw new Error(`Legal View unavailable (${response.status})`);
         const body = (await response.json()) as LegalViewData;
         if (!cancelled) setLegal(body);
       })
@@ -88,8 +96,7 @@ export function App() {
     return () => { cancelled = true; };
   }, [runId, report === null]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  async function start(url: string, body?: unknown, replay?: string) {
-    source.current?.close();
+  function resetRun(replay: string | null) {
     setBusy(true);
     setError(null);
     setEvents([]);
@@ -97,7 +104,48 @@ export function App() {
     setSelected(null);
     setBandFilter(null);
     setRunId(null);
-    setActiveReplay(replay ?? null);
+    setActiveReplay(replay);
+  }
+
+  /** Attaches the dashboard to an existing run: streams its events, then loads its Report. */
+  function attach(id: string, replay: string | null = null) {
+    source.current?.close();
+    resetRun(replay);
+    runIdRef.current = id;
+    setRunId(id);
+    navigate(`/dashboard?run=${encodeURIComponent(id)}`, true);
+    let received = false;
+    const es = new EventSource(`/api/scans/${id}/events`);
+    source.current = es;
+    es.onmessage = async (m) => {
+      received = true;
+      const ev = JSON.parse(m.data) as ScanEvent;
+      setEvents((prev) => (prev.some((p) => p.ordinal === ev.ordinal) ? prev : [...prev, ev]));
+      if (ev.type !== "stage") {
+        es.close();
+        if (ev.type === "completed") {
+          const r = await fetch(`/api/scans/${id}/report/json`);
+          if (r.ok) {
+            const loaded = (await r.json()) as Report;
+            setReport(loaded);
+            setSelected(pickHeadlineFinding(loaded.findings));
+          } else setError(`Report could not be loaded (${r.status})`);
+        }
+        setBusy(false);
+      }
+    };
+    es.onerror = () => {
+      // The server closes the stream after the terminal event; only report early drops.
+      if (es.readyState !== EventSource.CLOSED) return;
+      setBusy(false);
+      if (!received) setError("This scan run could not be opened.");
+    };
+  }
+
+  /** Starts a new run with a POST, then attaches to it. */
+  async function start(url: string, body?: unknown, replay?: string) {
+    source.current?.close();
+    resetRun(replay ?? null);
     try {
       const res = await fetch(url, {
         method: "POST",
@@ -106,34 +154,17 @@ export function App() {
       });
       if (!res.ok) throw new Error(`Request rejected (${res.status})`);
       const { run_id } = (await res.json()) as { run_id: string };
-      setRunId(run_id);
-      const es = new EventSource(`/api/scans/${run_id}/events`);
-      source.current = es;
-      es.onmessage = async (m) => {
-        const ev = JSON.parse(m.data) as ScanEvent;
-        setEvents((prev) => (prev.some((p) => p.ordinal === ev.ordinal) ? prev : [...prev, ev]));
-        if (ev.type !== "stage") {
-          es.close();
-          if (ev.type === "completed") {
-            const r = await fetch(`/api/scans/${run_id}/report/json`);
-            if (r.ok) {
-              const loaded = (await r.json()) as Report;
-              setReport(loaded);
-              setSelected(sortFindings(loaded.findings)[0]?.id ?? null);
-            } else setError(`Report could not be loaded (${r.status})`);
-          }
-          setBusy(false);
-        }
-      };
-      es.onerror = () => {
-        // The server closes the stream after the terminal event; only report early drops.
-        if (es.readyState === EventSource.CLOSED) setBusy(false);
-      };
+      attach(run_id, replay ?? null);
     } catch (e) {
       setError((e as Error).message);
       setBusy(false);
     }
   }
+
+  // Opening /dashboard?run=<id> (including after Home starts a run) attaches to that run.
+  useEffect(() => {
+    if (runParam && runParam !== runIdRef.current) attach(runParam);
+  }, [runParam]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sections = useMemo(() => {
     if (!report) return [];
@@ -142,7 +173,7 @@ export function App() {
       { id: "findings", label: "Findings", icon: FileSearch, count: report.findings.length },
       { id: "personal-data-map", label: "Personal Data Map", icon: MapIcon, count: report.personal_data_map.length },
       { id: "consent", label: "Consent Assessment", icon: ListChecks },
-      { id: "legal", label: "Legal view", icon: Gavel },
+      { id: "legal", label: "Legal View", icon: Gavel },
     ];
     if (mode !== "recorded") list.push({ id: "live-probes", label: "Live Probes", icon: FlaskConical });
     if (mode !== "recorded" && report.findings.some((f) => f.fix_patch)) list.push({ id: "fix-patches", label: "Fix Patches", icon: Wrench });
@@ -184,13 +215,12 @@ export function App() {
             </button>
             <button
               type="button"
-              className="btn btn-icon"
-              aria-pressed={large}
-              aria-label="Large type for presenting"
-              title="Large type for presenting"
-              onClick={() => setLarge(!large)}
+              className="btn"
+              aria-pressed={compact}
+              title="Smaller type for laptop screens"
+              onClick={() => setCompact(!compact)}
             >
-              <Type size={16} aria-hidden="true" />
+              Compact
             </button>
           </div>
           <p className="foot-note">Evidence is masked before it is shown. Recorded scans never call the scanner.</p>
@@ -199,6 +229,14 @@ export function App() {
 
       <div className="main">
         <header className="topbar">
+          <a
+            className="btn btn-sm"
+            href="/"
+            onClick={(e) => { e.preventDefault(); navigate("/"); }}
+          >
+            <ArrowLeft size={14} aria-hidden="true" />
+            Home
+          </a>
           <div className="switcher">
             <span className="switcher-label" id="recorded-label">Recorded scans</span>
             <div className="tabs" role="group" aria-labelledby="recorded-label">
@@ -299,7 +337,7 @@ export function App() {
                     <li key={key} className={ev ? "done" : active ? "active" : "pending"} data-stage={key}>
                       <span className="stage-icon" aria-hidden="true">{ev ? <Check size={12} strokeWidth={3} /> : null}</span>
                       {label}
-                      <span className="stage-ms">{ev ? `${ev.elapsed_ms} ms` : active ? "running" : "waiting"}</span>
+                      <span className="stage-ms">{ev ? `${ev.elapsed_ms}\u00a0ms` : active ? "running" : "waiting"}</span>
                     </li>
                   );
                 })}

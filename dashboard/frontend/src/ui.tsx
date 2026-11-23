@@ -36,14 +36,14 @@ export function orderRecordings(names: string[]): string[] {
 }
 
 export function formatDate(iso: string | null | undefined): string {
-  if (!iso) return "not stated";
+  if (!iso) return "not\u00a0stated";
   const d = new Date(`${iso}T00:00:00Z`);
   if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }).replace(/ /g, "\u00a0");
 }
 
 export function formatCrore(n: number): string {
-  return `₹${n.toLocaleString("en-IN")} crore`;
+  return `₹${n.toLocaleString("en-IN")}\u00a0crore`;
 }
 
 export function Panel(props: { id?: string; label: string; testId?: string; title: ReactNode; note?: ReactNode; children: ReactNode; actions?: ReactNode }) {
