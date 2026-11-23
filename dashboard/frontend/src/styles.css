@@ -281,7 +281,7 @@ input[type="checkbox"] { width: 1rem; height: 1rem; min-height: 0; accent-color:
 .sev-key .k { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8125rem; color: var(--ink-2); text-transform: capitalize; }
 .sev-key .v { font-size: 1.5rem; font-weight: 620; line-height: 1.15; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .cat-row { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) 2rem; align-items: center; gap: 0.75rem; padding: 0.3rem 0; font-size: 0.875rem; }
-.cat-label { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cat-label { color: var(--ink-2); min-width: 0; overflow-wrap: anywhere; line-height: 1.25; }
 .cat-bar { display: flex; gap: 2px; height: 0.65rem; }
 .cat-bar span { border-radius: 2px; }
 .cat-bar span:last-child { border-radius: 2px 4px 4px 2px; }
@@ -349,10 +349,11 @@ input[type="checkbox"] { width: 1rem; height: 1rem; min-height: 0; accent-color:
 .evidence .ln { flex: none; width: 3.5rem; padding-right: 0.9rem; text-align: right; color: var(--ink-3); user-select: none; }
 .plain-pre { margin: 0; padding: 0.7rem 0.85rem; overflow-x: auto; background: var(--code-bg); border: 1px solid var(--line); border-radius: var(--radius-sm); white-space: pre-wrap; word-break: break-word; }
 
-.flow { display: flex; flex-wrap: wrap; gap: 0.5rem 0; align-items: stretch; }
-.flow li { position: relative; display: flex; flex-direction: column; gap: 0.15rem; padding: 0.5rem 0.75rem; min-width: 9rem; max-width: 16rem; border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--surface); margin-right: 1.5rem; }
-.flow li:not(:last-child)::after { content: ""; position: absolute; left: 100%; top: 50%; width: 1.5rem; height: 1px; background: var(--line-strong); }
-.flow li:not(:last-child)::before { content: ""; position: absolute; left: calc(100% + 1.5rem - 5px); top: calc(50% - 3px); width: 6px; height: 6px; border-top: 1px solid var(--line-strong); border-right: 1px solid var(--line-strong); transform: rotate(45deg); }
+.flow { display: flex; flex-direction: column; gap: 0; margin: 0; padding: 0; list-style: none; }
+.flow li { position: relative; display: flex; flex-direction: column; gap: 0.15rem; padding: 0.5rem 0.75rem; max-width: 32rem; border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--surface); margin-bottom: 1rem; }
+.flow li:last-child { margin-bottom: 0; }
+.flow li:not(:last-child)::after { content: ""; position: absolute; left: 1.35rem; top: 100%; width: 1px; height: 1rem; background: var(--line-strong); }
+.flow li:not(:last-child)::before { content: ""; position: absolute; left: calc(1.35rem - 2.5px); top: calc(100% + 1rem - 6px); width: 6px; height: 6px; border-bottom: 1px solid var(--line-strong); border-right: 1px solid var(--line-strong); transform: rotate(45deg); }
 .flow .op { display: flex; align-items: center; gap: 0.45rem; font-weight: 600; font-size: 0.875rem; }
 .flow .idx { display: grid; place-items: center; width: 1.2rem; height: 1.2rem; border-radius: 50%; background: var(--accent-bg); color: var(--accent-ink); font-size: 0.6875rem; font-weight: 650; }
 .anchor { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-3); overflow-wrap: anywhere; }
@@ -385,7 +386,7 @@ td .mono { color: var(--ink); }
 .mx-r { padding: 0.2rem 0.5rem 0.2rem 0; color: var(--ink-2); display: flex; align-items: center; }
 .mx-c { display: grid; place-items: center; min-height: 2rem; border-radius: 4px; border: 1px solid transparent; background: var(--surface-2); color: var(--ink-3); font-variant-numeric: tabular-nums; cursor: pointer; transition: background 0.12s var(--ease), border-color 0.12s var(--ease); }
 .mx-c:hover:not(:disabled) { border-color: var(--line-strong); }
-.mx-c:disabled { cursor: default; background: transparent; color: var(--line-strong); }
+.mx-c:disabled { cursor: default; background: transparent; color: var(--ink-3); opacity: 0.6; }
 .mx-c.has { background: var(--accent-bg); color: var(--accent-ink); font-weight: 600; }
 .mx-c.hit { background: var(--sev-high-bg); color: var(--sev-high-ink); font-weight: 650; }
 .mx-c[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-bg); }

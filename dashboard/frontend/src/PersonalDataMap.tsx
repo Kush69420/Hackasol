@@ -131,7 +131,7 @@ function MatrixRow(props: {
             className={`mx-c${c ? (c.hit ? " hit" : " has") : ""}`}
             onClick={() => props.onCell(on ? null : { category: props.category, op })}
           >
-            {c ? c.n : ""}
+            {c ? c.n : <span aria-hidden="true">–</span>}
           </button>
         );
       })}
