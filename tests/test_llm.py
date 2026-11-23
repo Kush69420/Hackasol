@@ -205,3 +205,13 @@ def test_changing_provisions_changes_cache_key(tmp_path):
     first = session.ask('triage', 'Evidence', {'provisions': [{'id': PROVISION}]})
     second = session.ask('triage', 'Evidence', {'provisions': [{'id': 'CWE-639'}]})
     assert first['cache_key'] != second['cache_key']
+
+
+def test_omp_json_inside_markdown_fence_is_assessed(tmp_path):
+    value = {'data_category': 'Contact', 'reason': 'An email address column.'}
+    fenced = '```json\n' + json.dumps(value) + '\n```\n'
+    session = LLMSession(tmp_path, Omp('test', runner=lambda args, **_: subprocess.CompletedProcess(args, 0, fenced, '')))
+    session.mode = 'live'
+    result = session.ask('classification', 'column email')
+    assert result['status'] == 'assessed'
+    assert result['value'] == value

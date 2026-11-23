@@ -1,6 +1,7 @@
 """Provider adapters. omp runs `omp -p --no-session --no-tools --model MODEL PROMPT`."""
 import os
 import shutil
+import re
 import subprocess
 from typing import Protocol
 from urllib.parse import quote
@@ -100,7 +101,9 @@ class Omp:
             return False, 'omp is unreachable or its model is unavailable'
     def complete(self, system, user):
         result = self.runner(['omp', '-p', '--no-session', '--no-tools', '--no-extensions', '--no-skills', '--no-rules', '--no-context-files', '--model', self.model, '--system-prompt', system, user], capture_output=True, text=True, timeout=120, check=True)
-        return result.stdout
+        # omp prints Markdown; a model may wrap its JSON object in one fenced block.
+        fenced = re.fullmatch(r'\s*```(?:json)?\s*\n(.*?)\n\s*```\s*', result.stdout, re.S)
+        return fenced.group(1) if fenced else result.stdout
 
 
 PROVIDERS = {cls.name: cls for cls in (Anthropic, OpenAI, Gemini, Ollama, Omp)}
