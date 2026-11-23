@@ -21,33 +21,33 @@ ROLE = 'classification'
 MODEL = 'anthropic/claude-opus-5-5'
 
 
-def label(rows):
+def label(rows, *, role=ROLE):
     provider = Omp(MODEL)
-    cache = Cache(CACHE / 'opus-classification')
-    version = PROMPT_VERSION[ROLE]
+    cache = Cache(CACHE / f'opus-{role}')
+    version = PROMPT_VERSION[role]
     work = {}
     keys = []
     for row in rows:
         payload = json.loads(row['user'])
         key = cache_key(payload['evidence'], version, MODEL, payload['context'])
-        work.setdefault(key, row)
+        work.setdefault(key, (row, payload))
         keys.append(key)
 
     def complete(item):
-        key, row = item
+        key, (row, payload) = item
+        context = payload['context']
         cached = cache.get(key)
         if (isinstance(cached, dict) and cached.get('model') == MODEL
                 and cached.get('provider') == provider.name
-                and cached.get('prompt_version') == version and valid_value(ROLE, cached.get('value'))):
+                and cached.get('prompt_version') == version and valid_value(role, cached.get('value'), context)):
             return cached['value']
         try:
             value = _mask_object(json.loads(provider.complete(row['system'], row['user'])))
         except (OSError, ValueError, subprocess.SubprocessError):
             # Provider errors may contain request material. Log counts only.
             return None
-        if not valid_value(ROLE, value):
+        if not valid_value(role, value, context):
             return None
-        payload = json.loads(row['user'])
         cache.put(key, {'input': payload['evidence'], 'context': payload['context'], 'value': value,
                         'prompt_version': version, 'provider': provider.name, 'model': MODEL})
         return value
@@ -82,26 +82,31 @@ def triage_gold():
                        'excluded-not-determinable': len(scored['excluded_predictions'])}}
 
 
+def pinned_root(name, source):
+    root = ROOT / 'targets/training' / name
+    if report_path(root.relative_to(ROOT).as_posix()):
+        raise ValueError(f'Report Target cannot be a training source: {name}')
+
+    def git(*args):
+        return subprocess.check_output(['git', '-C', str(root), *args], text=True).strip()
+
+    if not root.exists():
+        root.mkdir(parents=True)
+        git('init', '--quiet')
+        git('remote', 'add', 'origin', source['url'])
+        git('fetch', '--quiet', '--depth', '1', 'origin', source['commit'])
+        git('checkout', '--quiet', '--detach', source['commit'])
+
+    if (git('remote', 'get-url', 'origin') != source['url']
+            or git('rev-parse', 'HEAD') != source['commit'] or git('status', '--porcelain')):
+        raise ValueError(f'Training source must be clean and match the pinned origin and revision: {name}')
+    return root
+
+
 def collect_sources(sources):
     def collect(item):
         name, source = item
-        root = ROOT / 'targets/training' / name
-        if report_path(root.relative_to(ROOT).as_posix()):
-            raise ValueError(f'Report Target cannot be a training source: {name}')
-
-        def git(*args):
-            return subprocess.check_output(['git', '-C', str(root), *args], text=True).strip()
-
-        if not root.exists():
-            root.mkdir(parents=True)
-            git('init', '--quiet')
-            git('remote', 'add', 'origin', source['url'])
-            git('fetch', '--quiet', '--depth', '1', 'origin', source['commit'])
-            git('checkout', '--quiet', '--detach', source['commit'])
-
-        if (git('remote', 'get-url', 'origin') != source['url']
-                or git('rev-parse', 'HEAD') != source['commit'] or git('status', '--porcelain')):
-            raise ValueError(f'Training source must be clean and match the pinned origin and revision: {name}')
+        root = pinned_root(name, source)
         rows = capture(root, classification_only=True, deterministic=True)
         write_jsonl(DATA / 'inputs' / f'{name}.jsonl', rows)
         print(f'{name}: {len(rows)} captured classification inputs', flush=True)

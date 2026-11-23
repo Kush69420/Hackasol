@@ -35,9 +35,15 @@ def read_jsonl(path):
 
 
 class RecordingSession(LLMSession):
-    def __init__(self, source):
+    def __init__(self, source, *, classification_teacher=None, blocked_classification_hashes=frozenset()):
         # The base session only needs provider identity for its scan summary.
         super().__init__(CACHE, SimpleNamespace(name='omp', model='capture-only'))
+        self.classification_replay = (
+            LLMSession(CACHE / 'opus-classification',
+                       SimpleNamespace(name='omp', model=classification_teacher))
+            if classification_teacher else None
+        )
+        self.blocked_classification_hashes = blocked_classification_hashes
         self.reason = 'Provider-free training input capture'
         self.source = source
         self.rows = {}
@@ -61,6 +67,12 @@ class RecordingSession(LLMSession):
                     'reason': mask_for_egress(f"The Auditor's deterministic classification uses: {signals}."),
                 }
         self.rows[key] = row
+        if (role == 'classification' and self.classification_replay is not None
+                and row['snippet_sha256'] not in self.blocked_classification_hashes):
+            verdict = self.classification_replay.ask(role, snippet, context)
+            if verdict['status'] == 'assessed':
+                self.cache_hits += 1
+                return verdict
         self.cache_misses += 1
         self.not_assessed += 1
         return {'status': 'not assessed', 'cache_key': key}
@@ -88,6 +100,8 @@ class RecordingSession(LLMSession):
                 row = self.rows[verdict['cache_key']]
                 row.update(element_or_finding_id=finding['id'],
                            source=self.source + '/' + evidence['file'], source_line=evidence['start_line'])
+                if row['role'] == 'triage':
+                    row['rules_fired'] = finding['rules_fired']
         verdict = report['consent_assessment']['llm_reasoning']
         if verdict['cache_key'] in self.rows:
             self.rows[verdict['cache_key']]['element_or_finding_id'] = 'consent-assessment'
@@ -95,13 +109,17 @@ class RecordingSession(LLMSession):
             raise RuntimeError('An LLM prompt could not be joined to its Report or Personal Data Element')
 
 
-def capture(source, *, classification_only=False, deterministic=False):
+def capture(source, *, classification_only=False, deterministic=False, classification_teacher=None,
+            blocked_classification_hashes=frozenset()):
     path = Path(source)
     # abspath, not resolve(): the worktree's targets/ is intentionally a symlink.
     canonical = Path(abspath(path)).relative_to(ROOT)
-    if len(canonical.parts) < 2 or canonical.parts[0] != 'targets':
-        raise ValueError('Capture paths must be relative to the repository targets/ directory')
-    session = RecordingSession(canonical.as_posix())
+    if not (len(canonical.parts) >= 2 and canonical.parts[0] == 'targets'
+            or len(canonical.parts) == 3 and canonical.parts[0] == 'corpus'
+            and canonical.parts[2] in {'positive', 'negative'}):
+        raise ValueError('Capture paths must name a Target Application or a Labelled Corpus fixture')
+    session = RecordingSession(canonical.as_posix(), classification_teacher=classification_teacher,
+                               blocked_classification_hashes=blocked_classification_hashes)
     if classification_only:
         inventory = scan.run_inventory(str(path))['inventory']
         session.record_elements(extract_elements(inventory), deterministic=deterministic)
