@@ -98,7 +98,48 @@
     "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
     "observations": { "type": "array", "items": { "$ref": "#/$defs/observation" } },
     "coverage_matrix": { "type": "array", "description": "Coverage of statutory Provisions and unresolved Gates", "items": { "type": "object" } },
-    "consent_assessment": { "type": ["object", "null"], "description": "Reserved for P2.1; null until then" },
+    "consent_assessment": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["criteria", "graph", "llm_reasoning"],
+          "properties": {
+            "criteria": {
+              "type": "array", "minItems": 7, "maxItems": 7,
+              "items": {
+                "type": "object", "additionalProperties": false,
+                "required": ["criterion", "applicability", "reason", "assessment", "linked_identifiers", "issue_types", "evidence", "step_counts"],
+                "properties": {
+                  "criterion": { "type": "string", "minLength": 1 },
+                  "applicability": { "enum": ["applicable", "not applicable", "not determinable"] },
+                  "reason": { "type": "string", "minLength": 1 },
+                  "assessment": { "type": "string", "minLength": 1 },
+                  "linked_identifiers": { "type": "array", "items": { "type": "string" } },
+                  "issue_types": { "type": "array", "items": { "$ref": "#/$defs/issueType" } },
+                  "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+                  "step_counts": {
+                    "oneOf": [
+                      { "type": "null" },
+                      { "type": "object", "additionalProperties": false,
+                        "required": ["grant", "withdrawal"],
+                        "properties": {
+                          "grant": { "type": "array", "items": { "type": ["integer", "null"], "minimum": 0 } },
+                          "withdrawal": { "type": "array", "items": { "type": ["integer", "null"], "minimum": 0 } }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "graph": { "type": "object" },
+            "llm_reasoning": { "$ref": "#/$defs/llmField" }
+          }
+        }
+      ]
+    },
     "accuracy": { "$ref": "#/$defs/accuracy" },
     "executive_summary": { "type": "object", "description": "Counts and Penalty Ceilings derived from Findings." }
   },
@@ -413,8 +454,42 @@
           ]
         },
         "llm_triage": { "$ref": "#/$defs/triageField" },
-        "live_probe": { "type": "null", "description": "Reserved for P2.3 (Confirmed / Refuted)" },
-        "fix_patch": { "type": "null", "description": "Reserved for P2.2" }
+        "live_probe": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["result", "method", "route", "reason", "request", "response"],
+              "properties": {
+                "result": { "enum": ["Confirmed", "Refuted", "inconclusive"] },
+                "method": { "type": "string" },
+                "route": { "type": "string" },
+                "reason": { "type": "string" },
+                "request": { "type": "string" },
+                "response": { "type": "string" },
+                "image_revision": { "type": "string" },
+                "image_digest": { "type": "string" }
+              }
+            }
+          ]
+        },
+        "fix_patch": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status", "diff", "reason"],
+              "properties": {
+                "status": { "enum": ["generated", "accepted", "rejected"] },
+                "diff": { "type": "string" },
+                "reason": { "type": "string" },
+                "provenance": { "enum": ["generated", "authored"] }
+              }
+            }
+          ]
+        }
       },
       "allOf": [
         {

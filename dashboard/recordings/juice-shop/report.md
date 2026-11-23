@@ -2,20 +2,20 @@
 
 ## Applicability Assumptions
 
-- AA-1: The Act applies: the Target Application processes digital Personal Data in India, or offers goods or services to Data Principals in India. Provisions: DPDP-Act-3 — Section 3. Dependent Findings: SEC-07-2d4f025671b7, SEC-08-a535cd15b04b, SEC-01-d85a743d0415, SEC-04-bebc3e7f55ae, SEC-10-d70f56f17198, SEC-10-d0971bb44714, SEC-08-177006878772, TRF-02-56fc1119eb9b, SEC-02-03b1356ecc57, SEC-02-0f4631e6a05d, SEC-02-b6efa0cd2309, SEC-02-e0994a7481e3, SEC-13-394d3dbca514, MON-01-8c5728dfea11, SEC-14-c5e9ac6a126d, RET-02-4696497b9137, RET-03-41bffe4101f9, RIG-01-a9383e4db278, RIG-02-f7117cbcde8b
+- AA-1: The Act applies: the Target Application processes digital Personal Data in India, or offers goods or services to Data Principals in India. Provisions: DPDP-Act-3 — Section 3. Dependent Findings: SEC-07-2d4f025671b7, SEC-08-a535cd15b04b, SEC-01-d85a743d0415, SEC-04-bebc3e7f55ae, SEC-10-d70f56f17198, SEC-10-d0971bb44714, SEC-08-177006878772, TRF-02-56fc1119eb9b, SEC-02-03b1356ecc57, SEC-02-0f4631e6a05d, SEC-02-b6efa0cd2309, SEC-02-e0994a7481e3, SEC-13-394d3dbca514, MON-01-8c5728dfea11, SEC-14-c5e9ac6a126d, RET-02-4696497b9137, RET-03-41bffe4101f9, RIG-01-a9383e4db278, RIG-02-f7117cbcde8b, SEC-08-a0e14c48e6ad
 
 - AA-2: The Data Fiduciary is not a Significant Data Fiduciary; its duties are shown as conditional. Provisions: DPDP-Act-10 — Section 10. Dependent Findings: TRF-02-56fc1119eb9b
 
 - AA-3: The Data Fiduciary is not a Third Schedule class; its duties are shown as conditional. Provisions: DPDP-Rule-8(1) — Rule 8(1), DPDP-Rules-Schedule-Third — Third Schedule. Dependent Findings: RET-03-41bffe4101f9
 
-- AA-4: Processing relies on consent unless the code shows a section 7 legitimate use, such as processing an order the Data Principal placed. Provisions: DPDP-Act-7 — Section 7. Dependent Findings: SEC-07-2d4f025671b7, SEC-08-a535cd15b04b, SEC-08-177006878772
+- AA-4: Processing relies on consent unless the code shows a section 7 legitimate use, such as processing an order the Data Principal placed. Provisions: DPDP-Act-7 — Section 7. Dependent Findings: SEC-07-2d4f025671b7, SEC-08-a535cd15b04b, SEC-08-177006878772, SEC-08-a0e14c48e6ad
 
 ## Executive summary
 
 | Severity | DPDP obligation | security dependent on Personal Data | Safeguard |
 | --- | --- | --- | --- |
 | critical | 0 | 0 | 0 |
-| high | 0 | 6 | 2 |
+| high | 0 | 7 | 2 |
 | medium | 1 | 6 | 0 |
 | low | 4 | 2 | 0 |
 
@@ -44,6 +44,7 @@ Penalty Ceilings: ₹250 crore, ₹50 crore; statutory maximum under the Schedul
 - RET-03-41bffe4101f9 — Enforceable From 2027-05-14
 - RIG-01-a9383e4db278 — Enforceable From 2027-05-14
 - RIG-02-f7117cbcde8b — Enforceable From 2027-05-14
+- SEC-08-a0e14c48e6ad — Enforceable From 2027-05-14
 
 ## Personal Data Map
 
@@ -82,14 +83,14 @@ Penalty Ceilings: ₹250 crore, ₹50 crore; statutory maximum under the Schedul
 | model:Address.city | Contact | Collect (frontend/src/app/address-create/address-create.component.html:71–71); Collect (frontend/src/app/address-create/address-create.component.ts:91–91); Collect (frontend/src/app/Services/address.service.ts:35–35); Collect (server.ts:540–546); Collect (server.ts:482–482); Store (models/address.ts:64–64); Expose (routes/address.ts:12–12); Expose (routes/address.ts:20–20); Collect (frontend/src/app/Services/address.service.ts:30–30); Collect (server.ts:480–480); Store (data/datacreator.ts:253–262) |
 | model:Address.state | Contact | Collect (frontend/src/app/address-create/address-create.component.html:79–79); Collect (frontend/src/app/address-create/address-create.component.ts:91–91); Collect (frontend/src/app/Services/address.service.ts:35–35); Collect (server.ts:540–546); Collect (server.ts:482–482); Store (models/address.ts:65–65); Expose (routes/address.ts:12–12); Expose (routes/address.ts:20–20); Collect (frontend/src/app/Services/address.service.ts:30–30); Collect (server.ts:480–480); Store (data/datacreator.ts:253–262); Store (frontend/src/app/web3-sandbox/web3-sandbox.component.ts:89–102) |
 | model:Address.country | Contact | Collect (frontend/src/app/address-create/address-create.component.html:22–22); Collect (frontend/src/app/address-create/address-create.component.ts:91–91); Collect (frontend/src/app/Services/address.service.ts:35–35); Collect (server.ts:540–546); Collect (server.ts:482–482); Store (models/address.ts:66–66); Expose (routes/address.ts:12–12); Expose (routes/address.ts:20–20); Collect (frontend/src/app/Services/address.service.ts:30–30); Collect (server.ts:480–480); Store (data/datacreator.ts:253–262) |
-| model:Card.fullName | Profile | Collect (frontend/src/app/payment-method/payment-method.component.html:53–53); Collect (frontend/src/app/payment-method/payment-method.component.ts:77–77); Collect (frontend/src/app/Services/payment.service.ts:30–30); Collect (server.ts:540–546); Collect (server.ts:470–470); Store (models/card.ts:37–37); Expose (routes/payment.ts:35–35); Expose (routes/payment.ts:61–61); Store (data/datacreator.ts:271–277) |
-| model:Card.cardNum | Financial | Collect (frontend/src/app/payment-method/payment-method.component.html:62–62); Collect (frontend/src/app/payment-method/payment-method.component.ts:78–78); Collect (frontend/src/app/Services/payment.service.ts:30–30); Collect (server.ts:540–546); Collect (server.ts:470–470); Store (models/card.ts:38–45); Expose (routes/payment.ts:35–35); Expose (routes/payment.ts:61–61); Store (data/datacreator.ts:271–277) |
-| model:Card.expMonth | Financial | Collect (frontend/src/app/payment-method/payment-method.component.html:77–77); Collect (frontend/src/app/payment-method/payment-method.component.ts:79–79); Collect (frontend/src/app/Services/payment.service.ts:30–30); Collect (server.ts:540–546); Collect (server.ts:470–470); Store (models/card.ts:46–53); Expose (routes/payment.ts:35–35); Expose (routes/payment.ts:61–61); Store (data/datacreator.ts:271–277) |
-| model:Card.expYear | Financial | Collect (frontend/src/app/payment-method/payment-method.component.html:90–90); Collect (frontend/src/app/payment-method/payment-method.component.ts:80–80); Collect (frontend/src/app/Services/payment.service.ts:30–30); Collect (server.ts:540–546); Collect (server.ts:470–470); Store (models/card.ts:54–61); Expose (routes/payment.ts:35–35); Expose (routes/payment.ts:61–61); Store (data/datacreator.ts:271–277) |
+| model:Card.fullName | Profile | Collect (frontend/src/app/payment-method/payment-method.component.html:53–53); Collect (frontend/src/app/payment-method/payment-method.component.ts:77–77); Collect (frontend/src/app/Services/payment.service.ts:30–30); Collect (server.ts:540–546); Collect (server.ts:470–470); Store (models/card.ts:37–37); Expose (routes/payment.ts:26–26); Expose (routes/payment.ts:53–53); Store (data/datacreator.ts:271–277) |
+| model:Card.cardNum | Financial | Collect (frontend/src/app/payment-method/payment-method.component.html:62–62); Collect (frontend/src/app/payment-method/payment-method.component.ts:78–78); Collect (frontend/src/app/Services/payment.service.ts:30–30); Collect (server.ts:540–546); Collect (server.ts:470–470); Store (models/card.ts:38–45); Expose (routes/payment.ts:32–32); Expose (routes/payment.ts:58–58); Store (data/datacreator.ts:271–277) |
+| model:Card.expMonth | Financial | Collect (frontend/src/app/payment-method/payment-method.component.html:77–77); Collect (frontend/src/app/payment-method/payment-method.component.ts:79–79); Collect (frontend/src/app/Services/payment.service.ts:30–30); Collect (server.ts:540–546); Collect (server.ts:470–470); Store (models/card.ts:46–53); Expose (routes/payment.ts:28–28); Expose (routes/payment.ts:54–54); Store (data/datacreator.ts:271–277) |
+| model:Card.expYear | Financial | Collect (frontend/src/app/payment-method/payment-method.component.html:90–90); Collect (frontend/src/app/payment-method/payment-method.component.ts:80–80); Collect (frontend/src/app/Services/payment.service.ts:30–30); Collect (server.ts:540–546); Collect (server.ts:470–470); Store (models/card.ts:54–61); Expose (routes/payment.ts:29–29); Expose (routes/payment.ts:55–55); Store (data/datacreator.ts:271–277) |
 | model:Recycle.AddressId | Contact | Store (data/datacreator.ts:681–687) |
-| model:SecurityAnswer.answer | Authentication Secret | Collect (frontend/src/app/register/register.component.html:93–95); Collect (frontend/src/app/register/register.component.ts:109–109); Collect (frontend/src/app/Services/security-answer.service.ts:21–21); Collect (server.ts:540–546); Store (models/securityAnswer.ts:42–47); Expose (routes/securityQuestion.ts:23–23); Expose (server.ts:540–546); Expose (server.ts:625–631); Store (data/datacreator.ts:707–707); Log (data/datacreator.ts:708–708) |
+| model:SecurityAnswer.answer | Authentication Secret | Collect (frontend/src/app/register/register.component.html:93–95); Collect (frontend/src/app/register/register.component.ts:109–109); Collect (frontend/src/app/Services/security-answer.service.ts:21–21); Collect (server.ts:540–546); Store (models/securityAnswer.ts:42–47); Expose (server.ts:625–631); Store (data/datacreator.ts:707–707); Log (data/datacreator.ts:708–708) |
 | model:User.username | Profile | Store (data/datacreator.ts:192–201); Store (routes/updateUserProfile.ts:38–38) |
-| model:User.email | Contact | Collect (frontend/src/app/register/register.component.html:16–17); Collect (frontend/src/app/register/register.component.ts:98–98); Collect (frontend/src/app/Services/user.service.ts:38–38); Collect (server.ts:540–546); Collect (server.ts:440–451); Collect (server.ts:452–452); Collect (server.ts:453–453); Collect (server.ts:454–454); Store (models/user.ts:56–69); Expose (routes/changePassword.ts:56–56); Expose (routes/saveLoginIp.ts:33–33); Expose (server.ts:540–546); Expose (server.ts:625–631); Store (data/datacreator.ts:192–201); Store (data/datacreator.ts:326–329) |
+| model:User.email | Contact | Collect (frontend/src/app/register/register.component.html:16–17); Collect (frontend/src/app/register/register.component.ts:98–98); Collect (frontend/src/app/Services/user.service.ts:38–38); Collect (server.ts:540–546); Collect (server.ts:440–451); Collect (server.ts:452–452); Collect (server.ts:453–453); Collect (server.ts:454–454); Store (models/user.ts:56–69); Expose (routes/changePassword.ts:56–56); Expose (routes/saveLoginIp.ts:33–33); Expose (server.ts:625–631); Store (data/datacreator.ts:192–201); Store (data/datacreator.ts:326–329) |
 | model:User.password | Authentication Secret | Collect (frontend/src/app/register/register.component.html:28–29); Collect (frontend/src/app/register/register.component.ts:99–99); Collect (frontend/src/app/Services/user.service.ts:38–38); Collect (server.ts:540–546); Collect (server.ts:440–451); Collect (server.ts:452–452); Collect (server.ts:453–453); Collect (server.ts:454–454); Store (models/user.ts:70–75); Expose (routes/changePassword.ts:56–56); Expose (routes/saveLoginIp.ts:33–33); Store (data/datacreator.ts:192–201); Store (data/datacreator.ts:326–329); Expose (routes/authenticatedUsers.ts:14–31); Store (routes/changePassword.ts:51–51); Store (routes/resetPassword.ts:44–44) |
 | model:User.deluxeToken | Authentication Secret | Store (data/datacreator.ts:192–201); Store (routes/deluxe.ts:43–43) |
 | model:User.lastLoginIp | Profile | Store (data/datacreator.ts:192–201); Store (routes/saveLoginIp.ts:32–32) |
@@ -196,7 +197,7 @@ models/user.ts:70–75
 ```
       «SECRET»
         type: DataTypes.STRING,
-        set («SECRET») {
+        set (clearTextPassword: string) {
           this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
         }
       }, // vuln-code-snippet end weakPasswordChallenge
@@ -236,6 +237,13 @@ models/user.ts:109–112
         type: DataTypes.STRING,
         defaultValue: ''
       },
+```
+
+Live Probe: Confirmed — GET /rest/memories; The Auditor-created memory was returned without authentication
+
+```
+Request: Origin: [synthetic origin]; setup: POST /api/Users (finale-generated; server.ts:540-543)
+Response: HTTP 200; Auditor-created record present; values: [masked]; cross-account assertion: Confirmed
 ```
 
 Data Flow:
@@ -347,8 +355,8 @@ server.ts:440–451
     if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {
       if (req.body.email.length !== 0 && req.body.password.length !== 0) {
         req.body.email = req.body.email.trim()
-        req.body.«SECRET»)
-        req.body.«SECRET»)
+        req.body.password = req.body.password.trim()
+        req.body.passwordRepeat = req.body.passwordRepeat.trim()
       } else {
         res.status(400).send(res.__('Invalid email/password cannot be empty'))
       }
@@ -385,6 +393,13 @@ server.ts:540–546
       pagination: false,
       include
     })
+```
+
+Live Probe: Confirmed — GET /rest/memories; Wildcard CORS on the Personal Data route
+
+```
+Request: Origin: [synthetic origin]
+Response: HTTP 200; Access-Control-Allow-Origin: *; body: [masked]
 ```
 
 Data Flow:
@@ -454,7 +469,7 @@ models/user.ts:70–75
 ```
       «SECRET»
         type: DataTypes.STRING,
-        set («SECRET») {
+        set (clearTextPassword: string) {
           this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
         }
       }, // vuln-code-snippet end weakPasswordChallenge
@@ -488,7 +503,7 @@ Data Flow:
 
 Recommended fix: Store Authentication Secrets with a current, salted, deliberately slow password hashing function, never with a plain or fast unsalted digest. Re-hash each existing record with the new function the next time the Data Principal authenticates. Rule 6(1)(a) requires protection of the Personal Data these secrets guard, and a weak hash removes that protection once the store is read. Tailored: not assessed
 
-LLM triage: not assessed; cache key: 0e596b70764e8e65ac826812bc61a70c7fbe697bfd7f99aa54ef0d8d9a1d248f
+LLM triage: not assessed; cache key: b0f84242fcd9123e2247cfb5c5daf48c29514c2d92adf609c43389ec01f8be7c
 
 ### SEC-05-c695dda06010 — Hard-coded secret or committed .env protecting Personal Data
 
@@ -722,8 +737,8 @@ server.ts:440–451
     if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {
       if (req.body.email.length !== 0 && req.body.password.length !== 0) {
         req.body.email = req.body.email.trim()
-        req.body.«SECRET»)
-        req.body.«SECRET»)
+        req.body.password = req.body.password.trim()
+        req.body.passwordRepeat = req.body.passwordRepeat.trim()
       } else {
         res.status(400).send(res.__('Invalid email/password cannot be empty'))
       }
@@ -840,7 +855,6 @@ Data Flow:
 - Store — models/user.ts:56–69; model; ts-join; inferred; finale generated model write
 - Expose — routes/changePassword.ts:56–56; response; ts-join; evidenced
 - Expose — routes/saveLoginIp.ts:33–33; response; ts-join; evidenced
-- Expose — server.ts:540–546; response; ts-join; inferred; finale generated read response
 - Expose — server.ts:625–631; response; ts-join; inferred; finale generated read response wrapper
 - Store — data/datacreator.ts:192–201; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
 - Store — data/datacreator.ts:326–329; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
@@ -1045,8 +1059,8 @@ Data Flow:
 - Collect — server.ts:470–470; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Cards
 - Collect — server.ts:540–546; handler; ts-join; inferred; finale generated handler
 - Store — models/card.ts:38–45; model; ts-join; inferred; finale generated model write
-- Expose — routes/payment.ts:35–35; response; ts-join; evidenced; masked
-- Expose — routes/payment.ts:61–61; response; ts-join; evidenced; masked
+- Expose — routes/payment.ts:32–32; response; ts-join; evidenced; masked
+- Expose — routes/payment.ts:58–58; response; ts-join; evidenced; masked
 - Store — data/datacreator.ts:271–277; model; semgrep:op-store-sequelize-create; evidenced; cardNum referenced in $VAR
 
 Recommended fix: Protect each Tier A and Tier B Personal Data Element at field or column level before it is stored, with keys held outside the data store, so that a database dump or a restored backup does not reveal the values. Disk or volume encryption protects only the storage medium, so it lowers severity without clearing the Finding. Until DPDP §44(2) omits IT Act §43A, that section's reasonable-security duty applies alongside Rule 6(1)(a). Tailored: not assessed
@@ -1118,8 +1132,6 @@ Data Flow:
 - Collect — server.ts:540–546; route; ts-join; inferred; POST /api/SecurityAnswers
 - Collect — server.ts:540–546; handler; ts-join; inferred; finale generated handler
 - Store — models/securityAnswer.ts:42–47; model; ts-join; inferred; finale generated model write
-- Expose — routes/securityQuestion.ts:23–23; response; ts-join; evidenced
-- Expose — server.ts:540–546; response; ts-join; inferred; finale generated read response
 - Expose — server.ts:625–631; response; ts-join; inferred; finale generated read response wrapper
 - Store — data/datacreator.ts:707–707; model; semgrep:op-store-sequelize-create; evidenced; answer referenced in $VAR
 - Log — data/datacreator.ts:708–708; log; semgrep:op-log-logger; evidenced; answer referenced in $VAR
@@ -1341,6 +1353,13 @@ router.post('/', (req: Request<Record<string, unknown>, Record<string, unknown>,
 …
 ```
 
+Live Probe: Confirmed — POST /dataerasure; The Auditor-created account remained readable after its erasure request
+
+```
+Request: Cookie and account values: [masked]
+Response: HTTP 200; subsequent account authentication succeeded; values: [masked]
+```
+
 Data Flow:
 
 - Collect — frontend/src/app/register/register.component.html:16–17; form; ts-join; evidenced
@@ -1355,7 +1374,6 @@ Data Flow:
 - Store — models/user.ts:56–69; model; ts-join; inferred; finale generated model write
 - Expose — routes/changePassword.ts:56–56; response; ts-join; evidenced
 - Expose — routes/saveLoginIp.ts:33–33; response; ts-join; evidenced
-- Expose — server.ts:540–546; response; ts-join; inferred; finale generated read response
 - Expose — server.ts:625–631; response; ts-join; inferred; finale generated read response wrapper
 - Store — data/datacreator.ts:192–201; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
 - Store — data/datacreator.ts:326–329; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
@@ -1412,7 +1430,6 @@ Data Flow:
 - Store — models/user.ts:56–69; model; ts-join; inferred; finale generated model write
 - Expose — routes/changePassword.ts:56–56; response; ts-join; evidenced
 - Expose — routes/saveLoginIp.ts:33–33; response; ts-join; evidenced
-- Expose — server.ts:540–546; response; ts-join; inferred; finale generated read response
 - Expose — server.ts:625–631; response; ts-join; inferred; finale generated read response wrapper
 - Store — data/datacreator.ts:192–201; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
 - Store — data/datacreator.ts:326–329; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
@@ -1530,7 +1547,7 @@ models/user.ts:70–75
 ```
       «SECRET»
         type: DataTypes.STRING,
-        set («SECRET») {
+        set (clearTextPassword: string) {
           this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
         }
       }, // vuln-code-snippet end weakPasswordChallenge
@@ -1616,7 +1633,6 @@ Data Flow:
 - Store — models/user.ts:56–69; model; ts-join; inferred; finale generated model write
 - Expose — routes/changePassword.ts:56–56; response; ts-join; evidenced
 - Expose — routes/saveLoginIp.ts:33–33; response; ts-join; evidenced
-- Expose — server.ts:540–546; response; ts-join; inferred; finale generated read response
 - Expose — server.ts:625–631; response; ts-join; inferred; finale generated read response wrapper
 - Store — data/datacreator.ts:192–201; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
 - Store — data/datacreator.ts:326–329; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
@@ -1747,7 +1763,6 @@ Data Flow:
 - Store — models/user.ts:56–69; model; ts-join; inferred; finale generated model write
 - Expose — routes/changePassword.ts:56–56; response; ts-join; evidenced
 - Expose — routes/saveLoginIp.ts:33–33; response; ts-join; evidenced
-- Expose — server.ts:540–546; response; ts-join; inferred; finale generated read response
 - Expose — server.ts:625–631; response; ts-join; inferred; finale generated read response wrapper
 - Store — data/datacreator.ts:192–201; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
 - Store — data/datacreator.ts:326–329; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
@@ -1756,9 +1771,346 @@ Recommended fix: Give each Data Principal a route to correct, complete or update
 
 LLM triage: not assessed; cache key: 20bbfd5b9f35a810b4b87e92748ecf598a6206c3900026c4f1d72d382e8fd193
 
+### SEC-08-a0e14c48e6ad — Over-exposed responses (whole model or nested records serialised)
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:670; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:670–670
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+
+Status: open.
+
+Evidence:
+
+routes/memory.ts:24–24
+
+```
+    const memories = await MemoryModel.findAll({ include: [UserModel] })
+```
+
+server.ts:670–670
+
+```
+  app.get('/rest/memories', utils.asyncHandler(getMemories()))
+```
+
+models/user.ts:44–55
+
+```
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+        set (username: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            username = security.sanitizeLegacy(username)
+          } else {
+            username = security.sanitizeSecure(username)
+          }
+          this.setDataValue('username', username)
+        }
+      },
+```
+
+models/user.ts:56–69
+
+```
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
+```
+
+models/user.ts:70–75
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        set (clearTextPassword: string) {
+          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
+        }
+      }, // vuln-code-snippet end weakPasswordChallenge
+```
+
+models/user.ts:97–100
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+models/user.ts:101–104
+
+```
+      lastLoginIp: {
+        type: DataTypes.STRING,
+        defaultValue: '0.0.0.0'
+      },
+```
+
+models/user.ts:105–108
+
+```
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue:«SECRET».svg'
+      },
+```
+
+models/user.ts:109–112
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+Live Probe: Confirmed — GET /rest/memories; Nested account Personal Data was returned with the Auditor-created memory
+
+```
+Request: Origin: [synthetic origin]; setup: POST /api/Users (finale-generated; server.ts:540-543)
+Response: HTTP 200; nested account email present; values: [masked]
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 54afb5f26ae0e3729671826a421ae52a73b1d2cb986a011a302aabc55cd3d423
+
 ### Observations
 
 No Observations.
+
+## Consent Assessment
+
+### recorded
+
+Applicability: not applicable — The static inventory identifies a banner but no consent grant or Consent Record. Assessment: Not met by the identified banner: no Consent Record was established. A dismiss action is not a consent grant; no grant was established either.
+
+Issue Types: CON-06
+
+Linked identifiers: none
+
+frontend/src/index.html:19–19
+
+```
+      window.cookieconsent.initialise({
+```
+
+### specific
+
+Applicability: not determinable — No controls established by the static inventory; applicability is not established. The identified banner is not a grant. Assessment: Not determinable: a consent control or multiple Purposes not established by the static inventory.
+
+Issue Types: CON-02, CON-03
+
+Linked identifiers: none
+
+frontend/src/index.html:19–19
+
+```
+      window.cookieconsent.initialise({
+```
+
+### enforced server-side
+
+Applicability: not determinable — No purposes established by the static inventory; applicability is not established. The identified banner is not a grant. Assessment: Not determinable: a Purpose linked to a Processing Operation and its lawful basis not established by the static inventory.
+
+Issue Types: CON-01
+
+Linked identifiers: none
+
+frontend/src/index.html:19–19
+
+```
+      window.cookieconsent.initialise({
+```
+
+### withdrawable with comparable ease
+
+Applicability: not applicable — The static inventory identifies no consent grant; this is limited to the inspected inventory. Assessment: Not assessed; an inapplicable Gate is not a compliance conclusion.
+
+Issue Types: CON-04
+
+Linked identifiers: none
+
+Static step counts: {   "grant": [],   "withdrawal": [] }
+
+frontend/src/index.html:19–19
+
+```
+      window.cookieconsent.initialise({
+```
+
+### propagated to Data Processors
+
+Applicability: not applicable — The static inventory identifies no Data Processor receiving Personal Data; this is limited to the inspected inventory. Assessment: Not assessed; an inapplicable Gate is not a compliance conclusion.
+
+Issue Types: CON-05
+
+Linked identifiers: none
+
+frontend/src/index.html:19–19
+
+```
+      window.cookieconsent.initialise({
+```
+
+### preceded by notice
+
+Applicability: not determinable — No controls established by the static inventory; applicability is not established. The identified banner is not a grant. Assessment: Not determinable: a consent request linked to notice contents and language options not established by the static inventory.
+
+Issue Types: CON-07
+
+Linked identifiers: notice:frontend/src/app/privacy-policy/privacy-policy.component.html:18, notice:frontend/src/app/privacy-policy/privacy-policy.component.html:24, notice:frontend/src/app/privacy-policy/privacy-policy.component.html:98, notice:frontend/src/app/privacy-policy/privacy-policy.component.html:100, notice:frontend/src/app/privacy-policy/privacy-policy.component.html:137, notice:frontend/src/app/privacy-policy/privacy-policy.component.html:140, notice:frontend/src/app/privacy-policy/privacy-policy.component.html:147, notice:frontend/src/app/privacy-policy/privacy-policy.component.html:155, notice:frontend/src/app/privacy-policy/privacy-policy.component.html:157, notice:frontend/src/app/privacy-policy/privacy-policy.component.html:160, notice:frontend/src/app/privacy-policy/privacy-policy.component.html:165, notice:views/dataErasureForm.hbs:32
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:18–22
+
+```
+      <p>This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use
+        our Service and the choices you have associated with that data. Our Privacy Policy for {{applicationName}} is
+        created with the help of the <a href="https://www.freeprivacypolicy.com/"
+                                        aria-label="Link to the page where the privacy policy was created">Free Privacy
+          Policy website</a>.</p>
+```
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:24–26
+
+```
+      <p>We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of
+        information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this
+        Privacy Policy have the same meanings as in our Terms and Conditions, accessible from {{applicationUrl}} .</p>
+```
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:98–99
+
+```
+      <p>Your consent to this Privacy Policy followed by your submission of such information represents your agreement to
+        that transfer.</p>
+```
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:100–104
+
+```
+      <p>{{applicationName}} will take all steps <span class="hot">reasonably necessary</span> to ensure that your data is
+        treated securely and in
+        accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a
+        country unless there are adequate controls in place including the security of your data and other personal
+        information.</p>
+```
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:137–139
+
+```
+      <p>Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you
+        will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you
+        visit.</p>
+```
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:140–142
+
+```
+      <p>We have no control over and assume no <span class="hot">responsibility</span> for the content, privacy policies
+        or practices of any third
+        party sites or services.</p>
+```
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:147–151
+
+```
+      <p>We do not knowingly collect personally identifiable information from anyone under the age of 18. If you are a
+        parent or guardian and you are aware that your Children has provided us with Personal Data, please contact us. If
+        we
+        become aware that we have collected Personal Data from children without verification of parental consent, we take
+        steps to remove that information from our servers.</p>
+```
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:155–156
+
+```
+      <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy
+        Policy on this page.</p>
+```
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:157–159
+
+```
+      <p>We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective
+        and
+        update the "effective date" at the top of this Privacy Policy.</p>
+```
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:160–161
+
+```
+      <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are
+        effective when they are posted on this page.</p>
+```
+
+frontend/src/app/privacy-policy/privacy-policy.component.html:165–165
+
+```
+      <p>If you have any questions about this Privacy Policy, please contact us:</p>
+```
+
+views/dataErasureForm.hbs:32–33
+
+```
+        <p>We take data security, customer privacy, and legal compliance very serious. In accordance with GDPR we allow
+            you to request complete erasure of your account and any associated data.</p>
+```
+
+frontend/src/index.html:19–19
+
+```
+      window.cookieconsent.initialise({
+```
+
+### verifiable parental consent
+
+Applicability: not applicable — The static inventory identifies no age/DOB collection or explicit Child audience; this is limited to the inspected inventory. Assessment: Not assessed; an inapplicable Gate is not a compliance conclusion.
+
+Issue Types: CHI-01
+
+Linked identifiers: none
+
+frontend/src/index.html:19–19
+
+```
+      window.cookieconsent.initialise({
+```
+
+Banner Evidence (not a grant): frontend/src/index.html:19–19
+
+```
+      window.cookieconsent.initialise({
+```
+
+LLM reasoning: not assessed; cache key: e4f4742e2b3aec416bfa3124896c40219ba704313596afb3b90eb207e7550c9e
+
+Limitation: Only statically resolved Purpose-specific links are represented; missing links are not proof of absence.
+
+Limitation: Step counts require a common, statically resolved starting template; credentials and text entry are not counted.
+
+Limitation: A dispatched deletion, browser choice, or Data Processor call does not establish actual deletion or a contract.
 
 ## Coverage Matrix
 
@@ -1778,21 +2130,21 @@ No Observations.
 | DPDP-Act-4 | Section 4 | not determinable | CON-01-express-enforcement |
 | DPDP-Act-4(1) | Section 4(1) | not determinable | CON-01-express-enforcement |
 | DPDP-Act-4(2) | Section 4(2) | not code-checkable | none |
-| DPDP-Act-5 | Section 5 | not determinable | CON-07-angular-consent-notice |
-| DPDP-Act-5(1) | Section 5(1) | not determinable | CON-07-angular-consent-notice |
+| DPDP-Act-5 | Section 5 | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
+| DPDP-Act-5(1) | Section 5(1) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
 | DPDP-Act-5(2) | Section 5(2) | not code-checkable | none |
-| DPDP-Act-5(3) | Section 5(3) | not determinable | CON-07-angular-consent-notice |
-| DPDP-Act-6 | Section 6 | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-04-express-withdrawal-path, CON-05-express-processor-withdrawal, CON-06-sequelize-consent-record, CON-07-angular-consent-notice, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author |
-| DPDP-Act-6(1) | Section 6(1) | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author |
+| DPDP-Act-5(3) | Section 5(3) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
+| DPDP-Act-6 | Section 6 | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-03-django-default-selected, CON-04-django-comparable-paths, CON-04-express-withdrawal-path, CON-05-express-processor-withdrawal, CON-06-django-incomplete-record, CON-06-sequelize-consent-record, CON-07-angular-consent-notice, CON-07-django-unitemised-notice, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author |
+| DPDP-Act-6(1) | Section 6(1) | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-03-django-default-selected, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author |
 | DPDP-Act-6(2) | Section 6(2) | not code-checkable | none |
-| DPDP-Act-6(3) | Section 6(3) | not determinable | CON-07-angular-consent-notice |
-| DPDP-Act-6(4) | Section 6(4) | not determinable | CON-04-express-withdrawal-path |
+| DPDP-Act-6(3) | Section 6(3) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
+| DPDP-Act-6(4) | Section 6(4) | not determinable | CON-04-django-comparable-paths, CON-04-express-withdrawal-path |
 | DPDP-Act-6(5) | Section 6(5) | not code-checkable | none |
 | DPDP-Act-6(6) | Section 6(6) | not determinable | CON-05-express-processor-withdrawal |
 | DPDP-Act-6(7) | Section 6(7) | not code-checkable | none |
 | DPDP-Act-6(8) | Section 6(8) | not code-checkable | none |
 | DPDP-Act-6(9) | Section 6(9) | not code-checkable | none |
-| DPDP-Act-6(10) | Section 6(10) | not determinable | CON-06-sequelize-consent-record |
+| DPDP-Act-6(10) | Section 6(10) | not determinable | CON-06-django-incomplete-record, CON-06-sequelize-consent-record |
 | DPDP-Act-7 | Section 7 | not determinable | CON-01-express-enforcement |
 | DPDP-Act-8 | Section 8 | not determinable | CON-05-express-processor-withdrawal, RET-01-express-purpose-end, RET-02-express-erasure-request, RIG-03-express-grievance, TRF-01-undisclosed-processor-transfer |
 | DPDP-Act-8(1) | Section 8(1) | not code-checkable | none |
@@ -1957,17 +2309,17 @@ No Observations.
 | DPDP-Rule-1(3) | Rule 1(3) | not code-checkable | none |
 | DPDP-Rule-1(4) | Rule 1(4) | not code-checkable | none |
 | DPDP-Rule-2 | Rule 2 | not code-checkable | none |
-| DPDP-Rule-3 | Rule 3 | not determinable | CON-04-express-withdrawal-path, CON-07-angular-consent-notice |
-| DPDP-Rule-3(a) | Rule 3(a) | not determinable | CON-07-angular-consent-notice |
-| DPDP-Rule-3(b) | Rule 3(b) | not determinable | CON-07-angular-consent-notice |
-| DPDP-Rule-3(c) | Rule 3(c) | not determinable | CON-04-express-withdrawal-path |
-| DPDP-Rule-3(c)(i) | Rule 3(c)(i) | not determinable | CON-04-express-withdrawal-path |
+| DPDP-Rule-3 | Rule 3 | not determinable | CON-04-django-comparable-paths, CON-04-express-withdrawal-path, CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
+| DPDP-Rule-3(a) | Rule 3(a) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
+| DPDP-Rule-3(b) | Rule 3(b) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
+| DPDP-Rule-3(c) | Rule 3(c) | not determinable | CON-04-django-comparable-paths, CON-04-express-withdrawal-path |
+| DPDP-Rule-3(c)(i) | Rule 3(c)(i) | not determinable | CON-04-django-comparable-paths, CON-04-express-withdrawal-path |
 | DPDP-Rule-4 | Rule 4 | not code-checkable | none |
 | DPDP-Rule-5 | Rule 5 | not code-checkable | none |
-| DPDP-Rule-6 | Rule 6 | not determinable | MON-01-monitoring-coverage, SEC-01-ts-morgan-query-secrets, SEC-02-sequelize-plain-fields, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
-| DPDP-Rule-6(1) | Rule 6(1) | not determinable | MON-01-monitoring-coverage, SEC-01-ts-morgan-query-secrets, SEC-02-sequelize-plain-fields, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
-| DPDP-Rule-6(1)(a) | Rule 6(1)(a) | not determinable | SEC-01-ts-morgan-query-secrets, SEC-02-sequelize-plain-fields, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-ts-wildcard-cors, SEC-15-committed-personal-data |
-| DPDP-Rule-6(1)(b) | Rule 6(1)(b) | static | SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-16-docker-root-container, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
+| DPDP-Rule-6 | Rule 6 | not determinable | MON-01-monitoring-coverage, SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-fastapi-wildcard-cors, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
+| DPDP-Rule-6(1) | Rule 6(1) | not determinable | MON-01-monitoring-coverage, SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-fastapi-wildcard-cors, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
+| DPDP-Rule-6(1)(a) | Rule 6(1)(a) | not determinable | SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-fastapi-wildcard-cors, SEC-11-ts-wildcard-cors, SEC-15-committed-personal-data |
+| DPDP-Rule-6(1)(b) | Rule 6(1)(b) | static | SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
 | DPDP-Rule-6(1)(c) | Rule 6(1)(c) | not determinable | MON-01-monitoring-coverage, SEC-12-express-access-logging |
 | DPDP-Rule-6(1)(d) | Rule 6(1)(d) | static | SEC-14-terraform-store-backup |
 | DPDP-Rule-6(1)(e) | Rule 6(1)(e) | static | SEC-13-ts-access-log-retention |
@@ -2009,7 +2361,7 @@ No Observations.
 
 ## Method, accuracy and limitations
 
-Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only mode replays matching cached LLM fields; uncached fields are not assessed. Consent Assessment, Live Probe and Fix Patch are not assessed.
+Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only mode replays matching cached LLM fields; uncached fields are not assessed. Live Probe outcomes, when available, appear with their Findings.
 
 | Method | Value |
 | --- | --- |
@@ -2019,12 +2371,12 @@ Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only
 | Exclusions | **/.git/**, **/node_modules/**, data/static/codefixes/**, test/**, frontend/**/*.spec.ts |
 | Files scanned | 1042 |
 | Files excluded | 484 |
-| Rule count | 40 |
+| Rule count | 51 |
 | LLM provider | ollama |
 | LLM model | llama3.1 |
 | Prompt versions | classification: classification-v1, triage: triage-v1, consent: consent-v1, fix: fix-v1 |
 | LLM mode | cache-only |
 | Cache hits | 0 |
-| Cache misses | 143 |
-| LLM fields not assessed | 143 |
+| Cache misses | 144 |
+| LLM fields not assessed | 144 |
 | Cache-only reason | ollama is unreachable or authentication failed |

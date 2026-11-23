@@ -30,9 +30,9 @@ def build_inventory(root: Path, files: list[Path], commit: str | None) -> dict:
         text=True, capture_output=True, check=True,
     )
     inventory = {"commit": commit, **json.loads(result.stdout), **analyse_config(root, rel)}
-    from auditor.analysers import django
+    from auditor.analysers import django, kubernetes, nginx, prisma
 
-    analysers = [django]
+    analysers = [django, prisma, kubernetes, nginx]
     try:
         fastapi = import_module("auditor.analysers.fastapi")
     except ModuleNotFoundError as exc:

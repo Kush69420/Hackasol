@@ -66,7 +66,7 @@ test("replay dashboard", async ({ page }) => {
     return url.hostname === "127.0.0.1" ? route.continue() : route.abort();
   });
   await page.goto("/");
-  await page.getByRole("button", { name: /Replay Mode/ }).click();
+  await page.getByRole("button", { name: /Replay Mode \(recorded Juice Shop scan\)/ }).click();
   await expect(page.getByTestId("provenance")).toHaveText("Replay Mode");
   await expect(page.getByTestId("run-status")).toHaveAttribute("data-status", "completed", {
     timeout: 120_000,

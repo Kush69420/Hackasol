@@ -17,7 +17,8 @@ from typing import Protocol
 FORMAT_VERSION = 1
 PRIMARY_TARGET = "juice-shop"
 PRIMARY_COMMIT = "c9f99228d9d56afb5f5ca7925376292f7fa44b13"
-BUNDLE_DIR = Path(__file__).resolve().parents[1] / "recordings" / PRIMARY_TARGET
+RECORDINGS_DIR = Path(__file__).resolve().parents[1] / "recordings"
+BUNDLE_DIR = RECORDINGS_DIR / PRIMARY_TARGET
 ARTIFACTS = {"json": "report.json", "md": "report.md", "html": "report.html", "pdf": "report.pdf"}
 
 
@@ -91,10 +92,12 @@ def main(argv: list[str] | None = None) -> int:
     commands = parser.add_subparsers(dest="command", required=True)
     rec = commands.add_parser("record", help="scan a Target Application and write a Replay Mode bundle")
     rec.add_argument("target")
-    rec.add_argument("--out", type=Path, default=BUNDLE_DIR)
+    rec.add_argument("--out", type=Path,
+                     help="bundle directory (default dashboard/recordings/<target directory name>)")
     args = parser.parse_args(argv)
     try:
-        print(record(args.target, args.out))
+        out = args.out or RECORDINGS_DIR / Path(args.target.rstrip("/")).name.removesuffix(".git")
+        print(record(args.target, out))
     except Exception as exc:  # report and exit non-zero; nothing partial is a valid bundle
         print(f"replay: {exc}", file=sys.stderr)
         return 1

@@ -42,6 +42,8 @@ export interface Finding {
   severity: { band: Band; justification: string };
   recommended_fix: { guidance: string; tailored?: LlmField };
   llm_triage: LlmField;
+  live_probe?: { result: "Confirmed" | "Refuted" | "inconclusive"; method: string; route: string; reason: string; request: string; response: string } | null;
+  fix_patch?: { status: "generated" | "accepted" | "rejected"; diff: string; reason: string; provenance?: "generated" | "authored" } | null;
   status: string;
 }
 export interface MapEntry {

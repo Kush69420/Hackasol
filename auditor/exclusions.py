@@ -8,7 +8,10 @@ ALWAYS_EXCLUDED = ("**/.git/**", "**/node_modules/**")
 PROFILES = {
     "juice-shop": ("data/static/codefixes/**", "test/**", "frontend/**/*.spec.ts"),
     "ai-kyc-platform": ("backend/venv/**", "**/__pycache__/**", "**/*.pyc"),
+    "trackmyrupee": ("expenses/tests/**", "**/__pycache__/**", "**/*.pyc"),
+    "singharya-e-kyc": ("tests/**", "**/__pycache__/**", "**/*.pyc"),
 }
+PROFILES["juice-shop-fork"] = PROFILES["juice-shop"]
 
 
 def exclusions_for(profile: str) -> list[str]:

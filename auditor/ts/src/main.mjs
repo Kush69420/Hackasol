@@ -8,6 +8,8 @@ import { extractModels } from './models.mjs';
 import { extractFrontend } from './frontend.mjs';
 import { createProject } from './project.mjs';
 import { extractNextjs } from './nextjs.mjs';
+import { extractOrm } from './orm.mjs';
+import { extractReact } from './react.mjs';
 
 const request = JSON.parse(readFileSync(0, 'utf8'));
 const project = createProject(request.root, request.files);
@@ -18,4 +20,6 @@ const out = {
   ...extractFrontend(project),
 };
 for (const [key, values] of Object.entries(extractNextjs(project))) out[key].push(...values);
+for (const [key, values] of Object.entries(extractOrm(project))) (out[key] ??= []).push(...values);
+for (const [key, values] of Object.entries(extractReact(project, out.forms))) (out[key] ??= []).push(...values);
 process.stdout.write(JSON.stringify(out));

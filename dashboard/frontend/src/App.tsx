@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BANDS, Band, Evidence, Finding, FlowStep, Provision, Report, ScanEvent } from "./types";
+import { LiveProbes, LiveProbeEvidence } from "./LiveProbes";
+import { FixPatches } from "./FixPatches";
 
 const STAGES: [string, string][] = [
   ["inventory", "Inventory"],
@@ -26,7 +28,15 @@ export function App() {
   const [selected, setSelected] = useState<string | null>(null);
   const source = useRef<EventSource | null>(null);
 
+  const [recordings, setRecordings] = useState<string[]>([]);
+
   useEffect(() => () => source.current?.close(), []);
+  useEffect(() => {
+    fetch("/api/replays")
+      .then((r) => (r.ok ? r.json() : { recordings: [] }))
+      .then((d: { recordings: string[] }) => setRecordings(d.recordings))
+      .catch(() => setRecordings([]));
+  }, []);
 
   const terminal = events.find((e) => e.type !== "stage");
   const status = !runId ? null : terminal ? terminal.type : "running";
@@ -98,6 +108,11 @@ export function App() {
         <button type="button" disabled={busy} onClick={() => void start("/api/replays/juice-shop")}>
           Replay Mode (recorded Juice Shop scan)
         </button>
+        {recordings.filter((name) => name !== "juice-shop").map((name) => (
+          <button key={name} type="button" disabled={busy} onClick={() => void start(`/api/replays/${name}`)}>
+            Replay Mode (recorded {name} scan)
+          </button>
+        ))}
       </form>
       {error && <p className="failed" role="alert">{error}</p>}
 
@@ -149,6 +164,8 @@ export function App() {
               ))}
             </div>
           </section>
+          {mode !== "recorded" && <LiveProbes runId={runId} onReport={setReport} />}
+          {mode !== "recorded" && <FixPatches runId={runId} findings={report.findings} />}
 
           <section aria-label="Findings">
             <h2>Findings</h2>
@@ -287,6 +304,7 @@ function FindingDetail({ finding: f }: { finding: Finding }) {
       {f.evidence.map((e, i) => (
         <EvidenceView key={i} evidence={e} />
       ))}
+      <LiveProbeEvidence finding={f} />
       <h3>Data Flow</h3>
       <DataFlowGraph steps={f.data_flow} />
       <h3>Provisions</h3>

@@ -254,8 +254,11 @@ Acceptance: SEC-07/08 (`/rest/memories`), RET-02 and SEC-11 Confirmed live on lo
 
 # After P2
 
-- Remaining frameworks through the same analyser split: Django (already in P2.1), Prisma, Mongoose, React, Kubernetes, nginx.
-- singharya E-KYC scan and Report.
+- Framework coverage through the same analyser split: Django (P2.1), plus Prisma and Mongoose (schema and ORM Processing Operations), React form-to-route-to-Element joins, Kubernetes and nginx configuration. Cross-file joins live in `auditor/analysers/framework_flows.py`; new Rules in `auditor/rules/framework_config.py`.
+- singharya E-KYC scan and Report: pin `e6e78d53edd30fd5be88dcd82d5afc1a2010d025`, see `docs/targets/singharya-e-kyc.md`.
+  - Scan: `OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/dpdp-audit scan targets/singharya-e-kyc --provider ollama --out reports/singharya-e-kyc/report.json`.
+  - Actual coverage: Python (FastAPI) and Kubernetes (including nginx-class Ingress) are exercised by the Target; the Report has no Findings. Prisma, Mongoose, React, Django and `nginx.conf` are covered by fixtures only (`tests/fixtures/frameworks/**`, `tests/fixtures/django`).
+  - Gap: committed ID-document images are not assessed by `SEC-15`, which reads text formats only.
 
 ## Submission
 

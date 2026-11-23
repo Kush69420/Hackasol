@@ -251,7 +251,8 @@ def _child_gate(ctx):
     # Explicit audience statements, not incidental mentions of games or children.
     for file, text in _texts(ctx, {'.html', '.md', '.json'}):
         for i, line in enumerate(text.splitlines(), 1):
-            if re.search(r'\b(?:designed|intended|made)\s+for\s+(?:children|kids|school students)\b', line, re.I):
+            # "not intended for children" states the opposite audience; it must not open the Gate.
+            if re.search(r'(?<!\bnot\s)(?<!\bnever\s)\b(?:designed|intended|made)\s+for\s+(?:children|kids|school students)\b', line, re.I):
                 return ctx.evidence(_coord(ctx, file, i)), None
     return None, None
 

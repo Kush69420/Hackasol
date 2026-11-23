@@ -17,7 +17,7 @@ from auditor.remediation import load_catalogue
 
 
 SECTIONS = ("Applicability Assumptions", "Executive summary", "Personal Data Map",
-            "Findings", "Coverage Matrix", "Method, accuracy and limitations")
+            "Findings", "Consent Assessment", "Coverage Matrix", "Method, accuracy and limitations")
 _NON_CODE = {"DPDP-Act-8(2)", "DPDP-Act-8(3)", "DPDP-Act-8(6)", "DPDP-Rule-7"}
 
 
@@ -136,7 +136,7 @@ def _sections(report):
     registry = load_registry()
     catalogue = load_catalogue()
     sections = [[] for _ in SECTIONS]
-    assumptions, summary, data_map, details, matrix, method = sections
+    assumptions, summary, data_map, details, consent, matrix, method = sections
     for item in report["applicability_assumptions"]:
         dependent = [f["id"] for f in findings if _dependent(item["id"], f)]
         assumptions.append(("list", [f"{item['id']}: {item['text']} Provisions: "
@@ -183,6 +183,10 @@ def _sections(report):
         details.append(("p", "Evidence:"))
         for ev in finding["evidence"]:
             details.extend((("p", _location(ev)), ("code", ev["excerpt"])))
+        probe = finding.get("live_probe")
+        if probe:
+            details.append(("p", f"Live Probe: {probe['result']} — {probe['method']} {probe['route']}; {probe['reason']}"))
+            details.append(("code", f"Request: {probe['request']}\nResponse: {probe['response']}"))
         details.append(("p", "Data Flow:"))
         details.append(("list", [f"{step['operation']} — {_location(step['evidence'])}"
                                   + (f"; {step['note']}" if step.get("note") else "")
@@ -191,6 +195,10 @@ def _sections(report):
         tailored = fix["tailored"]
         details.append(("p", f"Recommended fix: {fix['guidance']} Tailored: "
                         + (str(tailored["value"]) if tailored["status"] == "assessed" else "not assessed")))
+        patch = finding.get("fix_patch")
+        if patch:
+            details.append(("p", f"Fix Patch: {patch['status']} — {patch['reason']}"))
+            details.append(("code", patch["diff"]))
         triage = finding["llm_triage"]
         details.append(("p", "LLM triage: " + (f"{triage['value']['verdict']} — {triage['value']['reason']}"
                         if triage["status"] == "assessed" else "not assessed") + f"; cache key: {triage['cache_key']}"))
@@ -201,6 +209,26 @@ def _sections(report):
         details.append(("p", f"{observation['id']} — {observation['title']}; Rules: {', '.join(observation['rules_fired'])}. Recommended fix: {observation['recommended_fix']}"))
         for ev in observation["evidence"]:
             details.extend((("p", _location(ev)), ("code", ev["excerpt"])))
+    assessment = report.get("consent_assessment")
+    if assessment:
+        for row in assessment["criteria"]:
+            consent.append(("h", row["criterion"]))
+            consent.append(("p", f"Applicability: {row['applicability']} — {row['reason']} Assessment: {row['assessment']}"))
+            consent.append(("p", "Issue Types: " + ", ".join(row["issue_types"])))
+            consent.append(("p", "Linked identifiers: " + (", ".join(row["linked_identifiers"]) or "none")))
+            if row["step_counts"] is not None:
+                consent.append(("p", "Static step counts: " + _json(row["step_counts"])))
+            for ev in row["evidence"]:
+                consent.extend((("p", _location(ev)), ("code", ev["excerpt"])))
+        for banner in assessment["graph"].get("banners", []):
+            for ev in banner["evidence"]:
+                consent.extend((("p", "Banner Evidence (not a grant): " + _location(ev)), ("code", ev["excerpt"])))
+        reasoning = assessment["llm_reasoning"]
+        consent.append(("p", "LLM reasoning: " + (reasoning["value"]["assessment"] if reasoning["status"] == "assessed" else "not assessed") + "; cache key: " + reasoning["cache_key"]))
+        for limitation in assessment["graph"].get("limitations", []):
+            consent.append(("p", "Limitation: " + limitation))
+    else:
+        consent.append(("p", "Not assessed."))
     matrix.append(("table", (["Provision", "Citation", "Classification", "Covering Rules"],
                               [[row["provision"], row.get("citation", ""), row["classification"]
                                 + (f"; {row['annotation']}" if row.get("annotation") else ""),
@@ -208,7 +236,7 @@ def _sections(report):
     scan, llm, target = report["scan"], report["llm"], report["target"]
     method.append(("p", "Static Rules use Semgrep, TypeScript AST and configuration analysers. "
                    "Cache-only mode replays matching cached LLM fields; uncached fields are not assessed. "
-                   "Consent Assessment, Live Probe and Fix Patch are not assessed."))
+                   "Live Probe outcomes, when available, appear with their Findings."))
     method_rows = [
         ["Target Application", target["name"]], ["Target revision", target["commit"] or "not available"],
         ["Target source", target["source"]], ["Exclusions", ", ".join(scan["exclusions"]) or "none"],

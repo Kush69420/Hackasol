@@ -6,6 +6,8 @@ from pathlib import Path
 import sys
 
 from auditor import __version__
+from auditor.consent.criteria import assess_consent
+from auditor.consent.graph import build_graph
 from auditor.exclusions import exclusions_for, iter_target_files
 from auditor.inputs import resolve_target
 from auditor.inventory import build_inventory
@@ -58,6 +60,8 @@ def run_scan(source: str, *, commit: str | None = None, provider: str | None = N
     rules = load_rules()
     matches = [m for _, detect in rules.values() for m in detect(ctx)]
     assembled = assemble(matches, llm=session)
+    graph = ctx._consent_graph if hasattr(ctx, "_consent_graph") else build_graph(ctx)
+    consent_assessment = assess_consent(graph, assembled.findings, session)
     if on_stage:
         on_stage("findings")
 
@@ -74,7 +78,7 @@ def run_scan(source: str, *, commit: str | None = None, provider: str | None = N
         "personal_data_map": ctx.personal_data_map,
         "findings": assembled.findings, "observations": assembled.observations,
         "coverage_matrix": coverage_matrix(load_registry(), rules, assembled.not_determinable, assembled.findings),
-        "consent_assessment": None,
+        "consent_assessment": consent_assessment,
     }
     report["executive_summary"] = executive_summary(report)
     validate_report(report)

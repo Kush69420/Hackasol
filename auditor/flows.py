@@ -17,4 +17,6 @@ def trace_flows(root: Path, files: list[Path], inventory: dict) -> list[dict]:
         input=json.dumps({"root": str(root), "files": [p.relative_to(root).as_posix() for p in files], "inventory": inventory}),
         text=True, capture_output=True, check=True,
     )
-    return [*json.loads(result.stdout)["flows"], *inventory.get("python_flows", ())]
+    from auditor.analysers.framework_flows import trace
+
+    return [*json.loads(result.stdout)["flows"], *inventory.get("python_flows", ()), *trace(inventory)]

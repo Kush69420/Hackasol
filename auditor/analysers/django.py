@@ -64,7 +64,8 @@ def analyse(root: Path, rel_files: list[str]) -> dict:
         except (SyntaxError, UnicodeError, OSError):
             continue
     if not files:
-        return {}
+        return {'django_consent': [analyse_consent(root, rel_files)]} if any(
+            file == 'manage.py' or file.endswith('/manage.py') for file in rel_files) else {}
     modules = {f[:-3].replace('/', '.').removeprefix('backend.'): f for f in files}
     classes, functions, imports = {}, {}, {}
     models, serializers, logging = [], {}, []
@@ -359,4 +360,131 @@ def analyse(root: Path, rel_files: list[str]) -> dict:
     for module in urlconfs:
         if module not in included:
             visit(module)
-    return {'models': models, 'routes': routes, 'logging': logging, 'flows': flows}
+    result = {'models': models, 'routes': routes, 'logging': logging, 'flows': flows}
+    if any(file == 'manage.py' or file.endswith('/manage.py') for file in rel_files):
+        result['django_consent'] = [analyse_consent(root, rel_files)]
+    return result
+
+
+def analyse_consent(root: Path, rel_files: list[str]) -> dict:
+    """Inventory Django consent surfaces without importing Target Application code.
+
+    URL names link template actions to views only when a view name resolves
+    uniquely. This inventory does not assert that a condition enforces consent
+    for a particular Purpose, or that an event is a complete Consent Record.
+    """
+    trees = {}
+    templates = {}
+    for file in rel_files:
+        parts = Path(file).parts
+        if any(part in ('migrations', 'tests', 'test', '__pycache__') for part in parts):
+            continue
+        try:
+            if file.endswith('.py'):
+                trees[file] = ast.parse((root / file).read_text(encoding='utf-8'), filename=file)
+            elif file.endswith('.html'):
+                templates[file] = (root / file).read_text(encoding='utf-8')
+        except (SyntaxError, UnicodeError, OSError):
+            continue
+
+    definitions = {}
+    for file, tree in trees.items():
+        for node in tree.body:
+            if isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
+                definitions.setdefault(node.name, []).append((file, node))
+
+    urls, writes, middleware, models, conditions, calls, view_templates, signup_forms = [], [], [], [], [], [], [], []
+    for file, tree in trees.items():
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ClassDef):
+                bases = [_name(base).split('.')[-1] for base in node.bases]
+                if 'Model' in bases and ('consent' in node.name.lower()
+                                         or any('consent' in name.lower() for name in _assignments(node.body))):
+                    fields = []
+                    for name, value in _assignments(node.body).items():
+                        if isinstance(value, ast.Call):
+                            fields.append({'name': name, 'type': _name(value.func),
+                                           'automatic_time': any(k.arg in ('auto_now', 'auto_now_add', 'default')
+                                                                 and _literal(k.value, True) is not False for k in value.keywords),
+                                           'source': _coord(file, value)})
+                    models.append({'name': node.name, 'fields': fields, 'source': _coord(file, node)})
+            if isinstance(node, (ast.Assign, ast.AnnAssign)):
+                targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+                if any(isinstance(t, ast.Name) and t.id == 'MIDDLEWARE' for t in targets):
+                    if isinstance(node.value, (ast.List, ast.Tuple)):
+                        for position, entry in enumerate(node.value.elts):
+                            name = _literal(entry)
+                            if isinstance(name, str):
+                                entry_item = {'name': name, 'position': position, 'source': _coord(file, entry)}
+                                candidates = definitions.get(name.split('.')[-1], [])
+                                if len(candidates) == 1 and isinstance(candidates[0][1], ast.ClassDef):
+                                    entry_item['implementation'] = _coord(*candidates[0])
+                                middleware.append(entry_item)
+                if any(isinstance(t, ast.Name) and t.id == 'ACCOUNT_SIGNUP_FORM_CLASS' for t in targets):
+                    name = _literal(node.value)
+                    candidates = definitions.get(name.split('.')[-1], []) if isinstance(name, str) else []
+                    if len(candidates) == 1 and isinstance(candidates[0][1], ast.ClassDef):
+                        form_file, form_class = candidates[0]
+                        signup_forms.append({'name': name, 'source': _coord(file, node),
+                                             'implementation': _coord(form_file, form_class),
+                                             'fields': list(_assignments(form_class.body))})
+            if isinstance(node, ast.If) and re.search(r'consent', ast.unparse(node.test), re.I):
+                conditions.append({'condition': ast.unparse(node.test), 'source': _coord(file, node.test),
+                                   'body': [_coord(file, item) for item in node.body]})
+            if not isinstance(node, ast.Call):
+                continue
+            call = _name(node.func)
+            if call.split('.')[-1] in ('path', 're_path') and len(node.args) >= 2:
+                route = _literal(node.args[0])
+                name = next((_literal(k.value) for k in node.keywords if k.arg == 'name'), None)
+                view = node.args[1]
+                if isinstance(view, ast.Call) and isinstance(view.func, ast.Attribute) and view.func.attr == 'as_view':
+                    view = view.func.value
+                ref = _name(view).split('.')[-1]
+                candidates = definitions.get(ref, [])
+                if isinstance(route, str) and isinstance(name, str):
+                    binding = {'name': name, 'path': route, 'view_name': ref, 'source': _coord(file, node)}
+                    if len(candidates) == 1:
+                        view_file, view_node = candidates[0]
+                        binding['view'] = _coord(view_file, view_node)
+                    urls.append(binding)
+            if call.endswith('.objects.create') and 'consent' in call.lower():
+                writes.append({'model': call[:-len('.objects.create')].split('.')[-1],
+                               'fields': [k.arg for k in node.keywords if k.arg],
+                               'values': {k.arg: _literal(k.value) for k in node.keywords if k.arg},
+                               'null_fields': [k.arg for k in node.keywords if k.arg and isinstance(k.value, ast.Constant) and k.value.value is None],
+                               'source': _coord(file, node)})
+    for file, tree in trees.items():
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                for child in ast.walk(node):
+                    if isinstance(child, ast.Call):
+                        call = _name(child.func)
+                        if call.endswith(('.capture', '.identify')) or call.split('.')[-1] in ('ph_capture', 'ph_identify'):
+                            calls.append({'name': call, 'function': node.name, 'source': _coord(file, child),
+                                          'function_source': _coord(file, node)})
+                        if call.split('.')[-1] == 'render' and len(child.args) > 1:
+                            template = _literal(child.args[1])
+                            if isinstance(template, str):
+                                view_templates.append({'template': template, 'view': node.name,
+                                                       'source': _coord(file, child)})
+            elif isinstance(node, ast.ClassDef):
+                template = _literal(_assignments(node.body).get('template_name'))
+                if isinstance(template, str):
+                    view_templates.append({'template': template, 'view': node.name,
+                                           'source': _coord(file, node)})
+
+
+    actions = []
+    url_names = {url['name']: url for url in urls if sum(u['name'] == url['name'] for u in urls) == 1}
+    for file, text in templates.items():
+        for match in re.finditer(r"""<form\b[^>]*\baction\s*=\s*["']\s*{%\s*url\s+["']([^"']+)["']\s*%}[^>]*>""", text, re.I):
+            name = match.group(1)
+            line = text.count('\n', 0, match.start()) + 1
+            action = {'url_name': name, 'source': {'file': file, 'start_line': line, 'end_line': line}}
+            if name in url_names:
+                action['url'] = url_names[name]
+            actions.append(action)
+    return {'models': models, 'event_writes': writes, 'middleware': middleware,
+            'urls': urls, 'template_actions': actions, 'conditions': conditions,
+            'calls': calls, 'view_templates': view_templates, 'signup_forms': signup_forms}

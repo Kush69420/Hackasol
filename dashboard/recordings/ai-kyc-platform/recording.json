@@ -1,0 +1,44 @@
+{
+  "format_version": 1,
+  "target": {
+    "name": "ai-kyc-platform",
+    "commit": "70a821487c193be445810d836dd9b9b9ae22eb18"
+  },
+  "events": [
+    {
+      "ordinal": 0,
+      "mode": "cache-only",
+      "elapsed_ms": 810,
+      "type": "stage",
+      "stage": "inventory"
+    },
+    {
+      "ordinal": 1,
+      "mode": "cache-only",
+      "elapsed_ms": 816,
+      "type": "stage",
+      "stage": "elements"
+    },
+    {
+      "ordinal": 2,
+      "mode": "cache-only",
+      "elapsed_ms": 988,
+      "type": "stage",
+      "stage": "data_flows"
+    },
+    {
+      "ordinal": 3,
+      "mode": "cache-only",
+      "elapsed_ms": 2356,
+      "type": "stage",
+      "stage": "findings"
+    },
+    {
+      "ordinal": 4,
+      "mode": "cache-only",
+      "elapsed_ms": 3252,
+      "type": "completed",
+      "finding_count": 7
+    }
+  ]
+}

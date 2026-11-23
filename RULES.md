@@ -4,6 +4,26 @@ Generated from Rule metadata, the Issue Type catalogue, the Provision registry a
 
 ## SEC-01 — Personal Data written to logs
 
+### SEC-01-nginx-query-logging — Personal Data route parameters written to nginx access logs
+
+- Engine: config
+- Languages / file kind: nginx
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: CWE-532
+- CWE: CWE-532
+
+Labelled Corpus example: `corpus/SEC-01-nginx-query-logging/positive/server.ts`
+
+```
+import express from "express"
+import { lookup } from "./routes/users"
+const app = express()
+app.get("/api/users/:email", lookup())
+```
+
 ### SEC-01-ts-morgan-query-secrets — Authentication Secrets in access logs
 
 - Engine: ts-ast
@@ -512,6 +532,62 @@ resource "aws_ecs_task_definition" "app" {
   }
 ```
 
+### SEC-16-kubernetes-privileged-store — Privileged or root workload mounting a Personal Data store
+
+- Engine: config
+- Languages / file kind: kubernetes
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-250
+- CWE: CWE-250
+
+Labelled Corpus example: `corpus/SEC-16-kubernetes-privileged-store/positive/k8s/app.yaml`
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: user-data
+  namespace: app
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+```
+
+### SEC-16-kubernetes-public-store — Public Service in front of a Personal Data store workload
+
+- Engine: config
+- Languages / file kind: kubernetes
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-250
+- CWE: CWE-250
+
+Labelled Corpus example: `corpus/SEC-16-kubernetes-public-store/positive/k8s/app.yaml`
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: user-data
+  namespace: app
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+```
+
 ### SEC-16-terraform-public-storage — Public Personal Data object store
 
 - Engine: config
@@ -622,7 +698,50 @@ Labelled Corpus example: `corpus/CON-03-angular-default-true/positive/frontend/s
 <form><input name="consent" type="checkbox" checked></form>
 ```
 
+### CON-03-django-default-selected — Django consent selected by default
+
+- Engine: config
+- Languages / file kind: python, html
+- Classification: compliance-gap
+- Gate: a consent control exists
+- Primary Provision: Section 6(1) (`DPDP-Act-6(1)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-03-django-default-selected/positive/app.py`
+
+```
+# Django Target Application marker.
+```
+
 ## CON-04 — No Withdrawal Path, or one harder than the grant
+
+### CON-04-django-comparable-paths — Django Withdrawal Path harder than grant
+
+- Engine: config
+- Languages / file kind: python, html
+- Classification: compliance-gap
+- Gate: a consent grant exists
+- Primary Provision: Section 6(4) (`DPDP-Act-6(4)`)
+- Related Provisions: Rule 3(c)(i)
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-04-django-comparable-paths/positive/app.py`
+
+```
+class ConsentEvent(models.Model):
+    user = models.ForeignKey(User)
+    action = models.CharField()
+    purpose = models.CharField()
+    consent_version = models.CharField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+class GrantView(View):
+    template_name = "grant.html"
+    def post(self, request):
+        ConsentEvent.objects.create(user=request.user, action="GRANTED", purpose="messages", consent_version="v1")
+
+```
 
 ### CON-04-express-withdrawal-path — Missing or harder Withdrawal Path
 
@@ -665,6 +784,33 @@ app.delete('/consent', (req, res) => { Consent.update({ granted: false }); res.s
 
 ## CON-06 — Consent Record missing, or without Purpose, notice reference or time
 
+### CON-06-django-incomplete-record — Django Consent Record missing required fields
+
+- Engine: config
+- Languages / file kind: python, html
+- Classification: compliance-gap
+- Gate: a consent grant exists
+- Primary Provision: Section 6(10) (`DPDP-Act-6(10)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-06-django-incomplete-record/positive/app.py`
+
+```
+class ConsentEvent(models.Model):
+    user = models.ForeignKey(User)
+    action = models.CharField()
+    purpose = models.CharField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+class GrantView(View):
+    template_name = "grant.html"
+    def post(self, request):
+        ConsentEvent.objects.create(user=request.user, action="GRANTED", purpose="messages")
+
+urlpatterns = [path("grant/", GrantView.as_view(), name="grant")]
+```
+
 ### CON-06-sequelize-consent-record — Incomplete Consent Record
 
 - Engine: ts-ast
@@ -699,6 +845,27 @@ Labelled Corpus example: `corpus/CON-07-angular-consent-notice/positive/frontend
 
 ```
 <form><input name="consent" type="checkbox"></form>
+```
+
+### CON-07-django-unitemised-notice — Django consent notice not itemised
+
+- Engine: config
+- Languages / file kind: python, html
+- Classification: compliance-gap
+- Gate: consent is requested
+- Primary Provision: Section 5(1) (`DPDP-Act-5(1)`)
+- Related Provisions: Section 5(3); Section 6(3); Rule 3(a); Rule 3(b)
+- CWE: None
+
+Labelled Corpus example: `corpus/CON-07-django-unitemised-notice/positive/app.py`
+
+```
+class GrantView(View):
+    template_name = "grant.html"
+    def post(self, request):
+        ConsentEvent.objects.create(user=request.user, action="GRANTED", purpose="messages")
+
+urlpatterns = [path("grant/", GrantView.as_view(), name="grant")]
 ```
 
 ## CON-08 — Personal Data Elements collected beyond the Purpose

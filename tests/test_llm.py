@@ -9,7 +9,7 @@ import pytest
 from auditor.llm import LLMSession
 from auditor.llm import prompts
 from auditor.llm.providers import Anthropic, Gemini, Ollama, Omp, OpenAI
-from auditor.masking import mask_for_egress, mask_for_report
+from auditor.masking import contains_unmasked_material, mask_for_egress, mask_for_report
 
 
 # Twelve digits with a valid Verhoeff check digit.
@@ -82,6 +82,15 @@ def test_masking_modes_and_line_anchors():
     for value in (AADHAAR, PAN, JWT, PASSWORD, 'abc\ndef'):
         assert value not in report and value not in egress
     assert '«AADHAAR»' in report
+
+def test_fix_patch_check_flags_secret_values_but_not_code_references():
+    assert contains_unmasked_material('password = "hunter2xyz"')
+    assert not contains_unmasked_material('const currentPassword = query.current')
+    assert not contains_unmasked_material('password = readPassword()')
+    # Masking itself stays conservative at the egress boundary.
+    for mask in (mask_for_report, mask_for_egress):
+        assert 'hunter2xyz' not in mask('password = "hunter2xyz"')
+        assert 'query.current' not in mask('const currentPassword = query.current')
 
 def test_biometric_masking_payloads_and_keyed_arrays(tmp_path):
     payload = 'A' * 240

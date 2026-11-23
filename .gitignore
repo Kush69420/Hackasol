@@ -1,5 +1,5 @@
 # Target Application clones are never committed (AGENTS.md)
-targets/
+/targets/
 
 # LLM verdict cache is local; masked, but per-machine
 .dpdp-cache/
@@ -18,3 +18,7 @@ node_modules/
 .claude/
 .DS_Store
 Thumbs.db
+
+# Dashboard run output and the machine-local inventory are not deliverables
+reports/dashboard/
+reports/*/inventory.json

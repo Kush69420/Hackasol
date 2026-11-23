@@ -32,15 +32,30 @@ def _sub(text, pattern, label, flags=0, predicate=None):
         return f'«{label}»' + '\n' * m.group().count('\n')
     return re.sub(pattern, replace, text, flags=flags)
 
+def _secret_literal(value):
+    """True unless the assigned value is a code reference (identifier, member access, call)."""
+    assignment = re.split(r'\s*[:=]\s*', value, maxsplit=1)
+    if len(assignment) != 2:
+        return True
+    rhs = assignment[1]
+    if rhs.startswith(('"', "'")):
+        return True
+    if rhs.startswith('`'):
+        return False
+    return re.match(r'^[A-Za-z_$][\w$]*(?:[.(\[\?]|$)', rhs) is None
 
-def _mask(text: str, *, egress: bool) -> str:
+
+def _mask(text: str, *, egress: bool, code_aware: bool = False) -> str:
     text = _sub(text, r'data:image/[A-Za-z0-9.+-]+;base64,[A-Za-z0-9+/=\r\n]+', 'BIOMETRIC_PAYLOAD', re.I)
     text = _sub(text, r'(?<![A-Za-z0-9+/=])[A-Za-z0-9+/=]{200,}(?![A-Za-z0-9+/=])', 'BINARY')
     text = _sub(text, r'-----BEGIN [^-\n]*PRIVATE KEY-----[\s\S]*?-----END [^-\n]*PRIVATE KEY-----', 'SECRET')
     text = _sub(text, r'\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b', 'SECRET')
     text = _sub(text, r'\bAKIA[0-9A-Z]{16}\b|\bBearer[ \t]+[A-Za-z0-9._~+/=-]+', 'SECRET', re.I)
     # Replace the complete assignment, including quoted values with spaces.
-    text = _sub(text, r'''\b(?:[\w-]*(?:password|passwd|secret|token|api[_-]?key|private[_ -]?key)[\w-]*)["']?\s*[:=]\s*(?:"[^"\n]*"|'[^'\n]*'|[^\s,;})]+)''', 'SECRET', re.I)
+    # Masking stays conservative (a variable name is masked too); only the code-aware check, used to
+    # decide whether a Fix Patch diff still holds a secret value, exempts code references.
+    text = _sub(text, r'''\b(?:[\w-]*(?:password|passwd|secret|token|api[_-]?key|private[_ -]?key)[\w-]*)["']?\s*(?::|=(?!=))\s*(?:"[^"\n]*"|'[^'\n]*'|[^\s,;})]+)''', 'SECRET', re.I,
+                predicate=_secret_literal if code_aware else None)
     text = _sub(text, r'''(?<=[=:])[ \t]*["']?[A-Za-z0-9+/=_-]{32,}["']?''', 'SECRET')
     text = _sub(text, r'(?<!\d)\d{2}-\d{4}-\d{4}-\d{4}(?!\d)', 'ABHA')
     text = _sub(text, r'(?<!\d)\d{4}[ -]?\d{4}[ -]?\d{4}(?!\d)', 'AADHAAR', predicate=_aadhaar)
@@ -73,3 +88,11 @@ def mask_for_egress(text: str) -> str:
 
 def mask_for_report(text: str) -> str:
     return _mask(text, egress=False)
+
+
+def contains_unmasked_material(code: str) -> bool:
+    """Whether source code (such as a Fix Patch diff) holds Personal Data or a secret value.
+
+    Code references such as ``password = query.current`` are not values and do not count.
+    """
+    return _mask(code, egress=True, code_aware=True) != code

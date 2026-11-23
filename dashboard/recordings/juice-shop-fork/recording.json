@@ -1,0 +1,44 @@
+{
+  "format_version": 1,
+  "target": {
+    "name": "juice-shop-fork",
+    "commit": "2a66c603ea543aea6ab642c472431a27846b9e63"
+  },
+  "events": [
+    {
+      "ordinal": 0,
+      "mode": "cache-only",
+      "elapsed_ms": 3359,
+      "type": "stage",
+      "stage": "inventory"
+    },
+    {
+      "ordinal": 1,
+      "mode": "cache-only",
+      "elapsed_ms": 3452,
+      "type": "stage",
+      "stage": "elements"
+    },
+    {
+      "ordinal": 2,
+      "mode": "cache-only",
+      "elapsed_ms": 3816,
+      "type": "stage",
+      "stage": "data_flows"
+    },
+    {
+      "ordinal": 3,
+      "mode": "cache-only",
+      "elapsed_ms": 17101,
+      "type": "stage",
+      "stage": "findings"
+    },
+    {
+      "ordinal": 4,
+      "mode": "cache-only",
+      "elapsed_ms": 18538,
+      "type": "completed",
+      "finding_count": 18
+    }
+  ]
+}

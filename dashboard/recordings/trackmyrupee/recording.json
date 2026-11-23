@@ -1,0 +1,44 @@
+{
+  "format_version": 1,
+  "target": {
+    "name": "trackmyrupee",
+    "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546"
+  },
+  "events": [
+    {
+      "ordinal": 0,
+      "mode": "cache-only",
+      "elapsed_ms": 2564,
+      "type": "stage",
+      "stage": "inventory"
+    },
+    {
+      "ordinal": 1,
+      "mode": "cache-only",
+      "elapsed_ms": 2575,
+      "type": "stage",
+      "stage": "elements"
+    },
+    {
+      "ordinal": 2,
+      "mode": "cache-only",
+      "elapsed_ms": 2751,
+      "type": "stage",
+      "stage": "data_flows"
+    },
+    {
+      "ordinal": 3,
+      "mode": "cache-only",
+      "elapsed_ms": 38073,
+      "type": "stage",
+      "stage": "findings"
+    },
+    {
+      "ordinal": 4,
+      "mode": "cache-only",
+      "elapsed_ms": 39292,
+      "type": "completed",
+      "finding_count": 5
+    }
+  ]
+}

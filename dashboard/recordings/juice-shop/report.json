@@ -11,8 +11,8 @@
     "commit": "c9f99228d9d56afb5f5ca7925376292f7fa44b13"
   },
   "scan": {
-    "started_at": "2026-11-22T23:18:54.168802+00:00",
-    "finished_at": "2026-11-22T23:19:12.955975+00:00",
+    "started_at": "2026-11-23T01:43:00.059519+00:00",
+    "finished_at": "2026-11-23T01:43:14.542441+00:00",
     "exclusions": [
       "**/.git/**",
       "**/node_modules/**",
@@ -22,7 +22,7 @@
     ],
     "files_scanned": 1042,
     "files_excluded": 484,
-    "rule_count": 40
+    "rule_count": 51
   },
   "llm": {
     "mode": "cache-only",
@@ -35,8 +35,8 @@
       "fix": "fix-v1"
     },
     "cache_hits": 0,
-    "cache_misses": 143,
-    "not_assessed": 143,
+    "cache_misses": 144,
+    "not_assessed": 144,
     "reason": "ollama is unreachable or authentication failed"
   },
   "applicability_assumptions": [
@@ -226,7 +226,7 @@
           "file": "frontend/src/app/Services/two-factor-auth-service.ts",
           "start_line": 38,
           "end_line": 38,
-          "excerpt": "      «SECRET»),"
+          "excerpt": "      tmpToken: localStorage.getItem('totp_tmp_token'),"
         }
       },
       "operations": [
@@ -1560,9 +1560,9 @@
           "operation": "Expose",
           "evidence": {
             "file": "routes/payment.ts",
-            "start_line": 35,
-            "end_line": 35,
-            "excerpt": "    res.status(200).json({ status: 'success', data: displayableCards })"
+            "start_line": 26,
+            "end_line": 26,
+            "excerpt": "        fullName: card.fullName,"
           },
           "note": "response; ts-join; evidenced"
         },
@@ -1570,9 +1570,9 @@
           "operation": "Expose",
           "evidence": {
             "file": "routes/payment.ts",
-            "start_line": 61,
-            "end_line": 61,
-            "excerpt": "      res.status(200).json({ status: 'success', data: displayableCard })"
+            "start_line": 53,
+            "end_line": 53,
+            "excerpt": "      displayableCard.fullName = card.fullName"
           },
           "note": "response; ts-join; evidenced"
         },
@@ -1664,9 +1664,9 @@
           "operation": "Expose",
           "evidence": {
             "file": "routes/payment.ts",
-            "start_line": 35,
-            "end_line": 35,
-            "excerpt": "    res.status(200).json({ status: 'success', data: displayableCards })"
+            "start_line": 32,
+            "end_line": 32,
+            "excerpt": "      displayableCard.cardNum = '*'.repeat(12) + cardNumber.substring(cardNumber.length - 4)"
           },
           "note": "response; ts-join; evidenced; masked"
         },
@@ -1674,9 +1674,9 @@
           "operation": "Expose",
           "evidence": {
             "file": "routes/payment.ts",
-            "start_line": 61,
-            "end_line": 61,
-            "excerpt": "      res.status(200).json({ status: 'success', data: displayableCard })"
+            "start_line": 58,
+            "end_line": 58,
+            "excerpt": "      displayableCard.cardNum = '*'.repeat(12) + cardNumber.substring(cardNumber.length - 4)"
           },
           "note": "response; ts-join; evidenced; masked"
         },
@@ -1768,9 +1768,9 @@
           "operation": "Expose",
           "evidence": {
             "file": "routes/payment.ts",
-            "start_line": 35,
-            "end_line": 35,
-            "excerpt": "    res.status(200).json({ status: 'success', data: displayableCards })"
+            "start_line": 28,
+            "end_line": 28,
+            "excerpt": "        expMonth: card.expMonth,"
           },
           "note": "response; ts-join; evidenced"
         },
@@ -1778,9 +1778,9 @@
           "operation": "Expose",
           "evidence": {
             "file": "routes/payment.ts",
-            "start_line": 61,
-            "end_line": 61,
-            "excerpt": "      res.status(200).json({ status: 'success', data: displayableCard })"
+            "start_line": 54,
+            "end_line": 54,
+            "excerpt": "      displayableCard.expMonth = card.expMonth"
           },
           "note": "response; ts-join; evidenced"
         },
@@ -1872,9 +1872,9 @@
           "operation": "Expose",
           "evidence": {
             "file": "routes/payment.ts",
-            "start_line": 35,
-            "end_line": 35,
-            "excerpt": "    res.status(200).json({ status: 'success', data: displayableCards })"
+            "start_line": 29,
+            "end_line": 29,
+            "excerpt": "        expYear: card.expYear"
           },
           "note": "response; ts-join; evidenced"
         },
@@ -1882,9 +1882,9 @@
           "operation": "Expose",
           "evidence": {
             "file": "routes/payment.ts",
-            "start_line": 61,
-            "end_line": 61,
-            "excerpt": "      res.status(200).json({ status: 'success', data: displayableCard })"
+            "start_line": 55,
+            "end_line": 55,
+            "excerpt": "      displayableCard.expYear = card.expYear"
           },
           "note": "response; ts-join; evidenced"
         },
@@ -1989,26 +1989,6 @@
         {
           "operation": "Expose",
           "evidence": {
-            "file": "routes/securityQuestion.ts",
-            "start_line": 23,
-            "end_line": 23,
-            "excerpt": "        res.json({ question })"
-          },
-          "note": "response; ts-join; evidenced"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "server.ts",
-            "start_line": 540,
-            "end_line": 546,
-            "excerpt": "    const resource = finale.resource({\n      model,\n      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],\n      excludeAttributes: exclude,\n      pagination: false,\n      include\n    })"
-          },
-          "note": "response; ts-join; inferred; finale generated read response"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
             "file": "server.ts",
             "start_line": 625,
             "end_line": 631,
@@ -2056,7 +2036,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; username referenced in $VAR"
         },
@@ -2130,7 +2110,7 @@
             "file": "server.ts",
             "start_line": 440,
             "end_line": 451,
-            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
           },
           "note": "middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users"
         },
@@ -2198,16 +2178,6 @@
           "operation": "Expose",
           "evidence": {
             "file": "server.ts",
-            "start_line": 540,
-            "end_line": 546,
-            "excerpt": "    const resource = finale.resource({\n      model,\n      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],\n      excludeAttributes: exclude,\n      pagination: false,\n      include\n    })"
-          },
-          "note": "response; ts-join; inferred; finale generated read response"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "server.ts",
             "start_line": 625,
             "end_line": 631,
             "excerpt": "    resource.all.send.before((req: Request, res: Response, context: { instance: { status: string, data: any }, continue: any }) => {\n      context.instance = {\n        status: 'success',\n        data: context.instance\n      }\n      return context.continue\n    })"
@@ -2220,7 +2190,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         },
@@ -2230,7 +2200,7 @@
             "file": "data/datacreator.ts",
             "start_line": 326,
             "end_line": 329,
-            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      «SECRET»)\n    })"
+            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      password: makeRandomString(5)\n    })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         }
@@ -2244,7 +2214,7 @@
           "file": "models/user.ts",
           "start_line": 70,
           "end_line": 75,
-          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set («SECRET») {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
+          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set (clearTextPassword: string) {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
         }
       },
       "operations": [
@@ -2264,7 +2234,7 @@
             "file": "frontend/src/app/register/register.component.ts",
             "start_line": 99,
             "end_line": 99,
-            "excerpt": "        «SECRET»).password,"
+            "excerpt": "        password: this.registerModel().password,"
           },
           "note": "component; ts-join; evidenced"
         },
@@ -2294,7 +2264,7 @@
             "file": "server.ts",
             "start_line": 440,
             "end_line": 451,
-            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
           },
           "note": "middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users"
         },
@@ -2334,7 +2304,7 @@
             "file": "models/user.ts",
             "start_line": 70,
             "end_line": 75,
-            "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set («SECRET») {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
+            "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set (clearTextPassword: string) {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
           },
           "note": "model; ts-join; inferred; finale generated model write"
         },
@@ -2364,7 +2334,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; password referenced in $VAR"
         },
@@ -2374,7 +2344,7 @@
             "file": "data/datacreator.ts",
             "start_line": 326,
             "end_line": 329,
-            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      «SECRET»)\n    })"
+            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      password: makeRandomString(5)\n    })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; password referenced in $VAR"
         },
@@ -2384,7 +2354,7 @@
             "file": "routes/authenticatedUsers.ts",
             "start_line": 14,
             "end_line": 31,
-            "excerpt": "    res.json({\n      status: 'success',\n      data: users.map((user) => {\n        const «SECRET»)\n        let lastLoginTime: number | null = null\n        if (userToken) {\n          const «SECRET», { json: true })\n          lastLoginTime = parsedToken ? Math.floor(new Date(parsedToken?.iat ?? 0 * 1000).getTime()) : null\n        }\n\n        return {\n          ...user.dataValues,\n…"
+            "excerpt": "    res.json({\n      status: 'success',\n      data: users.map((user) => {\n        const userToken = security.authenticatedUsers.tokenOf(user)\n        let lastLoginTime: number | null = null\n        if (userToken) {\n          const parsedToken = decode(userToken, { json: true })\n          lastLoginTime = parsedToken ? Math.floor(new Date(parsedToken?.iat ?? 0 * 1000).getTime()) : null\n        }\n\n        return {\n          ...user.dataValues,\n…"
           },
           "note": "response; semgrep:op-expose-response-json; evidenced; password referenced in $VAR"
         },
@@ -2394,7 +2364,7 @@
             "file": "routes/changePassword.ts",
             "start_line": 51,
             "end_line": 51,
-            "excerpt": "      await user.update({ «SECRET» })"
+            "excerpt": "      await user.update({ password: newPasswordInString })"
           },
           "note": "model; semgrep:op-store-sequelize-update; evidenced; password referenced in $VAR"
         },
@@ -2404,7 +2374,7 @@
             "file": "routes/resetPassword.ts",
             "start_line": 44,
             "end_line": 44,
-            "excerpt": "          const updatedUser = await user.update({ «SECRET» })"
+            "excerpt": "          const updatedUser = await user.update({ password: newPassword })"
           },
           "note": "model; semgrep:op-store-sequelize-update; evidenced; password referenced in $VAR"
         }
@@ -2428,7 +2398,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; deluxeToken referenced in $VAR"
         },
@@ -2438,7 +2408,7 @@
             "file": "routes/deluxe.ts",
             "start_line": 43,
             "end_line": 43,
-            "excerpt": "        const updatedUser = await user.update({ role: security.roles.deluxe, «SECRET») })"
+            "excerpt": "        const updatedUser = await user.update({ role: security.roles.deluxe, deluxeToken: security.deluxeToken(user.email) })"
           },
           "note": "model; semgrep:op-store-sequelize-update; evidenced; deluxeToken referenced in $VAR"
         }
@@ -2462,7 +2432,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; lastLoginIp referenced in $VAR"
         },
@@ -2496,7 +2466,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; profileImage referenced in $VAR"
         },
@@ -2550,7 +2520,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; totpSecret referenced in $VAR"
         },
@@ -2560,7 +2530,7 @@
             "file": "routes/authenticatedUsers.ts",
             "start_line": 14,
             "end_line": 31,
-            "excerpt": "    res.json({\n      status: 'success',\n      data: users.map((user) => {\n        const «SECRET»)\n        let lastLoginTime: number | null = null\n        if (userToken) {\n          const «SECRET», { json: true })\n          lastLoginTime = parsedToken ? Math.floor(new Date(parsedToken?.iat ?? 0 * 1000).getTime()) : null\n        }\n\n        return {\n          ...user.dataValues,\n…"
+            "excerpt": "    res.json({\n      status: 'success',\n      data: users.map((user) => {\n        const userToken = security.authenticatedUsers.tokenOf(user)\n        let lastLoginTime: number | null = null\n        if (userToken) {\n          const parsedToken = decode(userToken, { json: true })\n          lastLoginTime = parsedToken ? Math.floor(new Date(parsedToken?.iat ?? 0 * 1000).getTime()) : null\n        }\n\n        return {\n          ...user.dataValues,\n…"
           },
           "note": "response; semgrep:op-expose-response-json; evidenced; totpSecret referenced in $VAR"
         }
@@ -2726,7 +2696,7 @@
           "file": "routes/changePassword.ts",
           "start_line": 14,
           "end_line": 14,
-          "excerpt": "    const «SECRET» as string"
+          "excerpt": "    const currentPassword = query.current as string"
         }
       },
       "operations": [
@@ -2760,7 +2730,7 @@
           "file": "routes/changePassword.ts",
           "start_line": 15,
           "end_line": 15,
-          "excerpt": "    const «SECRET» as string"
+          "excerpt": "    const newPassword = query.new as string"
         }
       },
       "operations": [
@@ -2794,7 +2764,7 @@
           "file": "routes/changePassword.ts",
           "start_line": 17,
           "end_line": 17,
-          "excerpt": "    const «SECRET»"
+          "excerpt": "    const repeatPassword = query.repeat"
         }
       },
       "operations": [
@@ -2969,7 +2939,7 @@
           "file": "routes/resetPassword.ts",
           "start_line": 20,
           "end_line": 20,
-          "excerpt": "    const «SECRET»"
+          "excerpt": "    const newPassword = body.new"
         }
       },
       "operations": []
@@ -2982,7 +2952,7 @@
           "file": "routes/resetPassword.ts",
           "start_line": 21,
           "end_line": 21,
-          "excerpt": "    const «SECRET»"
+          "excerpt": "    const repeatPassword = body.repeat"
         }
       },
       "operations": []
@@ -3152,7 +3122,7 @@
           "file": "models/user.ts",
           "start_line": 70,
           "end_line": 75,
-          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set («SECRET») {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
+          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set (clearTextPassword: string) {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
         },
         {
           "file": "models/user.ts",
@@ -3243,7 +3213,16 @@
         "status": "not assessed",
         "cache_key": "06d0b7dcb4cb545f26a85a9a86a9b7919c19ebcea9dadc40e0850476dc97913a"
       },
-      "live_probe": null,
+      "live_probe": {
+        "result": "Confirmed",
+        "method": "GET",
+        "route": "/rest/memories",
+        "reason": "The Auditor-created memory was returned without authentication",
+        "request": "Origin: [synthetic origin]; setup: POST /api/Users (finale-generated; server.ts:540-543)",
+        "response": "HTTP 200; Auditor-created record present; values: [masked]; cross-account assertion: Confirmed",
+        "image_revision": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
+        "image_digest": "sha256:b38ed9cd72918923fa405ed073940e79953d755fa134b2e4b474fa6f9b29a63a"
+      },
       "fix_patch": null
     },
     {
@@ -3453,7 +3432,7 @@
           "file": "server.ts",
           "start_line": 440,
           "end_line": 451,
-          "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+          "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
         },
         {
           "file": "server.ts",
@@ -3503,7 +3482,7 @@
             "file": "server.ts",
             "start_line": 440,
             "end_line": 451,
-            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
           },
           {
             "file": "server.ts",
@@ -3569,7 +3548,16 @@
         "status": "not assessed",
         "cache_key": "7e11e87b1a870e44f1c616f5efa493e58d2640ffa2abfa88a8295e0e24c0574f"
       },
-      "live_probe": null,
+      "live_probe": {
+        "result": "Confirmed",
+        "method": "GET",
+        "route": "/rest/memories",
+        "reason": "Wildcard CORS on the Personal Data route",
+        "request": "Origin: [synthetic origin]",
+        "response": "HTTP 200; Access-Control-Allow-Origin: *; body: [masked]",
+        "image_revision": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
+        "image_digest": "sha256:b38ed9cd72918923fa405ed073940e79953d755fa134b2e4b474fa6f9b29a63a"
+      },
       "fix_patch": null
     },
     {
@@ -3624,7 +3612,7 @@
           "file": "routes/changePassword.ts",
           "start_line": 14,
           "end_line": 14,
-          "excerpt": "    const «SECRET» as string"
+          "excerpt": "    const currentPassword = query.current as string"
         }
       },
       "data_category": "Authentication Secret",
@@ -3699,7 +3687,7 @@
           "file": "models/user.ts",
           "start_line": 70,
           "end_line": 75,
-          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set («SECRET») {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
+          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set (clearTextPassword: string) {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
         },
         {
           "file": "lib/insecurity.ts",
@@ -3725,7 +3713,7 @@
             "file": "frontend/src/app/register/register.component.ts",
             "start_line": 99,
             "end_line": 99,
-            "excerpt": "        «SECRET»).password,"
+            "excerpt": "        password: this.registerModel().password,"
           },
           "note": "component; ts-join; evidenced"
         },
@@ -3755,7 +3743,7 @@
             "file": "server.ts",
             "start_line": 440,
             "end_line": 451,
-            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
           },
           "note": "middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users"
         },
@@ -3805,7 +3793,7 @@
             "file": "models/user.ts",
             "start_line": 70,
             "end_line": 75,
-            "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set («SECRET») {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
+            "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set (clearTextPassword: string) {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
           },
           "note": "model; ts-join; inferred; finale generated model write"
         },
@@ -3835,7 +3823,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; password referenced in $VAR"
         },
@@ -3845,7 +3833,7 @@
             "file": "data/datacreator.ts",
             "start_line": 326,
             "end_line": 329,
-            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      «SECRET»)\n    })"
+            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      password: makeRandomString(5)\n    })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; password referenced in $VAR"
         },
@@ -3855,7 +3843,7 @@
             "file": "routes/authenticatedUsers.ts",
             "start_line": 14,
             "end_line": 31,
-            "excerpt": "    res.json({\n      status: 'success',\n      data: users.map((user) => {\n        const «SECRET»)\n        let lastLoginTime: number | null = null\n        if (userToken) {\n          const «SECRET», { json: true })\n          lastLoginTime = parsedToken ? Math.floor(new Date(parsedToken?.iat ?? 0 * 1000).getTime()) : null\n        }\n\n        return {\n          ...user.dataValues,\n…"
+            "excerpt": "    res.json({\n      status: 'success',\n      data: users.map((user) => {\n        const userToken = security.authenticatedUsers.tokenOf(user)\n        let lastLoginTime: number | null = null\n        if (userToken) {\n          const parsedToken = decode(userToken, { json: true })\n          lastLoginTime = parsedToken ? Math.floor(new Date(parsedToken?.iat ?? 0 * 1000).getTime()) : null\n        }\n\n        return {\n          ...user.dataValues,\n…"
           },
           "note": "response; semgrep:op-expose-response-json; evidenced; password referenced in $VAR"
         },
@@ -3865,7 +3853,7 @@
             "file": "routes/changePassword.ts",
             "start_line": 51,
             "end_line": 51,
-            "excerpt": "      await user.update({ «SECRET» })"
+            "excerpt": "      await user.update({ password: newPasswordInString })"
           },
           "note": "model; semgrep:op-store-sequelize-update; evidenced; password referenced in $VAR"
         },
@@ -3875,7 +3863,7 @@
             "file": "routes/resetPassword.ts",
             "start_line": 44,
             "end_line": 44,
-            "excerpt": "          const updatedUser = await user.update({ «SECRET» })"
+            "excerpt": "          const updatedUser = await user.update({ password: newPassword })"
           },
           "note": "model; semgrep:op-store-sequelize-update; evidenced; password referenced in $VAR"
         }
@@ -3887,7 +3875,7 @@
           "file": "models/user.ts",
           "start_line": 70,
           "end_line": 75,
-          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set («SECRET») {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
+          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set (clearTextPassword: string) {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
         }
       },
       "data_category": "Authentication Secret",
@@ -3899,7 +3887,7 @@
             "file": "models/user.ts",
             "start_line": 70,
             "end_line": 75,
-            "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set («SECRET») {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
+            "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set (clearTextPassword: string) {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
           },
           {
             "file": "lib/insecurity.ts",
@@ -3936,14 +3924,14 @@
         "guidance": "Store Authentication Secrets with a current, salted, deliberately slow password hashing function, never with a plain or fast unsalted digest. Re-hash each existing record with the new function the next time the Data Principal authenticates. Rule 6(1)(a) requires protection of the Personal Data these secrets guard, and a weak hash removes that protection once the store is read.",
         "tailored": {
           "status": "not assessed",
-          "cache_key": "1800b25cbf9c839293bf65ea433fa836a3be73d8f9f16df1e0c9e5af44c521b8"
+          "cache_key": "06d9b524f3cf73edac73897d9dcdea40f4f54c955fcc4a2b715a749686925a27"
         }
       },
       "status": "open",
       "legal_review": null,
       "llm_triage": {
         "status": "not assessed",
-        "cache_key": "0e596b70764e8e65ac826812bc61a70c7fbe697bfd7f99aa54ef0d8d9a1d248f"
+        "cache_key": "b0f84242fcd9123e2247cfb5c5daf48c29514c2d92adf609c43389ec01f8be7c"
       },
       "live_probe": null,
       "fix_patch": null
@@ -4361,7 +4349,7 @@
           "file": "server.ts",
           "start_line": 440,
           "end_line": 451,
-          "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+          "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
         },
         {
           "file": "server.ts",
@@ -4420,7 +4408,7 @@
             "file": "server.ts",
             "start_line": 440,
             "end_line": 451,
-            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
           },
           {
             "file": "server.ts",
@@ -4564,7 +4552,7 @@
             "file": "server.ts",
             "start_line": 440,
             "end_line": 451,
-            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
           },
           "note": "middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users"
         },
@@ -4642,16 +4630,6 @@
           "operation": "Expose",
           "evidence": {
             "file": "server.ts",
-            "start_line": 540,
-            "end_line": 546,
-            "excerpt": "    const resource = finale.resource({\n      model,\n      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],\n      excludeAttributes: exclude,\n      pagination: false,\n      include\n    })"
-          },
-          "note": "response; ts-join; inferred; finale generated read response"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "server.ts",
             "start_line": 625,
             "end_line": 631,
             "excerpt": "    resource.all.send.before((req: Request, res: Response, context: { instance: { status: string, data: any }, continue: any }) => {\n      context.instance = {\n        status: 'success',\n        data: context.instance\n      }\n      return context.continue\n    })"
@@ -4664,7 +4642,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         },
@@ -4674,7 +4652,7 @@
             "file": "data/datacreator.ts",
             "start_line": 326,
             "end_line": 329,
-            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      «SECRET»)\n    })"
+            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      password: makeRandomString(5)\n    })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         }
@@ -4805,7 +4783,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; totpSecret referenced in $VAR"
         },
@@ -4815,7 +4793,7 @@
             "file": "routes/authenticatedUsers.ts",
             "start_line": 14,
             "end_line": 31,
-            "excerpt": "    res.json({\n      status: 'success',\n      data: users.map((user) => {\n        const «SECRET»)\n        let lastLoginTime: number | null = null\n        if (userToken) {\n          const «SECRET», { json: true })\n          lastLoginTime = parsedToken ? Math.floor(new Date(parsedToken?.iat ?? 0 * 1000).getTime()) : null\n        }\n\n        return {\n          ...user.dataValues,\n…"
+            "excerpt": "    res.json({\n      status: 'success',\n      data: users.map((user) => {\n        const userToken = security.authenticatedUsers.tokenOf(user)\n        let lastLoginTime: number | null = null\n        if (userToken) {\n          const parsedToken = decode(userToken, { json: true })\n          lastLoginTime = parsedToken ? Math.floor(new Date(parsedToken?.iat ?? 0 * 1000).getTime()) : null\n        }\n\n        return {\n          ...user.dataValues,\n…"
           },
           "note": "response; semgrep:op-expose-response-json; evidenced; totpSecret referenced in $VAR"
         }
@@ -4924,7 +4902,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; deluxeToken referenced in $VAR"
         },
@@ -4934,7 +4912,7 @@
             "file": "routes/deluxe.ts",
             "start_line": 43,
             "end_line": 43,
-            "excerpt": "        const updatedUser = await user.update({ role: security.roles.deluxe, «SECRET») })"
+            "excerpt": "        const updatedUser = await user.update({ role: security.roles.deluxe, deluxeToken: security.deluxeToken(user.email) })"
           },
           "note": "model; semgrep:op-store-sequelize-update; evidenced; deluxeToken referenced in $VAR"
         }
@@ -5111,9 +5089,9 @@
           "operation": "Expose",
           "evidence": {
             "file": "routes/payment.ts",
-            "start_line": 35,
-            "end_line": 35,
-            "excerpt": "    res.status(200).json({ status: 'success', data: displayableCards })"
+            "start_line": 32,
+            "end_line": 32,
+            "excerpt": "      displayableCard.cardNum = '*'.repeat(12) + cardNumber.substring(cardNumber.length - 4)"
           },
           "note": "response; ts-join; evidenced; masked"
         },
@@ -5121,9 +5099,9 @@
           "operation": "Expose",
           "evidence": {
             "file": "routes/payment.ts",
-            "start_line": 61,
-            "end_line": 61,
-            "excerpt": "      res.status(200).json({ status: 'success', data: displayableCard })"
+            "start_line": 58,
+            "end_line": 58,
+            "excerpt": "      displayableCard.cardNum = '*'.repeat(12) + cardNumber.substring(cardNumber.length - 4)"
           },
           "note": "response; ts-join; evidenced; masked"
         },
@@ -5299,26 +5277,6 @@
         {
           "operation": "Expose",
           "evidence": {
-            "file": "routes/securityQuestion.ts",
-            "start_line": 23,
-            "end_line": 23,
-            "excerpt": "        res.json({ question })"
-          },
-          "note": "response; ts-join; evidenced"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "server.ts",
-            "start_line": 540,
-            "end_line": 546,
-            "excerpt": "    const resource = finale.resource({\n      model,\n      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],\n      excludeAttributes: exclude,\n      pagination: false,\n      include\n    })"
-          },
-          "note": "response; ts-join; inferred; finale generated read response"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
             "file": "server.ts",
             "start_line": 625,
             "end_line": 631,
@@ -5467,7 +5425,7 @@
           "file": "routes/changePassword.ts",
           "start_line": 14,
           "end_line": 14,
-          "excerpt": "    const «SECRET» as string"
+          "excerpt": "    const currentPassword = query.current as string"
         }
       },
       "data_category": "Authentication Secret",
@@ -6016,7 +5974,7 @@
             "file": "server.ts",
             "start_line": 440,
             "end_line": 451,
-            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
           },
           "note": "middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users"
         },
@@ -6094,16 +6052,6 @@
           "operation": "Expose",
           "evidence": {
             "file": "server.ts",
-            "start_line": 540,
-            "end_line": 546,
-            "excerpt": "    const resource = finale.resource({\n      model,\n      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],\n      excludeAttributes: exclude,\n      pagination: false,\n      include\n    })"
-          },
-          "note": "response; ts-join; inferred; finale generated read response"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "server.ts",
             "start_line": 625,
             "end_line": 631,
             "excerpt": "    resource.all.send.before((req: Request, res: Response, context: { instance: { status: string, data: any }, continue: any }) => {\n      context.instance = {\n        status: 'success',\n        data: context.instance\n      }\n      return context.continue\n    })"
@@ -6116,7 +6064,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         },
@@ -6126,7 +6074,7 @@
             "file": "data/datacreator.ts",
             "start_line": 326,
             "end_line": 329,
-            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      «SECRET»)\n    })"
+            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      password: makeRandomString(5)\n    })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         }
@@ -6190,7 +6138,16 @@
         "status": "not assessed",
         "cache_key": "836f47fc3625284c62e3a4a6d363cfab60e68688aab09c4abd16d72c8ea83c99"
       },
-      "live_probe": null,
+      "live_probe": {
+        "result": "Confirmed",
+        "method": "POST",
+        "route": "/dataerasure",
+        "reason": "The Auditor-created account remained readable after its erasure request",
+        "request": "Cookie and account values: [masked]",
+        "response": "HTTP 200; subsequent account authentication succeeded; values: [masked]",
+        "image_revision": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
+        "image_digest": "sha256:b38ed9cd72918923fa405ed073940e79953d755fa134b2e4b474fa6f9b29a63a"
+      },
       "fix_patch": null
     },
     {
@@ -6256,7 +6213,7 @@
             "file": "server.ts",
             "start_line": 440,
             "end_line": 451,
-            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
           },
           "note": "middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users"
         },
@@ -6334,16 +6291,6 @@
           "operation": "Expose",
           "evidence": {
             "file": "server.ts",
-            "start_line": 540,
-            "end_line": 546,
-            "excerpt": "    const resource = finale.resource({\n      model,\n      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],\n      excludeAttributes: exclude,\n      pagination: false,\n      include\n    })"
-          },
-          "note": "response; ts-join; inferred; finale generated read response"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "server.ts",
             "start_line": 625,
             "end_line": 631,
             "excerpt": "    resource.all.send.before((req: Request, res: Response, context: { instance: { status: string, data: any }, continue: any }) => {\n      context.instance = {\n        status: 'success',\n        data: context.instance\n      }\n      return context.continue\n    })"
@@ -6356,7 +6303,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         },
@@ -6366,7 +6313,7 @@
             "file": "data/datacreator.ts",
             "start_line": 326,
             "end_line": 329,
-            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      «SECRET»)\n    })"
+            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      password: makeRandomString(5)\n    })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         }
@@ -6494,7 +6441,7 @@
           "file": "models/user.ts",
           "start_line": 70,
           "end_line": 75,
-          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set («SECRET») {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
+          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set (clearTextPassword: string) {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
         },
         {
           "file": "models/user.ts",
@@ -6580,7 +6527,7 @@
             "file": "server.ts",
             "start_line": 440,
             "end_line": 451,
-            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
           },
           "note": "middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users"
         },
@@ -6658,16 +6605,6 @@
           "operation": "Expose",
           "evidence": {
             "file": "server.ts",
-            "start_line": 540,
-            "end_line": 546,
-            "excerpt": "    const resource = finale.resource({\n      model,\n      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],\n      excludeAttributes: exclude,\n      pagination: false,\n      include\n    })"
-          },
-          "note": "response; ts-join; inferred; finale generated read response"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "server.ts",
             "start_line": 625,
             "end_line": 631,
             "excerpt": "    resource.all.send.before((req: Request, res: Response, context: { instance: { status: string, data: any }, continue: any }) => {\n      context.instance = {\n        status: 'success',\n        data: context.instance\n      }\n      return context.continue\n    })"
@@ -6680,7 +6617,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         },
@@ -6690,7 +6627,7 @@
             "file": "data/datacreator.ts",
             "start_line": 326,
             "end_line": 329,
-            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      «SECRET»)\n    })"
+            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      password: makeRandomString(5)\n    })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         }
@@ -6880,7 +6817,7 @@
             "file": "server.ts",
             "start_line": 440,
             "end_line": 451,
-            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.«SECRET»)\n        req.body.«SECRET»)\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
+            "excerpt": "  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {\n    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {\n      if (req.body.email.length !== 0 && req.body.password.length !== 0) {\n        req.body.email = req.body.email.trim()\n        req.body.password = req.body.password.trim()\n        req.body.passwordRepeat = req.body.passwordRepeat.trim()\n      } else {\n        res.status(400).send(res.__('Invalid email/password cannot be empty'))\n      }\n    }\n    next()\n  })"
           },
           "note": "middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users"
         },
@@ -6958,16 +6895,6 @@
           "operation": "Expose",
           "evidence": {
             "file": "server.ts",
-            "start_line": 540,
-            "end_line": 546,
-            "excerpt": "    const resource = finale.resource({\n      model,\n      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],\n      excludeAttributes: exclude,\n      pagination: false,\n      include\n    })"
-          },
-          "note": "response; ts-join; inferred; finale generated read response"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "server.ts",
             "start_line": 625,
             "end_line": 631,
             "excerpt": "    resource.all.send.before((req: Request, res: Response, context: { instance: { status: string, data: any }, continue: any }) => {\n      context.instance = {\n        status: 'success',\n        data: context.instance\n      }\n      return context.continue\n    })"
@@ -6980,7 +6907,7 @@
             "file": "data/datacreator.ts",
             "start_line": 192,
             "end_line": 201,
-            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          «SECRET» === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
+            "excerpt": "        const user = await UserModel.create({\n          username,\n          email: completeEmail,\n          password,\n          role,\n          deluxeToken: role === security.roles.deluxe ? security.deluxeToken(completeEmail) : '',\n          profileImage: `assets/public/images/uploads/${profileImage ?? (role === security.roles.admin ? 'defaultAdmin.png' : 'default.svg')}`,\n          totpSecret,\n          lastLoginIp\n        })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         },
@@ -6990,7 +6917,7 @@
             "file": "data/datacreator.ts",
             "start_line": 326,
             "end_line": 329,
-            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      «SECRET»)\n    })"
+            "excerpt": "    async () => await UserModel.create({\n      email: getGeneratedRandomFakeUserEmail(),\n      password: makeRandomString(5)\n    })"
           },
           "note": "model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR"
         }
@@ -7054,6 +6981,144 @@
         "cache_key": "20bbfd5b9f35a810b4b87e92748ecf598a6206c3900026c4f1d72d382e8fd193"
       },
       "live_probe": null,
+      "fix_patch": null
+    },
+    {
+      "id": "SEC-08-a0e14c48e6ad",
+      "issue_type": "SEC-08",
+      "rules_fired": [
+        "SEC-08-ts-nested-records"
+      ],
+      "kind": "security-personal-data",
+      "classification": "technical",
+      "evidence": [
+        {
+          "file": "routes/memory.ts",
+          "start_line": 24,
+          "end_line": 24,
+          "excerpt": "    const memories = await MemoryModel.findAll({ include: [UserModel] })"
+        },
+        {
+          "file": "server.ts",
+          "start_line": 670,
+          "end_line": 670,
+          "excerpt": "  app.get('/rest/memories', utils.asyncHandler(getMemories()))"
+        },
+        {
+          "file": "models/user.ts",
+          "start_line": 44,
+          "end_line": 55,
+          "excerpt": "      username: {\n        type: DataTypes.STRING,\n        defaultValue: '',\n        set (username: string) {\n          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {\n            username = security.sanitizeLegacy(username)\n          } else {\n            username = security.sanitizeSecure(username)\n          }\n          this.setDataValue('username', username)\n        }\n      },"
+        },
+        {
+          "file": "models/user.ts",
+          "start_line": 56,
+          "end_line": 69,
+          "excerpt": "      email: {\n        type: DataTypes.STRING,\n        unique: true,\n        set (email: string) {\n          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {\n            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {\n              return email?.includes('<iframe src=\"javascript:alert(`xss`)\">') ?? false\n            })\n          } else {\n            email = security.sanitizeSecure(email)\n          }\n          this.setDataValue('email', email)\n…"
+        },
+        {
+          "file": "models/user.ts",
+          "start_line": 70,
+          "end_line": 75,
+          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        set (clearTextPassword: string) {\n          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge\n        }\n      }, // vuln-code-snippet end weakPasswordChallenge"
+        },
+        {
+          "file": "models/user.ts",
+          "start_line": 97,
+          "end_line": 100,
+          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        defaultValue: ''\n      },"
+        },
+        {
+          "file": "models/user.ts",
+          "start_line": 101,
+          "end_line": 104,
+          "excerpt": "      lastLoginIp: {\n        type: DataTypes.STRING,\n        defaultValue: '0.0.0.0'\n      },"
+        },
+        {
+          "file": "models/user.ts",
+          "start_line": 105,
+          "end_line": 108,
+          "excerpt": "      profileImage: {\n        type: DataTypes.STRING,\n        defaultValue:«SECRET».svg'\n      },"
+        },
+        {
+          "file": "models/user.ts",
+          "start_line": 109,
+          "end_line": 112,
+          "excerpt": "      «SECRET»\n        type: DataTypes.STRING,\n        defaultValue: ''\n      },"
+        }
+      ],
+      "data_flow": [],
+      "personal_data_element": {
+        "name": "model:User.username",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "models/user.ts",
+          "start_line": 44,
+          "end_line": 55,
+          "excerpt": "      username: {\n        type: DataTypes.STRING,\n        defaultValue: '',\n        set (username: string) {\n          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {\n            username = security.sanitizeLegacy(username)\n          } else {\n            username = security.sanitizeSecure(username)\n          }\n          this.setDataValue('username', username)\n        }\n      },"
+        }
+      },
+      "data_category": "Profile",
+      "processing_operation": "Expose",
+      "exposure": {
+        "level": "Public",
+        "derived_from": [
+          {
+            "file": "server.ts",
+            "start_line": 670,
+            "end_line": 670,
+            "excerpt": "  app.get('/rest/memories', utils.asyncHandler(getMemories()))"
+          }
+        ]
+      },
+      "primary_provision": "DPDP-Rule-6(1)(b)",
+      "other_provisions": [
+        "DPDP-Act-6(1)",
+        "CWE-213",
+        "OWASP-API3-2023"
+      ],
+      "penalty_ceiling": {
+        "parent_section": "DPDP-Act-8(5)",
+        "amount_inr_crore": 250
+      },
+      "enforceable_from": "2027-05-14",
+      "cvss": {
+        "status": "scored",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L",
+        "score": 7.9
+      },
+      "risk_matrix": {
+        "tier": "C",
+        "exposure": "Public",
+        "cell": "high"
+      },
+      "severity": {
+        "band": "high",
+        "justification": "model:User.username (Profile) has Public Exposure based on Evidence at server.ts:670; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33)."
+      },
+      "recommended_fix": {
+        "guidance": "Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control.",
+        "tailored": {
+          "status": "not assessed",
+          "cache_key": "54afb5f26ae0e3729671826a421ae52a73b1d2cb986a011a302aabc55cd3d423"
+        }
+      },
+      "status": "open",
+      "legal_review": null,
+      "llm_triage": {
+        "status": "not assessed",
+        "cache_key": "54afb5f26ae0e3729671826a421ae52a73b1d2cb986a011a302aabc55cd3d423"
+      },
+      "live_probe": {
+        "result": "Confirmed",
+        "method": "GET",
+        "route": "/rest/memories",
+        "reason": "Nested account Personal Data was returned with the Auditor-created memory",
+        "request": "Origin: [synthetic origin]; setup: POST /api/Users (finale-generated; server.ts:540-543)",
+        "response": "HTTP 200; nested account email present; values: [masked]",
+        "image_revision": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
+        "image_digest": "sha256:b38ed9cd72918923fa405ed073940e79953d755fa134b2e4b474fa6f9b29a63a"
+      },
       "fix_patch": null
     }
   ],
@@ -7173,10 +7238,12 @@
       "title": "Notice",
       "classification": "not determinable",
       "rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ],
       "not_determinable_rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ]
     },
     {
@@ -7185,10 +7252,12 @@
       "title": "Notice to accompany or precede a consent request",
       "classification": "not determinable",
       "rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ],
       "not_determinable_rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ]
     },
     {
@@ -7204,10 +7273,12 @@
       "title": "Language of notice",
       "classification": "not determinable",
       "rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ],
       "not_determinable_rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ]
     },
     {
@@ -7219,10 +7290,14 @@
         "CON-01-express-enforcement",
         "CON-02-angular-bundled-purposes",
         "CON-03-angular-default-true",
+        "CON-03-django-default-selected",
+        "CON-04-django-comparable-paths",
         "CON-04-express-withdrawal-path",
         "CON-05-express-processor-withdrawal",
+        "CON-06-django-incomplete-record",
         "CON-06-sequelize-consent-record",
         "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice",
         "CON-08-angular-excess-elements",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
@@ -7232,10 +7307,14 @@
         "CON-01-express-enforcement",
         "CON-02-angular-bundled-purposes",
         "CON-03-angular-default-true",
+        "CON-03-django-default-selected",
+        "CON-04-django-comparable-paths",
         "CON-04-express-withdrawal-path",
         "CON-05-express-processor-withdrawal",
+        "CON-06-django-incomplete-record",
         "CON-06-sequelize-consent-record",
         "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice",
         "CON-08-angular-excess-elements"
       ]
     },
@@ -7248,6 +7327,7 @@
         "CON-01-express-enforcement",
         "CON-02-angular-bundled-purposes",
         "CON-03-angular-default-true",
+        "CON-03-django-default-selected",
         "CON-08-angular-excess-elements",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
@@ -7257,6 +7337,7 @@
         "CON-01-express-enforcement",
         "CON-02-angular-bundled-purposes",
         "CON-03-angular-default-true",
+        "CON-03-django-default-selected",
         "CON-08-angular-excess-elements"
       ]
     },
@@ -7273,10 +7354,12 @@
       "title": "Clear and plain request for consent",
       "classification": "not determinable",
       "rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ],
       "not_determinable_rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ]
     },
     {
@@ -7285,9 +7368,11 @@
       "title": "Right to withdraw consent",
       "classification": "not determinable",
       "rules": [
+        "CON-04-django-comparable-paths",
         "CON-04-express-withdrawal-path"
       ],
       "not_determinable_rules": [
+        "CON-04-django-comparable-paths",
         "CON-04-express-withdrawal-path"
       ]
     },
@@ -7337,9 +7422,11 @@
       "title": "Burden of proof for consent",
       "classification": "not determinable",
       "rules": [
+        "CON-06-django-incomplete-record",
         "CON-06-sequelize-consent-record"
       ],
       "not_determinable_rules": [
+        "CON-06-django-incomplete-record",
         "CON-06-sequelize-consent-record"
       ]
     },
@@ -8612,12 +8699,16 @@
       "title": "Notice given by Data Fiduciary to Data Principal",
       "classification": "not determinable",
       "rules": [
+        "CON-04-django-comparable-paths",
         "CON-04-express-withdrawal-path",
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ],
       "not_determinable_rules": [
+        "CON-04-django-comparable-paths",
         "CON-04-express-withdrawal-path",
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ]
     },
     {
@@ -8626,10 +8717,12 @@
       "title": "Notice given by Data Fiduciary to Data Principal",
       "classification": "not determinable",
       "rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ],
       "not_determinable_rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ]
     },
     {
@@ -8638,10 +8731,12 @@
       "title": "Notice given by Data Fiduciary to Data Principal",
       "classification": "not determinable",
       "rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ],
       "not_determinable_rules": [
-        "CON-07-angular-consent-notice"
+        "CON-07-angular-consent-notice",
+        "CON-07-django-unitemised-notice"
       ]
     },
     {
@@ -8650,9 +8745,11 @@
       "title": "Notice given by Data Fiduciary to Data Principal",
       "classification": "not determinable",
       "rules": [
+        "CON-04-django-comparable-paths",
         "CON-04-express-withdrawal-path"
       ],
       "not_determinable_rules": [
+        "CON-04-django-comparable-paths",
         "CON-04-express-withdrawal-path"
       ]
     },
@@ -8662,9 +8759,11 @@
       "title": "Notice given by Data Fiduciary to Data Principal",
       "classification": "not determinable",
       "rules": [
+        "CON-04-django-comparable-paths",
         "CON-04-express-withdrawal-path"
       ],
       "not_determinable_rules": [
+        "CON-04-django-comparable-paths",
         "CON-04-express-withdrawal-path"
       ]
     },
@@ -8689,8 +8788,12 @@
       "classification": "not determinable",
       "rules": [
         "MON-01-monitoring-coverage",
+        "SEC-01-nginx-query-logging",
         "SEC-01-ts-morgan-query-secrets",
+        "SEC-02-django-plain-fields",
         "SEC-02-sequelize-plain-fields",
+        "SEC-03-django-aadhaar-storage",
+        "SEC-03-fastapi-aadhaar-response",
         "SEC-03-sequelize-aadhaar-storage",
         "SEC-04-ts-md5-password-hash",
         "SEC-05-ts-hardcoded-jwt-key",
@@ -8701,12 +8804,15 @@
         "SEC-08-ts-review-author",
         "SEC-09-ts-query-authentication-secret",
         "SEC-10-ts-storage-header",
+        "SEC-11-fastapi-wildcard-cors",
         "SEC-11-ts-wildcard-cors",
         "SEC-12-express-access-logging",
         "SEC-13-ts-access-log-retention",
         "SEC-14-terraform-store-backup",
         "SEC-15-committed-personal-data",
         "SEC-16-docker-root-container",
+        "SEC-16-kubernetes-privileged-store",
+        "SEC-16-kubernetes-public-store",
         "SEC-16-terraform-public-storage",
         "SEC-16-terraform-public-store"
       ],
@@ -8722,8 +8828,12 @@
       "classification": "not determinable",
       "rules": [
         "MON-01-monitoring-coverage",
+        "SEC-01-nginx-query-logging",
         "SEC-01-ts-morgan-query-secrets",
+        "SEC-02-django-plain-fields",
         "SEC-02-sequelize-plain-fields",
+        "SEC-03-django-aadhaar-storage",
+        "SEC-03-fastapi-aadhaar-response",
         "SEC-03-sequelize-aadhaar-storage",
         "SEC-04-ts-md5-password-hash",
         "SEC-05-ts-hardcoded-jwt-key",
@@ -8734,12 +8844,15 @@
         "SEC-08-ts-review-author",
         "SEC-09-ts-query-authentication-secret",
         "SEC-10-ts-storage-header",
+        "SEC-11-fastapi-wildcard-cors",
         "SEC-11-ts-wildcard-cors",
         "SEC-12-express-access-logging",
         "SEC-13-ts-access-log-retention",
         "SEC-14-terraform-store-backup",
         "SEC-15-committed-personal-data",
         "SEC-16-docker-root-container",
+        "SEC-16-kubernetes-privileged-store",
+        "SEC-16-kubernetes-public-store",
         "SEC-16-terraform-public-storage",
         "SEC-16-terraform-public-store"
       ],
@@ -8754,12 +8867,17 @@
       "title": "Reasonable security safeguards",
       "classification": "not determinable",
       "rules": [
+        "SEC-01-nginx-query-logging",
         "SEC-01-ts-morgan-query-secrets",
+        "SEC-02-django-plain-fields",
         "SEC-02-sequelize-plain-fields",
+        "SEC-03-django-aadhaar-storage",
+        "SEC-03-fastapi-aadhaar-response",
         "SEC-03-sequelize-aadhaar-storage",
         "SEC-04-ts-md5-password-hash",
         "SEC-09-ts-query-authentication-secret",
         "SEC-10-ts-storage-header",
+        "SEC-11-fastapi-wildcard-cors",
         "SEC-11-ts-wildcard-cors",
         "SEC-15-committed-personal-data"
       ],
@@ -8780,6 +8898,8 @@
         "SEC-08-ts-nested-records",
         "SEC-08-ts-review-author",
         "SEC-16-docker-root-container",
+        "SEC-16-kubernetes-privileged-store",
+        "SEC-16-kubernetes-public-store",
         "SEC-16-terraform-public-storage",
         "SEC-16-terraform-public-store"
       ]
@@ -9120,7 +9240,476 @@
       "rules": []
     }
   ],
-  "consent_assessment": null,
+  "consent_assessment": {
+    "criteria": [
+      {
+        "criterion": "recorded",
+        "applicability": "not applicable",
+        "reason": "The static inventory identifies a banner but no consent grant or Consent Record.",
+        "assessment": "Not met by the identified banner: no Consent Record was established. A dismiss action is not a consent grant; no grant was established either.",
+        "linked_identifiers": [],
+        "issue_types": [
+          "CON-06"
+        ],
+        "evidence": [
+          {
+            "file": "frontend/src/index.html",
+            "start_line": 19,
+            "end_line": 19,
+            "excerpt": "      window.cookieconsent.initialise({"
+          }
+        ],
+        "step_counts": null
+      },
+      {
+        "criterion": "specific",
+        "applicability": "not determinable",
+        "reason": "No controls established by the static inventory; applicability is not established. The identified banner is not a grant.",
+        "assessment": "Not determinable: a consent control or multiple Purposes not established by the static inventory.",
+        "linked_identifiers": [],
+        "issue_types": [
+          "CON-02",
+          "CON-03"
+        ],
+        "evidence": [
+          {
+            "file": "frontend/src/index.html",
+            "start_line": 19,
+            "end_line": 19,
+            "excerpt": "      window.cookieconsent.initialise({"
+          }
+        ],
+        "step_counts": null
+      },
+      {
+        "criterion": "enforced server-side",
+        "applicability": "not determinable",
+        "reason": "No purposes established by the static inventory; applicability is not established. The identified banner is not a grant.",
+        "assessment": "Not determinable: a Purpose linked to a Processing Operation and its lawful basis not established by the static inventory.",
+        "linked_identifiers": [],
+        "issue_types": [
+          "CON-01"
+        ],
+        "evidence": [
+          {
+            "file": "frontend/src/index.html",
+            "start_line": 19,
+            "end_line": 19,
+            "excerpt": "      window.cookieconsent.initialise({"
+          }
+        ],
+        "step_counts": null
+      },
+      {
+        "criterion": "withdrawable with comparable ease",
+        "applicability": "not applicable",
+        "reason": "The static inventory identifies no consent grant; this is limited to the inspected inventory.",
+        "assessment": "Not assessed; an inapplicable Gate is not a compliance conclusion.",
+        "linked_identifiers": [],
+        "issue_types": [
+          "CON-04"
+        ],
+        "evidence": [
+          {
+            "file": "frontend/src/index.html",
+            "start_line": 19,
+            "end_line": 19,
+            "excerpt": "      window.cookieconsent.initialise({"
+          }
+        ],
+        "step_counts": {
+          "grant": [],
+          "withdrawal": []
+        }
+      },
+      {
+        "criterion": "propagated to Data Processors",
+        "applicability": "not applicable",
+        "reason": "The static inventory identifies no Data Processor receiving Personal Data; this is limited to the inspected inventory.",
+        "assessment": "Not assessed; an inapplicable Gate is not a compliance conclusion.",
+        "linked_identifiers": [],
+        "issue_types": [
+          "CON-05"
+        ],
+        "evidence": [
+          {
+            "file": "frontend/src/index.html",
+            "start_line": 19,
+            "end_line": 19,
+            "excerpt": "      window.cookieconsent.initialise({"
+          }
+        ],
+        "step_counts": null
+      },
+      {
+        "criterion": "preceded by notice",
+        "applicability": "not determinable",
+        "reason": "No controls established by the static inventory; applicability is not established. The identified banner is not a grant.",
+        "assessment": "Not determinable: a consent request linked to notice contents and language options not established by the static inventory.",
+        "linked_identifiers": [
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:18",
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:24",
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:98",
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:100",
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:137",
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:140",
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:147",
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:155",
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:157",
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:160",
+          "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:165",
+          "notice:views/dataErasureForm.hbs:32"
+        ],
+        "issue_types": [
+          "CON-07"
+        ],
+        "evidence": [
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 18,
+            "end_line": 22,
+            "excerpt": "      <p>This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use\n        our Service and the choices you have associated with that data. Our Privacy Policy for {{applicationName}} is\n        created with the help of the <a href=\"https://www.freeprivacypolicy.com/\"\n                                        aria-label=\"Link to the page where the privacy policy was created\">Free Privacy\n          Policy website</a>.</p>"
+          },
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 24,
+            "end_line": 26,
+            "excerpt": "      <p>We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of\n        information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this\n        Privacy Policy have the same meanings as in our Terms and Conditions, accessible from {{applicationUrl}} .</p>"
+          },
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 98,
+            "end_line": 99,
+            "excerpt": "      <p>Your consent to this Privacy Policy followed by your submission of such information represents your agreement to\n        that transfer.</p>"
+          },
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 100,
+            "end_line": 104,
+            "excerpt": "      <p>{{applicationName}} will take all steps <span class=\"hot\">reasonably necessary</span> to ensure that your data is\n        treated securely and in\n        accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a\n        country unless there are adequate controls in place including the security of your data and other personal\n        information.</p>"
+          },
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 137,
+            "end_line": 139,
+            "excerpt": "      <p>Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you\n        will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you\n        visit.</p>"
+          },
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 140,
+            "end_line": 142,
+            "excerpt": "      <p>We have no control over and assume no <span class=\"hot\">responsibility</span> for the content, privacy policies\n        or practices of any third\n        party sites or services.</p>"
+          },
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 147,
+            "end_line": 151,
+            "excerpt": "      <p>We do not knowingly collect personally identifiable information from anyone under the age of 18. If you are a\n        parent or guardian and you are aware that your Children has provided us with Personal Data, please contact us. If\n        we\n        become aware that we have collected Personal Data from children without verification of parental consent, we take\n        steps to remove that information from our servers.</p>"
+          },
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 155,
+            "end_line": 156,
+            "excerpt": "      <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy\n        Policy on this page.</p>"
+          },
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 157,
+            "end_line": 159,
+            "excerpt": "      <p>We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective\n        and\n        update the \"effective date\" at the top of this Privacy Policy.</p>"
+          },
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 160,
+            "end_line": 161,
+            "excerpt": "      <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are\n        effective when they are posted on this page.</p>"
+          },
+          {
+            "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+            "start_line": 165,
+            "end_line": 165,
+            "excerpt": "      <p>If you have any questions about this Privacy Policy, please contact us:</p>"
+          },
+          {
+            "file": "views/dataErasureForm.hbs",
+            "start_line": 32,
+            "end_line": 33,
+            "excerpt": "        <p>We take data security, customer privacy, and legal compliance very serious. In accordance with GDPR we allow\n            you to request complete erasure of your account and any associated data.</p>"
+          },
+          {
+            "file": "frontend/src/index.html",
+            "start_line": 19,
+            "end_line": 19,
+            "excerpt": "      window.cookieconsent.initialise({"
+          }
+        ],
+        "step_counts": null
+      },
+      {
+        "criterion": "verifiable parental consent",
+        "applicability": "not applicable",
+        "reason": "The static inventory identifies no age/DOB collection or explicit Child audience; this is limited to the inspected inventory.",
+        "assessment": "Not assessed; an inapplicable Gate is not a compliance conclusion.",
+        "linked_identifiers": [],
+        "issue_types": [
+          "CHI-01"
+        ],
+        "evidence": [
+          {
+            "file": "frontend/src/index.html",
+            "start_line": 19,
+            "end_line": 19,
+            "excerpt": "      window.cookieconsent.initialise({"
+          }
+        ],
+        "step_counts": null
+      }
+    ],
+    "graph": {
+      "purposes": [],
+      "records": [],
+      "enforcement_points": [],
+      "withdrawal_paths": [],
+      "grant_paths": [],
+      "processors": [],
+      "operations": [],
+      "notices": [
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:18",
+          "purpose_ids": [],
+          "text": "This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use\n        our Service and the choices you have associated with that data. Our Privacy Policy for {{applicationName}} is\n        created with the help of the Free Privacy\n          Policy website.",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 18,
+              "end_line": 22,
+              "excerpt": "      <p>This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use\n        our Service and the choices you have associated with that data. Our Privacy Policy for {{applicationName}} is\n        created with the help of the <a href=\"https://www.freeprivacypolicy.com/\"\n                                        aria-label=\"Link to the page where the privacy policy was created\">Free Privacy\n          Policy website</a>.</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:24",
+          "purpose_ids": [],
+          "text": "We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of\n        information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this\n        Privacy Policy have the same meanings as in our Terms and Conditions, accessible from {{applicationUrl}} .",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 24,
+              "end_line": 26,
+              "excerpt": "      <p>We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of\n        information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this\n        Privacy Policy have the same meanings as in our Terms and Conditions, accessible from {{applicationUrl}} .</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:98",
+          "purpose_ids": [],
+          "text": "Your consent to this Privacy Policy followed by your submission of such information represents your agreement to\n        that transfer.",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 98,
+              "end_line": 99,
+              "excerpt": "      <p>Your consent to this Privacy Policy followed by your submission of such information represents your agreement to\n        that transfer.</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:100",
+          "purpose_ids": [],
+          "text": "{{applicationName}} will take all steps reasonably necessary to ensure that your data is\n        treated securely and in\n        accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a\n        country unless there are adequate controls in place including the security of your data and other personal\n        information.",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 100,
+              "end_line": 104,
+              "excerpt": "      <p>{{applicationName}} will take all steps <span class=\"hot\">reasonably necessary</span> to ensure that your data is\n        treated securely and in\n        accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a\n        country unless there are adequate controls in place including the security of your data and other personal\n        information.</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:137",
+          "purpose_ids": [],
+          "text": "Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you\n        will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you\n        visit.",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 137,
+              "end_line": 139,
+              "excerpt": "      <p>Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you\n        will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you\n        visit.</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:140",
+          "purpose_ids": [],
+          "text": "We have no control over and assume no responsibility for the content, privacy policies\n        or practices of any third\n        party sites or services.",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 140,
+              "end_line": 142,
+              "excerpt": "      <p>We have no control over and assume no <span class=\"hot\">responsibility</span> for the content, privacy policies\n        or practices of any third\n        party sites or services.</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:147",
+          "purpose_ids": [],
+          "text": "We do not knowingly collect personally identifiable information from anyone under the age of 18. If you are a\n        parent or guardian and you are aware that your Children has provided us with Personal Data, please contact us. If\n        we\n        become aware that we have collected Personal Data from children without verification of parental consent, we take\n        steps to remove that information from our servers.",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 147,
+              "end_line": 151,
+              "excerpt": "      <p>We do not knowingly collect personally identifiable information from anyone under the age of 18. If you are a\n        parent or guardian and you are aware that your Children has provided us with Personal Data, please contact us. If\n        we\n        become aware that we have collected Personal Data from children without verification of parental consent, we take\n        steps to remove that information from our servers.</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:155",
+          "purpose_ids": [],
+          "text": "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy\n        Policy on this page.",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 155,
+              "end_line": 156,
+              "excerpt": "      <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy\n        Policy on this page.</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:157",
+          "purpose_ids": [],
+          "text": "We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective\n        and\n        update the \"effective date\" at the top of this Privacy Policy.",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 157,
+              "end_line": 159,
+              "excerpt": "      <p>We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective\n        and\n        update the \"effective date\" at the top of this Privacy Policy.</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:160",
+          "purpose_ids": [],
+          "text": "You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are\n        effective when they are posted on this page.",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 160,
+              "end_line": 161,
+              "excerpt": "      <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are\n        effective when they are posted on this page.</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:frontend/src/app/privacy-policy/privacy-policy.component.html:165",
+          "purpose_ids": [],
+          "text": "If you have any questions about this Privacy Policy, please contact us:",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "frontend/src/app/privacy-policy/privacy-policy.component.html",
+              "start_line": 165,
+              "end_line": 165,
+              "excerpt": "      <p>If you have any questions about this Privacy Policy, please contact us:</p>"
+            }
+          ]
+        },
+        {
+          "id": "notice:views/dataErasureForm.hbs:32",
+          "purpose_ids": [],
+          "text": "We take data security, customer privacy, and legal compliance very serious. In accordance with GDPR we allow\n            you to request complete erasure of your account and any associated data.",
+          "language": null,
+          "itemised": null,
+          "before_grant": null,
+          "evidence": [
+            {
+              "file": "views/dataErasureForm.hbs",
+              "start_line": 32,
+              "end_line": 33,
+              "excerpt": "        <p>We take data security, customer privacy, and legal compliance very serious. In accordance with GDPR we allow\n            you to request complete erasure of your account and any associated data.</p>"
+            }
+          ]
+        }
+      ],
+      "controls": [],
+      "banners": [
+        {
+          "id": "banner:frontend/src/index.html:19",
+          "evidence": [
+            {
+              "file": "frontend/src/index.html",
+              "start_line": 19,
+              "end_line": 19,
+              "excerpt": "      window.cookieconsent.initialise({"
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Only statically resolved Purpose-specific links are represented; missing links are not proof of absence.",
+        "Step counts require a common, statically resolved starting template; credentials and text entry are not counted.",
+        "A dispatched deletion, browser choice, or Data Processor call does not establish actual deletion or a contract."
+      ],
+      "processor_propagation": [],
+      "parental_verification": {
+        "state": "not determinable",
+        "evidence": [],
+        "reason": "No verifiable parental consent mechanism was resolved; age self-declaration alone is insufficient."
+      },
+      "child_gate": {
+        "state": "not determinable",
+        "evidence": [
+          {
+            "file": "frontend/src/index.html",
+            "start_line": 19,
+            "end_line": 19,
+            "excerpt": "      window.cookieconsent.initialise({"
+          }
+        ],
+        "reason": "The existing CHI-01 Gate did not resolve age/DOB collection or an explicit Child audience."
+      }
+    },
+    "llm_reasoning": {
+      "status": "not assessed",
+      "cache_key": "e4f4742e2b3aec416bfa3124896c40219ba704313596afb3b90eb207e7550c9e"
+    }
+  },
   "executive_summary": {
     "counts_by_severity": {
       "critical": 0,

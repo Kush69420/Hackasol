@@ -19,7 +19,8 @@ Bind to `127.0.0.1` only: the service accepts local paths, so it must not be exp
 | Route | Result |
 |---|---|
 | `POST /api/scans` | 202 `{run_id, mode: "live"}` |
-| `POST /api/replays/juice-shop` | 202 `{run_id, mode: "recorded"}`; 409 if the bundle format is incompatible; 404 if absent |
+| `GET /api/replays` | `{recordings: [name, ...]}` for every bundle under `dashboard/recordings/` |
+| `POST /api/replays/{name}` | 202 `{run_id, mode: "recorded"}`; 409 if the bundle format is incompatible; 404 if absent or the name is not `[a-z0-9][a-z0-9-]*` |
 | `GET /api/scans/{run_id}` | `{run_id, mode, status: running\|completed\|failed, target}` |
 | `GET /api/scans/{run_id}/events` | SSE; one `data: <json>` per event, from ordinal 0 for any client |
 | `GET /api/scans/{run_id}/report/{json\|md\|html\|pdf}` | the artifact for that run; 404 unknown id/format; 409 while running or failed |

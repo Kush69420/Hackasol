@@ -131,7 +131,8 @@ class ReplayRun:
 
 def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/dashboard"),
                cache_dir: Path = Path(".dpdp-cache"), targets_dir: Path = Path("targets"),
-               bundle_dir: Path = replay_module.BUNDLE_DIR, frontend_dist: Path = FRONTEND_DIST) -> FastAPI:
+               bundle_dir: Path | None = None, recordings_dir: Path = replay_module.RECORDINGS_DIR,
+               frontend_dist: Path = FRONTEND_DIST) -> FastAPI:
     app = FastAPI(title="DPDP Compliance Auditor Dashboard")
     clock = clock or SystemClock()
     runs: dict[str, ScanRun | ReplayRun] = {}
@@ -141,6 +142,8 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
         if run is None:
             raise HTTPException(404, "Unknown run")
         return run
+    from dashboard.backend.probes import router as probe_router; app.include_router(probe_router(get_run))
+    from dashboard.backend.fixpatch import router as fixpatch_router; app.include_router(fixpatch_router(get_run))
 
     @app.post("/api/scans", status_code=202)
     def start_scan(body: ScanRequest):
@@ -156,10 +159,23 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
                          kwargs={"cache_dir": cache_dir, "targets_dir": targets_dir}).start()
         return {"run_id": run_id, "mode": "live"}
 
-    @app.post("/api/replays/juice-shop", status_code=202)
-    def start_replay():
+    def bundle_for(name: str) -> Path:
+        if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", name):
+            raise HTTPException(404, "No recording for that name")
+        if name == replay_module.PRIMARY_TARGET and bundle_dir is not None:
+            return Path(bundle_dir)
+        return Path(recordings_dir) / name
+
+    @app.get("/api/replays")
+    def list_replays():
+        root = Path(recordings_dir)
+        names = sorted(p.parent.name for p in root.glob("*/recording.json")) if root.is_dir() else []
+        return {"recordings": names}
+
+    @app.post("/api/replays/{name}", status_code=202)
+    def start_replay(name: str):
         try:
-            recording = replay_module.load_recording(bundle_dir)
+            recording = replay_module.load_recording(bundle_for(name))
         except RecordingError as exc:
             raise HTTPException(404 if "No recording" in str(exc) else 409, str(exc))
         run_id = uuid.uuid4().hex

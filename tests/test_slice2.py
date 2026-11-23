@@ -96,6 +96,17 @@ def test_corpus_child_and_aadhaar_cases_are_synthetic_only(pinned_report):
 CEILINGS = {"SEC": 250, "MON": 250, "CHI": 200}
 
 
+def test_corpus_negated_child_audience_opens_no_child_gate(tmp_path, monkeypatch):
+    # TrackMyRupee templates/privacy_policy.html:400 says the app is NOT intended for children.
+    target = tmp_path / "app"
+    target.mkdir()
+    (target / "policy.html").write_text("<p>This app is not intended for children under 18.</p>\n"
+                                        "<script>window.gtag('event', 'view', {});</script>\n")
+    monkeypatch.setenv("OLLAMA_HOST", "http://127.0.0.1:1")
+    report = run_scan(str(target), provider="ollama", cache_dir=tmp_path / "cache")
+    assert not {"CHI-01", "CHI-02"} & _issue_types(report)
+
+
 def test_legal_ceilings_follow_the_schedule():
     registry = load_registry()
     for issue_type, issue in load_catalogue().items():
