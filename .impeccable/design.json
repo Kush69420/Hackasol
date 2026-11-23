@@ -1,0 +1,556 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-23T21:23:17Z",
+  "title": "Design System: DPDP Compliance Auditor Dashboard",
+  "extensions": {
+    "colorMeta": {
+      "cool-paper": {
+        "role": "neutral",
+        "displayName": "Cool Paper",
+        "canonical": "oklch(0.982 0.004 262)",
+        "dark": "oklch(0.155 0.012 262)",
+        "tonalRamp": [
+          "oklch(0.2 0.012 262)",
+          "oklch(0.31 0.012 262)",
+          "oklch(0.42 0.012 262)",
+          "oklch(0.53 0.012 262)",
+          "oklch(0.64 0.012 262)",
+          "oklch(0.75 0.012 262)",
+          "oklch(0.85 0.012 262)",
+          "oklch(0.95 0.012 262)"
+        ]
+      },
+      "white-sheet": {
+        "role": "neutral",
+        "displayName": "White Sheet",
+        "canonical": "oklch(1 0 0)",
+        "dark": "oklch(0.2 0.013 262)",
+        "tonalRamp": [
+          "oklch(0.2 0.012 262)",
+          "oklch(0.31 0.012 262)",
+          "oklch(0.42 0.012 262)",
+          "oklch(0.53 0.012 262)",
+          "oklch(0.64 0.012 262)",
+          "oklch(0.75 0.012 262)",
+          "oklch(0.85 0.012 262)",
+          "oklch(0.95 0.012 262)"
+        ]
+      },
+      "sunken-sheet": {
+        "role": "neutral",
+        "displayName": "Sunken Sheet",
+        "canonical": "oklch(0.968 0.006 262)",
+        "dark": "oklch(0.175 0.012 262)",
+        "tonalRamp": [
+          "oklch(0.2 0.012 262)",
+          "oklch(0.31 0.012 262)",
+          "oklch(0.42 0.012 262)",
+          "oklch(0.53 0.012 262)",
+          "oklch(0.64 0.012 262)",
+          "oklch(0.75 0.012 262)",
+          "oklch(0.85 0.012 262)",
+          "oklch(0.95 0.012 262)"
+        ]
+      },
+      "pressed-sheet": {
+        "role": "neutral",
+        "displayName": "Pressed Sheet",
+        "canonical": "oklch(0.945 0.008 262)",
+        "dark": "oklch(0.25 0.014 262)",
+        "tonalRamp": [
+          "oklch(0.2 0.012 262)",
+          "oklch(0.31 0.012 262)",
+          "oklch(0.42 0.012 262)",
+          "oklch(0.53 0.012 262)",
+          "oklch(0.64 0.012 262)",
+          "oklch(0.75 0.012 262)",
+          "oklch(0.85 0.012 262)",
+          "oklch(0.95 0.012 262)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.912 0.007 262)",
+        "dark": "oklch(0.29 0.014 262)",
+        "tonalRamp": [
+          "oklch(0.2 0.012 262)",
+          "oklch(0.31 0.012 262)",
+          "oklch(0.42 0.012 262)",
+          "oklch(0.53 0.012 262)",
+          "oklch(0.64 0.012 262)",
+          "oklch(0.75 0.012 262)",
+          "oklch(0.85 0.012 262)",
+          "oklch(0.95 0.012 262)"
+        ]
+      },
+      "hairline-strong": {
+        "role": "neutral",
+        "displayName": "Hairline Strong",
+        "canonical": "oklch(0.84 0.012 262)",
+        "dark": "oklch(0.38 0.016 262)",
+        "tonalRamp": [
+          "oklch(0.2 0.012 262)",
+          "oklch(0.31 0.012 262)",
+          "oklch(0.42 0.012 262)",
+          "oklch(0.53 0.012 262)",
+          "oklch(0.64 0.012 262)",
+          "oklch(0.75 0.012 262)",
+          "oklch(0.85 0.012 262)",
+          "oklch(0.95 0.012 262)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0.2 0.025 262)",
+        "dark": "oklch(0.96 0.006 262)",
+        "tonalRamp": [
+          "oklch(0.2 0.02 262)",
+          "oklch(0.31 0.02 262)",
+          "oklch(0.42 0.02 262)",
+          "oklch(0.53 0.02 262)",
+          "oklch(0.64 0.02 262)",
+          "oklch(0.75 0.02 262)",
+          "oklch(0.85 0.02 262)",
+          "oklch(0.95 0.02 262)"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Ink Muted",
+        "canonical": "oklch(0.41 0.02 262)",
+        "dark": "oklch(0.8 0.012 262)",
+        "tonalRamp": [
+          "oklch(0.2 0.02 262)",
+          "oklch(0.31 0.02 262)",
+          "oklch(0.42 0.02 262)",
+          "oklch(0.53 0.02 262)",
+          "oklch(0.64 0.02 262)",
+          "oklch(0.75 0.02 262)",
+          "oklch(0.85 0.02 262)",
+          "oklch(0.95 0.02 262)"
+        ]
+      },
+      "ink-subtle": {
+        "role": "neutral",
+        "displayName": "Ink Subtle",
+        "canonical": "oklch(0.5 0.02 262)",
+        "dark": "oklch(0.7 0.016 262)",
+        "tonalRamp": [
+          "oklch(0.2 0.02 262)",
+          "oklch(0.31 0.02 262)",
+          "oklch(0.42 0.02 262)",
+          "oklch(0.53 0.02 262)",
+          "oklch(0.64 0.02 262)",
+          "oklch(0.75 0.02 262)",
+          "oklch(0.85 0.02 262)",
+          "oklch(0.95 0.02 262)"
+        ]
+      },
+      "signal-indigo": {
+        "role": "primary",
+        "displayName": "Signal Indigo",
+        "canonical": "oklch(0.5 0.21 266)",
+        "dark": "oklch(0.72 0.15 266)",
+        "tonalRamp": [
+          "oklch(0.2 0.111 266)",
+          "oklch(0.31 0.132 266)",
+          "oklch(0.42 0.153 266)",
+          "oklch(0.53 0.174 266)",
+          "oklch(0.64 0.194 266)",
+          "oklch(0.75 0.21 266)",
+          "oklch(0.85 0.21 266)",
+          "oklch(0.95 0.21 266)"
+        ]
+      },
+      "signal-indigo-deep": {
+        "role": "primary",
+        "displayName": "Signal Indigo Deep",
+        "canonical": "oklch(0.44 0.21 266)",
+        "dark": "oklch(0.78 0.14 266)",
+        "tonalRamp": [
+          "oklch(0.2 0.111 266)",
+          "oklch(0.31 0.132 266)",
+          "oklch(0.42 0.153 266)",
+          "oklch(0.53 0.174 266)",
+          "oklch(0.64 0.194 266)",
+          "oklch(0.75 0.21 266)",
+          "oklch(0.85 0.21 266)",
+          "oklch(0.95 0.21 266)"
+        ]
+      },
+      "indigo-wash": {
+        "role": "primary",
+        "displayName": "Indigo Wash",
+        "canonical": "oklch(0.955 0.03 266)",
+        "dark": "oklch(0.27 0.06 266)",
+        "tonalRamp": [
+          "oklch(0.2 0.032 266)",
+          "oklch(0.31 0.038 266)",
+          "oklch(0.42 0.044 266)",
+          "oklch(0.53 0.05 266)",
+          "oklch(0.64 0.056 266)",
+          "oklch(0.75 0.06 266)",
+          "oklch(0.85 0.06 266)",
+          "oklch(0.95 0.06 266)"
+        ]
+      },
+      "indigo-ink": {
+        "role": "primary",
+        "displayName": "Indigo Ink",
+        "canonical": "oklch(0.4 0.2 266)",
+        "dark": "oklch(0.82 0.11 266)",
+        "tonalRamp": [
+          "oklch(0.2 0.106 266)",
+          "oklch(0.31 0.126 266)",
+          "oklch(0.42 0.146 266)",
+          "oklch(0.53 0.165 266)",
+          "oklch(0.64 0.185 266)",
+          "oklch(0.75 0.2 266)",
+          "oklch(0.85 0.2 266)",
+          "oklch(0.95 0.2 266)"
+        ]
+      },
+      "sev-critical": {
+        "role": "severity",
+        "displayName": "Critical Crimson",
+        "canonical": "oklch(0.42 0.19 18)",
+        "dark": "oklch(0.66 0.21 18)",
+        "tonalRamp": [
+          "oklch(0.2 0.101 18)",
+          "oklch(0.31 0.12 18)",
+          "oklch(0.42 0.138 18)",
+          "oklch(0.53 0.157 18)",
+          "oklch(0.64 0.176 18)",
+          "oklch(0.75 0.19 18)",
+          "oklch(0.85 0.19 18)",
+          "oklch(0.95 0.19 18)"
+        ]
+      },
+      "sev-high": {
+        "role": "severity",
+        "displayName": "High Vermilion",
+        "canonical": "oklch(0.58 0.21 30)",
+        "dark": "oklch(0.7 0.19 35)",
+        "tonalRamp": [
+          "oklch(0.2 0.111 30)",
+          "oklch(0.31 0.132 30)",
+          "oklch(0.42 0.153 30)",
+          "oklch(0.53 0.174 30)",
+          "oklch(0.64 0.194 30)",
+          "oklch(0.75 0.21 30)",
+          "oklch(0.85 0.21 30)",
+          "oklch(0.95 0.21 30)"
+        ]
+      },
+      "sev-medium": {
+        "role": "severity",
+        "displayName": "Medium Amber",
+        "canonical": "oklch(0.76 0.15 82)",
+        "dark": "oklch(0.8 0.15 85)",
+        "tonalRamp": [
+          "oklch(0.2 0.08 82)",
+          "oklch(0.31 0.094 82)",
+          "oklch(0.42 0.109 82)",
+          "oklch(0.53 0.124 82)",
+          "oklch(0.64 0.139 82)",
+          "oklch(0.75 0.15 82)",
+          "oklch(0.85 0.15 82)",
+          "oklch(0.95 0.15 82)"
+        ]
+      },
+      "sev-low": {
+        "role": "severity",
+        "displayName": "Low Slate",
+        "canonical": "oklch(0.66 0.05 255)",
+        "dark": "oklch(0.65 0.05 255)",
+        "tonalRamp": [
+          "oklch(0.2 0.027 255)",
+          "oklch(0.31 0.031 255)",
+          "oklch(0.42 0.036 255)",
+          "oklch(0.53 0.041 255)",
+          "oklch(0.64 0.046 255)",
+          "oklch(0.75 0.05 255)",
+          "oklch(0.85 0.05 255)",
+          "oklch(0.95 0.05 255)"
+        ]
+      },
+      "good": {
+        "role": "status",
+        "displayName": "Live Green",
+        "canonical": "oklch(0.45 0.13 150)",
+        "dark": "oklch(0.8 0.14 150)",
+        "tonalRamp": [
+          "oklch(0.2 0.069 150)",
+          "oklch(0.31 0.082 150)",
+          "oklch(0.42 0.095 150)",
+          "oklch(0.53 0.108 150)",
+          "oklch(0.64 0.12 150)",
+          "oklch(0.75 0.13 150)",
+          "oklch(0.85 0.13 150)",
+          "oklch(0.95 0.13 150)"
+        ]
+      },
+      "warn": {
+        "role": "status",
+        "displayName": "Cache Amber-Brown",
+        "canonical": "oklch(0.45 0.1 75)",
+        "dark": "oklch(0.86 0.1 85)",
+        "tonalRamp": [
+          "oklch(0.2 0.053 75)",
+          "oklch(0.31 0.063 75)",
+          "oklch(0.42 0.073 75)",
+          "oklch(0.53 0.083 75)",
+          "oklch(0.64 0.093 75)",
+          "oklch(0.75 0.1 75)",
+          "oklch(0.85 0.1 75)",
+          "oklch(0.95 0.1 75)"
+        ]
+      },
+      "bad": {
+        "role": "status",
+        "displayName": "Failure Red",
+        "canonical": "oklch(0.42 0.17 22)",
+        "dark": "oklch(0.82 0.11 20)",
+        "tonalRamp": [
+          "oklch(0.2 0.09 22)",
+          "oklch(0.31 0.107 22)",
+          "oklch(0.42 0.124 22)",
+          "oklch(0.53 0.141 22)",
+          "oklch(0.64 0.157 22)",
+          "oklch(0.75 0.17 22)",
+          "oklch(0.85 0.17 22)",
+          "oklch(0.95 0.17 22)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "The Target name in the run header; one per screen."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Panel headings and section titles."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "One-sentence legal summary that opens the Overview."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text and form controls."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Sub-headings inside a Finding, chart titles, table headers."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Badges, chips, counts, stage timings."
+      },
+      "stat": {
+        "displayName": "Stat",
+        "purpose": "Severity counts and Penalty Ceiling amounts, tabular."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Evidence, ids, anchors and Issue Types in Geist Mono."
+      }
+    },
+    "shadows": [
+      {
+        "name": "popover",
+        "value": "0 8px 24px oklch(0.2 0.03 262 / 0.12), 0 1px 3px oklch(0.2 0.03 262 / 0.1)",
+        "purpose": "Floating layers only; panels, rows and buttons are flat at rest."
+      },
+      {
+        "name": "input-focus-halo",
+        "value": "0 0 0 3px oklch(0.955 0.03 266)",
+        "purpose": "Focus halo on inputs and selects, paired with an indigo border."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.2, 0.7, 0.2, 1)",
+        "purpose": "State transitions on controls, 120 to 150ms. Disabled under prefers-reduced-motion."
+      },
+      {
+        "name": "spin",
+        "value": "0.8s linear infinite",
+        "purpose": "Active stage ring in the stepper."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "findings-split",
+        "value": "60rem (container query)"
+      },
+      {
+        "name": "overview-stack",
+        "value": "62rem"
+      },
+      {
+        "name": "shell-collapse",
+        "value": "52rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single primary action in a context (Replay, Scan).",
+      "html": "<button class=\"ds-btn-primary\">Scan</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:0.45rem;min-height:2.1rem;padding:0.35rem 0.8rem;border-radius:5px;font:500 0.875rem/1.2 var(--font-sans, 'Geist Variable', system-ui, sans-serif);cursor:pointer;transition:background .15s,border-color .15s;background:var(--accent, oklch(0.5 0.21 266));border:1px solid var(--accent, oklch(0.5 0.21 266));color:var(--on-accent, oklch(0.99 0 0));} .ds-btn-primary:hover{background:var(--accent-hover, oklch(0.44 0.21 266));} .ds-btn-primary:focus-visible{outline:2px solid var(--accent, oklch(0.5 0.21 266));outline-offset:2px;} .ds-btn-primary:active{transform:translateY(1px);}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Report downloads and secondary actions.",
+      "html": "<button class=\"ds-btn-secondary\">Download PDF</button>",
+      "css": ".ds-btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:0.45rem;min-height:2.1rem;padding:0.35rem 0.8rem;border-radius:5px;font:500 0.875rem/1.2 var(--font-sans, 'Geist Variable', system-ui, sans-serif);cursor:pointer;transition:background .15s,border-color .15s;background:var(--surface, oklch(1 0 0));border:1px solid var(--line-strong, oklch(0.84 0.012 262));color:var(--ink, oklch(0.2 0.025 262));} .ds-btn-secondary:hover{background:var(--surface-3, oklch(0.945 0.008 262));} .ds-btn-secondary:focus-visible{outline:2px solid var(--accent, oklch(0.5 0.21 266));outline-offset:2px;}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Target Application field and search; indigo border and halo on focus.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Target Application (git URL)\">",
+      "css": ".ds-input{min-height:2.1rem;padding:0.3rem 0.65rem;width:16rem;background:var(--surface, oklch(1 0 0));border:1px solid var(--line-strong, oklch(0.84 0.012 262));border-radius:5px;font:400 0.9375rem var(--font-sans, 'Geist Variable', system-ui, sans-serif);color:var(--ink, oklch(0.2 0.025 262));transition:border-color .15s,box-shadow .15s;} .ds-input::placeholder{color:var(--ink-3, oklch(0.5 0.02 262));} .ds-input:hover{border-color:var(--ink-3, oklch(0.5 0.02 262));} .ds-input:focus-visible{outline:none;border-color:var(--accent, oklch(0.5 0.21 266));box-shadow:0 0 0 3px var(--accent-bg, oklch(0.955 0.03 266));}"
+    },
+    {
+      "name": "Sidebar Nav Item",
+      "kind": "nav",
+      "refersTo": "nav-item-active",
+      "description": "Section link with scroll-spy; the current section sits on Indigo Wash.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#\">Overview</a><a class=\"ds-nav-link\" aria-current=\"true\" href=\"#\">Findings <span class=\"ds-count\">53</span></a></nav>",
+      "css": ".ds-nav{display:flex;flex-direction:column;gap:2px;width:13rem;} .ds-nav-link{display:flex;align-items:center;gap:0.6rem;padding:0.42rem 0.55rem;border-radius:5px;color:var(--ink-2, oklch(0.41 0.02 262));text-decoration:none;font:500 0.875rem var(--font-sans, 'Geist Variable', system-ui, sans-serif);transition:background .15s,color .15s;} .ds-nav-link:hover{background:var(--surface-3, oklch(0.945 0.008 262));color:var(--ink, oklch(0.2 0.025 262));} .ds-nav-link[aria-current=true]{background:var(--accent-bg, oklch(0.955 0.03 266));color:var(--accent-ink, oklch(0.4 0.2 266));} .ds-nav-link:focus-visible{outline:2px solid var(--accent, oklch(0.5 0.21 266));outline-offset:2px;} .ds-count{margin-left:auto;font-size:0.75rem;font-variant-numeric:tabular-nums;opacity:.8;}"
+    },
+    {
+      "name": "Severity Badges",
+      "kind": "chip",
+      "refersTo": "badge-severity-high",
+      "description": "Wash background with matching ink; one per severity band.",
+      "html": "<span class=\"ds-sev ds-sev-critical\">Critical</span> <span class=\"ds-sev ds-sev-high\">High</span> <span class=\"ds-sev ds-sev-medium\">Medium</span> <span class=\"ds-sev ds-sev-low\">Low</span>",
+      "css": ".ds-sev{display:inline-flex;align-items:center;padding:0.12rem 0.55rem;border-radius:999px;font:550 0.75rem/1.4 var(--font-sans, 'Geist Variable', system-ui, sans-serif);} .ds-sev-critical{background:oklch(0.95 0.035 18);color:oklch(0.38 0.17 18);} .ds-sev-high{background:oklch(0.955 0.04 35);color:oklch(0.42 0.16 32);} .ds-sev-medium{background:oklch(0.96 0.06 90);color:oklch(0.42 0.1 72);} .ds-sev-low{background:oklch(0.955 0.012 255);color:oklch(0.42 0.04 255);}"
+    },
+    {
+      "name": "Provenance Badges",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Live, Cache-only and Replay Mode, so nothing recorded reads as live.",
+      "html": "<span class=\"ds-prov ds-live\">Live</span> <span class=\"ds-prov ds-cache\">Cache-only</span> <span class=\"ds-prov ds-replay\">Replay Mode</span>",
+      "css": ".ds-prov{display:inline-flex;padding:0.12rem 0.55rem;border-radius:999px;font:550 0.75rem/1.4 var(--font-sans, 'Geist Variable', system-ui, sans-serif);} .ds-live{background:oklch(0.955 0.04 150);color:oklch(0.45 0.13 150);} .ds-cache{background:oklch(0.96 0.06 90);color:oklch(0.45 0.1 75);} .ds-replay{background:oklch(0.955 0.03 266);color:oklch(0.4 0.2 266);}"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Flat white panel with a hairline border and a hairline-divided header.",
+      "html": "<section class=\"ds-panel\"><header class=\"ds-panel-head\"><h2>Personal Data Map</h2><p>Where each Data Category is processed.</p></header><div class=\"ds-panel-body\">Panel content</div></section>",
+      "css": ".ds-panel{width:22rem;background:oklch(1 0 0);border:1px solid oklch(0.912 0.007 262);border-radius:8px;color:oklch(0.2 0.025 262);font-family:var(--font-sans, 'Geist Variable', system-ui, sans-serif);} .ds-panel-head{padding:1rem 1.25rem;border-bottom:1px solid oklch(0.912 0.007 262);} .ds-panel-head h2{margin:0;font:620 1.0625rem/1.3 inherit;letter-spacing:-0.01em;} .ds-panel-head p{margin:0.25rem 0 0;font-size:0.8125rem;color:oklch(0.5 0.02 262);} .ds-panel-body{padding:1.25rem;font-size:0.9375rem;}"
+    },
+    {
+      "name": "Finding Row",
+      "kind": "custom",
+      "refersTo": "finding-row-selected",
+      "description": "Master-list row: Issue Type in mono, operation right, file and Provision below. Selected rows get an inset indigo ring.",
+      "html": "<ul class=\"ds-rows\"><li><button class=\"ds-row\" aria-current=\"true\"><span class=\"ds-row-type\">unmasked-identifier-in-log</span><span class=\"ds-row-op\">Log</span><span class=\"ds-row-sub\">routes/login.ts:42 &middot; DPDP s.8(5)</span></button></li><li><button class=\"ds-row\"><span class=\"ds-row-type\">cleartext-token-store</span><span class=\"ds-row-op\">Store</span><span class=\"ds-row-sub\">lib/session.ts:17 &middot; DPDP s.8(5)</span></button></li></ul>",
+      "css": ".ds-rows{list-style:none;margin:0;padding:0;width:24rem;border:1px solid oklch(0.912 0.007 262);border-radius:8px;overflow:hidden;background:oklch(1 0 0);} .ds-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0.1rem 0.75rem;align-items:baseline;width:100%;padding:0.6rem 0.9rem;border:0;border-bottom:1px solid oklch(0.912 0.007 262);background:transparent;text-align:left;cursor:pointer;font-family:var(--font-sans, 'Geist Variable', system-ui, sans-serif);color:oklch(0.2 0.025 262);transition:background .12s;} .ds-row:hover{background:oklch(0.968 0.006 262);} .ds-row[aria-current=true]{background:oklch(0.955 0.03 266);box-shadow:inset 0 0 0 1px oklch(0.5 0.21 266);} .ds-row:focus-visible{outline:2px solid oklch(0.5 0.21 266);outline-offset:-2px;} .ds-row-type{font:600 0.8125rem 'Geist Mono Variable', ui-monospace, monospace;} .ds-row-op{font-size:0.75rem;color:oklch(0.5 0.02 262);} .ds-row-sub{grid-column:1/-1;font-size:0.8125rem;color:oklch(0.41 0.02 262);}"
+    },
+    {
+      "name": "Evidence Block",
+      "kind": "custom",
+      "refersTo": "code",
+      "description": "File caption bar, line numbers, highlighted Finding lines. Content arrives masked and stays masked.",
+      "html": "<figure class=\"ds-ev\"><figcaption>routes/login.ts</figcaption><pre><span class=\"ds-ln\">41</span>const user = await find(email)\n<span class=\"ds-hl\"><span class=\"ds-ln\">42</span>logger.info(&quot;login&quot;, email)</span>\n<span class=\"ds-ln\">43</span>return user</pre></figure>",
+      "css": ".ds-ev{margin:0;width:24rem;border:1px solid oklch(0.912 0.007 262);border-radius:5px;overflow:hidden;background:oklch(0.975 0.006 262);} .ds-ev figcaption{padding:0.4rem 0.75rem;font:0.75rem 'Geist Mono Variable', ui-monospace, monospace;color:oklch(0.41 0.02 262);background:oklch(0.968 0.006 262);border-bottom:1px solid oklch(0.912 0.007 262);} .ds-ev pre{margin:0;padding:0.4rem 0;font:0.8125rem/1.6 'Geist Mono Variable', ui-monospace, monospace;color:oklch(0.2 0.025 262);overflow-x:auto;} .ds-ln{display:inline-block;width:3.5rem;padding-right:0.9rem;text-align:right;color:oklch(0.5 0.02 262);user-select:none;} .ds-hl{display:block;background:oklch(0.955 0.04 266);}"
+    },
+    {
+      "name": "Severity Distribution Bar",
+      "kind": "custom",
+      "refersTo": "badge-severity-high",
+      "description": "One segmented bar plus four filter keys with tabular counts.",
+      "html": "<div class=\"ds-dist\"><div class=\"ds-bar\"><span style=\"flex:0 0 4px;background:oklch(0.42 0.19 18)\"></span><span style=\"flex:32;background:oklch(0.58 0.21 30)\"></span><span style=\"flex:13;background:oklch(0.76 0.15 82)\"></span><span style=\"flex:8;background:oklch(0.66 0.05 255)\"></span></div><div class=\"ds-keys\"><button class=\"ds-key\"><span>Critical</span><b>0</b></button><button class=\"ds-key\" aria-pressed=\"true\"><span>High</span><b>32</b></button><button class=\"ds-key\"><span>Medium</span><b>13</b></button><button class=\"ds-key\"><span>Low</span><b>8</b></button></div></div>",
+      "css": ".ds-dist{width:26rem;font-family:var(--font-sans, 'Geist Variable', system-ui, sans-serif);} .ds-bar{display:flex;gap:2px;height:0.9rem;} .ds-bar span{border-radius:3px;} .ds-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;margin-top:0.85rem;} .ds-key{display:flex;flex-direction:column;gap:0.1rem;padding:0.5rem 0.6rem;border:1px solid transparent;border-radius:5px;background:transparent;text-align:left;cursor:pointer;color:oklch(0.41 0.02 262);font-size:0.8125rem;transition:background .15s,border-color .15s;} .ds-key b{font-size:1.5rem;font-weight:620;letter-spacing:-0.02em;line-height:1.15;color:oklch(0.2 0.025 262);font-variant-numeric:tabular-nums;} .ds-key:hover{background:oklch(0.968 0.006 262);border-color:oklch(0.912 0.007 262);} .ds-key[aria-pressed=true]{background:oklch(0.955 0.03 266);border-color:oklch(0.5 0.21 266);} .ds-key:focus-visible{outline:2px solid oklch(0.5 0.21 266);outline-offset:2px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Evidence Desk",
+    "overview": "The dashboard is a desk where a judge or a compliance reviewer reads the case file: what was found, how severe it is, and the statute it breaches, with the file and line one click away. It is the category-standard security-ops console played straight, finished to the level of Vercel, Snyk and Sentry: a fixed sidebar, a quiet top bar, hairline panels on a cool near-white page, and a master-detail Findings list where selection is the only thing that moves.\n\nEverything is in service of one claim: the result came from traced code, not keywords. Colour therefore carries meaning and nothing else. Severity has its own four-step ramp and is used only on severity; indigo marks selection, focus and the single primary action; everything else is a tonal step of one cool neutral. Numbers are tabular, ids and code are monospaced, and statute text is quoted, never paraphrased into decoration. The interface is built to survive a projector: a large-type mode raises the root size, light and dark themes are both complete, and contrast clears WCAG AA.",
+    "keyCharacteristics": [
+      "Cool near-white page, white panels, 1px hairlines; no card stacks inside cards.",
+      "One indigo accent, rationed to selection, focus and the primary action.",
+      "A four-step severity ramp (critical, high, medium, low) used only on severity.",
+      "Geist for reading, Geist Mono for ids, code and Evidence; tabular figures everywhere numbers are compared.",
+      "Depth from tone and hairline; one popover shadow, nothing else.",
+      "Honest provenance: Live, Cache-only and Replay Mode each carry their own badge."
+    ],
+    "rules": [
+      {
+        "name": "The Severity-Only Rule",
+        "body": "The severity ramp appears only where a Severity is being shown. Never use crimson, vermilion, amber or slate for decoration, emphasis or status that is not a Severity.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Voice Rule",
+        "body": "Indigo marks selection, focus and the single primary action. If two indigo things compete on one screen, one of them is not selection.",
+        "section": "colors"
+      },
+      {
+        "name": "The Wash-and-Ink Rule",
+        "body": "A coloured badge or callout is a wash background with its matching ink text, never a solid fill with white text; solids are reserved for bars, dots and the primary button.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Any figure that is compared, summed or sorted uses tabular numerals.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Eyebrow Rule",
+        "body": "Headings stand alone; no small uppercase kicker above a title.",
+        "section": "typography"
+      },
+      {
+        "name": "The Evidence-First Rule",
+        "body": "From the first screen, a Finding's file, line and Data Flow are reachable in one click; the first Finding is pre-selected so the detail is never empty.",
+        "section": "layout"
+      },
+      {
+        "name": "The Own-Scroll Rule",
+        "body": "Anything wider than its column (matrix, tables, Evidence, CVSS vectors) scrolls or wraps inside itself.",
+        "section": "layout"
+      },
+      {
+        "name": "The Hairline-Not-Shadow Rule",
+        "body": "Separate with a 1px line or a tone step. A shadow on a panel, row or button at rest is a defect.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use Signal Indigo only for selection, focus and the single primary action.",
+      "Do show Severity with the four-step ramp, always as a wash badge or a bar segment, and always with a text label as well as colour.",
+      "Do set ids, Issue Types, file paths and Evidence in Geist Mono, and every compared number in tabular figures.",
+      "Do separate with 1px Hairline or a surface tone step; keep panels flat.",
+      "Do label Replay Mode, Cache-only and Live on the run header, and show \"not assessed\" for anything that was not run.",
+      "Do keep Evidence masking intact and quote Provisions as supplied.",
+      "Do test both themes and large-type mode when adding a surface."
+    ],
+    "donts": [
+      "Don't nest bordered panels inside panels, or build a stack of identical stat cards.",
+      "Don't add a hero-metric strip, a gradient, gradient text, or a coloured side-stripe on a row or callout.",
+      "Don't place a small uppercase kicker above a heading.",
+      "Don't use a severity colour for anything that is not a Severity.",
+      "Don't put a shadow on a panel, row or button at rest; the popover shadow is the only one.",
+      "Don't use text lighter than Ink Subtle, or colour as the only carrier of meaning.",
+      "Don't let any element widen the page; wide content scrolls inside its own wrapper.",
+      "Don't write \"vulnerability\", \"issue\", \"user\", \"PII\" or \"demo mode\" in interface text; use CONTEXT.md terms."
+    ]
+  }
+}
