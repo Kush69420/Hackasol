@@ -140,7 +140,7 @@ git -C targets/juice-shop checkout c9f99228d9d56afb5f5ca7925376292f7fa44b13
 DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/dpdp-audit scan targets/juice-shop --format json   # writes reports/juice-shop/report.{json,md,html,pdf}
 ```
 
-The scan above is the documented Primary Target command; it writes the four Report files to `reports/juice-shop/` and prints the LLM mode on stderr. The committed Juice Shop Report was produced this way in cache-only mode (`llm.mode`, `llm.provider`, `llm.model` and `llm.prompt_versions` in the Report state exactly what ran; uncached LLM fields are "not assessed"). Findings do not depend on the LLM; only classification and triage fields do. With a reachable provider, set `DPDP_LLM_PROVIDER` (`anthropic`, `openai`, `gemini`, `ollama` or `omp`), `DPDP_LLM_MODEL` and the matching key as described under [LLM configuration](#llm-configuration).
+The scan above is the offline setup example; it writes the four Report files to `reports/juice-shop/` and prints the LLM mode on stderr. The published Juice Shop Report uses the cached Opus 5.5 verdicts from the accuracy run. The Report's `llm` block states which provider, model and prompt versions ran. Uncached fields in an offline scan are “not assessed”; cached classification can add Elements that Rules then evaluate, while triage does not add or remove Findings. See [LLM configuration](#llm-configuration).
 
 ### Dashboard and Replay Mode
 
@@ -150,13 +150,13 @@ The scan above is the documented Primary Target command; it writes the four Repo
 
 Open `http://127.0.0.1:8000/`. Start a live scan, or click a **Replay Mode** button to play back a recorded scan at its recorded pace with no scanner, provider or Target Application access. Replay Mode is labelled in the UI and never publishes: Live Probes and Open PR are unavailable and answer 409 for a recorded run. Each recording's pin, Report digest, scan date and LLM provenance are in the [manifest](dashboard/recordings/manifest.json). Recordings are not newly measured results: they are the times and Reports of the scans that made them. See [dashboard/README.md](dashboard/README.md).
 
-Re-record a Target Application (the cache-only provider setting keeps it deterministic):
+Re-record a Target Application from its pinned revision with a warm `.dpdp-cache` (the fork uses the PR head):
 
 ```sh
-DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/<name>
+DPDP_LLM_PROVIDER=omp DPDP_LLM_MODEL=anthropic/claude-opus-5-5 .venv/bin/python -m dashboard.backend.replay record targets/<name>
 ```
 
-The Juice Shop recording also carries the Live Probe outcomes of the pinned image: four of its 52 Findings hold an outcome, and no Finding is added, so its Findings equal those of [`reports/juice-shop/report.json`](reports/juice-shop/report.json). The TrackMyRupee recording carries the Live Probe outcomes on its Consent Assessment criteria. In both cases the committed Report is the static scan alone; the manifest says which Findings and criteria received outcomes.
+Recording runs the normal provider readiness check. For the published recordings, `omp` was forced offline, so only cached verdicts were used. The Juice Shop bundle has 53 Findings, the same as the [published Report](reports/juice-shop/report.json); four carry forward Live Probe outcomes from the pinned image. The TrackMyRupee bundle carries forward Live Probe outcomes on its Consent Assessment criteria. Both committed Reports exclude the overlays; the manifest identifies the historical outcomes.
 
 ### Check the package
 

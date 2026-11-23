@@ -29,6 +29,9 @@ Penalty Ceilings: none; statutory maximum under the Schedule; the Board sets any
 
 | Element | Data Category | Processing Operations (Evidence) |
 | --- | --- | --- |
+| model:KycSessionInput.customer_identifier | Profile | None recorded |
+| param:POST /api/kyc/sessions#body.customer_identifier | Profile | Collect (api/main.py:47–47); Expose (api/main.py:125–131) |
+| model:KycSessionOutput.customer_identifier | Profile | None recorded |
 | model:KycSessionOutput.access_token_id | Authentication Secret | None recorded |
 
 ## Findings
@@ -381,11 +384,11 @@ Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only
 | Files scanned | 41 |
 | Files excluded | 45 |
 | Rule count | 65 |
-| LLM provider | ollama |
-| LLM model | llama3.1 |
-| Prompt versions | classification: classification-v1, triage: triage-v1, consent: consent-v1, fix: fix-v1 |
+| LLM provider | omp |
+| LLM model | anthropic/claude-opus-5-5 |
+| Prompt versions | classification: classification-v1, triage: triage-v2, consent: consent-v2, fix: fix-v1 |
 | LLM mode | cache-only |
-| Cache hits | 0 |
-| Cache misses | 3 |
-| LLM fields not assessed | 3 |
-| Cache-only reason | ollama is unreachable or authentication failed |
+| Cache hits | 3 |
+| Cache misses | 0 |
+| LLM fields not assessed | 0 |
+| Cache-only reason | forced offline for artifact regeneration |

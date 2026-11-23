@@ -30,13 +30,15 @@ Event: `{run_id, ordinal, mode: live|cache-only|recorded, type: stage|completed|
 
 ## Replay Mode
 
-`dashboard/recordings/<target>/` holds a versioned bundle: `recording.json` (`format_version`, Target Application commit, events with their recorded `elapsed_ms`) and the exact masked Report artifacts. Replay Mode emits each event at its recorded offset from replay start (mode `recorded`) and serves the bundle bytes unchanged. It calls neither the scanner nor the LLM and needs no `targets/` checkout. Cache-only scanning is different: it still scans, using the LLM cache. The juice-shop bundle holds 52 Findings (the scanned count; four carry Live Probe outcomes from the pinned image) and the trackmyrupee bundle carries Live Probe outcomes on its Consent Assessment; see `live_probe_overlay` in the manifest.
+`dashboard/recordings/<target>/` holds a versioned bundle: `recording.json` (`format_version`, Target Application commit, events with their recorded `elapsed_ms`) and the exact masked Report artifacts. Replay Mode emits each event at its recorded offset from replay start (mode `recorded`) and serves the bundle bytes unchanged. It calls neither the scanner nor the LLM and needs no `targets/` checkout. Cache-only scanning is different: it still scans, using the LLM cache. The Juice Shop bundle has 53 Findings; four carry forward Live Probe outcomes from the pinned image. TrackMyRupee carries forward outcomes on its Consent Assessment. See `live_probe_overlay` in the manifest.
 
-Regenerate from the pinned Primary Target (`c9f99228d9d56afb5f5ca7925376292f7fa44b13`):
+Regenerate from the pinned Primary Target (`c9f99228d9d56afb5f5ca7925376292f7fa44b13`) with a warm `.dpdp-cache`:
 
 ```
-DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/juice-shop   # likewise targets/<name>; the fork re-records from its PR head
+DPDP_LLM_PROVIDER=omp DPDP_LLM_MODEL=anthropic/claude-opus-5-5 .venv/bin/python -m dashboard.backend.replay record targets/juice-shop   # likewise targets/<name>; the fork re-records from its PR head
 ```
+
+The recorder checks the provider's availability. The published bundles were recorded with `omp` forced offline, so all verdicts came from the cache.
 
 ## Tests
 

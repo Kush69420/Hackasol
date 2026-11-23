@@ -11,16 +11,16 @@
         "md": "reports/juice-shop/report.md",
         "html": "reports/juice-shop/report.html",
         "pdf": "reports/juice-shop/report.pdf",
-        "content_sha256": "9c1ebca9a9ae804be1e84874cd47b10d398d58eb740c6bc5bad2e51984f83b3b",
+        "content_sha256": "465f260e27098f67cbab7586caafcecc4d221b8bae43bf898b31039bc901bd1b",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/juice-shop",
         "events": 5,
-        "recording_sha256": "17849c3c11906b620632ae849850e233b162973673582680afe38045fc59e0c6",
-        "report_sha256": "69b15ba527bbb85be780fd45484c290c16abe85b6ac7634097a1b3a0f805795e",
+        "recording_sha256": "7c6daafd410cf6a421e078d8ccc7d2994cc4eb111d0be55cec0c33acec0ee77f",
+        "report_sha256": "bb06ab6964011266402fe0c6c042f60b8b61b340c84848e8be3b80399c3152c8",
         "live_probe_overlay": {
-          "note": "The recorded Report is the static scan plus Live Probe outcomes written by `dpdp-audit probe` against the pinned image on a disposable local instance; the deliverable Report is the static scan alone. Playback shows the probe outcomes as past results.",
+          "note": "The recorded Report carries forward historical Live Probe outcomes written by `dpdp-audit probe` against the pinned image on a disposable local instance; the deliverable Report is the static scan alone. Playback shows the probe outcomes as past results.",
           "image": "dpdp/juice-shop:c9f99228",
           "image_revision": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
           "added_finding_ids": [],
@@ -33,21 +33,21 @@
         }
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:39:22.300401+00:00",
+        "scan_started_at": "2026-11-23T14:54:24.916439+00:00",
         "llm_mode": "cache-only",
-        "llm_provider": "ollama",
-        "llm_model": "llama3.1",
+        "llm_provider": "omp",
+        "llm_model": "anthropic/claude-opus-5-5",
         "prompt_versions": {
           "classification": "classification-v1",
-          "triage": "triage-v1",
-          "consent": "consent-v1",
+          "triage": "triage-v2",
+          "consent": "consent-v2",
           "fix": "fix-v1"
         },
-        "cached_verdicts_used": false,
-        "cache_hits": 0,
-        "cache_misses": 206,
-        "not_assessed": 206,
-        "command": "DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/juice-shop"
+        "cached_verdicts_used": true,
+        "cache_hits": 208,
+        "cache_misses": 0,
+        "not_assessed": 0,
+        "command": "DPDP_LLM_PROVIDER=omp DPDP_LLM_MODEL=anthropic/claude-opus-5-5 .venv/bin/python -m dashboard.backend.replay record targets/juice-shop # provider forced offline; warm .dpdp-cache"
       },
       "clone_url": "https://github.com/juice-shop/juice-shop"
     },
@@ -61,31 +61,31 @@
         "md": "reports/ai-kyc-platform/report.md",
         "html": "reports/ai-kyc-platform/report.html",
         "pdf": "reports/ai-kyc-platform/report.pdf",
-        "content_sha256": "37c869f2432b70a859a17d6eeb46bcde8d7448ddd6ab1b6a6d77892dea8ebbee",
+        "content_sha256": "6975a50b7bbc5599e2742d3af633179ddf6c9218f01bf2012f95c24b09c74aeb",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/ai-kyc-platform",
         "events": 5,
-        "recording_sha256": "6f4c316022798a552de2cde6f50b19d3ba104b186ef6a86ecca81277942acfc4",
-        "report_sha256": "6cbf954421ee7e6757eb2eccb9ca356ce30fecae75d32a4c99ef5a2dfb2c093f"
+        "recording_sha256": "ebcde4f919413e15732538c756ae34a145ca4058506aba002abe9c24f445575f",
+        "report_sha256": "55debe76dff3ebbe347509d030bd4145667fa50b86f30128f2b645b71f826820"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:39:47.852926+00:00",
+        "scan_started_at": "2026-11-23T14:54:27.965269+00:00",
         "llm_mode": "cache-only",
-        "llm_provider": "ollama",
-        "llm_model": "llama3.1",
+        "llm_provider": "omp",
+        "llm_model": "anthropic/claude-opus-5-5",
         "prompt_versions": {
           "classification": "classification-v1",
-          "triage": "triage-v1",
-          "consent": "consent-v1",
+          "triage": "triage-v2",
+          "consent": "consent-v2",
           "fix": "fix-v1"
         },
-        "cached_verdicts_used": false,
-        "cache_hits": 0,
-        "cache_misses": 27,
-        "not_assessed": 27,
-        "command": "DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/ai-kyc-platform"
+        "cached_verdicts_used": true,
+        "cache_hits": 27,
+        "cache_misses": 0,
+        "not_assessed": 0,
+        "command": "DPDP_LLM_PROVIDER=omp DPDP_LLM_MODEL=anthropic/claude-opus-5-5 .venv/bin/python -m dashboard.backend.replay record targets/ai-kyc-platform # provider forced offline; warm .dpdp-cache"
       },
       "clone_url": "https://github.com/JhashankKumar/ai-kyc-platform",
       "target_doc": "docs/targets/ai-kyc-platform.md"
@@ -100,16 +100,16 @@
         "md": "reports/trackmyrupee/report.md",
         "html": "reports/trackmyrupee/report.html",
         "pdf": "reports/trackmyrupee/report.pdf",
-        "content_sha256": "e1cc033af6c3b6f2cb6c74d38d1257ef7f8c1c7ccae88a4a82a4fe38a54f6a88",
+        "content_sha256": "dcddf7227c2709a660453f29e8458a4fe0387ab22a31547768e9a49b78ffce6d",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/trackmyrupee",
         "events": 5,
-        "recording_sha256": "1c068a752e15c89dde7f7530b24c2c760f9995ec82b37fc1429003f0c44ea545",
-        "report_sha256": "339264a78049e96b596f65e2c8a0d8bb0c6bdfcc74fc69a71dfc27846d832084",
+        "recording_sha256": "82a35d8704d4c29906cdc2db5d68d628deb9aeac2a936af198c336a7ac35e23e",
+        "report_sha256": "536b13226637fef701a06c1af90ab5003351896dba6e13c517528a1ef9b2a798",
         "live_probe_overlay": {
-          "note": "The recorded Report is the static scan plus Live Probe outcomes written by `dpdp-audit probe` against a local server at the pinned revision (temp SQLite, console email backend, loopback analytics sink); the deliverable Report is the static scan alone. The outcomes sit on the Consent Assessment criteria (`live_probes`, `live_probe_run`) and create no Finding. Playback shows them as past results. The local test instance raised the signup rate limit from 3/h per IP (finance_tracker/settings.py:419-425) so one probe run could create its accounts; rate limiting was not under test.",
+          "note": "The recorded Report carries forward historical Live Probe outcomes written by `dpdp-audit probe` against a local server at the pinned revision (temp SQLite, console email backend, loopback analytics sink); the deliverable Report is the static scan alone. The outcomes sit on the Consent Assessment criteria (`live_probes`, `live_probe_run`) and create no Finding. Playback shows them as past results. The local test instance raised the signup rate limit from 3/h per IP (finance_tracker/settings.py:419-425) so one probe run could create its accounts; rate limiting was not under test.",
           "observed_at": "2026-11-23T12:49:20+00:00",
           "target_commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
           "criteria": [
@@ -159,21 +159,21 @@
         }
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:48:46.640947+00:00",
+        "scan_started_at": "2026-11-23T14:54:33.183965+00:00",
         "llm_mode": "cache-only",
-        "llm_provider": "ollama",
-        "llm_model": "llama3.1",
+        "llm_provider": "omp",
+        "llm_model": "anthropic/claude-opus-5-5",
         "prompt_versions": {
           "classification": "classification-v1",
-          "triage": "triage-v1",
-          "consent": "consent-v1",
+          "triage": "triage-v2",
+          "consent": "consent-v2",
           "fix": "fix-v1"
         },
-        "cached_verdicts_used": false,
-        "cache_hits": 0,
-        "cache_misses": 30,
-        "not_assessed": 30,
-        "command": "DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/trackmyrupee"
+        "cached_verdicts_used": true,
+        "cache_hits": 30,
+        "cache_misses": 0,
+        "not_assessed": 0,
+        "command": "DPDP_LLM_PROVIDER=omp DPDP_LLM_MODEL=anthropic/claude-opus-5-5 .venv/bin/python -m dashboard.backend.replay record targets/trackmyrupee # provider forced offline; warm .dpdp-cache"
       },
       "clone_url": "https://github.com/OmkarPathak/TrackMyRupee",
       "target_doc": "docs/targets/trackmyrupee.md"
@@ -188,31 +188,31 @@
         "md": "reports/singharya-e-kyc/report.md",
         "html": "reports/singharya-e-kyc/report.html",
         "pdf": "reports/singharya-e-kyc/report.pdf",
-        "content_sha256": "fa8e51aca957e54663149a639ba22b54fe01a657dbbf52cc0ec306945b9ea7a4",
+        "content_sha256": "d4a7111ad207b238e721929eb0db31562cbb127e82743459de1d1949af4d6b4a",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/singharya-e-kyc",
         "events": 5,
-        "recording_sha256": "fb6bc2a87fb8c876bf10d244973f42f8ba99a3c2802ea7c2676ff03889b1004b",
-        "report_sha256": "af5d19047c7aafe626d9988ed593e8356b4ea8153746ad20412f9e0122dab466"
+        "recording_sha256": "11d647a8d62e73fd02610f7eff2e1902abeedfed9ab87c8f99b84ebc50ab9eda",
+        "report_sha256": "c8b6b776a66b832f93e5633eba93492ea8a8fcbf504fae676f38ac3238276b26"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:41:05.640149+00:00",
+        "scan_started_at": "2026-11-23T14:54:26.792272+00:00",
         "llm_mode": "cache-only",
-        "llm_provider": "ollama",
-        "llm_model": "llama3.1",
+        "llm_provider": "omp",
+        "llm_model": "anthropic/claude-opus-5-5",
         "prompt_versions": {
           "classification": "classification-v1",
-          "triage": "triage-v1",
-          "consent": "consent-v1",
+          "triage": "triage-v2",
+          "consent": "consent-v2",
           "fix": "fix-v1"
         },
-        "cached_verdicts_used": false,
-        "cache_hits": 0,
-        "cache_misses": 3,
-        "not_assessed": 3,
-        "command": "DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/singharya-e-kyc"
+        "cached_verdicts_used": true,
+        "cache_hits": 3,
+        "cache_misses": 0,
+        "not_assessed": 0,
+        "command": "DPDP_LLM_PROVIDER=omp DPDP_LLM_MODEL=anthropic/claude-opus-5-5 .venv/bin/python -m dashboard.backend.replay record targets/singharya-e-kyc # provider forced offline; warm .dpdp-cache"
       },
       "clone_url": "https://github.com/singharya-btech/ML-Based-E-KYC-Fraud-Detection-System",
       "target_doc": "docs/targets/singharya-e-kyc.md"
@@ -227,31 +227,31 @@
         "md": "reports/juice-shop-fork/report.md",
         "html": "reports/juice-shop-fork/report.html",
         "pdf": "reports/juice-shop-fork/report.pdf",
-        "content_sha256": "ffcc4c9f8c9160e9a836ab56810925b1e95aded6e8edbfba001d24d849cbbe2d",
+        "content_sha256": "b01ce92fc0ee70d2e85e9756c227d12cafea7183cc71ea2e7f5df8bb149a70d5",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/juice-shop-fork",
         "events": 5,
-        "recording_sha256": "47173ea14bc867e9812bb22ede6caaaec161e1d2cf3e3aa0cd65fbb6ad2001c1",
-        "report_sha256": "96bea62d0c4f642089451866836ac39b4cb9100e17dd495e6bacb9811c1b1b92"
+        "recording_sha256": "bb0ee1f4540f365281d6e7858faca64a660d9e9d77489fd2cddaed540ffc63c7",
+        "report_sha256": "0a64f59af24fc5500bee2f7b047eab4f823e7a6ee2d978d2a5fb9683fde4cc94"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:41:38.689558+00:00",
+        "scan_started_at": "2026-11-23T14:57:25.715492+00:00",
         "llm_mode": "cache-only",
-        "llm_provider": "ollama",
-        "llm_model": "llama3.1",
+        "llm_provider": "omp",
+        "llm_model": "anthropic/claude-opus-5-5",
         "prompt_versions": {
           "classification": "classification-v1",
-          "triage": "triage-v1",
-          "consent": "consent-v1",
+          "triage": "triage-v2",
+          "consent": "consent-v2",
           "fix": "fix-v1"
         },
-        "cached_verdicts_used": false,
-        "cache_hits": 0,
-        "cache_misses": 196,
-        "not_assessed": 196,
-        "command": "DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/juice-shop-fork"
+        "cached_verdicts_used": true,
+        "cache_hits": 198,
+        "cache_misses": 0,
+        "not_assessed": 0,
+        "command": "DPDP_LLM_PROVIDER=omp DPDP_LLM_MODEL=anthropic/claude-opus-5-5 .venv/bin/python -m dashboard.backend.replay record targets/juice-shop-fork # provider forced offline; warm .dpdp-cache"
       },
       "clone_url": "https://github.com/TanKaizokuO/juice-shop",
       "rescan": {

@@ -33,6 +33,25 @@ Penalty Ceilings: ₹50 crore; statutory maximum under the Schedule; the Board s
 
 | Element | Data Category | Processing Operations (Evidence) |
 | --- | --- | --- |
+| collection:AccountCreateView.user | Profile | None recorded |
+| collection:AccountUpdateView.user | Profile | None recorded |
+| collection:TransferCreateView.user | Profile | None recorded |
+| collection:TransferUpdateView.user | Profile | None recorded |
+| collection:HoldingsListView.user_currency | Financial | None recorded |
+| collection:HoldingsListView.user_accounts | Financial | None recorded |
+| collection:YearInReviewView.user_first_name | Profile | None recorded |
+| collection:ExpenseUpdateView.user | Profile | None recorded |
+| collection:SavingsGoalCreateView.user | Profile | None recorded |
+| collection:SavingsGoalUpdateView.user | Profile | None recorded |
+| collection:GoalContributionUpdateView.user | Profile | None recorded |
+| collection:IncomeCreateView.user | Profile | None recorded |
+| collection:IncomeUpdateView.user | Profile | None recorded |
+| collection:LoanCreateView.user | Profile | None recorded |
+| collection:LoanUpdateView.user | Profile | None recorded |
+| collection:RecurringTransactionCreateView.user | Profile | None recorded |
+| collection:RecurringTransactionUpdateView.user | Profile | None recorded |
+| collection:ProfileUpdateView.is_social_user | Profile | None recorded |
+| collection:PaymentHistoryView.profile | Profile | None recorded |
 
 ## Findings
 
@@ -62,9 +81,11 @@ Data Flow:
 
 - None recorded.
 
-Recommended fix: Ship every consent control unselected, and record consent only after the Data Principal takes a clear affirmative action, such as ticking the box themselves. Do not default a consent value to true in the model, the form or the API, because §6(1) requires that clear affirmative action. Apply the same rule to any consent set during sign-up, import or migration. Tailored: not assessed
+Recommended fix: Ship every consent control unselected, and record consent only after the Data Principal takes a clear affirmative action, such as ticking the box themselves. Do not default a consent value to true in the model, the form or the API, because §6(1) requires that clear affirmative action. Apply the same rule to any consent set during sign-up, import or migration. Tailored: {'fix': 'Remove the `checked` attribute from the consent checkbox so it starts unticked. Consent is only valid when the user ticks the box themselves (DPDP §6(1)). Keep `required` if this consent is truly needed for the service, or remove it if the user may refuse. The template should be: `&lt;input class="form-check-input" type="checkbox" name="consent_transactions" id="id_consent_transactions" required style="width: 2.5em; height: 1.25em;"&gt;`. In the backend, make sure nothing else defaults this consent to true: the model field should use `default=False`, the Django form field should not set `initial=True`, and the API should not fill in a missing value as true. On submit, set consent to true only if `consent_transactions` is actually in the POST data (`\'consent_transactions\' in request.POST`, or `form.cleaned_data` with a `BooleanField` that has no initial value). Store when consent was given (timestamp) alongside it. Check sign-up, import and migration code for any consent set to true without the user\'s action, and reset those records to false until users confirm.'}
 
-LLM triage: not assessed; cache key: 5633fcad8e45d6f57c18f51cfa453644cfaaea75a6ce24385c2940a03df30391
+LLM triage: true-positive — At templates/expenses/dpdp_consent.html line 53, the consent checkbox 'consent_transactions' has the 'checked' attribute, so it is already ticked when the page loads. That matches the positive CON-03 example, a consent checkbox that is checked by default. Consent the user gets by default does not come from a clear affirmative action, which Section 6(1) requires for valid consent. The 'required' attribute adds to the problem: the form cannot be submitted unless this consent is given, so the consent may also fail to be free and unconditional.; cache key: 3b63bdc9eca2404bfbd6df607b3bb39d559b172e676fd0b44e480d8840520c89
+
+LLM triage citations: DPDP-Act-6(1) — Section 6(1), DPDP-Act-6 — Section 6
 
 ### CON-03-94c021251539 — Pre-ticked or default-true consent
 
@@ -92,9 +113,11 @@ Data Flow:
 
 - None recorded.
 
-Recommended fix: Ship every consent control unselected, and record consent only after the Data Principal takes a clear affirmative action, such as ticking the box themselves. Do not default a consent value to true in the model, the form or the API, because §6(1) requires that clear affirmative action. Apply the same rule to any consent set during sign-up, import or migration. Tailored: not assessed
+Recommended fix: Ship every consent control unselected, and record consent only after the Data Principal takes a clear affirmative action, such as ticking the box themselves. Do not default a consent value to true in the model, the form or the API, because §6(1) requires that clear affirmative action. Apply the same rule to any consent set during sign-up, import or migration. Tailored: {'fix': 'Take the `checked` attribute off the consent_device checkbox so it starts unticked, and keep `required` so the form can\'t be submitted until the user ticks it. Corrected markup: `&lt;input class="form-check-input" type="checkbox" name="consent_device" id="id_consent_device" required style="width: 2.5em; height: 1.25em;"&gt;`. If the template is built from a Django form, also look at the form field and any model field behind consent_device. Remove `initial=True` and `default=True` and use `required=True` with `initial=False`, so the server-side value is never true by default and can\'t put `checked` back. On the server, store consent only when the submitted POST includes consent_device=\'on\'. Don\'t assume consent when the field is missing, and save a timestamp with it. Apply the same rule to every place consent is set (sign-up, API serializers, data import or migration scripts) so none of them default it to true. This satisfies DPDP §6(1)\'s requirement for a clear affirmative action.'}
 
-LLM triage: not assessed; cache key: 5f7558dfe9e4c1017ee031c12182778867dd19fbf78d629455cdbcde95fd810e
+LLM triage: true-positive — The consent checkbox 'consent_device' (id_consent_device) in templates/expenses/dpdp_consent.html line 66 has the 'checked' attribute, so it is ticked before the user does anything. This matches the positive example (a consent checkbox that starts checked) and not the negative one (no 'checked'). The 'required' attribute does not help. Because the box starts ticked, a user can submit the form without ever taking a clear affirmative action, so the consent is not unambiguous as Section 6(1) requires. Any consent collected this way may be invalid under Section 6(2) to the extent it infringes that standard.; cache key: afcfcbb4643c5def1b1f4266eb28d4edc4750ed8d98fec7d377deed007f50c28
+
+LLM triage citations: DPDP-Act-6(1) — Section 6(1), DPDP-Act-6 — Section 6, DPDP-Act-6(2) — Section 6(2)
 
 ### CON-03-c8163452354e — Pre-ticked or default-true consent
 
@@ -122,9 +145,11 @@ Data Flow:
 
 - None recorded.
 
-Recommended fix: Ship every consent control unselected, and record consent only after the Data Principal takes a clear affirmative action, such as ticking the box themselves. Do not default a consent value to true in the model, the form or the API, because §6(1) requires that clear affirmative action. Apply the same rule to any consent set during sign-up, import or migration. Tailored: not assessed
+Recommended fix: Ship every consent control unselected, and record consent only after the Data Principal takes a clear affirmative action, such as ticking the box themselves. Do not default a consent value to true in the model, the form or the API, because §6(1) requires that clear affirmative action. Apply the same rule to any consent set during sign-up, import or migration. Tailored: {'fix': 'Remove the `checked` attribute from the consent_device checkbox so it loads unticked. Keep `required` so the form can\'t be submitted until the user ticks the box themselves. Then fix it on the server side too: the Django form field and the model field for consent_device should not default to True (use `initial=False` / `default=False`). Only save consent when the submitted POST data actually includes consent_device, and store when it was given. Corrected markup: `&lt;input class="form-check-input" type="checkbox" name="consent_device" id="id_consent_device" required style="width: 2.5em; height: 1.25em;"&gt;`. Apply the same rule to consent set during sign-up, import or migration, and in API serializers: never default it to true.'}
 
-LLM triage: not assessed; cache key: 554e19d73fd23b1e5da763aa452e3f2fb44703c52c565241a82ea785ac99235f
+LLM triage: true-positive — At templates/account/signup.html:156 the consent checkbox 'consent_device' has the 'checked' attribute, so it is already ticked when the signup form loads. The user doesn't have to do anything to give consent, which goes against the requirement for 'a clear affirmative action'. This matches the positive example, a consent checkbox with 'checked'. The 'required' attribute also means signup can't go ahead without this consent, which makes it look conditional rather than free and unconditional. The Evidence doesn't show whether device processing is actually needed for the signup purpose.; cache key: 13f35e802db86fd00cf2a9fcb1824cc6ed97bd4edacf02b399c7fb62a8e39d09
+
+LLM triage citations: DPDP-Act-6(1) — Section 6(1), DPDP-Act-6 — Section 6
 
 ### CON-03-e9015c2df7d8 — Pre-ticked or default-true consent
 
@@ -152,9 +177,11 @@ Data Flow:
 
 - None recorded.
 
-Recommended fix: Ship every consent control unselected, and record consent only after the Data Principal takes a clear affirmative action, such as ticking the box themselves. Do not default a consent value to true in the model, the form or the API, because §6(1) requires that clear affirmative action. Apply the same rule to any consent set during sign-up, import or migration. Tailored: not assessed
+Recommended fix: Ship every consent control unselected, and record consent only after the Data Principal takes a clear affirmative action, such as ticking the box themselves. Do not default a consent value to true in the model, the form or the API, because §6(1) requires that clear affirmative action. Apply the same rule to any consent set during sign-up, import or migration. Tailored: {'fix': 'Take the `checked` attribute off the consent_transactions checkbox so it starts unticked. Keep `required` so the form can\'t be submitted until the user ticks it themselves: `&lt;input class="form-check-input" type="checkbox" name="consent_transactions" id="id_consent_transactions" required style="width: 2.5em; height: 1.25em;"&gt;`. Also check the server side doesn\'t set this consent to true by default. The Django form field should use `initial=False` (or no initial value) and `required=True`. The model field should use `default=False`, or `null=True` with no default. Any API serializer, sign-up flow, import or migration should save consent as true only when the request explicitly contains the user\'s ticked value, and should store when that consent was given.'}
 
-LLM triage: not assessed; cache key: 57cc56343655f7909f4e5fad58874fafefd00a31944207e4e0e18d0deb3a325d
+LLM triage: true-positive — At templates/account/signup.html line 143, the consent checkbox 'consent_transactions' is set to 'checked' by default. This matches the positive example: consent is ticked before the user does anything. A ticked box the user never touched is not the 'clear affirmative action' that Section 6(1) requires, and it does not show unambiguous agreement. The 'required' attribute adds a second problem: the form can't be submitted unless the box stays ticked, so consent becomes a condition of signing up rather than a free, unconditional choice.; cache key: 922e5aac415079693d01ba9718d906c54c3a6902776d4cefe41045a5989dbd88
+
+LLM triage citations: DPDP-Act-6(1) — Section 6(1), DPDP-Act-6 — Section 6
 
 ### RIG-04-91983d63d6a4 — No nomination
 
@@ -182,9 +209,11 @@ Data Flow:
 
 - None recorded.
 
-Recommended fix: List nomination alongside the other Data Principal rights in every in-repo notice or rights page, and provide a route for a Data Principal to nominate another individual who can exercise those rights on their behalf. §14 provides for nomination, and Rule 14(4) sets how it is made. Tailored: not assessed
+Recommended fix: List nomination alongside the other Data Principal rights in every in-repo notice or rights page, and provide a route for a Data Principal to nominate another individual who can exercise those rights on their behalf. §14 provides for nomination, and Rule 14(4) sets how it is made. Tailored: {'fix': 'The template claims "DPDP Act-aligned data handling", but no in-repo notice or rights page mentions the right to nominate under DPDP Act §14. Add a nomination entry to every privacy notice and Data Principal rights page, next to the rights to access, correct, erase and seek grievance redressal. For example: {% trans "Right to nominate: you may nominate another individual to exercise your rights under the DPDP Act if you die or become incapacitated (Section 14)." %}. Then build a working way to nominate, following the manner set by Rule 14(4): (1) a nominee form or view, reachable from the account or privacy settings and linked from the rights page, that records the nominee\'s name, contact details and relationship; (2) a Nominee model linked to the user, with created and updated timestamps, plus the ability to change or withdraw the nomination at any time; (3) a process for a nominee to submit a rights request with proof of death or incapacity, sent to the grievance or DPO contact for checking. Until nomination is listed and the form works, change the badge text to something that doesn\'t claim alignment, such as "Privacy-focused data handling".'}
 
-LLM triage: not assessed; cache key: b1dec80338a599c04efb57546e1f9e4e9ed16d4203fc9a09c0b421657fbffbf6
+LLM triage: false-positive — The flagged line, templates/landing.html:1431, is only a marketing tagline: "DPDP Act-aligned data handling". It is not a notice telling Data Principals what their rights are. It lists no rights at all, so it can't be said to leave out the right to nominate under Section 14(1) or Rule 14(4). The positive example is different: it lists rights (access, correction, erasure) and omits nomination. The evidence contains no list of rights, so the RIG-04-rights-notice pattern doesn't apply to this line. Whether a real rights notice elsewhere on the site omits nomination can't be judged from this evidence and would need its own finding.; cache key: 6c3d7b6e53b6859a01b0ba94d92996c071f807326e314b75d4b3264c1414b94d
+
+LLM triage citations: DPDP-Act-14(1) — Section 14(1), DPDP-Rule-14(4) — Rule 14(4)
 
 ### Observations
 
@@ -2168,7 +2197,35 @@ Issue Types: CHI-01
 
 Linked identifiers: none
 
-LLM reasoning: not assessed; cache key: 322c4dfa554cc614037dcbdfcd455b271714bfe923cccb86cc3c31fd51da55f3
+LLM reasoning: The Evidence shows a DPDP consent design that is partly in place but has clear gaps. Server-side enforcement is established. A redirect middleware is registered in settings and sends users without consent_granted to the dpdp_consent page. Every PostHog client.capture and client.identify call is checked with analytics_consent_given() before it runs. Specific consent is not met on either grant path (signup.html and dpdp_consent.html). The transactions and device toggles are pre-checked and required, and email consent is a hidden input fixed to "on". The signup notice also says toggling each item is required to register. So the user cannot choose per Purpose, and the only real actions are the age checkbox and the submit button. Each grant writes a ConsentEvent with user, action, a single generic purpose label, version, timestamp, IP and user agent. However, the record is flagged incomplete and is not linked to the itemised Purposes, so it is not determinable whether it is adequate proof. An itemised notice comes before the signup grant (before_grant true), but no notice resolved for the dpdp_consent path comes before its grant. For either path, the Evidence does not show that the notice covers how to withdraw consent, how to complain to the Board, or language options. Withdrawal is only possible by deleting the whole account. Neither the grant nor the withdrawal path has a resolved step count, so comparable ease cannot be judged. PostHog calls are gated against future processing, but erasing data already sent to the Data Processor is unresolved. The privacy policy itself says analytics data already collected is not deleted when the user changes their choice. Verifiable parental consent was not resolved, and only an age self-declaration was found.; cache key: 10dfd58cd1c73370f7dd436a83cb80faab23cb238520d8fd484039d2dfb42af8
+
+LLM reasoning citations: DPDP-Act-4(1) — Section 4(1), DPDP-Act-4 — Section 4, DPDP-Act-5(1) — Section 5(1), DPDP-Act-5 — Section 5, DPDP-Act-5(3) — Section 5(3), DPDP-Act-6(1) — Section 6(1), DPDP-Act-6 — Section 6, DPDP-Act-6(3) — Section 6(3), DPDP-Act-6(4) — Section 6(4), DPDP-Act-6(6) — Section 6(6), DPDP-Act-6(10) — Section 6(10), DPDP-Act-8(7) — Section 8(7), DPDP-Act-8(7)(b) — Section 8(7)(b), DPDP-Act-8 — Section 8, DPDP-Rule-3 — Rule 3, DPDP-Rule-3(a) — Rule 3(a), DPDP-Rule-3(b) — Rule 3(b), DPDP-Rule-3(c) — Rule 3(c), DPDP-Rule-3(c)(i) — Rule 3(c)(i)
+
+LLM reading — recorded: not determinable. ConsentEvent records are created on both grant paths (expenses/forms.py:911 'Signup Data Collection' and expenses/views/misc.py:448 'Terms and Data Collection'). They store user, action, consent_version, timestamp, ip_address and user_agent. Every record is flagged complete=false and has no linked purpose_ids. Each one uses a single generic purpose label rather than the three itemised Purposes, and does not capture choices per control. The account-deletion withdrawal path does not show a WITHDRAWN record; such records appear only for family household flows. So the Evidence does not establish whether these records are enough to prove notice and consent.
+
+LLM reading citations: DPDP-Act-6(10) — Section 6(10)
+
+LLM reading — specific: not met. On both signup.html and dpdp_consent.html, consent_transactions and consent_device are pre-checked and required (default_selected true), and consent_email is a hidden input with value="on" that the user never sees or controls. The signup notice says 'Toggling each is required to complete your registration.' The user therefore cannot give or refuse consent for each Purpose separately. The only affirmative actions are confirm_age and submit, which does not meet the standard of specific, unconditional consent given by a clear affirmative action for each specified Purpose.
+
+LLM reading citations: DPDP-Act-6(1) — Section 6(1), DPDP-Act-6 — Section 6, DPDP-Act-4(1) — Section 4(1)
+
+LLM reading — enforced server-side: met. DPDPAConsentMiddleware is registered in finance_tracker/settings.py:146. It redirects to dpdp_consent when profile.consent_granted is false (expenses/middleware.py:147-148). PostHog capture and identify are each preceded by a server-side analytics_consent_given() check (expenses/posthog_utils.py:108 and 125). All of these enforcement points are flagged server_side=true.
+
+LLM reading citations: DPDP-Act-4(1) — Section 4(1), DPDP-Act-4 — Section 4
+
+LLM reading — withdrawable with comparable ease: not determinable. Withdrawal happens through WithdrawConsentView (settings/consent/withdraw/), a single form submit that deletes the account. Withdrawing per Purpose is not possible. Both the grant and withdrawal paths have start_template and step_count set to null, and step counts cannot be compared without a common, statically resolved starting point. Comparable ease therefore cannot be established.
+
+LLM reading citations: DPDP-Act-6(4) — Section 6(4), DPDP-Rule-3(c)(i) — Rule 3(c)(i)
+
+LLM reading — propagated to Data Processors: not determinable. Future calls to the PostHog Data Processor (client.capture and client.identify) are gated server-side by a consent check. The processor_propagation state, however, records that earlier transfers and deletion are unresolved. Calling dispatch_account_deletion does not prove that any processor erasure happened. The privacy policy notice (templates/privacy_policy.html:154) states that 'Analytics data already collected is not deleted when you change your choice.' That points to a possible gap in causing the Data Processor to stop processing or erase, but the Evidence does not show what happens when the account is deleted.
+
+LLM reading citations: DPDP-Act-6(6) — Section 6(6), DPDP-Act-8(7)(b) — Section 8(7)(b), DPDP-Act-8(7) — Section 8(7), DPDP-Act-8 — Section 8
+
+LLM reading — preceded by notice: not determinable. On signup, an itemised notice (templates/account/signup.html:105, before_grant true) with linked Purposes appears before the submit button. On the dpdp_consent path, the general notice (line 12) has before_grant null, and the version notice (line 88) has before_grant false. Neither linked notice is shown to state how to withdraw consent, how to exercise rights, or how to complain to the Board. That information appears only in the privacy policy (notice 333), whose before_grant is null and which is not linked to the grant. No option to read the notice in English or an Eighth Schedule language is established (language null).
+
+LLM reading citations: DPDP-Act-5(1) — Section 5(1), DPDP-Act-5 — Section 5, DPDP-Act-5(3) — Section 5(3), DPDP-Act-6(3) — Section 6(3), DPDP-Rule-3 — Rule 3, DPDP-Rule-3(a) — Rule 3(a), DPDP-Rule-3(b) — Rule 3(b), DPDP-Rule-3(c) — Rule 3(c)
+
+LLM reading — verifiable parental consent: not determinable. Both the child gate and the parental verification are in state 'not determinable'. The only related evidence is a required confirm_age self-declaration checkbox (age 18 or older, not stored) on both grant paths. No mechanism for verifiable parental consent was found, and whether the audience includes children, or whether age or date of birth is collected, was not established.
 
 Limitation: Only statically resolved Purpose-specific links are represented; missing links are not proof of absence.
 
@@ -2454,11 +2511,11 @@ Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only
 | Files scanned | 1676 |
 | Files excluded | 290 |
 | Rule count | 65 |
-| LLM provider | ollama |
-| LLM model | llama3.1 |
-| Prompt versions | classification: classification-v1, triage: triage-v1, consent: consent-v1, fix: fix-v1 |
+| LLM provider | omp |
+| LLM model | anthropic/claude-opus-5-5 |
+| Prompt versions | classification: classification-v1, triage: triage-v2, consent: consent-v2, fix: fix-v1 |
 | LLM mode | cache-only |
-| Cache hits | 0 |
-| Cache misses | 30 |
-| LLM fields not assessed | 30 |
-| Cache-only reason | ollama is unreachable or authentication failed |
+| Cache hits | 30 |
+| Cache misses | 0 |
+| LLM fields not assessed | 0 |
+| Cache-only reason | forced offline for artifact regeneration |
