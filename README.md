@@ -85,6 +85,25 @@ Set `DPDP_LLM_PROVIDER` to `anthropic`, `openai`, `gemini`, `ollama` or `omp`, a
 
 Every scan probes its configured LLM provider. If unavailable, cache-only mode replays matching entries; uncached LLM fields are `not assessed`. The Report discloses this through `llm.mode` and `llm.reason`, and the command reports it on stderr. Cache-only mode does not imply that unassessed fields were assessed.
 
+## Retrieval grounding, dataset and local models
+
+**Grounded verdicts.** `auditor/rag/` builds an in-memory BM25 index at scan time over the Provision registry excerpts, the remediation catalogue and the Labelled Corpus fixtures; no statute PDF text is indexed. Each triage and Consent Assessment prompt (`triage-v2`, `consent-v2`) receives eight Provisions (the Issue Type's catalogue Provisions and their parents first, then the best-matching others) plus worked examples from the Labelled Corpus, and must answer with `citations`. A citation outside the Provisions sent for that prompt makes the verdict `not assessed`. Triage sees every Evidence location of the Finding, its Exposure, Data Category and Data Flow. Classification (`classification-v1`) and fixes (`fix-v1`) are unchanged.
+
+**Hosted model.** The published cache, Reports and Replay bundles use Opus 5.5 through `omp` (`anthropic/claude-opus-5-5`). `python -m auditor.llm.prewarm targets/<name> --cache-dir <dir> --provider omp --model anthropic/claude-opus-5-5 --workers 8` fills the cache in parallel: it runs the scan cache-only, asks the provider for every miss concurrently, and repeats until a cache-only scan has none.
+
+**Dataset.** [`training/data/`](training/data/) holds classification and triage examples built from 20 pinned public repositories ([`training/sources.yaml`](training/sources.yaml)); the four Report Targets appear only in the held-out evaluation inputs. Prompts are the Auditor's own masked prompts. Labels come from the Auditor's deterministic classification and Labelled Corpus verdicts where they exist, and from Opus 5.5 elsewhere; an Opus answer is kept only when it is valid JSON and every citation is among the Provisions sent. Classification has 942 training and 106 validation rows, triage 248 and 1, with no repository in both splits; `training/leakage.py` checks the split against the held-out inputs. Re-running `mask_for_egress` over every row changes no Evidence, context or answer text. Method, class counts and exclusions: [`training/DATASET.md`](training/DATASET.md).
+
+**Local fine-tune.** On an RTX A4000 we trained a QLoRA adapter (rank 16, learning rate 2e-4, 4,096-token rows, 2 epochs) on `unsloth/Qwen3-8B-bnb-4bit` over the 1,190 training rows: 34 minutes, 8.6 GB peak reserved memory, validation loss 0.292 → 0.235. The merged model was quantised to Q5_K_M and served through Ollama as `dpdp-auditor:ft-20261123-2033`; it returned valid answers on a classification and a triage smoke prompt. It was not scored on the held-out set, and the Auditor does not use it. Scripts and the run record: [`training/`](training/README.md), [`training/runs/ft-20261123-2033.json`](training/runs/ft-20261123-2033.json).
+
+**Model comparison.** `training/evaluate.py` scores any model on the held-out Report Target set in [`accuracy/llm-eval/`](accuracy/llm-eval/README.md) (136 classification rows, 52 Juice Shop triage labels), using the production prompts and validity checks; an invalid answer counts as wrong.
+
+| Model | Classification accuracy | Classification macro-F1 | Triage accuracy | Valid answers |
+|---|---:|---:|---:|---:|
+| Opus 5.5 (`omp`) | 86.5% | 41.8% | 76.9% | 188/188 |
+| Qwen3.8 27B (Ollama, thinking off) | 57.7% | 32.7% | 73.1% | 188/188 |
+
+Qwen3.8 ran on the A4000 with 23% of the model on the CPU, at about 10 seconds per item.
+
 ## Report contract and layout
 
 `auditor/schema/report.schema.json` is the contract for the Report and its consumers. When changing it, bump `schema_version` and update every consumer together.

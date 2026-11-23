@@ -1,0 +1,149 @@
+{
+  "sources": {
+    "Django-CRM": {
+      "captured": 40,
+      "deterministic": 32,
+      "teacher": 8
+    },
+    "django-allauth": {
+      "captured": 50,
+      "deterministic": 31,
+      "teacher": 19
+    },
+    "django-appointment": {
+      "captured": 7,
+      "deterministic": 7
+    },
+    "django-oscar": {
+      "captured": 15,
+      "teacher": 11,
+      "deterministic": 4
+    },
+    "documenso": {
+      "captured": 108,
+      "deterministic": 73,
+      "teacher": 33,
+      "invalid": 2
+    },
+    "dub": {
+      "captured": 140,
+      "deterministic": 68,
+      "teacher": 72
+    },
+    "ecommerce": {
+      "captured": 25,
+      "teacher": 10,
+      "deterministic": 14,
+      "invalid": 1
+    },
+    "edx-platform": {
+      "captured": 28,
+      "deterministic": 13,
+      "teacher": 15
+    },
+    "fastapi-realworld-example-app": {
+      "captured": 7,
+      "deterministic": 6,
+      "teacher": 1
+    },
+    "formbricks": {
+      "captured": 98,
+      "deterministic": 57,
+      "teacher": 41
+    },
+    "full-stack-fastapi-template": {
+      "captured": 44,
+      "deterministic": 24,
+      "teacher": 20
+    },
+    "healthchecks": {
+      "captured": 30,
+      "deterministic": 27,
+      "teacher": 3
+    },
+    "node-express-realworld-example-app": {
+      "captured": 8,
+      "deterministic": 5,
+      "teacher": 3
+    },
+    "open-webui": {
+      "captured": 250,
+      "held_out_overlap": 18,
+      "deterministic": 111,
+      "teacher": 121
+    },
+    "plunk": {
+      "captured": 35,
+      "deterministic": 23,
+      "teacher": 12
+    },
+    "pretix": {
+      "captured": 22,
+      "teacher": 12,
+      "deterministic": 10
+    },
+    "saleor": {
+      "captured": 26,
+      "deterministic": 21,
+      "teacher": 5
+    },
+    "taxonomy": {
+      "captured": 24,
+      "teacher": 9,
+      "deterministic": 15
+    },
+    "trigger.dev": {
+      "captured": 99,
+      "deterministic": 56,
+      "invalid": 1,
+      "teacher": 42
+    },
+    "wagtail": {
+      "captured": 14,
+      "teacher": 9,
+      "deterministic": 5
+    }
+  },
+  "validation_repository": "documenso",
+  "splits": {
+    "val": {
+      "rows": 106,
+      "counts": {
+        "Profile": 32,
+        "Contact": 35,
+        "Authentication Secret": 37,
+        "Financial": 2
+      },
+      "label_origin": {
+        "deterministic": 73,
+        "teacher": 33
+      },
+      "tokens_approx": {
+        "p50": 166,
+        "p95": 241,
+        "max": 295
+      },
+      "sha256": "dca48eb0ef0f3cb1f96d710a30b9239c69fafbf04630334139ea0ad8a56953dd"
+    },
+    "train": {
+      "rows": 942,
+      "counts": {
+        "Contact": 150,
+        "Profile": 434,
+        "Authentication Secret": 343,
+        "Financial": 13,
+        "Biometric": 2
+      },
+      "label_origin": {
+        "deterministic": 529,
+        "teacher": 413
+      },
+      "tokens_approx": {
+        "p50": 171,
+        "p95": 259,
+        "max": 316
+      },
+      "sha256": "2c7c8b13770961249249d85d63ede94b743f0a6667a39dc7315de4e8e8b163c9"
+    }
+  }
+}

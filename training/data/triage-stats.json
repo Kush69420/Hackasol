@@ -1,0 +1,531 @@
+{
+  "prompt_version": "triage-v2",
+  "excluded_sources": {
+    "edx-platform": "Auditor crash: strict UTF-8 read at auditor/rules/rights_config.py:67"
+  },
+  "sources": {
+    "corpus/CHI-01-age-parental-consent": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/CHI-02-child-tracking": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/CON-01-express-enforcement": {
+      "captured": 4,
+      "other_rule": 3,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/CON-02-angular-bundled-purposes": {
+      "captured": 2,
+      "other_rule": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/CON-03-angular-default-true": {
+      "captured": 2,
+      "other_rule": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/CON-03-django-default-selected": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/CON-04-django-comparable-paths": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "teacher_disagreed": 1
+    },
+    "corpus/CON-04-express-withdrawal-path": {
+      "captured": 4,
+      "other_rule": 3,
+      "self_retrieved": 1,
+      "teacher_disagreed": 1
+    },
+    "corpus/CON-05-express-processor-withdrawal": {
+      "captured": 6,
+      "other_rule": 5,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/CON-06-django-incomplete-record": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/CON-06-sequelize-consent-record": {
+      "captured": 4,
+      "other_rule": 3,
+      "other_issue": 1
+    },
+    "corpus/CON-07-angular-consent-notice": {
+      "captured": 2,
+      "other_rule": 1,
+      "other_issue": 1
+    },
+    "corpus/CON-07-django-unitemised-notice": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/CON-08-angular-excess-elements": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/MON-01-monitoring-coverage": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/RET-01-express-purpose-end": {
+      "captured": 2,
+      "other_rule": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/RET-01-sequelize-soft-delete": {
+      "captured": 4,
+      "other_rule": 3,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/RET-02-express-erasure-request": {
+      "captured": 4,
+      "other_rule": 3,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/RET-03-express-erasure-notice": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "teacher_disagreed": 1
+    },
+    "corpus/RIG-01-express-incomplete-export": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/RIG-02-express-email-correction": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/RIG-03-express-grievance": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "teacher_disagreed": 1
+    },
+    "corpus/RIG-04-rights-notice": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-01-nginx-query-logging": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "teacher_disagreed": 1
+    },
+    "corpus/SEC-01-ts-morgan-query-secrets": {
+      "captured": 4,
+      "other_rule": 3,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-02-django-plain-fields": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-02-sequelize-plain-fields": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-03-django-aadhaar-storage": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-03-fastapi-aadhaar-response": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-03-sequelize-aadhaar-storage": {
+      "captured": 2,
+      "other_rule": 1,
+      "other_issue": 1
+    },
+    "corpus/SEC-04-ts-constant-key-verifier": {
+      "captured": 3,
+      "other_rule": 2,
+      "other_issue": 1
+    },
+    "corpus/SEC-04-ts-md5-credential-compare": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-04-ts-md5-password-hash": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-05-ts-hardcoded-hmac-key": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-05-ts-hardcoded-jwt-key": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-06-express-error-disclosure": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-07-ts-lossy-owner-key": {
+      "captured": 9,
+      "other_rule": 8,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-07-ts-public-personal-data-directory": {
+      "captured": 4,
+      "other_rule": 2,
+      "self_retrieved": 2,
+      "teacher_disagreed": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-07-ts-unauthenticated-record-read": {
+      "captured": 7,
+      "other_rule": 6,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-07-ts-unchecked-nested-records": {
+      "captured": 6,
+      "other_rule": 5,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-07-ts-unscoped-authenticated-read": {
+      "captured": 5,
+      "other_rule": 4,
+      "self_retrieved": 1,
+      "teacher_disagreed": 1
+    },
+    "corpus/SEC-08-ts-account-list": {
+      "captured": 6,
+      "other_rule": 5,
+      "other_issue": 1
+    },
+    "corpus/SEC-08-ts-nested-records": {
+      "captured": 6,
+      "other_rule": 5,
+      "other_issue": 1
+    },
+    "corpus/SEC-08-ts-review-author": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-08-ts-whole-model-serialisation": {
+      "captured": 5,
+      "other_rule": 4,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-09-ts-query-authentication-secret": {
+      "captured": 3,
+      "other_rule": 2,
+      "other_issue": 1
+    },
+    "corpus/SEC-09-ts-query-personal-data": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-10-ts-storage-header": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-10-ts-token-storage-site": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-11-fastapi-wildcard-cors": {
+      "captured": 1,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-11-terraform-plaintext-listener": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-11-ts-jsonp-response": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "teacher_disagreed": 1
+    },
+    "corpus/SEC-11-ts-session-cookie-flags": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-11-ts-wildcard-cors": {
+      "captured": 7,
+      "other_rule": 6,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-12-express-access-logging": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-13-ts-access-log-retention": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-14-terraform-store-backup": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-15-committed-personal-data": {
+      "captured": 3,
+      "self_retrieved": 3,
+      "deterministic": 1,
+      "true-positive": 1,
+      "teacher_disagreed": 2
+    },
+    "corpus/SEC-16-docker-root-container": {
+      "captured": 5,
+      "other_rule": 4,
+      "self_retrieved": 1,
+      "teacher_disagreed": 1
+    },
+    "corpus/SEC-16-kubernetes-privileged-store": {
+      "captured": 3,
+      "other_rule": 2,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-16-kubernetes-public-store": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-16-terraform-public-storage": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/SEC-16-terraform-public-store": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "teacher_disagreed": 1
+    },
+    "corpus/TRF-01-undisclosed-processor-transfer": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "deterministic": 1,
+      "true-positive": 1
+    },
+    "corpus/TRF-02-terraform-storage-region": {
+      "captured": 3,
+      "other_rule": 2,
+      "self_retrieved": 1,
+      "teacher_disagreed": 1
+    },
+    "Django-CRM": {
+      "captured": 6,
+      "teacher": 6,
+      "false-positive": 1,
+      "uncertain": 4,
+      "true-positive": 1
+    },
+    "django-allauth": {
+      "captured": 8,
+      "teacher": 8,
+      "false-positive": 8
+    },
+    "django-appointment": {},
+    "django-oscar": {},
+    "documenso": {
+      "captured": 1,
+      "teacher": 1,
+      "uncertain": 1
+    },
+    "dub": {
+      "captured": 8,
+      "teacher": 8,
+      "uncertain": 5,
+      "false-positive": 3
+    },
+    "ecommerce": {},
+    "fastapi-realworld-example-app": {},
+    "formbricks": {
+      "captured": 9,
+      "teacher": 9,
+      "false-positive": 8,
+      "uncertain": 1
+    },
+    "full-stack-fastapi-template": {
+      "captured": 4,
+      "teacher": 4,
+      "false-positive": 4
+    },
+    "healthchecks": {},
+    "node-express-realworld-example-app": {
+      "captured": 1,
+      "teacher": 1,
+      "true-positive": 1
+    },
+    "open-webui": {
+      "captured": 6,
+      "teacher": 6,
+      "uncertain": 1,
+      "false-positive": 4,
+      "true-positive": 1
+    },
+    "plunk": {
+      "captured": 9,
+      "teacher": 9,
+      "uncertain": 9
+    },
+    "pretix": {},
+    "saleor": {
+      "captured": 115,
+      "teacher": 115,
+      "false-positive": 114,
+      "uncertain": 1
+    },
+    "taxonomy": {
+      "captured": 1,
+      "teacher": 1,
+      "uncertain": 1
+    },
+    "trigger.dev": {
+      "captured": 33,
+      "teacher": 33,
+      "false-positive": 14,
+      "uncertain": 19
+    },
+    "wagtail": {}
+  },
+  "splits": {
+    "train": {
+      "rows": 248,
+      "counts": {
+        "true-positive": 51,
+        "false-positive": 156,
+        "uncertain": 41
+      },
+      "label_origin": {
+        "deterministic": 48,
+        "teacher": 200
+      },
+      "tokens_approx": [
+        1807,
+        2287,
+        3661
+      ],
+      "sha256": "eff0034cdcfb628ad51bcc9de4988ef98fdad94b098e24f8a8149469f092b940"
+    },
+    "val": {
+      "rows": 1,
+      "counts": {
+        "uncertain": 1
+      },
+      "label_origin": {
+        "teacher": 1
+      },
+      "tokens_approx": [
+        1689,
+        1689,
+        1689
+      ],
+      "sha256": "a8d279b636870d04690a43afc36a7faccd8ea21a80ca98d5bea8f24b228b2155"
+    }
+  }
+}

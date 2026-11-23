@@ -1,7 +1,7 @@
 # Local QLoRA training
 
 Use the RTX A4000 host. Run these commands there from `~/dpdp-ft`; place
-`train.py`, `export.sh`, `requirements.txt`, and your git-ignored JSONL splits
+`train.py`, `export.sh`, `requirements.txt`, and the JSONL splits from `training/data/`
 there first. Check `nvidia-smi` and `ollama ps` before training. Do not stop
 Ollama or evict other jobs. Training is single-GPU; the export merge and
 quantization run on CPU.

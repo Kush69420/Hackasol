@@ -3,7 +3,8 @@
 
 # LLM verdict cache is local; masked, but per-machine
 .dpdp-cache/
-/training/data/
+# Dataset is published; the trainer's throughput-smoke samples are not
+/training/data/smoke-*
 /training/cache/
 
 .venv/
