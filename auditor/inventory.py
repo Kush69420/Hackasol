@@ -7,6 +7,7 @@ populate the inventory.
 
 from __future__ import annotations
 
+from importlib import import_module
 import json
 import subprocess
 from pathlib import Path
@@ -29,6 +30,23 @@ def build_inventory(root: Path, files: list[Path], commit: str | None) -> dict:
         text=True, capture_output=True, check=True,
     )
     inventory = {"commit": commit, **json.loads(result.stdout), **analyse_config(root, rel)}
+    from auditor.analysers import django
+
+    analysers = [django]
+    try:
+        fastapi = import_module("auditor.analysers.fastapi")
+    except ModuleNotFoundError as exc:
+        if exc.name != "auditor.analysers.fastapi":
+            raise
+    else:
+        analysers.append(fastapi)
+    inventory["python_flows"] = []
+    for analyser in analysers:
+        for key, values in analyser.analyse(root, rel).items():
+            if key == "flows":
+                inventory["python_flows"].extend(values)
+            else:
+                inventory.setdefault(key, []).extend(values)
     missing = [k for k in INVENTORY_KEYS if k not in inventory]
     if missing:
         raise ValueError(f"inventory analysers did not produce: {', '.join(missing)}")

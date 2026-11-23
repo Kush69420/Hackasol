@@ -7,6 +7,7 @@ import { extractRoutes } from './routes.mjs';
 import { extractModels } from './models.mjs';
 import { extractFrontend } from './frontend.mjs';
 import { createProject } from './project.mjs';
+import { extractNextjs } from './nextjs.mjs';
 
 const request = JSON.parse(readFileSync(0, 'utf8'));
 const project = createProject(request.root, request.files);
@@ -16,4 +17,5 @@ const out = {
   ...extractModels(project),
   ...extractFrontend(project),
 };
+for (const [key, values] of Object.entries(extractNextjs(project))) out[key].push(...values);
 process.stdout.write(JSON.stringify(out));

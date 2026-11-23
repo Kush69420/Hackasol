@@ -60,8 +60,11 @@ def run_semgrep(root: Path, files: Iterable[str | Path], config_dirs: Sequence[P
             if proc.returncode != 0:
                 raise RuntimeError(f"semgrep exited {proc.returncode}: {proc.stderr.strip()[-2000:]}")
             report = json.loads(proc.stdout)
-            if report["errors"]:
-                raise RuntimeError(f"semgrep reported {len(report['errors'])} error(s): {report['errors'][0]}")
+            # Warn-level entries (PartialParsing of one construct) leave the rest of the file scanned;
+            # only error-level entries mean results are missing.
+            fatal = [e for e in report["errors"] if e.get("level") != "warn"]
+            if fatal:
+                raise RuntimeError(f"semgrep reported {len(fatal)} error(s): {fatal[0]}")
             matches.extend(_match_dict(root, result, bound) for result in report["results"])
     return matches
 

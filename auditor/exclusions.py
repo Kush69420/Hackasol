@@ -7,6 +7,7 @@ import os
 ALWAYS_EXCLUDED = ("**/.git/**", "**/node_modules/**")
 PROFILES = {
     "juice-shop": ("data/static/codefixes/**", "test/**", "frontend/**/*.spec.ts"),
+    "ai-kyc-platform": ("backend/venv/**", "**/__pycache__/**", "**/*.pyc"),
 }
 
 
