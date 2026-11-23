@@ -1,6 +1,8 @@
 import type { ConsentAssessmentData } from "./types";
+import { LlmCitations } from "./ProvisionView";
 
 export function ConsentAssessment({ assessment, replay }: { assessment: ConsentAssessmentData | null; replay: boolean }) {
+  const reasoning = assessment?.llm_reasoning;
   return (
     <section aria-label="Consent Assessment" data-testid="consent-assessment">
       <h2>Consent Assessment</h2>
@@ -31,6 +33,19 @@ export function ConsentAssessment({ assessment, replay }: { assessment: ConsentA
           )}
         </article>
       ))}
+      {reasoning?.status === "assessed" && reasoning.value && (
+        <article data-testid="consent-llm-reasoning">
+          <h3>LLM reasoning</h3>
+          <p>{reasoning.value.assessment}</p>
+          <LlmCitations ids={reasoning.value.citations} />
+          {reasoning.value.criteria?.map((row) => (
+            <div key={row.criterion}>
+              <p>{row.criterion}: {row.reading} — {row.reason}</p>
+              <LlmCitations ids={row.citations} />
+            </div>
+          ))}
+        </article>
+      )}
     </section>
   );
 }

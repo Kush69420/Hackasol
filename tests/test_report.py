@@ -10,7 +10,7 @@ from auditor.report import SECTIONS, _dependent, coverage_matrix, executive_summ
 from auditor.rules import load_rules
 from auditor.schema import validate_report
 from test_accuracy import accuracy_report
-from test_schema import finding, make_report
+from test_schema import assessed, finding, make_report
 
 
 def pdf_text(path):
@@ -67,6 +67,25 @@ def test_coverage_registry_and_unmet_gates():
     assert gated_rule in index["DPDP-Act-12(2)"]["not_determinable_rules"]
     assert index["DPDP-Act-9"]["annotation"] == "covered, not exercised on a real Target"
     assert "not determinable" in render_html(make_report(coverage_matrix=rows))
+
+
+def test_v2_report_resolves_triage_and_consent_citations():
+    triage = assessed({"verdict": "uncertain", "reason": "Evidence is incomplete.",
+                       "citations": ["CWE-532"]}, "triage-v2")
+    reasoning = assessed({
+        "assessment": "Withdrawal is not established.",
+        "criteria": [{"criterion": "recorded", "reading": "not determinable",
+                      "reason": "No record was shown.", "citations": ["DPDP-Act-6(10)"]}],
+        "citations": ["DPDP-Act-6(4)"],
+    }, "consent-v2")
+    report = make_report([finding(llm_triage=triage, other_provisions=[])],
+                         consent_assessment={"criteria": [], "graph": {}, "llm_reasoning": reasoning})
+    text = render_html(report)
+    registry = load_registry()
+    for label, pid in (("LLM triage", "CWE-532"), ("LLM reasoning", "DPDP-Act-6(4)"),
+                       ("LLM reading", "DPDP-Act-6(10)")):
+        assert f"{label} citations: {pid} — {registry[pid].citation}" in text
+    assert "LLM reading — recorded: not determinable." in text
 
 
 def test_masking_and_html_escaping(tmp_path):

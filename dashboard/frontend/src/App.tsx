@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { BANDS, Band, Evidence, Finding, FlowStep, Provision, Report, ScanEvent } from "./types";
+import { BANDS, Band, Evidence, Finding, FlowStep, Report, ScanEvent } from "./types";
 import { LiveProbes, LiveProbeEvidence } from "./LiveProbes";
 import { FixPatches } from "./FixPatches";
 import { LegalView } from "./LegalView";
 import { ConsentAssessment } from "./ConsentAssessment";
+import { LlmCitations, ProvisionView } from "./ProvisionView";
 
 const STAGES: [string, string][] = [
   ["inventory", "Inventory"],
@@ -259,29 +260,6 @@ function DataFlowGraph({ steps }: { steps: FlowStep[] }) {
   );
 }
 
-function ProvisionView({ id, primary }: { id: string; primary?: boolean }) {
-  const [p, setP] = useState<Provision | null | undefined>(undefined);
-  useEffect(() => {
-    let live = true;
-    fetch(`/api/provisions/${encodeURIComponent(id)}`)
-      .then((r) => (r.ok ? (r.json() as Promise<Provision>) : null))
-      .then((v) => live && setP(v))
-      .catch(() => live && setP(null));
-    return () => {
-      live = false;
-    };
-  }, [id]);
-  return (
-    <div className="provision" data-testid={primary ? "primary-provision" : "related-provision"}>
-      <strong>{p ? p.citation : id}</strong>
-      {p && <span> — {p.title}</span>}
-      {p === undefined && <em> loading…</em>}
-      {p === null && <em> (no registry excerpt available)</em>}
-      {p && <blockquote data-testid="statute-excerpt">{p.excerpt}</blockquote>}
-    </div>
-  );
-}
-
 function llmText(field: { status: string; value?: unknown } | undefined): string {
   if (!field) return "not assessed";
   if (field.status !== "assessed") return field.status;
@@ -328,6 +306,7 @@ function FindingDetail({ finding: f }: { finding: Finding }) {
       <p>Tailored fix: {llmText(f.recommended_fix.tailored)}</p>
       <h3>LLM triage</h3>
       <p data-testid="llm-triage">{llmText(f.llm_triage)}</p>
+      {f.llm_triage.status === "assessed" && <LlmCitations ids={f.llm_triage.value?.citations} />}
     </section>
   );
 }

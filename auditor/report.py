@@ -205,6 +205,9 @@ def _sections(report):
         triage = finding["llm_triage"]
         details.append(("p", "LLM triage: " + (f"{triage['value']['verdict']} — {triage['value']['reason']}"
                         if triage["status"] == "assessed" else "not assessed") + f"; cache key: {triage['cache_key']}"))
+        if triage["status"] == "assessed" and triage["value"].get("citations"):
+            details.append(("p", "LLM triage citations: "
+                            + ", ".join(_citation(pid, registry) for pid in triage["value"]["citations"])))
     details.append(("h", "Observations"))
     if not report["observations"]:
         details.append(("p", "No Observations."))
@@ -233,6 +236,16 @@ def _sections(report):
                 consent.extend((("p", "Banner Evidence (not a grant): " + _location(ev)), ("code", ev["excerpt"])))
         reasoning = assessment["llm_reasoning"]
         consent.append(("p", "LLM reasoning: " + (reasoning["value"]["assessment"] if reasoning["status"] == "assessed" else "not assessed") + "; cache key: " + reasoning["cache_key"]))
+        if reasoning["status"] == "assessed":
+            value = reasoning["value"]
+            if value.get("citations"):
+                consent.append(("p", "LLM reasoning citations: "
+                                + ", ".join(_citation(pid, registry) for pid in value["citations"])))
+            for row in value.get("criteria", []):
+                consent.append(("p", f"LLM reading — {row['criterion']}: {row['reading']}. {row['reason']}"))
+                if row["citations"]:
+                    consent.append(("p", "LLM reading citations: "
+                                    + ", ".join(_citation(pid, registry) for pid in row["citations"])))
         for limitation in assessment["graph"].get("limitations", []):
             consent.append(("p", "Limitation: " + limitation))
     else:

@@ -18,12 +18,27 @@ export interface Element {
   data_category: string;
   evidence: Evidence;
 }
-export interface LlmField {
+export interface LlmField<Value = unknown> {
   status: string;
-  value?: unknown;
+  value?: Value;
   cache_key?: string;
   provider?: string;
   model?: string;
+}
+export interface LlmTriageValue {
+  verdict: "true-positive" | "false-positive" | "uncertain";
+  reason: string;
+  citations?: string[];
+}
+export interface LlmConsentValue {
+  assessment: string;
+  criteria?: {
+    criterion: string;
+    reading: "met" | "not met" | "not determinable";
+    reason: string;
+    citations: string[];
+  }[];
+  citations?: string[];
 }
 export interface Finding {
   id: string;
@@ -41,7 +56,7 @@ export interface Finding {
   enforceable_from: string;
   severity: { band: Band; justification: string };
   recommended_fix: { guidance: string; tailored?: LlmField };
-  llm_triage: LlmField;
+  llm_triage: LlmField<LlmTriageValue>;
   live_probe?: { result: "Confirmed" | "Refuted" | "inconclusive"; method: string; route: string; reason: string; request: string; response: string } | null;
   fix_patch?: { status: "generated" | "accepted" | "rejected"; diff: string; reason: string; provenance?: "generated" | "authored" } | null;
   status: string;
@@ -69,6 +84,7 @@ export interface ConsentCriterion {
 }
 export interface ConsentAssessmentData {
   criteria: ConsentCriterion[];
+  llm_reasoning: LlmField<LlmConsentValue>;
   live_probe_run?: { target: string; commit: string | null; observed_at: string };
 }
 export interface CeilingRow {
