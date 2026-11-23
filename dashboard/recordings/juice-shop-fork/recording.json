@@ -8,37 +8,37 @@
     {
       "ordinal": 0,
       "mode": "cache-only",
-      "elapsed_ms": 2878,
+      "elapsed_ms": 1381,
       "type": "stage",
       "stage": "inventory"
     },
     {
       "ordinal": 1,
       "mode": "cache-only",
-      "elapsed_ms": 3123,
+      "elapsed_ms": 1479,
       "type": "stage",
       "stage": "elements"
     },
     {
       "ordinal": 2,
       "mode": "cache-only",
-      "elapsed_ms": 3833,
+      "elapsed_ms": 1911,
       "type": "stage",
       "stage": "data_flows"
     },
     {
       "ordinal": 3,
       "mode": "cache-only",
-      "elapsed_ms": 11775,
+      "elapsed_ms": 4482,
       "type": "stage",
       "stage": "findings"
     },
     {
       "ordinal": 4,
       "mode": "cache-only",
-      "elapsed_ms": 17914,
+      "elapsed_ms": 7722,
       "type": "completed",
-      "finding_count": 47
+      "finding_count": 48
     }
   ]
 }

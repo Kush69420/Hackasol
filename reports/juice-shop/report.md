@@ -5400,11 +5400,11 @@ Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only
 
 ### Measured accuracy
 
-Primary Target: each canonical Finding is one prediction. It matches a confirmed reference entry when the Issue Type and normalised file path are equal and any Finding Evidence range overlaps the entry's reviewed anchor range. Matching is one-to-one, in Finding id order, each prediction taking the lowest-id unmatched entry; a second prediction for a matched entry is a false positive. A Finding that merges several Rules is one prediction. Labelled Corpus: for each Rule, the positive counts as a true positive if the Rule emits there (else a false negative) and the negative counts as a false positive if the Rule emits there (else a true negative); Rule emissions are counted, not merged Findings. Precision = TP/(TP+FP); recall = TP/(TP+FN); a zero denominator is N/A.
+Reference Target: each canonical Finding is one prediction. It matches a confirmed reference entry when the Issue Type and normalised file path are equal and any Finding Evidence range overlaps the entry's reviewed anchor range. Matching is one-to-one, in Finding id order, each prediction taking the lowest-id unmatched entry; a second prediction for a matched entry is a false positive. A Finding that merges several Rules is one prediction. Labelled Corpus: for each Rule, the positive counts as a true positive if the Rule emits there (else a false negative) and the negative counts as a false positive if the Rule emits there (else a true negative); Rule emissions are counted, not merged Findings. Precision = TP/(TP+FP); recall = TP/(TP+FN); a zero denominator is N/A.
 
-Primary Target: canonical Findings for juice-shop at c9f99228d9d56afb5f5ca7925376292f7fa44b13 against accuracy/juice-shop.json.
+Reference Target: canonical Findings for juice-shop at c9f99228d9d56afb5f5ca7925376292f7fa44b13 against accuracy/juice-shop.json.
 
-| Primary Target | TP | FP | FN | Precision | Recall |
+| Reference Target | TP | FP | FN | Precision | Recall |
 | --- | --- | --- | --- | --- | --- |
 | juice-shop | 45 | 8 | 2 | 0.8491 (45/53) | 0.9574 (45/47) |
 
@@ -5554,7 +5554,7 @@ Labelled Corpus: Rule emissions on designed fixtures, one true positive and one 
 
 ### Limitations
 
-- The Primary Target reference list covers one Target Application at one pinned revision; the figures say nothing about any Secondary Target.
+- The Reference Target reference list covers one Target Application at one pinned revision; the figures say nothing about any Secondary Target.
 - The reference list is hand-checked by the authors, so omissions and judgement calls bias recall and precision; entries that could not be determined are excluded, not scored.
 - A Finding whose only overlapping same-Issue-Type reference entries are not-determinable is neither a true nor a false positive; it is listed as an excluded prediction.
 - Labelled Corpus cases are small designed fixtures: one pair per Rule shows the Rule works on that pair, not how often it is right on real code.

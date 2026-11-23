@@ -11,8 +11,8 @@
     "commit": "70a821487c193be445810d836dd9b9b9ae22eb18"
   },
   "scan": {
-    "started_at": "2026-11-23T14:30:09.537763+00:00",
-    "finished_at": "2026-11-23T14:30:12.680467+00:00",
+    "started_at": "2026-11-23T16:18:12.211596+00:00",
+    "finished_at": "2026-11-23T16:18:13.590301+00:00",
     "exclusions": [
       "**/.git/**",
       "**/node_modules/**",
@@ -26,18 +26,18 @@
   },
   "llm": {
     "mode": "cache-only",
-    "provider": "ollama",
-    "model": "llama3.1",
+    "provider": "omp",
+    "model": "anthropic/claude-opus-5-5",
     "prompt_versions": {
       "classification": "classification-v1",
-      "triage": "triage-v1",
-      "consent": "consent-v1",
+      "triage": "triage-v2",
+      "consent": "consent-v2",
       "fix": "fix-v1"
     },
-    "cache_hits": 0,
-    "cache_misses": 27,
-    "not_assessed": 27,
-    "reason": "ollama is unreachable or authentication failed"
+    "cache_hits": 27,
+    "cache_misses": 0,
+    "not_assessed": 0,
+    "reason": "forced offline for artifact regeneration"
   },
   "applicability_assumptions": [
     {
@@ -188,6 +188,43 @@
     },
     {
       "element": {
+        "name": "model:VerificationRequest.user_id",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "ai-services/models/schemas.py",
+          "start_line": 69,
+          "end_line": 69,
+          "excerpt": "    user_id: str"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
+        "name": "param:POST /verify/complete#body.user_id",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "ai-services/models/schemas.py",
+          "start_line": 69,
+          "end_line": 69,
+          "excerpt": "    user_id: str"
+        }
+      },
+      "operations": [
+        {
+          "operation": "Collect",
+          "evidence": {
+            "file": "ai-services/models/schemas.py",
+            "start_line": 69,
+            "end_line": 69,
+            "excerpt": "    user_id: str"
+          },
+          "note": "backend; fastapi; evidenced"
+        }
+      ]
+    },
+    {
+      "element": {
         "name": "collection:LivenessDetectionService.liveness_score",
         "data_category": "Profile",
         "evidence": {
@@ -297,6 +334,19 @@
     },
     {
       "element": {
+        "name": "model:AuditLog.user",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/compliance/models.py",
+          "start_line": 9,
+          "end_line": 9,
+          "excerpt": "    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='audit_logs')"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
         "name": "model:AuditLog.ip_address",
         "data_category": "Contact",
         "evidence": {
@@ -304,6 +354,45 @@
           "start_line": 15,
           "end_line": 15,
           "excerpt": "    ip_address = models.GenericIPAddressField()"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
+        "name": "model:AuditLog.user_agent",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/compliance/models.py",
+          "start_line": 16,
+          "end_line": 16,
+          "excerpt": "    user_agent = models.TextField(blank=True, null=True)"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
+        "name": "model:RiskAssessment.user",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/compliance/models.py",
+          "start_line": 77,
+          "end_line": 77,
+          "excerpt": "    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='risk_assessments')"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
+        "name": "model:KYCDocument.user",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/kyc/models.py",
+          "start_line": 28,
+          "end_line": 28,
+          "excerpt": "    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='kyc_documents')"
         }
       },
       "operations": []
@@ -472,6 +561,19 @@
     },
     {
       "element": {
+        "name": "model:VerificationAttempt.user",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/kyc/models.py",
+          "start_line": 68,
+          "end_line": 68,
+          "excerpt": "    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='verification_attempts')"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
         "name": "model:User.email",
         "data_category": "Contact",
         "evidence": {
@@ -521,6 +623,95 @@
         }
       },
       "operations": []
+    },
+    {
+      "element": {
+        "name": "model:User.is_verified",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/users/models.py",
+          "start_line": 12,
+          "end_line": 12,
+          "excerpt": "    is_verified = models.BooleanField(default=False)"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
+        "name": "model:User.created_at",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/users/models.py",
+          "start_line": 13,
+          "end_line": 13,
+          "excerpt": "    created_at = models.DateTimeField(default=timezone.now)"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
+        "name": "model:User.updated_at",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/users/models.py",
+          "start_line": 14,
+          "end_line": 14,
+          "excerpt": "    updated_at = models.DateTimeField(auto_now=True)"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
+        "name": "model:UserProfile.user",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/users/models.py",
+          "start_line": 30,
+          "end_line": 30,
+          "excerpt": "    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
+        "name": "model:UserProfile.profile_picture",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/users/models.py",
+          "start_line": 31,
+          "end_line": 31,
+          "excerpt": "    profile_picture = models.ImageField(upload_to='profiles/', blank=True, null=True)"
+        }
+      },
+      "operations": []
+    },
+    {
+      "element": {
+        "name": "form:frontend/src/components/DocumentUpload.tsx#file",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "frontend/src/components/DocumentUpload.tsx",
+          "start_line": 211,
+          "end_line": 217,
+          "excerpt": "        <input\n          type=\"file\"\n          multiple\n          accept=\"image/*,.pdf,.doc,.docx\"\n          onChange={handleFileSelect}\n          className=\"absolute inset-0 w-full h-full opacity-0 cursor-pointer\"\n        />"
+        }
+      },
+      "operations": [
+        {
+          "operation": "Collect",
+          "evidence": {
+            "file": "frontend/src/components/DocumentUpload.tsx",
+            "start_line": 211,
+            "end_line": 217,
+            "excerpt": "        <input\n          type=\"file\"\n          multiple\n          accept=\"image/*,.pdf,.doc,.docx\"\n          onChange={handleFileSelect}\n          className=\"absolute inset-0 w-full h-full opacity-0 cursor-pointer\"\n        />"
+          },
+          "note": "form; ts-join; evidenced"
+        }
+      ]
     }
   ],
   "findings": [
@@ -654,15 +845,33 @@
       "recommended_fix": {
         "guidance": "Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry.",
         "tailored": {
-          "status": "not assessed",
-          "cache_key": "9a8712334430f4b34bb58c75a98d29bdd82dafab42d18264fa13085aa1293a43"
+          "status": "assessed",
+          "value": {
+            "fix": "Replace the wildcard CORS setup with an explicit allowlist of trusted origins. Right now allow_origins=[\"*\"] is combined with allow_credentials=True, and in that case Starlette echoes back whatever Origin the request sent. Any website can then make authenticated cross-origin requests and read the Personal Data in the responses. Load the trusted HTTPS origins from configuration, for example: `ALLOWED_ORIGINS = [o.strip() for o in os.environ['ALLOWED_ORIGINS'].split(',') if o.strip()]`. Stop the app at startup if the list is empty or contains '*'. Then use `app.add_middleware(CORSMiddleware, allow_origins=ALLOWED_ORIGINS, allow_credentials=True, allow_methods=['GET','POST','PUT','PATCH','DELETE','OPTIONS'], allow_headers=['Authorization','Content-Type'], max_age=600)`, listing only the methods and headers the API actually uses. Only use allow_origin_regex if it is fully anchored to your own domains. Rule 6(1)(a) also calls for transport and session controls. Enforce TLS with `app.add_middleware(HTTPSRedirectMiddleware)` and `TrustedHostMiddleware(allowed_hosts=[...])`, or terminate TLS at the proxy and redirect HTTP to HTTPS there. Add the header `Strict-Transport-Security: max-age=31536000; includeSubDomains`. Set every session or auth cookie with `response.set_cookie(..., secure=True, httponly=True, samesite='lax')`, or samesite='strict' where the flows allow it. If a cookie truly has to be sent cross-site, use samesite='none' only together with secure=True and the explicit origin allowlist."
+          },
+          "cache_key": "4a7cdf4432705ed0d37aeefe54d4fd381414d3722605f837aadb711e4b176461",
+          "provider": "omp",
+          "model": "anthropic/claude-opus-5-5",
+          "prompt_version": "fix-v1"
         }
       },
       "status": "open",
       "legal_review": null,
       "llm_triage": {
-        "status": "not assessed",
-        "cache_key": "3af425c4786f65e2d73cedcc17d4844e6a58b144280ce4f2653aef4da908572b"
+        "status": "assessed",
+        "value": {
+          "verdict": "true-positive",
+          "reason": "In ai-services/main.py, the FastAPI app adds CORSMiddleware with allow_origins=[\"*\"], allow_credentials=True, allow_methods=[\"*\"] and allow_headers=[\"*\"]. The comment \"Configure appropriately for production\" shows nobody has narrowed it yet. The same app has public endpoints that take biometric data: /face/match accepts document_image and selfie_image, and /liveness/detect accepts selfie_image. Both endpoints send back face-match and liveness results, including confidence scores and analysis details. With this setup, a page on any origin can send requests to these endpoints from a user's browser and read the replies. Combining wildcard origins with credentials makes it worse, because Starlette echoes the requesting origin back when cookies are present. This matches the positive example (wildcard origins on a /face/match biometric endpoint) and not the negative one (a single trusted origin). It is a permissive cross-domain policy that trusts any domain, and a failure to apply reasonable security safeguards to biometric personal data.",
+          "citations": [
+            "CWE-942",
+            "DPDP-Rule-6(1)",
+            "DPDP-Rule-6"
+          ]
+        },
+        "cache_key": "69cec8b3ee5307c33cf9cc130edebcf0cbc23befeb072eb27bbc0c5b99ed83c3",
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "prompt_version": "triage-v2"
       },
       "live_probe": null,
       "fix_patch": null
@@ -751,15 +960,32 @@
       "recommended_fix": {
         "guidance": "Hold the Aadhaar number only in an encrypted vault or behind a reference token, and keep it out of application tables, logs, caches and files. Where a screen or response must show the number, display only the masked form. Keep every collection, storage and sharing path within the limits of Aadhaar Act 2016 §29 and the Aadhaar (Sharing of Information) Regulations 2016.",
         "tailored": {
-          "status": "not assessed",
-          "cache_key": "e62d33a080ffcaf3840529d66f911156d97b289b8cf7ebe064b378334cc4cd41"
+          "status": "assessed",
+          "value": {
+            "fix": "Don't return the raw OCR output. The extracted text and structured data can contain a full 12-digit Aadhaar number (or a 16-digit VID), so redact them before building OCRResponse. Add a helper such as `mask_aadhaar(value)` that walks strings, dicts and lists recursively. It should replace any match of `\\b[2-9]\\d{3}[\\s-]?\\d{4}[\\s-]?\\d{4}\\b`, ideally confirmed with a Verhoeff checksum, and the VID pattern `\\b\\d{4}[\\s-]?\\d{4}[\\s-]?\\d{4}[\\s-]?\\d{4}\\b` with `XXXX XXXX ` followed by the last 4 digits. Call it as `extracted_text=mask_aadhaar(result.get(\"text\", \"\"))` and `structured_data=mask_aadhaar(result.get(\"structured_data\", {}))`. If later steps need the full number, send it straight to an encrypted Aadhaar Data Vault (HSM/KMS-backed). Put only the opaque reference token it returns (for example `structured_data[\"aadhaar_ref\"]`) and the masked number (`aadhaar_masked`) into the response. Also make sure the raw `result`, the OCR text and the uploaded image are never logged, cached, written to temporary files or saved in application tables: delete temporary files after processing and scrub logger and exception output. Collect and share the number only for the purpose the user consented to, as Aadhaar Act 2016 §29 and the 2016 Sharing of Information Regulations require. Add a unit test that feeds OCR output containing a sample Aadhaar number and checks that the response shows only the masked form and the token."
+          },
+          "cache_key": "085292654e6cc394fc2bd444ecfb68a472b818ab5a8948ec69c2ff279e9c1ef4",
+          "provider": "omp",
+          "model": "anthropic/claude-opus-5-5",
+          "prompt_version": "fix-v1"
         }
       },
       "status": "open",
       "legal_review": null,
       "llm_triage": {
-        "status": "not assessed",
-        "cache_key": "81bb7adbbdfdd5cde8fa01ebf5d070bbfd02f82398bef62dadc701ece1a91691"
+        "status": "assessed",
+        "value": {
+          "verdict": "true-positive",
+          "reason": "The evidence matches the positive example. At ocr_service.py:182 the full Aadhaar number is pulled from the document with only the spaces removed and stored as data[\"aadhaar_number\"]. The FastAPI handler at main.py:145-151 then returns result.get(\"structured_data\", {}) straight in the OCRResponse, with no masking, obfuscation or tokenisation. That differs from the negative example, which wraps the data in mask(). So the API response exposes the whole Aadhaar number, and the code shows none of the masking or obfuscation safeguards described in DPDP Rule 6(1)(a). One gap: the excerpt doesn't show the line where data becomes the structured_data value, but the data flow note and the matching pattern strongly suggest it does. Aadhaar Act s.29(4) is not cited because it covers publishing or displaying the number publicly, and this endpoint is marked Internal-Restricted. Provisions whose text was not fetched are also left out.",
+          "citations": [
+            "DPDP-Rule-6(1)(a)",
+            "DPDP-Rule-6(1)"
+          ]
+        },
+        "cache_key": "8bec3f830e9138e79621f5f94510cdec3262eac97b0861484777766201ebc7c4",
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "prompt_version": "triage-v2"
       },
       "live_probe": null,
       "fix_patch": null
@@ -878,15 +1104,32 @@
       "recommended_fix": {
         "guidance": "Hold the Aadhaar number only in an encrypted vault or behind a reference token, and keep it out of application tables, logs, caches and files. Where a screen or response must show the number, display only the masked form. Keep every collection, storage and sharing path within the limits of Aadhaar Act 2016 §29 and the Aadhaar (Sharing of Information) Regulations 2016.",
         "tailored": {
-          "status": "not assessed",
-          "cache_key": "f7d3e988d252a2057e1c7972d258fac4fdec12f4bf54b944159c93193bfaa38d"
+          "status": "assessed",
+          "value": {
+            "fix": "The line `AADHAAR = 'aadhaar', 'Aadhaar'` is just a label for a document type. It holds no Aadhaar number, so the line can stay as it is. The fix belongs in every model, serializer and view that stores a document number when the type is AADHAAR: (1) Remove the raw number from the application table. Send it to an encrypted vault or tokenization service, such as a UIDAI-compliant Aadhaar Data Vault or KMS envelope encryption with keys held outside the database, and store only the returned reference token, e.g. `«SECRET»)`. If you need lookups, add a keyed HMAC column. (2) Add a `masked_number` field that holds only the last 4 digits ('XXXX-XXXX-1234'), and have serializers, admin, templates and API responses return only that field. (3) Check the number before saving: 12 digits plus a Verhoeff checksum. Never write the full number to logs, Sentry or error messages, caches, sessions, the search index, exports or uploaded file names. Scrub it in logging filters and DRF exception handlers. (4) Collect it only with recorded consent for a stated purpose, as Aadhaar Act §29 and the Sharing of Information Regulations 2016 require. Do not share it with third parties, and do not publish or display it in full. Restrict and audit access to the vault lookup path. Also write a data migration that moves existing raw values into the vault, keeps the tokens and masked forms, and wipes the plaintext columns."
+          },
+          "cache_key": "2e1be22ec69cfbebe5f5f4bfc1f1f9952696762b4b3d5b4a6fd0ea27596cc077",
+          "provider": "omp",
+          "model": "anthropic/claude-opus-5-5",
+          "prompt_version": "fix-v1"
         }
       },
       "status": "open",
       "legal_review": null,
       "llm_triage": {
-        "status": "not assessed",
-        "cache_key": "7c169edd165c80c99ba621e952f3a99367d0e45e4d05495048bc721128322fad"
+        "status": "assessed",
+        "value": {
+          "verdict": "true-positive",
+          "reason": "Line 11 of backend/kyc/models.py adds 'aadhaar' as a document type, so the model is meant to hold Aadhaar numbers. Line 30 stores `document_number` as a plain `models.CharField(max_length=100)`. Nothing in the Evidence shows encryption, masking, tokenization or any other protection on that field. This matches the positive example exactly and differs from the negative example only in having the AADHAAR choice. The data flow shows the number is taken from request data (views.py:26), saved through `serializer.save()` (views.py:34), and sent back unmasked in API responses through `serializer.data` (views.py:39, 66). Keeping a government identifier like Aadhaar in plaintext and returning it in full falls short of the reasonable security safeguards in DPDP Rule 6(1), which names encryption, obfuscation, masking and virtual tokens in clause (a). Section 29(4) of the Aadhaar Act is not cited because the exposure is internal-restricted, not public display. The Aadhaar Sharing of Information Regulations 2016 are not cited because their text was not available.",
+          "citations": [
+            "DPDP-Rule-6(1)",
+            "DPDP-Rule-6(1)(a)"
+          ]
+        },
+        "cache_key": "3274fd7b1ccbba1334046091fba7ba05d0d6abf4c9fd4db391ab8b6f3793cee8",
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "prompt_version": "triage-v2"
       },
       "live_probe": null,
       "fix_patch": null
@@ -1011,138 +1254,34 @@
       "recommended_fix": {
         "guidance": "Protect each Tier A and Tier B Personal Data Element at field or column level before it is stored, with keys held outside the data store, so that a database dump or a restored backup does not reveal the values. Disk or volume encryption protects only the storage medium, so it lowers severity without clearing the Finding. Until DPDP §44(2) omits IT Act §43A, that section's reasonable-security duty applies alongside Rule 6(1)(a).",
         "tailored": {
-          "status": "not assessed",
-          "cache_key": "6f310001fbcdbfaab7dd52de093dd1808ef84120106e4548a1761d47ca3f47c7"
+          "status": "assessed",
+          "value": {
+            "fix": "Encrypt `document_number` at the field level before it is stored. Replace `models.CharField(max_length=100)` with an encrypted field type, such as `EncryptedCharField` from django-cryptography or django-fernet-encrypted-fields, or with a custom field that uses AES-GCM in `get_prep_value`/`from_db_value`. Keep the key outside the database and outside the repo: load it from a KMS, Vault, or a secret injected through an environment variable. Use key versioning so keys can be rotated. Ciphertext is longer than the plaintext, so increase the column length (for example `max_length=512`) or use `TextField`. If you need lookups or uniqueness on this value, add a separate keyed hash column (an HMAC-SHA256 'blind index' with its own key held outside the database) and drop direct filters or indexes on the plaintext. Write a data migration that encrypts the existing rows, then confirm that a raw database dump or a restored backup no longer shows readable values. Leave the column out of logs, the admin `list_display`/`search_fields`, and plain serializer output. Disk or volume encryption alone does not resolve this finding. Field-level encryption is what meets DPDP Rule 6(1)(a) and the IT Act §43A reasonable-security duty."
+          },
+          "cache_key": "7a8f34a339153603b5d9fcc305610704102b3b2f059e20445c447f859a1943b2",
+          "provider": "omp",
+          "model": "anthropic/claude-opus-5-5",
+          "prompt_version": "fix-v1"
         }
       },
       "status": "open",
       "legal_review": null,
       "llm_triage": {
-        "status": "not assessed",
-        "cache_key": "a9ce5a670e13b6327ca9ae04aca998d840014b56bbbcd7f72f791f8ab340a399"
-      },
-      "live_probe": null,
-      "fix_patch": null
-    },
-    {
-      "id": "SEC-12-e7116519cc6a",
-      "issue_type": "SEC-12",
-      "rules_fired": [
-        "SEC-12-express-access-logging"
-      ],
-      "kind": "security-personal-data",
-      "classification": "compliance-gap",
-      "evidence": [
-        {
-          "file": "backend/kyc/urls.py",
-          "start_line": 5,
-          "end_line": 5,
-          "excerpt": "    path('kyc/verifications/', views.KYCVerificationView.as_view(), name='kyc-verifications'),"
+        "status": "assessed",
+        "value": {
+          "verdict": "true-positive",
+          "reason": "In backend/kyc/models.py, document_number is a plain models.CharField(max_length=100). The same model defines document type choices AADHAAR ('aadhaar') and PAN ('pan'), so this field holds Aadhaar and PAN numbers, which are government identifiers. Nothing in the evidence shows field-level encryption, masking or tokenisation. This matches the positive example (a plain CharField holding an Aadhaar number) and not the negative one (EncryptedCharField). The data flow shows these values are collected from request.data, saved with serializer.save() and sent back in API responses through KYCVerificationSerializer(...).data, so they are stored in the database as cleartext. That falls short of the encryption, obfuscation, masking or tokenisation safeguards in DPDP Rule 6(1)(a) and is a case of CWE-311 (Missing Encryption of Sensitive Data). Two things are not visible in the evidence: whether the database itself is encrypted, and whether the serializer masks the field. Neither changes the finding that the model field is plaintext.",
+          "citations": [
+            "DPDP-Rule-6(1)(a)",
+            "DPDP-Rule-6(1)",
+            "DPDP-Rule-6",
+            "CWE-311"
+          ]
         },
-        {
-          "file": "backend/kyc/models.py",
-          "start_line": 30,
-          "end_line": 30,
-          "excerpt": "    document_number = models.CharField(max_length=100)"
-        }
-      ],
-      "data_flow": [
-        {
-          "operation": "Store",
-          "evidence": {
-            "file": "backend/kyc/views.py",
-            "start_line": 34,
-            "end_line": 34,
-            "excerpt": "            verification = serializer.save()"
-          },
-          "note": "handler; django; evidenced; Serializer save"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "backend/kyc/views.py",
-            "start_line": 39,
-            "end_line": 39,
-            "excerpt": "                'data': KYCVerificationSerializer(verification).data"
-          },
-          "note": "response; django; evidenced; Serializer response"
-        },
-        {
-          "operation": "Collect",
-          "evidence": {
-            "file": "backend/kyc/views.py",
-            "start_line": 26,
-            "end_line": 26,
-            "excerpt": "            serializer = KYCVerificationSerializer(data=request.data)"
-          },
-          "note": "handler; django; evidenced; Serializer request data"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "backend/kyc/views.py",
-            "start_line": 66,
-            "end_line": 66,
-            "excerpt": "                'data': serializer.data"
-          },
-          "note": "response; django; evidenced; Serializer response"
-        }
-      ],
-      "personal_data_element": {
-        "name": "model:KYCDocument.document_number",
-        "data_category": "Government Identifier",
-        "evidence": {
-          "file": "backend/kyc/models.py",
-          "start_line": 30,
-          "end_line": 30,
-          "excerpt": "    document_number = models.CharField(max_length=100)"
-        }
-      },
-      "data_category": "Government Identifier",
-      "processing_operation": "Expose",
-      "exposure": {
-        "level": "Internal-Restricted",
-        "derived_from": [
-          {
-            "file": "backend/kyc/urls.py",
-            "start_line": 5,
-            "end_line": 5,
-            "excerpt": "    path('kyc/verifications/', views.KYCVerificationView.as_view(), name='kyc-verifications'),"
-          }
-        ]
-      },
-      "primary_provision": "DPDP-Rule-6(1)(c)",
-      "other_provisions": [],
-      "penalty_ceiling": {
-        "parent_section": "DPDP-Act-8(5)",
-        "amount_inr_crore": 250
-      },
-      "enforceable_from": "2027-05-13",
-      "cvss": {
-        "status": "n/a",
-        "reason": "Compliance Gap: no CVSS score, so the band is the Risk Matrix cell"
-      },
-      "risk_matrix": {
-        "tier": "A",
-        "exposure": "Internal-Restricted",
-        "cell": "medium"
-      },
-      "severity": {
-        "band": "medium",
-        "justification": "model:KYCDocument.document_number (Government Identifier) has Internal-Restricted Exposure based on Evidence at backend/kyc/urls.py:5; Risk Matrix A/Internal-Restricted cell is medium. Primary Provision Rule 6(1)(c) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33)."
-      },
-      "recommended_fix": {
-        "guidance": "Enable request or access logging on every route and data store that reads Personal Data, recording who accessed which record and when, without writing the Personal Data itself. Make each entry attributable to an authenticated identity, and protect the log destination. Rule 6(1)(c) requires access to be visible through logs, monitoring and review, so that unauthorised access can be detected and investigated.",
-        "tailored": {
-          "status": "not assessed",
-          "cache_key": "724f596ec4c9d70c88562040c8d6a7c88068f6cdfaba71c92d6db967036d0860"
-        }
-      },
-      "status": "open",
-      "legal_review": null,
-      "llm_triage": {
-        "status": "not assessed",
-        "cache_key": "60a85784adfd218bd3c134d6c51b9ac3bb45269daaea9aac920fc62dc9feb64b"
+        "cache_key": "a9dcef4575ba23336e08457f9e84e5a917570c933cc14a9b611034cfe3ef8dba",
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "prompt_version": "triage-v2"
       },
       "live_probe": null,
       "fix_patch": null
@@ -1165,16 +1304,16 @@
       ],
       "data_flow": [],
       "personal_data_element": {
-        "name": "model:AuditLog.ip_address",
-        "data_category": "Contact",
+        "name": "model:AuditLog.user",
+        "data_category": "Profile",
         "evidence": {
           "file": "backend/compliance/models.py",
-          "start_line": 15,
-          "end_line": 15,
-          "excerpt": "    ip_address = models.GenericIPAddressField()"
+          "start_line": 9,
+          "end_line": 9,
+          "excerpt": "    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='audit_logs')"
         }
       },
-      "data_category": "Contact",
+      "data_category": "Profile",
       "processing_operation": null,
       "exposure": {
         "level": "Internal-Restricted",
@@ -1205,20 +1344,136 @@
       },
       "severity": {
         "band": "low",
-        "justification": "model:AuditLog.ip_address (Contact) has Internal-Restricted Exposure based on Evidence at monitoring/grafana/dashboards/kyc-dashboard.json:11; Risk Matrix C/Internal-Restricted cell is low. Primary Provision Rule 6(1)(c) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33)."
+        "justification": "model:AuditLog.user (Profile) has Internal-Restricted Exposure based on Evidence at monitoring/grafana/dashboards/kyc-dashboard.json:11; Risk Matrix C/Internal-Restricted cell is low. Primary Provision Rule 6(1)(c) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33)."
       },
       "recommended_fix": {
         "guidance": "Set up alerting or scheduled review on the access logs and authentication events for every store that holds Personal Data, so unauthorised access is detected and its cause and impact can be established. Rule 6(1)(c) requires monitoring and review of this kind, and investigation depends on it. Make sure the alert rules cover authentication failures and privileged reads, not only application errors.",
         "tailored": {
-          "status": "not assessed",
-          "cache_key": "2728db2070a52f85564bad2539d31df27742accc276042e306e2f4e27a49138c"
+          "status": "assessed",
+          "value": {
+            "fix": "The 'KYC Verifications' dashboard only displays data. Nothing alerts on access to the KYC store, so for MON-01 / Rule 6(1)(c) add monitoring on top of the panel. (1) Turn on audit logging for every store holding KYC Personal Data. That means the database (for example pgaudit, or MongoDB auditLog), any object storage holding KYC documents (S3/GCS data-access logs) and the auth/IdP layer. Log the actor identity, source IP, timestamp, the query or object accessed, the row or record count and success or failure. Send these logs to a central, tamper-resistant sink with a defined retention period (for example 1 year or more). (2) Add alert rules next to the dashboard, as Grafana/Prometheus alerting or SIEM rules, that fire on: repeated authentication failures against the KYC DB, API or admin console (for example 5 or more failures per principal or IP within 5 minutes); any privileged or admin role reading KYC tables or documents; bulk reads or exports above a baseline (for example more than 100 KYC records per session); access from unexpected service accounts, IPs or hours; and changes to roles, grants or audit configuration on KYC stores. These alerts are in addition to the existing application-error and 5xx alerts. (3) Send the alerts to an on-call channel with a named owner and a runbook that covers triage, finding the cause, assessing impact (which data principals and records were touched) and escalating to breach notification. (4) Schedule a documented periodic review, at least weekly, of privileged-access and authentication-failure reports for KYC stores, and record who reviewed them and what they found. (5) Keep the alert and dashboard definitions in version control, and test them with synthetic failed logins and a privileged read to confirm they fire."
+          },
+          "cache_key": "7dc99311fd9b07b46763d58fe3caeb6d1ba8c842e6ec4839dcd0ef400f51ca11",
+          "provider": "omp",
+          "model": "anthropic/claude-opus-5-5",
+          "prompt_version": "fix-v1"
         }
       },
       "status": "open",
       "legal_review": null,
       "llm_triage": {
-        "status": "not assessed",
-        "cache_key": "e8323fc0acaa4f715c019ce091329dd28282814bc54d55b835ba1c9e84363712"
+        "status": "assessed",
+        "value": {
+          "verdict": "uncertain",
+          "reason": "The only Evidence is one line from the dashboard JSON: a panel title, \"KYC Verifications\". There is no query expression, metric name, or data source, and none of the other panels are shown. The title suggests a business throughput metric (how many KYC verifications ran) rather than monitoring of who accessed Profile/KYC personal data or of unauthorised access attempts. That would match the positive example, which has only generic metrics. But a KYC panel could also track failed or anomalous verification attempts, and the rest of the dashboard or other monitoring config may already provide the access visibility Rule 6(1)(c) requires. One title is not enough to tell whether access monitoring for this data is missing, so the Finding can't be confirmed or dismissed.",
+          "citations": [
+            "DPDP-Rule-6(1)(c)",
+            "DPDP-Rule-6(1)"
+          ]
+        },
+        "cache_key": "f1476fe33f9c47a20aa8b3dbd260db24dcb81078534beb3c89552b2e25b7190f",
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "prompt_version": "triage-v2"
+      },
+      "live_probe": null,
+      "fix_patch": null
+    },
+    {
+      "id": "SEC-12-e7116519cc6a",
+      "issue_type": "SEC-12",
+      "rules_fired": [
+        "SEC-12-express-access-logging"
+      ],
+      "kind": "security-personal-data",
+      "classification": "compliance-gap",
+      "evidence": [
+        {
+          "file": "backend/kyc/urls.py",
+          "start_line": 5,
+          "end_line": 5,
+          "excerpt": "    path('kyc/verifications/', views.KYCVerificationView.as_view(), name='kyc-verifications'),"
+        },
+        {
+          "file": "backend/kyc/models.py",
+          "start_line": 28,
+          "end_line": 28,
+          "excerpt": "    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='kyc_documents')"
+        }
+      ],
+      "data_flow": [],
+      "personal_data_element": {
+        "name": "model:KYCDocument.user",
+        "data_category": "Profile",
+        "evidence": {
+          "file": "backend/kyc/models.py",
+          "start_line": 28,
+          "end_line": 28,
+          "excerpt": "    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='kyc_documents')"
+        }
+      },
+      "data_category": "Profile",
+      "processing_operation": "Expose",
+      "exposure": {
+        "level": "Internal-Restricted",
+        "derived_from": [
+          {
+            "file": "backend/kyc/urls.py",
+            "start_line": 5,
+            "end_line": 5,
+            "excerpt": "    path('kyc/verifications/', views.KYCVerificationView.as_view(), name='kyc-verifications'),"
+          }
+        ]
+      },
+      "primary_provision": "DPDP-Rule-6(1)(c)",
+      "other_provisions": [],
+      "penalty_ceiling": {
+        "parent_section": "DPDP-Act-8(5)",
+        "amount_inr_crore": 250
+      },
+      "enforceable_from": "2027-05-13",
+      "cvss": {
+        "status": "n/a",
+        "reason": "Compliance Gap: no CVSS score, so the band is the Risk Matrix cell"
+      },
+      "risk_matrix": {
+        "tier": "C",
+        "exposure": "Internal-Restricted",
+        "cell": "low"
+      },
+      "severity": {
+        "band": "low",
+        "justification": "model:KYCDocument.user (Profile) has Internal-Restricted Exposure based on Evidence at backend/kyc/urls.py:5; Risk Matrix C/Internal-Restricted cell is low. Primary Provision Rule 6(1)(c) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33)."
+      },
+      "recommended_fix": {
+        "guidance": "Enable request or access logging on every route and data store that reads Personal Data, recording who accessed which record and when, without writing the Personal Data itself. Make each entry attributable to an authenticated identity, and protect the log destination. Rule 6(1)(c) requires access to be visible through logs, monitoring and review, so that unauthorised access can be detected and investigated.",
+        "tailored": {
+          "status": "assessed",
+          "value": {
+            "fix": "Add audit logging to KYCVerificationView, and keep the URL route as it is: path('kyc/verifications/', views.KYCVerificationView.as_view(), name='kyc-verifications'). (1) Require an authenticated user before anything is logged. Add LoginRequiredMixin or permission_classes=[IsAuthenticated] plus a KYC-specific permission. (2) Create a reusable AuditAccessMixin in a new file, e.g. audit/mixins.py, and add it to the view: class KYCVerificationView(AuditAccessMixin, LoginRequiredMixin, ...). In dispatch() or finalize_response(), write one structured entry to a dedicated logger, e.g. logging.getLogger('audit.pii_access'), on every request, including denied ones. Each entry records: the UTC timestamp, the actor's user ID (request.user.pk, never their name or email), the auth method or session ID hash, the request ID or correlation ID, the HTTP method, the route name ('kyc-verifications'), the action (list/retrieve/create/update), the IDs of the KYC records touched (primary keys or opaque references only), the result count for lists, the response status code, and the client IP and user agent. (3) Never log Personal Data. Leave out request and response bodies, query strings that may hold PII, document numbers, names, DOBs, addresses and images. Add a logging.Filter that drops or redacts any field not on an allow-list. (4) Log access at the data layer too. Add the same audit call to the KYC model manager/queryset or the service functions that read KYC records, so reads from Celery tasks, the admin and management commands are also tied to an identity (a service account or system actor). Enable audit logging on the KYC database tables or columns as well, e.g. pgaudit. (5) Protect where the logs go. Send 'audit.pii_access' to a separate handler, e.g. a SysLogHandler/HTTP handler shipping to a SIEM or an append-only/WORM bucket with object lock. Restrict read access to security staff. Make application roles write-only. Keep the logs for the required retention period and sync clocks with NTP. (6) Set up monitoring and review. Alert on unusual access, e.g. a large number of KYC reads per user, access outside working hours, or repeated 403s, and schedule regular access reviews. (7) To verify: write a Django test that calls the route as an authenticated user and as an anonymous user. Use assertLogs('audit.pii_access') to check that each request produces exactly one entry with the user ID, record IDs, timestamp and status, and that no PII fields from the KYC fixture appear in the log message."
+          },
+          "cache_key": "82a12d3b80a05a7c4a4ee763f8a88b7e02bc8074bbf89fa0741a71caba46144c",
+          "provider": "omp",
+          "model": "anthropic/claude-opus-5-5",
+          "prompt_version": "fix-v1"
+        }
+      },
+      "status": "open",
+      "legal_review": null,
+      "llm_triage": {
+        "status": "assessed",
+        "value": {
+          "verdict": "uncertain",
+          "reason": "The rule SEC-12-express-access-logging is written for Express apps, where the check is whether request-logging middleware such as morgan is present. This code is a Django backend. The Evidence has only two pieces: a URL route to KYCVerificationView and a ForeignKey linking KYC documents to User. Neither shows how access to KYC personal data is logged or monitored. The view code, settings.py LOGGING configuration, middleware stack and any audit-logging setup are all missing. In Django, access logging usually lives in exactly those places, or in the web server or reverse proxy, so a route and a model can't show that logging is absent. KYC data is sensitive, so Rule 6(1)(c) would apply if logging really is missing. But the Evidence can't confirm or rule out a violation, and CWE-639 isn't supported because no authorization logic is shown.",
+          "citations": [
+            "DPDP-Rule-6(1)(c)",
+            "DPDP-Rule-6(1)"
+          ]
+        },
+        "cache_key": "0db893605cfb252514308b0da0331cd9f3eef2bdff6a3cd3fb8f4d0e58b83b6e",
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "prompt_version": "triage-v2"
       },
       "live_probe": null,
       "fix_patch": null
@@ -1291,15 +1546,35 @@
       "recommended_fix": {
         "guidance": "Publish the business contact details of a person who can answer Personal Data queries, in the app and in its notices, as §8(9) and Rule 9 require. Establish an effective grievance mechanism under §8(10) and §13, and publish the response period as Rule 14(3) requires.",
         "tailored": {
-          "status": "not assessed",
-          "cache_key": "ba3f600ca04d76212d31a02639878517e9877ea99e93152e26f926fbdbc5ddf0"
+          "status": "assessed",
+          "value": {
+            "fix": "The `email = models.EmailField(unique=True)` field shows the app collects personal data (user email addresses). The code has nowhere to publish a Personal Data contact and no grievance mechanism. Add both: (1) Put the business contact details of the Data Protection Officer or another designated person who can answer Personal Data queries (name or role, email, phone, postal address) in settings or a `DataProtectionContact` model. Show them on a public privacy and contact page, in the app footer and account settings, and in every privacy or consent notice, as §8(9) and Rule 9 require. (2) Add a grievance mechanism under §8(10) and §13. This means a `Grievance` model (user FK or contact email, category such as access, correction, erasure, consent withdrawal or other, description, status, `created_at`, `acknowledged_at`, `resolved_at`, response), an authenticated form and API endpoint for submitting grievances, an emailed acknowledgement with a reference ID, and an admin workflow that tracks deadlines. (3) Publish the response period in the notice and on the grievance page (for example, 'We will respond within N days, up to the maximum Rule 14(3) allows'). Enforce it with an SLA field and an overdue alert. The notice should also tell users they can escalate to the Data Protection Board of India if they are not satisfied with the response."
+          },
+          "cache_key": "ae71349184ecde42102ae5ef016110136384a38518a0d35eda24a88536554069",
+          "provider": "omp",
+          "model": "anthropic/claude-opus-5-5",
+          "prompt_version": "fix-v1"
         }
       },
       "status": "open",
       "legal_review": null,
       "llm_triage": {
-        "status": "not assessed",
-        "cache_key": "5d9932bb8318ab9982d5310604faab1a9e47bd15d053e6656f635c8a412e02bc"
+        "status": "assessed",
+        "value": {
+          "verdict": "uncertain",
+          "reason": "The Evidence is one line from backend/users/models.py: a Django model field `email = models.EmailField(unique=True)`. It shows the system stores users' contact details, which makes it a Data Fiduciary handling personal data. RIG-03 is about a missing grievance mechanism under Section 8(10), Section 13 and Rule 14(3), plus missing published contact details under Section 8(9) and Rule 9. A missing mechanism can only be confirmed by looking at the whole codebase, and the Evidence doesn't do that. It says nothing about whether a complaints or grievance endpoint, view, URL route or published contact page exists anywhere else in the backend. There is no data_flow to go on either. The rule name suggests an Express check, but this code is Django, so the detector may not recognise Django-style grievance routes. The context.examples show the deciding factor is whether a complaints endpoint exists alongside the model. That can't be judged from this single model field, so the Evidence isn't enough to call this a true or false positive.",
+          "citations": [
+            "DPDP-Act-8(10)",
+            "DPDP-Act-13",
+            "DPDP-Rule-14(3)",
+            "DPDP-Act-8(9)",
+            "DPDP-Rule-9"
+          ]
+        },
+        "cache_key": "a5c73e8f382ddd4f886057a8f28d2e8a6595245e94d56c1b98773ee7e9ddfe11",
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "prompt_version": "triage-v2"
       },
       "live_probe": null,
       "fix_patch": null
@@ -3623,8 +3898,8 @@
     "counts_by_severity": {
       "critical": 0,
       "high": 3,
-      "medium": 2,
-      "low": 2
+      "medium": 1,
+      "low": 3
     },
     "counts_by_kind": {
       "DPDP obligation": 1,
@@ -3637,8 +3912,8 @@
       "SEC-03-9a0640bc6639",
       "SEC-03-efb9664725b2",
       "SEC-02-1c18323367ce",
-      "SEC-12-e7116519cc6a",
       "MON-01-72fc143c58bf",
+      "SEC-12-e7116519cc6a",
       "RIG-03-5210dafdc63d"
     ],
     "penalty_note": "Penalty Ceilings are statutory maximums, not amounts imposed; the Data Protection Board determines the actual amount under section 33."
