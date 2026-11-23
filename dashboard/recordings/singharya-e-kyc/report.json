@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "tool": {
     "name": "dpdp-audit",
     "version": "0.1.0"
@@ -11,8 +11,8 @@
     "commit": "e6e78d53edd30fd5be88dcd82d5afc1a2010d025"
   },
   "scan": {
-    "started_at": "2026-11-23T12:41:05.640149+00:00",
-    "finished_at": "2026-11-23T12:41:06.536648+00:00",
+    "started_at": "2026-11-23T14:31:04.683679+00:00",
+    "finished_at": "2026-11-23T14:31:05.206083+00:00",
     "exclusions": [
       "**/.git/**",
       "**/node_modules/**",

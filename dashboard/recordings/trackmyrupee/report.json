@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "tool": {
     "name": "dpdp-audit",
     "version": "0.1.0"
@@ -11,8 +11,8 @@
     "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546"
   },
   "scan": {
-    "started_at": "2026-11-23T12:48:46.640947+00:00",
-    "finished_at": "2026-11-23T12:48:58.486994+00:00",
+    "started_at": "2026-11-23T14:18:48.159353+00:00",
+    "finished_at": "2026-11-23T14:18:59.041561+00:00",
     "exclusions": [
       "**/.git/**",
       "**/node_modules/**",
@@ -3477,7 +3477,7 @@
             "assertion": "consent-after-withdrawal",
             "method": "POST",
             "route": "/settings/consent/withdraw/",
-            "reason": "Grant, withdrawal or pre-withdrawal operation was not established",
+            "reason": "The browser did not observe an accepted withdrawal POST",
             "request": "Auditor-created account; values: [masked]",
             "response": "Account profile availability compared before and after withdrawal; values: [masked]"
           },
@@ -3490,7 +3490,7 @@
             "purpose": "Email Address",
             "reason": "Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional)",
             "request": "Auditor-created signup omitting the \"Email Address\" consent; values: [masked]",
-            "response": "Signup response status and session issuance only; values: [masked]"
+            "response": "Signup response status and, when required, email confirmation and login; values: [masked]"
           },
           {
             "status": "Not Confirmed",
@@ -3501,7 +3501,7 @@
             "purpose": "Financial Transactions",
             "reason": "Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional)",
             "request": "Auditor-created signup omitting the \"Financial Transactions\" consent; values: [masked]",
-            "response": "Signup response status and session issuance only; values: [masked]"
+            "response": "Signup response status and, when required, email confirmation and login; values: [masked]"
           },
           {
             "status": "Not Confirmed",
@@ -3512,38 +3512,38 @@
             "purpose": "Device and Browser Information",
             "reason": "Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional)",
             "request": "Auditor-created signup omitting the \"Device and Browser Information\" consent; values: [masked]",
-            "response": "Signup response status and session issuance only; values: [masked]"
+            "response": "Signup response status and, when required, email confirmation and login; values: [masked]"
           },
           {
-            "status": "Inconclusive",
-            "meaning": "not run or inconclusive; no effect on the static verdict",
+            "status": "Not Confirmed",
+            "meaning": "enforcement observed",
             "assertion": "analytics-declined",
             "method": "POST",
             "route": "/accounts/signup/ → /accounts/login/",
             "purpose": "Analytics",
-            "reason": "A comparable login failed or the scoped outbound observation was unavailable",
+            "reason": "No outbound event was observed after the decline or withdrawal while the granted control produced 2",
             "request": "Signup and login with the tmr_consent=declined cookie; values: [masked]",
             "response": "Local count of PostHog events for the verified account and action window; no payloads retained by the Auditor"
           },
           {
-            "status": "Inconclusive",
-            "meaning": "not run or inconclusive; no effect on the static verdict",
+            "status": "Not Confirmed",
+            "meaning": "enforcement observed",
             "assertion": "analytics-withdrawn",
             "method": "POST",
             "route": "/api/prompts/ → /accounts/login/",
             "purpose": "Analytics",
-            "reason": "A comparable login failed or the scoped outbound observation was unavailable",
+            "reason": "No outbound event was observed after the decline or withdrawal while the granted control produced 2",
             "request": "Cookie choice accepted, then declined as the banner records it, then login; values: [masked]",
             "response": "Local count of PostHog events for the verified account and action window; no payloads retained by the Auditor"
           },
           {
-            "status": "Inconclusive",
-            "meaning": "not run or inconclusive; no effect on the static verdict",
+            "status": "Not Confirmed",
+            "meaning": "enforcement observed",
             "assertion": "withdrawal-data-removal",
             "method": "POST",
             "route": "/settings/consent/withdraw/",
             "purpose": "Account",
-            "reason": "The authenticated profile did not establish Auditor ownership; no withdrawal POST was sent",
+            "reason": "The account no longer authenticated and no account-linked rows remained",
             "request": "Withdrawal POST requires the authenticated profile to match the Auditor-created account; values: [masked]",
             "response": "When sent: post-withdrawal authentication and read-only count of account-linked rows; values: [masked]"
           }
@@ -3658,7 +3658,7 @@
             "assertion": "comparable-ease",
             "method": "BROWSER",
             "route": "/accounts/signup/ → /settings/consent/withdraw/",
-            "reason": "Comparable grant and withdrawal interactions were not both recorded",
+            "reason": "Comparable grant and withdrawal interactions were not both recorded: the browser did not observe an accepted withdrawal POST",
             "request": "Signup and withdrawal interactions; values: [masked]",
             "response": "Counts include clicks and checkbox changes, excluding text entry"
           }
@@ -9116,7 +9116,7 @@
     "live_probe_run": {
       "target": "trackmyrupee",
       "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
-      "observed_at": "2026-11-23T12:49:20+00:00"
+      "observed_at": "2026-11-23T14:19:33+00:00"
     }
   },
   "executive_summary": {

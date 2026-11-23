@@ -29,8 +29,8 @@ def main(argv: list[str] | None = None) -> int:
     scan.add_argument("--cache-dir", type=Path, default=Path(".dpdp-cache"))
     scan.add_argument("--inventory-only", action="store_true",
                       help="write the source-anchored application inventory instead of a Report")
-    accuracy = commands.add_parser("accuracy", help="measure precision and recall (Primary Target and Labelled Corpus)")
-    accuracy.add_argument("target", nargs="?", help="Primary Target Application (local directory); not needed with --corpus-only")
+    accuracy = commands.add_parser("accuracy", help="measure precision and recall (Reference Target and Labelled Corpus)")
+    accuracy.add_argument("target", nargs="?", help="Reference Target Application (local directory); not needed with --corpus-only")
     accuracy.add_argument("--cache-only", action="store_true", default=True,
                           help="replay cached LLM verdicts without contacting a provider (always on)")
     accuracy.add_argument("--corpus-only", action="store_true",

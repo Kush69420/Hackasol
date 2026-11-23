@@ -15,8 +15,8 @@ def ctx():
 
 @pytest.mark.parametrize('detect', [enforcement, bundled, default_true, withdrawal,
                                     processor, consent_record, notice, excess])
-def test_primary_target_outcome(ctx, detect):
-    # The Primary Target does not expose a supported consent control or grant,
+def test_reference_target_outcome(ctx, detect):
+    # The Reference Target does not expose a supported consent control or grant,
     # nor an evidenced optional processing route in the Rule's supported shape.
     assert detect(ctx) == []
 

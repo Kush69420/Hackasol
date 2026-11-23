@@ -22,7 +22,7 @@ Each Finding is labelled as one of three kinds: DPDP obligation, security check 
 
 ## Targets
 
-- **Primary: OWASP Juice Shop, as-is, pinned to `c9f99228`.**
+- **Reference: OWASP Juice Shop, as-is, pinned to `c9f99228`.**
   - Excluded from the scan: `data/static/codefixes/` (deliberately vulnerable challenge variants, including `.tf` files), `test/` (includes `test/cypress/`), `frontend/**/*.spec.ts`.
   - The two Terraform trees (`terraform/`, `infrastructure/terraform/`) differ: scan both, merging identical resources.
 - **ai-kyc-platform**: the first Target after the P1 exit, before P2, so Government Identifier and Biometric Findings appear in the demo.
@@ -176,7 +176,7 @@ Commands: `dpdp-audit scan targets/juice-shop` writes `reports/juice-shop/report
 - Report precision and recall against that list, plus Labelled Corpus precision and recall per Rule in CI. LLM verdicts are replayed from the cache so the figures reproduce.
 - **Commands**: `dpdp-audit accuracy targets/juice-shop --cache-only [--reference accuracy/juice-shop.json] [--cache-dir accuracy/cache]` runs a cache-only scan, refuses a Target revision that differs from the reference pin, scores canonical Findings, evaluates the Labelled Corpus, attaches `report["accuracy"]` and writes all four Report formats. `dpdp-audit accuracy --corpus-only` evaluates only the Labelled Corpus (used by `.github/workflows/accuracy.yml`) and exits non-zero when a Rule's pair is missing.
 - **Comparison**: one canonical Finding is one prediction; it matches one confirmed reference entry when the Issue Type and file are equal and Evidence overlaps the reviewed anchor range. Matching is one-to-one in Finding id order; a second prediction for a matched entry is a false positive; not-determinable entries are excluded and listed with their reason. Precision = TP/(TP+FP), recall = TP/(TP+FN), N/A for a zero denominator, counts always shown.
-- **Two populations**: Primary Target rows count canonical Findings; Labelled Corpus rows name the Rule and count fixture emissions (positive: TP or FN; negative: FP or TN). They are never combined.
+- **Two populations**: Reference Target rows count canonical Findings; Labelled Corpus rows name the Rule and count fixture emissions (positive: TP or FN; negative: FP or TN). They are never combined.
 - **Cache replay**: `accuracy/cache/manifest.json` records the Target revision, a Rules digest (sha256 over `auditor/rules/*.py` and `rules/semgrep/**/*.y*ml`), provider, model, prompt version and the cache identity (masked snippet, prompt version, model). A cache miss is "not assessed", is counted in the Report, and means the run does not reproduce the published figures. A Rule or prompt change invalidates the manifest; regenerate it with `--write-manifest` and document why.
 - **Limits**: one Target at one revision; hand-checked list; Labelled Corpus fixtures are designed cases, not a sample of real code.
 

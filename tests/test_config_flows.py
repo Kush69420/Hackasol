@@ -81,8 +81,8 @@ def test_literal_and_unresolved_region(fixture_inventory):
     assert all(s['file'] != 'terraform/variables.tf' for s in unresolved['resolved_from'])
 
 
-@pytest.mark.skipif(not TARGET.is_dir(), reason='Primary Target is absent')
-def test_primary_target_password_logging_and_region():
+@pytest.mark.skipif(not TARGET.is_dir(), reason='Reference Target is absent')
+def test_reference_target_password_logging_and_region():
     data = inventory(TARGET)
     elements = [element('/rest/user/change-password', key) for key in ('current', 'new', 'repeat')]
     steps = log_operations(data, elements)

@@ -6,10 +6,13 @@ mode 'limited'    every signup is rate limited (HTTP 429), so no control account
 mode 'profile-mismatch'   the authenticated profile changes before withdrawal.
 """
 from datetime import datetime, timezone
+from email.message import EmailMessage
 from hashlib import sha256
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import sqlite3
+from pathlib import Path
+import secrets
 from urllib.parse import parse_qs
 
 CONSENTS = ('confirm_age', 'consent_email', 'consent_transactions', 'consent_device')
@@ -53,10 +56,19 @@ class SinkHandler(BaseHTTPRequestHandler):
 
 
 class Server(ThreadingHTTPServer):
-    def __init__(self, mode, sink, db_path, *, fail_login=None, noise=False, delayed_control=False):
+    def __init__(self, mode, sink, db_path, *, fail_login=None, noise=False, delayed_control=False,
+                 verification=False, consent_redirect=False, foreign_confirmation=False):
         super().__init__(('127.0.0.1', 0), Handler)
         self.mode, self.sink, self.db_path = mode, sink, db_path
         self.fail_login, self.noise, self.delayed_control = fail_login, noise, delayed_control
+        self.mailbox = Path(db_path).with_suffix('.mail')
+        self.mailbox.mkdir()
+        self.verification, self.consent_redirect = verification, consent_redirect
+        self.foreign_confirmation = foreign_confirmation
+        self.verification_keys = []
+        self.pending_verifications = {}
+        self.consented = set()
+        self.verification_posts = self.consent_posts = 0
         self.pending_control = None
         self.withdrawal_form_read = False
         self.withdrawal_posts = 0
@@ -88,6 +100,14 @@ class Handler(BaseHTTPRequestHandler):
     def cookies(self):
         return dict(part.strip().split('=', 1) for part in self.headers.get('Cookie', '').split(';') if '=' in part)
 
+    def send_confirmation(self, email, key):
+        message = EmailMessage()
+        message['To'] = email
+        message['Subject'] = 'Confirm Your Email Address'
+        port = 1 if self.server.foreign_confirmation else self.server.server_port
+        message.set_content(f'Confirm at http://127.0.0.1:{port}/accounts/confirm-email/{key}/')
+        (self.server.mailbox / f'{secrets.token_hex(8)}.log').write_bytes(message.as_bytes())
+
     def analytics(self, username):
         """The Target's capture call, gated on the tmr_consent cookie only when enforcing."""
         choice = self.cookies().get('tmr_consent')
@@ -110,15 +130,21 @@ class Handler(BaseHTTPRequestHandler):
             if not row:
                 return self.send('', 302, [('Location', '/accounts/login/')])
             username = row[0]
+            if self.server.consent_redirect and user_id not in self.server.consented:
+                return self.send('', 302, [('Location', '/consent/')])
             email = f'{username}@example.invalid'
             if self.server.mode == 'profile-mismatch' and self.server.withdrawal_form_read:
                 # A stray copy of the expected email does not identify the authenticated profile.
                 email = 'different@example.invalid'
-            return self.send(f'<p>{username}@example.invalid</p><input name="auth_email" value="{email}">'
+            return self.send(f'<p>{username}@example.invalid</p><input type="email" name="auth_email" value="{email}">'
                              f"<script>var PH_ID = '{distinct_id(username)}';</script>")
+        if self.path.startswith('/accounts/confirm-email/') and self.path.rsplit('/', 2)[1] in self.server.pending_verifications:
+            email = self.server.pending_verifications[self.path.rsplit('/', 2)[1]]
+            return self.send(f'<a href="mailto:{email}">{email}</a><form method="post" action="{self.path}">'
+                             '<input type="hidden" name="csrfmiddlewaretoken" value="tok"></form>')
         if self.path == '/settings/consent/withdraw/':
             self.server.withdrawal_form_read = True
-        if self.path in ('/accounts/signup/', '/accounts/login/', '/settings/consent/withdraw/'):
+        if self.path in ('/accounts/signup/', '/accounts/login/', '/consent/', '/settings/consent/withdraw/'):
             return self.send('<input type="hidden" name="csrfmiddlewaretoken" value="tok">',
                              headers=[('Set-Cookie', 'csrftoken=tok; Path=/')])
         return self.send('not found', 404)
@@ -128,6 +154,20 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == '/api/prompts/':
             return self.send('{"status":"success"}', 200)
         data = {key: values[0] for key, values in parse_qs(body).items()}
+        if self.path.startswith('/accounts/confirm-email/'):
+            self.server.verification_posts += 1
+            if data.get('csrfmiddlewaretoken') == 'tok':
+                key = self.path.rsplit('/', 2)[1]
+                if self.server.pending_verifications.pop(key, None):
+                    return self.send('', 302, [('Location', '/accounts/login/')])
+            return self.send('invalid', 400)
+        if self.path == '/consent/':
+            self.server.consent_posts += 1
+            user_id = self.cookies().get('sessionid', '')[1:]
+            if user_id and all(data.get(name) == 'on' for name in CONSENTS):
+                self.server.consented.add(user_id)
+                return self.send('', 302, [('Location', '/dashboard/')])
+            return self.send('consent needed')
         if self.path == '/accounts/signup/':
             if self.server.mode == 'limited':
                 return self.send('slow down', 429)
@@ -139,6 +179,13 @@ class Handler(BaseHTTPRequestHandler):
             db.commit()
             db.close()
             self.analytics(data['username'])
+            if self.server.verification:
+                key = secrets.token_urlsafe(24)
+                self.server.verification_keys.append(key)
+                self.server.pending_verifications[key] = data['email']
+                self.send_confirmation(data['email'], key)
+                return self.send('', 302, [('Location', '/accounts/confirm-email/'),
+                                           ('Set-Cookie', 'sessionid=pending; Path=/')])
             return self.send('', 302, [('Location', '/dashboard/'), ('Set-Cookie', f'sessionid=s{cursor.lastrowid}; Path=/')])
         if self.path == '/accounts/login/':
             db = self.server.db()
@@ -147,6 +194,9 @@ class Handler(BaseHTTPRequestHandler):
             db.close()
             if not row:
                 return self.send('invalid')
+            if f"{data.get('login')}@example.invalid" in self.server.pending_verifications.values():
+                return self.send('', 302, [('Location', '/accounts/confirm-email/'),
+                                           ('Set-Cookie', 'sessionid=pending; Path=/')])
             self.analytics(data['login'])
             if self.cookies().get('tmr_consent') == self.server.fail_login and self.server.fail_login is not None:
                 return self.send('invalid')

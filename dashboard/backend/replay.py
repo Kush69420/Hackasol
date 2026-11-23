@@ -15,10 +15,10 @@ from pathlib import Path
 from typing import Protocol
 
 FORMAT_VERSION = 1
-PRIMARY_TARGET = "juice-shop"
-PRIMARY_COMMIT = "c9f99228d9d56afb5f5ca7925376292f7fa44b13"
+REFERENCE_TARGET = "juice-shop"
+REFERENCE_COMMIT = "c9f99228d9d56afb5f5ca7925376292f7fa44b13"
 RECORDINGS_DIR = Path(__file__).resolve().parents[1] / "recordings"
-BUNDLE_DIR = RECORDINGS_DIR / PRIMARY_TARGET
+BUNDLE_DIR = RECORDINGS_DIR / REFERENCE_TARGET
 ARTIFACTS = {"json": "report.json", "md": "report.md", "html": "report.html", "pdf": "report.pdf"}
 
 
@@ -53,7 +53,7 @@ def load_recording(bundle: Path = BUNDLE_DIR) -> Recording:
     path = Path(bundle) / "recording.json"
     if not path.is_file():
         raise RecordingError(f"No recording at {bundle}; regenerate it with "
-                             f"`python -m dashboard.backend.replay record targets/{PRIMARY_TARGET}`")
+                             f"`python -m dashboard.backend.replay record targets/{REFERENCE_TARGET}`")
     data = json.loads(path.read_text(encoding="utf-8"))
     if data.get("format_version") != FORMAT_VERSION:
         raise RecordingError(f"Recording format {data.get('format_version')!r} is incompatible "
@@ -77,8 +77,8 @@ def record(source: str, out_dir: Path = BUNDLE_DIR, *, cache_dir: Path = Path(".
         raise RecordingError(f"Scan failed, nothing recorded: {run.events[-1].get('message', '')}")
     report = json.loads((out_dir / ARTIFACTS["json"]).read_text(encoding="utf-8"))
     target = {"name": report["target"]["name"], "commit": report["target"]["commit"]}
-    if target["name"] == PRIMARY_TARGET and target["commit"] != PRIMARY_COMMIT:
-        raise RecordingError(f"Primary Target is at {target['commit']}, not the pinned {PRIMARY_COMMIT}")
+    if target["name"] == REFERENCE_TARGET and target["commit"] != REFERENCE_COMMIT:
+        raise RecordingError(f"Reference Target is at {target['commit']}, not the pinned {REFERENCE_COMMIT}")
     # every event of a recorded run carries the run's final mode (cache-only or live)
     events = [{**{k: v for k, v in e.items() if k != "run_id"}, "mode": run.mode} for e in run.events]
     bundle = {"format_version": FORMAT_VERSION, "target": target, "events": events}

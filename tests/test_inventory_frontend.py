@@ -52,8 +52,8 @@ def test_fixture_frontend():
     assert '.spec.ts' not in json.dumps(inventory)
 
 
-@pytest.mark.skipif(not TARGET.exists(), reason='Primary Target unavailable')
-def test_primary_target_models():
+@pytest.mark.skipif(not TARGET.exists(), reason='Reference Target unavailable')
+def test_reference_target_models():
     inventory = extract(TARGET, 'models')
     models = {model['name']: model for model in inventory['models']}
     assert {'User', 'Address', 'Card'} <= models.keys()
@@ -65,8 +65,8 @@ def test_primary_target_models():
     assert '.spec.ts' not in json.dumps(inventory)
 
 
-@pytest.mark.skipif(not TARGET.exists(), reason='Primary Target unavailable')
-def test_primary_target_frontend():
+@pytest.mark.skipif(not TARGET.exists(), reason='Reference Target unavailable')
+def test_reference_target_frontend():
     inventory = extract(TARGET, 'frontend')
     assert {'signal', 'untyped', 'ngModel'} <= {form['style'] for form in inventory['forms']}
     calls = [c for c in inventory['service_calls'] if c['service'] == 'AddressService']

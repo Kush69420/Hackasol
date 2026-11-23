@@ -5,7 +5,7 @@
 - Command: `dpdp-audit accuracy targets/juice-shop --cache-only --cache-dir accuracy/cache --reference accuracy/juice-shop.json --results accuracy/results.md --provider omp --model anthropic/claude-haiku-5-5`
 - Rules digest: `16c6f1df4175e43ee048dd0ee52eb36634b6740fefc8a67a204c6ad9e371f858`
 
-## Static scoring (Primary Target)
+## Static scoring (Reference Target)
 
 Static figures count only deterministic Findings. Live Probe outcomes are never added to them.
 
@@ -61,11 +61,11 @@ Rules with a corpus FP or FN: none
 
 ## Method
 
-Primary Target: each canonical Finding is one prediction. It matches a confirmed reference entry when the Issue Type and normalised file path are equal and any Finding Evidence range overlaps the entry's reviewed anchor range. Matching is one-to-one, in Finding id order, each prediction taking the lowest-id unmatched entry; a second prediction for a matched entry is a false positive. A Finding that merges several Rules is one prediction. Labelled Corpus: for each Rule, the positive counts as a true positive if the Rule emits there (else a false negative) and the negative counts as a false positive if the Rule emits there (else a true negative); Rule emissions are counted, not merged Findings. Precision = TP/(TP+FP); recall = TP/(TP+FN); a zero denominator is N/A.
+Reference Target: each canonical Finding is one prediction. It matches a confirmed reference entry when the Issue Type and normalised file path are equal and any Finding Evidence range overlaps the entry's reviewed anchor range. Matching is one-to-one, in Finding id order, each prediction taking the lowest-id unmatched entry; a second prediction for a matched entry is a false positive. A Finding that merges several Rules is one prediction. Labelled Corpus: for each Rule, the positive counts as a true positive if the Rule emits there (else a false negative) and the negative counts as a false positive if the Rule emits there (else a true negative); Rule emissions are counted, not merged Findings. Precision = TP/(TP+FP); recall = TP/(TP+FN); a zero denominator is N/A.
 
 ## Limitations
 
-- The Primary Target reference list covers one Target Application at one pinned revision; the figures say nothing about any Secondary Target.
+- The Reference Target reference list covers one Target Application at one pinned revision; the figures say nothing about any Secondary Target.
 - The reference list is hand-checked by the authors, so omissions and judgement calls bias recall and precision; entries that could not be determined are excluded, not scored.
 - A Finding whose only overlapping same-Issue-Type reference entries are not-determinable is neither a true nor a false positive; it is listed as an excluded prediction.
 - Labelled Corpus cases are small designed fixtures: one pair per Rule shows the Rule works on that pair, not how often it is right on real code.

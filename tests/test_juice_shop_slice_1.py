@@ -1,4 +1,4 @@
-"""Issue #5 acceptance: every Slice 1 case on the pinned Primary Target, by Rule and Evidence.
+"""Issue #5 acceptance: every Slice 1 case on the pinned Reference Target, by Rule and Evidence.
 
 Runs one full scan with the LLM unreachable (cache-only), so Findings are deterministic.
 Skipped when the pinned clone is absent (targets/ is git-ignored).

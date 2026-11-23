@@ -1,7 +1,7 @@
 """Benchmark step 2: compare Semgrep with the Auditor reports committed at HEAD.
 
 Reads benchmark/results/ (written by run_semgrep.sh) and the Auditor reports at HEAD, scores both
-against the Primary Target reference, and writes benchmark/results/summary.json. Markdown tables
+against the Reference Target reference, and writes benchmark/results/summary.json. Markdown tables
 go to stdout.
 
 Usage: .venv/bin/python benchmark/compare.py
@@ -27,7 +27,7 @@ from auditor.remediation import load_catalogue  # noqa: E402
 
 RESULTS = ROOT / "benchmark" / "results"
 TARGETS = ("juice-shop", "ai-kyc-platform", "trackmyrupee", "singharya-e-kyc")
-PRIMARY_TARGET = "juice-shop"  # the only Target with a labelled reference
+REFERENCE_TARGET = "juice-shop"  # the only Target with a labelled reference
 ANY_ISSUE_TYPE = "*"  # location-only scoring treats every Issue Type alike
 CWE = re.compile(r"CWE-\d+")
 CONSENT_OR_ERASURE = ("CON-", "RET-")
@@ -228,7 +228,7 @@ def validate_provenance(target: str, run_entry: dict, report: dict, reference: d
         raise ValueError(f"{target}: Semgrep checkout was dirty or its cleanliness is unknown")
     if not commit or commit != report.get("target", {}).get("commit"):
         raise ValueError(f"{target}: Semgrep checkout commit does not match Auditor report commit")
-    if target == PRIMARY_TARGET and commit != reference.get("target", {}).get("commit"):
+    if target == REFERENCE_TARGET and commit != reference.get("target", {}).get("commit"):
         raise ValueError(f"{target}: checkout commit does not match labelled reference pin")
 
 
@@ -241,7 +241,7 @@ def build_summary() -> dict:
     for target in TARGETS:
         validate_provenance(target, run["targets"][target], reports[target], reference)
     summary: dict[str, Any] = {"format_version": 1, "semgrep_version": run["semgrep_version"],
-                               "configs": run["configs"], "targets": {}, "primary_reference": {},
+                               "configs": run["configs"], "targets": {}, "reference_target": {},
                                "catalogue_primary_provisions": len({i.primary for i in catalogue.values()})}
     for target in TARGETS:
         raw, head, run_entry = load_semgrep(target), reports[target], run["targets"][target]
@@ -256,8 +256,8 @@ def build_summary() -> dict:
             "severity_crosstab": severity_crosstab(groups, head),
             "file_sets": file_sets(target, raw, head),
         }
-        if target == PRIMARY_TARGET:
-            summary["primary_reference"] = reference_scores(groups, head, reference, index)
+        if target == REFERENCE_TARGET:
+            summary["reference_target"] = reference_scores(groups, head, reference, index)
     return summary
 
 
@@ -273,7 +273,7 @@ def ratio_cell(value: float | None) -> str:
 
 def render(summary: dict) -> str:
     targets = summary["targets"]
-    ref = summary["primary_reference"]
+    ref = summary["reference_target"]
     sections = []
 
     sections.append("### Run provenance\n\n" + md_table(
@@ -290,7 +290,7 @@ def render(summary: dict) -> str:
             s = ref[mode][tool]
             rows.append([label, tool, s["tp"], s["fp"], s["fn"], s["excluded"], ratio_cell(s["precision"]),
                          ratio_cell(s["recall"])])
-    sections.append(f"### Primary Target reference: {PRIMARY_TARGET} ({ref['confirmed_entries']} confirmed entries, "
+    sections.append(f"### Reference Target reference: {REFERENCE_TARGET} ({ref['confirmed_entries']} confirmed entries, "
                     f"{ref['excluded_entries']} not determinable)\n\n"
                     + md_table(["Scoring", "Tool", "TP", "FP", "FN", "Excluded", "Precision", "Recall"], rows))
 

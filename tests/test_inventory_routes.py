@@ -64,8 +64,8 @@ def test_fixture(tmp_path):
     assert all(not r['registration']['file'].startswith('test/') for r in routes)
 
 
-@pytest.mark.skipif(not TARGET.is_dir(), reason='Primary Target is absent')
-def test_primary_target():
+@pytest.mark.skipif(not TARGET.is_dir(), reason='Reference Target is absent')
+def test_reference_target():
     result = extract(TARGET)
     routes = result['routes']
     auth = next(r for r in routes if r['method'] == 'GET' and r['path'] == '/rest/user/authentication-details')

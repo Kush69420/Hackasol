@@ -1,4 +1,4 @@
-"""Issue #7 acceptance: Slice 2 outcomes on the pinned Primary Target, corpus breadth and legal framing.
+"""Issue #7 acceptance: Slice 2 outcomes on the pinned Reference Target, corpus breadth and legal framing.
 
 `-k pinned` scans the pinned Juice Shop once in cache-only mode; `-k corpus` and `-k legal`
 need no Target.

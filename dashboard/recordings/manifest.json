@@ -3,7 +3,7 @@
   "entries": [
     {
       "name": "juice-shop",
-      "role": "Primary Target",
+      "role": "Reference Target",
       "clone": "targets/juice-shop",
       "pinned_revision": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
       "report": {
@@ -11,14 +11,14 @@
         "md": "reports/juice-shop/report.md",
         "html": "reports/juice-shop/report.html",
         "pdf": "reports/juice-shop/report.pdf",
-        "content_sha256": "9c1ebca9a9ae804be1e84874cd47b10d398d58eb740c6bc5bad2e51984f83b3b",
+        "content_sha256": "5b9057fb5a2aac49ed3b604352a2a093bcfab3e4acdac1cc41b5818c651af797",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/juice-shop",
         "events": 5,
-        "recording_sha256": "17849c3c11906b620632ae849850e233b162973673582680afe38045fc59e0c6",
-        "report_sha256": "69b15ba527bbb85be780fd45484c290c16abe85b6ac7634097a1b3a0f805795e",
+        "recording_sha256": "b7cbab8ee252dd1891e1158ea49f2117b856fedb64513ed9f7cc8f616fa7fced",
+        "report_sha256": "6cafb8cb7cb7e83a5d2dac5c961ce5323a41d073a11af9ba1b6daedfadf143dc",
         "live_probe_overlay": {
           "note": "The recorded Report is the static scan plus Live Probe outcomes written by `dpdp-audit probe` against the pinned image on a disposable local instance; the deliverable Report is the static scan alone. Playback shows the probe outcomes as past results.",
           "image": "dpdp/juice-shop:c9f99228",
@@ -33,7 +33,7 @@
         }
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:39:22.300401+00:00",
+        "scan_started_at": "2026-11-23T14:39:35.933233+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -61,17 +61,17 @@
         "md": "reports/ai-kyc-platform/report.md",
         "html": "reports/ai-kyc-platform/report.html",
         "pdf": "reports/ai-kyc-platform/report.pdf",
-        "content_sha256": "37c869f2432b70a859a17d6eeb46bcde8d7448ddd6ab1b6a6d77892dea8ebbee",
+        "content_sha256": "1bd1719260838ca1b0a940a1848eb6dc60cfed71edab43758ea9e273d194dc85",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/ai-kyc-platform",
         "events": 5,
-        "recording_sha256": "6f4c316022798a552de2cde6f50b19d3ba104b186ef6a86ecca81277942acfc4",
-        "report_sha256": "6cbf954421ee7e6757eb2eccb9ca356ce30fecae75d32a4c99ef5a2dfb2c093f"
+        "recording_sha256": "b1e3a610458699b4c7747802e2df78386ff46d8e56a8a7e10d269855a1991600",
+        "report_sha256": "03d595b647d5528375cf0c494694497c00234e1b04b488c2656f135062704a8a"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:39:47.852926+00:00",
+        "scan_started_at": "2026-11-23T14:30:09.537763+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -100,17 +100,17 @@
         "md": "reports/trackmyrupee/report.md",
         "html": "reports/trackmyrupee/report.html",
         "pdf": "reports/trackmyrupee/report.pdf",
-        "content_sha256": "e1cc033af6c3b6f2cb6c74d38d1257ef7f8c1c7ccae88a4a82a4fe38a54f6a88",
+        "content_sha256": "55eb8e09a6e6c6c58518f6017b9b01015fc11c0f565ae7fa6c1ed43f56a26ebf",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/trackmyrupee",
         "events": 5,
-        "recording_sha256": "1c068a752e15c89dde7f7530b24c2c760f9995ec82b37fc1429003f0c44ea545",
-        "report_sha256": "339264a78049e96b596f65e2c8a0d8bb0c6bdfcc74fc69a71dfc27846d832084",
+        "recording_sha256": "08133deb6c419c9ad3a33ad902791465b700552088472c6dbad071178b74420b",
+        "report_sha256": "770ca2549da140754e92c2ca4b84bae4d372ed52a4f5868b4c2139b0f0997688",
         "live_probe_overlay": {
-          "note": "The recorded Report is the static scan plus Live Probe outcomes written by `dpdp-audit probe` against a local server at the pinned revision (temp SQLite, console email backend, loopback analytics sink); the deliverable Report is the static scan alone. The outcomes sit on the Consent Assessment criteria (`live_probes`, `live_probe_run`) and create no Finding. Playback shows them as past results. The local test instance raised the signup rate limit from 3/h per IP (finance_tracker/settings.py:419-425) so one probe run could create its accounts; rate limiting was not under test.",
-          "observed_at": "2026-11-23T12:49:20+00:00",
+          "note": "The recorded Report is the static scan plus Live Probe outcomes written by `dpdp-audit probe` against a clean copy of the pinned revision. The deliverable Report remains the static scan alone. The outcomes sit on the Consent Assessment criteria (`live_probes`, `live_probe_run`) and create no Finding; Replay Mode shows past results. The disposable Django instance ran in debug mode on loopback HTTP with a throwaway signing key and fresh SQLite so no real accounts or data were used. It raised the signup limit from 3/h per IP (finance_tracker/settings.py:419-425) to 100/h to create the run's accounts; rate limiting was not under test. It required email verification and used a file mailbox to verify synthetic accounts without sending mail. It used PostHog SDK 3.25.0 (the pin requires posthog>=3.5.0; 8.1.0 changed capture and removed module-level identify), a synthetic PostHog key and a run-scoped loopback sink to observe only this run's analytics without external delivery.",
+          "observed_at": "2026-11-23T14:19:33+00:00",
           "target_commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
           "criteria": [
             {
@@ -118,31 +118,38 @@
               "outcomes": [
                 {
                   "assertion": "consent-after-withdrawal",
-                  "status": "Inconclusive"
+                  "status": "Inconclusive",
+                  "reason": "The browser did not observe an accepted withdrawal POST"
                 },
                 {
                   "assertion": "consent-declined:consent_email",
-                  "status": "Not Confirmed"
+                  "status": "Not Confirmed",
+                  "reason": "Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional)"
                 },
                 {
                   "assertion": "consent-declined:consent_transactions",
-                  "status": "Not Confirmed"
+                  "status": "Not Confirmed",
+                  "reason": "Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional)"
                 },
                 {
                   "assertion": "consent-declined:consent_device",
-                  "status": "Not Confirmed"
+                  "status": "Not Confirmed",
+                  "reason": "Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional)"
                 },
                 {
                   "assertion": "analytics-declined",
-                  "status": "Inconclusive"
+                  "status": "Not Confirmed",
+                  "reason": "No outbound event was observed after the decline or withdrawal while the granted control produced 2"
                 },
                 {
                   "assertion": "analytics-withdrawn",
-                  "status": "Inconclusive"
+                  "status": "Not Confirmed",
+                  "reason": "No outbound event was observed after the decline or withdrawal while the granted control produced 2"
                 },
                 {
                   "assertion": "withdrawal-data-removal",
-                  "status": "Inconclusive"
+                  "status": "Not Confirmed",
+                  "reason": "The account no longer authenticated and no account-linked rows remained"
                 }
               ]
             },
@@ -151,7 +158,8 @@
               "outcomes": [
                 {
                   "assertion": "comparable-ease",
-                  "status": "Inconclusive"
+                  "status": "Inconclusive",
+                  "reason": "Comparable grant and withdrawal interactions were not both recorded: the browser did not observe an accepted withdrawal POST"
                 }
               ]
             }
@@ -159,7 +167,7 @@
         }
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:48:46.640947+00:00",
+        "scan_started_at": "2026-11-23T14:18:48.159353+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -188,17 +196,17 @@
         "md": "reports/singharya-e-kyc/report.md",
         "html": "reports/singharya-e-kyc/report.html",
         "pdf": "reports/singharya-e-kyc/report.pdf",
-        "content_sha256": "fa8e51aca957e54663149a639ba22b54fe01a657dbbf52cc0ec306945b9ea7a4",
+        "content_sha256": "e2123cc674a437575271cddd622f32ea22cd70c9f2543e3abe9de55d1f5d372e",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/singharya-e-kyc",
         "events": 5,
-        "recording_sha256": "fb6bc2a87fb8c876bf10d244973f42f8ba99a3c2802ea7c2676ff03889b1004b",
-        "report_sha256": "af5d19047c7aafe626d9988ed593e8356b4ea8153746ad20412f9e0122dab466"
+        "recording_sha256": "f2b23d24a3a3d5c055ceb735f5006ded6f5ed90b84e6c5592a15ae52de7bab45",
+        "report_sha256": "b407b67d6f287f473b595f84d685ff6af9754917b731761b4a1a2328f8e0efeb"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:41:05.640149+00:00",
+        "scan_started_at": "2026-11-23T14:31:04.683679+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -227,17 +235,17 @@
         "md": "reports/juice-shop-fork/report.md",
         "html": "reports/juice-shop-fork/report.html",
         "pdf": "reports/juice-shop-fork/report.pdf",
-        "content_sha256": "ffcc4c9f8c9160e9a836ab56810925b1e95aded6e8edbfba001d24d849cbbe2d",
+        "content_sha256": "7cdfaf058b0f666c7fd14a2d86b623d3004c38911a3e74dbcd76a47c3ba0ede5",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/juice-shop-fork",
         "events": 5,
-        "recording_sha256": "47173ea14bc867e9812bb22ede6caaaec161e1d2cf3e3aa0cd65fbb6ad2001c1",
-        "report_sha256": "96bea62d0c4f642089451866836ac39b4cb9100e17dd495e6bacb9811c1b1b92"
+        "recording_sha256": "874b7350eeac39561f6dcb95a6c209b7e481783cfc5969ede6574c9e19a3576c",
+        "report_sha256": "fbb293b5ce4dc29d244321a963107470c0e3a17fe1a5a7d3edc8c6fface7f86a"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:41:38.689558+00:00",
+        "scan_started_at": "2026-11-23T14:31:27.012171+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",

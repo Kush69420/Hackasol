@@ -112,8 +112,8 @@ def test_llm_assessed_and_cache_miss():
     assert not assessed.calls[0][1].count('person@example.org')
 
 
-@pytest.mark.skipif(not TARGET.exists(), reason='Primary Target unavailable')
-def test_primary_target_model_classifications():
+@pytest.mark.skipif(not TARGET.exists(), reason='Reference Target unavailable')
+def test_reference_target_model_classifications():
     files, _ = iter_target_files(TARGET, 'juice-shop')
     request = {'root': str(TARGET), 'files': [p.relative_to(TARGET).as_posix() for p in files]}
     result = subprocess.run(['node', 'auditor/ts/src/run_module.mjs', 'models'], cwd=ROOT,
@@ -128,8 +128,8 @@ def test_primary_target_model_classifications():
     assert 'model:Product.name' not in elements
 
 
-@pytest.mark.skipif(not TARGET.exists(), reason='Primary Target unavailable')
-def test_primary_target_password_query_elements():
+@pytest.mark.skipif(not TARGET.exists(), reason='Reference Target unavailable')
+def test_reference_target_password_query_elements():
     files, _ = iter_target_files(TARGET, 'juice-shop')
     request = {'root': str(TARGET), 'files': [p.relative_to(TARGET).as_posix() for p in files]}
     result = subprocess.run(['node', 'auditor/ts/src/run_module.mjs', 'routes'], cwd=ROOT,

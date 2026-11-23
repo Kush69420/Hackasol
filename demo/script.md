@@ -21,13 +21,13 @@ Recorded runs: click the **Replay Mode** button a step names, such as **Replay M
 
 ## Step 1: Indian Targets
 
-Open the three Indian Target Applications first. All three are Secondary Targets; Juice Shop, the Primary Target, follows in step 2.
+Open the three Indian Target Applications first. All three are Secondary Targets; Juice Shop, the Reference Target, follows in step 2.
 
 **Consent Assessment (TrackMyRupee).**
 
 **Live:** scan `targets/trackmyrupee` (pinned at `47990e4f19d7debea70c5d56bab77e3c3f051546`), then open the Consent Assessment section of its html or md Report.
 **Recorded:** click **Replay Mode (recorded trackmyrupee scan)**, then open the same section.
-**Expected state:** the seven criteria (recorded, specific, enforced server-side, withdrawable with comparable ease, propagated to Data Processors, preceded by notice, verifiable parental consent), each with Evidence or a "not determinable" reason, and the grant and withdrawal step counts the Report records. The committed Report is static; the recording carries the single local Live Probe run: three declined-consent signup assertions Not Confirmed and five assertions Inconclusive. This does not establish deletion at Data Processors.
+**Expected state:** the seven criteria (recorded, specific, enforced server-side, withdrawable with comparable ease, propagated to Data Processors, preceded by notice, verifiable parental consent), each with Evidence or a "not determinable" reason, and the grant and withdrawal step counts the Report records. The committed Report is static. The recording shows three declined-consent signup assertions, two analytics assertions and the HTTP withdrawal-data-removal assertion as Not Confirmed. Both browser assertions are Inconclusive: the browser did not observe an accepted withdrawal POST. This does not establish deletion at Data Processors.
 
 **ai-kyc-platform: Government Identifiers.**
 
@@ -43,7 +43,7 @@ Open the three Indian Target Applications first. All three are Secondary Targets
 
 ## Step 2: Scan Juice Shop
 
-Juice Shop, the Primary Target, is the benchmark for accuracy: `dpdp-audit accuracy` scores its Findings against the ground truth in `accuracy/juice-shop.json`.
+Juice Shop, the Reference Target, is the benchmark for accuracy: `dpdp-audit accuracy` scores its Findings against the ground truth in `accuracy/juice-shop.json`.
 
 **Live:** enter `targets/juice-shop` and start the scan (about 20 s cache-only; longer with a reachable provider). To see the cache-only disclosure without a provider, start the service with `DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1`.
 **Recorded:** click **Replay Mode (recorded Juice Shop scan)**.

@@ -1,8 +1,8 @@
-"""Measured accuracy: Primary Target scoring, Labelled Corpus evaluation and cache replay provenance.
+"""Measured accuracy: Reference Target scoring, Labelled Corpus evaluation and cache replay provenance.
 
 Two separate populations are scored and never merged:
 
-* Primary Target: canonical Report Findings against the hand-checked reference list.
+* Reference Target: canonical Report Findings against the hand-checked reference list.
 * Labelled Corpus: each Rule's true positive and near-miss negative, counting Rule emissions.
 
 Everything here is deterministic. Heavy imports (the scan, the Rules) are lazy so the Report
@@ -23,7 +23,7 @@ MANIFEST_NAME = "manifest.json"
 CACHE_IDENTITY = "sha256(masked snippet + NUL + prompt version + NUL + model [+ NUL + masked context JSON])"
 
 METHOD = (
-    "Primary Target: each canonical Finding is one prediction. It matches a confirmed reference entry "
+    "Reference Target: each canonical Finding is one prediction. It matches a confirmed reference entry "
     "when the Issue Type and normalised file path are equal and any Finding Evidence range overlaps the "
     "entry's reviewed anchor range. Matching is one-to-one, in Finding id order, each prediction taking the "
     "lowest-id unmatched entry; a second prediction for a matched entry is a false positive. A Finding that "
@@ -33,7 +33,7 @@ METHOD = (
     "Precision = TP/(TP+FP); recall = TP/(TP+FN); a zero denominator is N/A."
 )
 LIMITATIONS = (
-    "The Primary Target reference list covers one Target Application at one pinned revision; the figures say nothing about any Secondary Target.",
+    "The Reference Target reference list covers one Target Application at one pinned revision; the figures say nothing about any Secondary Target.",
     "The reference list is hand-checked by the authors, so omissions and judgement calls bias recall and precision; entries that could not be determined are excluded, not scored.",
     "A Finding whose only overlapping same-Issue-Type reference entries are not-determinable is neither a true nor a false positive; it is listed as an excluded prediction.",
     "Labelled Corpus cases are small designed fixtures: one pair per Rule shows the Rule works on that pair, not how often it is right on real code.",
@@ -82,7 +82,7 @@ def load_reference(path: Path = REFERENCE_PATH) -> dict:
     return reference
 
 
-# --- Primary Target scoring -----------------------------------------------------------------
+# --- Reference Target scoring ---------------------------------------------------------------
 
 def score_findings(findings: list[dict], reference: dict, *, reference_path: str = str(REFERENCE_PATH)) -> dict:
     confirmed = sorted((e for e in reference["entries"] if e["status"] == "confirmed"), key=lambda e: e["id"])
@@ -254,7 +254,7 @@ def build_accuracy(report: dict, reference: dict, corpus: dict, *, reference_pat
     if report["target"]["commit"] != reference["target"]["commit"]:
         raise ValueError(f"Target revision {report['target']['commit']} does not match the reference pin "
                          f"{reference['target']['commit']}")
-    return {"primary_target": score_findings(report["findings"], reference, reference_path=reference_path),
+    return {"reference_target": score_findings(report["findings"], reference, reference_path=reference_path),
             "labelled_corpus": corpus, "llm": replay_status(report, cache_dir),
             "method": METHOD, "limitations": list(LIMITATIONS)}
 
@@ -263,13 +263,17 @@ def run_accuracy(target: str, *, reference_path: Path = REFERENCE_PATH, cache_di
                  provider: str | None = None, model: str | None = None, commit: str | None = None,
                  write_manifest_file: bool = False) -> dict:
     """Cache-only scan, scoring and corpus evaluation; returns the validated Report with `accuracy`."""
+    from concurrent.futures import ThreadPoolExecutor
+
     from auditor.scan import run_scan
     from auditor.schema import validate_report
 
     reference = load_reference(reference_path)
-    corpus = evaluate_corpus()
-    with forced_cache_only():
-        report = run_scan(target, commit=commit, provider=provider, model=model, cache_dir=cache_dir)
+    # The corpus uses its own fixtures and no LLM; it can run while the Target is scanned.
+    with forced_cache_only(), ThreadPoolExecutor(max_workers=1) as pool:
+        target_report = pool.submit(run_scan, target, commit=commit, provider=provider, model=model, cache_dir=cache_dir)
+        corpus = evaluate_corpus()
+        report = target_report.result()
     if write_manifest_file:
         write_manifest(report, cache_dir)
     report["accuracy"] = build_accuracy(report, reference, corpus, reference_path=Path(reference_path).as_posix(),
@@ -280,9 +284,9 @@ def run_accuracy(target: str, *, reference_path: Path = REFERENCE_PATH, cache_di
 
 def summary_lines(accuracy: dict) -> list[str]:
     lines = []
-    primary = accuracy.get("primary_target")
+    primary = accuracy.get("reference_target")
     if primary:
-        lines += [f"Primary Target {primary['target']} @ {primary['commit'][:8]} (canonical Findings vs {primary['reference']})",
+        lines += [f"Reference Target {primary['target']} @ {primary['commit'][:8]} (canonical Findings vs {primary['reference']})",
                   f"  TP={primary['tp']} FP={primary['fp']} FN={primary['fn']}",
                   f"  precision {ratio_text(primary['precision'], primary['tp'], primary['tp'] + primary['fp'])}",
                   f"  recall    {ratio_text(primary['recall'], primary['tp'], primary['tp'] + primary['fn'])}"]
@@ -348,7 +352,7 @@ def _fmt(value: float | None) -> str:
 def render_results_markdown(report: dict, reference: dict, *, command: str, digest: str) -> str:
     """Deterministic `accuracy/results.md` from a scored Report; Live Probe outcomes stay out of static figures."""
     accuracy = report["accuracy"]
-    primary, corpus, llm = accuracy["primary_target"], accuracy["labelled_corpus"], accuracy["llm"]
+    primary, corpus, llm = accuracy["reference_target"], accuracy["labelled_corpus"], accuracy["llm"]
     target = report["target"]
     confirmed = [e for e in reference["entries"] if e["status"] == "confirmed"]
     undeterminable = [e for e in reference["entries"] if e["status"] != "confirmed"]
@@ -366,7 +370,7 @@ def render_results_markdown(report: dict, reference: dict, *, command: str, dige
              f"{len(undeterminable)} not-determinable and excluded from scoring)",
              f"- Command: `{command}`",
              f"- Rules digest: `{digest}`", "",
-             "## Static scoring (Primary Target)", "",
+             "## Static scoring (Reference Target)", "",
              "Static figures count only deterministic Findings. Live Probe outcomes are never added to them.", "",
              "| Issue Type | TP | FP | FN | Precision | Recall | F1 | Live Probe confirmations |",
              "|---|---|---|---|---|---|---|---|"]

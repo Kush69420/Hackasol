@@ -282,7 +282,7 @@
       }
     }
   },
-  "primary_reference": {
+  "reference_target": {
     "reference": "accuracy/juice-shop.json",
     "confirmed_entries": 47,
     "excluded_entries": 5,
