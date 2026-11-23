@@ -2,7 +2,7 @@
 
 - Target: juice-shop pinned at `c9f99228d9d56afb5f5ca7925376292f7fa44b13`
 - Reference: `accuracy/juice-shop.json` (47 confirmed, 5 not-determinable and excluded from scoring)
-- Command: `dpdp-audit accuracy targets/juice-shop --cache-only --cache-dir accuracy/cache --reference accuracy/juice-shop.json --results accuracy/results.md --provider omp --model anthropic/claude-haiku-5-5`
+- Command: `dpdp-audit accuracy targets/juice-shop --cache-only --cache-dir accuracy/cache --reference accuracy/juice-shop.json --results accuracy/results.md --provider omp --model anthropic/claude-opus-5-5`
 - Rules digest: `16c6f1df4175e43ee048dd0ee52eb36634b6740fefc8a67a204c6ad9e371f858`
 
 ## Static scoring (Primary Target)
@@ -55,7 +55,7 @@ Rules with a corpus FP or FN: none
 
 ## LLM replay
 
-- Mode: cache-only (omp/anthropic/claude-haiku-5-5); prompts: classification: classification-v1, consent: consent-v1, fix: fix-v1, triage: triage-v1
+- Mode: cache-only (omp/anthropic/claude-opus-5-5); prompts: classification: classification-v1, consent: consent-v2, fix: fix-v1, triage: triage-v2
 - Cache: 208 hit(s), 0 miss(es), 0 not assessed
 - Reproduces published run: yes
 
