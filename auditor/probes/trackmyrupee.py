@@ -40,6 +40,7 @@ CONSENT = '/consent/'
 VERIFY_PENDING = '/accounts/confirm-email/'
 VERIFY_PATH = re.compile(r'/accounts/confirm-email/[-:\w]+/', re.ASCII)
 MAIL_URL = re.compile(r'https?://[^\s<>"\']+')
+CONFIRM_ACTION = re.compile(r'<form[^>]*\baction="(/accounts/confirm-email/[^"]*)"')
 CSRF = re.compile(r'name="csrfmiddlewaretoken" value="([^"]+)"')
 
 
@@ -286,6 +287,10 @@ def _signup(session: Session, username: str, password: str, omit: str | None = N
     return 'unknown'
 
 
+def _account_key(path: str) -> str:
+    return path.split('/')[3].split(':')[0]
+
+
 def _finish_signup(session: Session, username: str, password: str) -> str | None:
     email = f'{username}@example.invalid'
     route = _verification_path(session.origin, email)
@@ -296,9 +301,14 @@ def _finish_signup(session: Session, username: str, password: str) -> str | None
     try:
         form = session.request('GET', route)
         token = CSRF.search(form.text) if form.status_code == 200 else None
-        if not token or f'href="mailto:{email}"' not in form.text or f'action="{route}"' not in form.text:
+        actions = CONFIRM_ACTION.findall(form.text) if token else []
+        # The Target re-signs the key with a timestamp on every render, so the form action can differ from the
+        # mailed route after a second boundary. Accept it only for the mailed link's own account key.
+        if (not token or f'href="mailto:{email}"' not in form.text or len(actions) != 1
+                or not VERIFY_PATH.fullmatch(actions[0]) or _account_key(actions[0]) != _account_key(route)):
             return 'The email confirmation form did not match the Auditor-created account'
-        if session.request('POST', route, data={'csrfmiddlewaretoken': token[1]}).status_code not in REDIRECTS:
+        session.verification_route = actions[0]
+        if session.request('POST', actions[0], data={'csrfmiddlewaretoken': token[1]}).status_code not in REDIRECTS:
             return 'The Target Application did not accept email confirmation'
     finally:
         session.verification_route = None

@@ -48,7 +48,9 @@ class Handler(BaseHTTPRequestHandler):
             return self.send('<a href="/settings/consent/withdraw/">Withdraw</a>')
         if self.path == '/settings/consent/withdraw/':
             self.server.withdrawal_form_read = True
-            return self.send('<form method="post"><button type="submit">Withdraw</button></form>')
+            return self.send('''<form method="post" action="/accounts/logout/" hidden>
+                <button type="submit">Logout</button></form>
+                <form method="post"><button type="submit">Withdraw</button></form>''')
         if self.path.startswith('/static/probe-'):
             return self.send('', 404)
         return self.send('not found', 404)

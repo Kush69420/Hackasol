@@ -26,7 +26,8 @@ let grant = 0, withdrawal = 0, before = false, withdrawn = false, after = null, 
 let browser;
 try {
   browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({ serviceWorkers: 'block' });
+  // Tall enough that the fixed cookie banner cannot cover the Withdrawal Path's submit button.
+  const context = await browser.newContext({ serviceWorkers: 'block', viewport: { width: 1280, height: 1400 } });
   let actions = 0, assets = 0;
   await context.route('**/*', async route => {
     const req = route.request();
@@ -101,8 +102,15 @@ try {
     const verification = await page.goto(origin + route, { waitUntil: 'domcontentloaded' });
     const matchingRecipient = page.locator(`a[href="mailto:${email}"]`);
     if (verification?.status() !== 200 || await matchingRecipient.count() !== 1) throw new Error();
+    // The Target signs the key with a timestamp on every render, so after a second boundary the form
+    // action carries a fresh signature. Post to that action, but only for the mailed link's own account key.
+    const confirmForm = page.locator('form[action^="/accounts/confirm-email/"]');
+    const action = await confirmForm.count() === 1 ? await confirmForm.getAttribute('action') : '';
+    const accountKey = p => p.split('/')[3].split(':')[0];
+    if (!/^\/accounts\/confirm-email\/[-:\w]+\/$/.test(action) || accountKey(action) !== accountKey(route)) throw new Error();
+    verificationRoute = action;
     verifyArmed = true;
-    const confirmed = await submit(route, page.locator(`form[action="${route}"] button[type="submit"]`));
+    const confirmed = await submit(action, confirmForm.locator('button[type="submit"]'));
     verificationRoute = null;
     if (!redirects.includes(confirmed.status())) throw new Error();
     await context.clearCookies();
@@ -138,7 +146,7 @@ try {
   if (!owned) throw new Error();
   stage = 'withdrawal-post';
   withdrawArmed = true;
-  const withdrawalResponse = await submit(withdrawPath, page.locator('form[method="post"] button[type="submit"]'));
+  const withdrawalResponse = await submit(withdrawPath, page.locator('form[method="post"]:not([action]) button[type="submit"]'));
   withdrawal++;
   withdrawn = redirects.includes(withdrawalResponse.status());
   if (!withdrawn) throw new Error();
