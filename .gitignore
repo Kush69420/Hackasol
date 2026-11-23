@@ -3,6 +3,8 @@
 
 # LLM verdict cache is local; masked, but per-machine
 .dpdp-cache/
+/training/data/
+/training/cache/
 
 .venv/
 __pycache__/

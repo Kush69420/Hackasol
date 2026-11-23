@@ -1,0 +1,101 @@
+# Keys are the shallow clone names in targets/training/.
+Django-CRM:
+  url: https://github.com/MicroPyramid/Django-CRM.git
+  commit: f63fe8cf22bd818cea45427b48ef59da24206ff1
+  licence: MIT
+  framework: Django
+django-allauth:
+  url: https://github.com/pennersr/django-allauth.git
+  commit: 1a70b222fa9d5c13c2a33f64da94a99e9d248033
+  licence: MIT
+  framework: Django
+django-appointment:
+  url: https://github.com/adamspd/django-appointment.git
+  commit: 17ca322d17e24cfcf7d2f5f3918be04b2d45139d
+  licence: Apache-2.0
+  framework: Django
+django-oscar:
+  url: https://github.com/django-oscar/django-oscar.git
+  commit: a5ed3c9c17d4cf6ee18aa9795b493172416ab68b
+  licence: BSD-3-Clause
+  framework: Django
+documenso:
+  url: https://github.com/documenso/documenso.git
+  commit: e745c9ec339f1b16d2f8d181b6457323fb33ebe5
+  licence: AGPL-3.0 (see repository enterprise exceptions)
+  framework: Prisma and React
+dub:
+  url: https://github.com/dubinc/dub.git
+  commit: 6b463b4bdd9ed2fd9aa416f67b5b77d317b1471e
+  licence: AGPL-3.0 (enterprise directories separately licensed)
+  framework: Next.js and Prisma
+ecommerce:
+  url: https://github.com/openedx/ecommerce.git
+  commit: 615fdee5b2f1050c058fa1e9b548ee1a86d4cd88
+  licence: AGPL-3.0
+  framework: Django
+edx-platform:
+  url: https://github.com/openedx/edx-platform.git
+  commit: b9e3b3b8662b539e200f8acf68d42431de032320
+  licence: AGPL-3.0
+  framework: Django
+fastapi-realworld-example-app:
+  url: https://github.com/nsidnev/fastapi-realworld-example-app.git
+  commit: 029eb7781c60d5f563ee8990a0cbfb79b244538c
+  licence: MIT
+  framework: FastAPI
+formbricks:
+  url: https://github.com/formbricks/formbricks.git
+  commit: 6119a98f6a81baff4afbc8e5333bc87676bec297
+  licence: AGPL-3.0 (some MIT or enterprise-licensed directories)
+  framework: Next.js and Prisma
+full-stack-fastapi-template:
+  url: https://github.com/tiangolo/full-stack-fastapi-template.git
+  commit: 77e550a73bb49dd2967622c5ed11bf7a49603c93
+  licence: MIT
+  framework: FastAPI and React
+healthchecks:
+  url: https://github.com/healthchecks/healthchecks.git
+  commit: c1039ad23395162c5e2f17d324d8ccdaa60a1d14
+  licence: BSD-3-Clause
+  framework: Django
+node-express-realworld-example-app:
+  url: https://github.com/gothinkster/node-express-realworld-example-app.git
+  commit: 30b68e1e881462b2f4164ea09ab4c4f5699c7b0b
+  licence: MIT (package.json)
+  framework: Express and Mongoose
+open-webui:
+  url: https://github.com/open-webui/open-webui.git
+  commit: 0666e59d26a4d056e0bacee41742486badd71cf8
+  licence: Open WebUI License (branding conditions)
+  framework: FastAPI
+plunk:
+  url: https://github.com/useplunk/plunk.git
+  commit: d0491e2b3a4c737ca3a6f8ecc6ede3fb80e7c6c9
+  licence: AGPL-3.0
+  framework: Express and Prisma
+pretix:
+  url: https://github.com/pretix/pretix.git
+  commit: 36db1134aab305fd63bf0389397d0a50a597cfc7
+  licence: AGPL-3.0 (additional terms in LICENSE)
+  framework: Django
+saleor:
+  url: https://github.com/saleor/saleor.git
+  commit: e1ccf4d580025b06c2ff01441a1e798dc4635f24
+  licence: BSD-3-Clause
+  framework: Django
+taxonomy:
+  url: https://github.com/shadcn-ui/taxonomy.git
+  commit: 298a8857c7128a0d121e7f699dfd729f23b3966d
+  licence: MIT
+  framework: Next.js and Prisma
+trigger.dev:
+  url: https://github.com/triggerdotdev/trigger.dev.git
+  commit: 24b09257d144d6d49ff84485c929f123030aa8e5
+  licence: Apache-2.0
+  framework: Prisma and React
+wagtail:
+  url: https://github.com/wagtail/wagtail.git
+  commit: e1c02c292f0500bf65e194c9bdd62b6787abd238
+  licence: BSD-3-Clause
+  framework: Django
