@@ -42,32 +42,33 @@ A Timeout means Semgrep did not finish that analysis, so juice-shop has 3 incomp
 
 | Scoring | Tool | TP | FP | FN | Excluded | Precision | Recall |
 |---|---|---|---|---|---|---|---|
-| location only | Auditor | 17 | 4 | 30 | 0 | 0.81 | 0.36 |
+| location only | Auditor | 44 | 8 | 3 | 0 | 0.85 | 0.94 |
 | location only | Semgrep | 7 | 45 | 40 | 0 | 0.13 | 0.15 |
-| Issue Type and location | Auditor | 16 | 5 | 31 | 0 | 0.76 | 0.34 |
+| Issue Type and location | Auditor | 45 | 7 | 2 | 0 | 0.87 | 0.96 |
 | Issue Type and location | Semgrep | 1 | 3 | 46 | 0 | 0.25 | 0.02 |
 
 - For Semgrep, FP means "no matching reference entry". The reference covers DPDP-scope Issue Types only, so these are off-reference hits, not verified false positives.
 - Excluded counts predictions that overlap only not-determinable entries. They are neither TP nor FP. None occurred here.
 - The Issue Type and location route leaves Semgrep 4 predictions in total (1 TP, 3 FP), because only some Semgrep groups carry a CWE that links to a DPDP Issue Type.
+- The Auditor figures follow the recall Rules added after the first benchmark (then: location-only 0.81 / 0.36, Issue Type and location 0.76 / 0.34). Those Rules were written from the gaps on this same reference, so the Auditor's juice-shop figures are not held-out; see `accuracy/README.md`. The Semgrep side is unchanged (same version, configs and results).
 
 ### Overlap with Auditor Evidence (location only)
 
 | Target | Semgrep groups | Groups on Auditor Evidence | Auditor Findings | Findings on Semgrep groups | Semgrep cross-file results | Auditor multi-file Findings |
 |---|---|---|---|---|---|---|
-| juice-shop | 52 | 1 | 21 | 1 | 0 | 16 |
+| juice-shop | 52 | 8 | 52 | 10 | 0 | 44 |
 | ai-kyc-platform | 9 | 1 | 7 | 1 | 0 | 2 |
 | trackmyrupee | 452 | 0 | 5 | 0 | 0 | 0 |
 | singharya-e-kyc | 0 | 0 | 0 | 0 | 0 | 0 |
 
-- The two tools flag almost different places: 1 of 21 juice-shop Findings overlaps a Semgrep group, and 1 of 7 in ai-kyc-platform.
-- Auditor multi-file Findings are Findings whose Evidence spans more than one file. 16 of 21 juice-shop Findings do. Semgrep ran its OSS engine (`engine_kind` OSS on every result) and had no result with a trace into another file, so it has no counterpart.
+- The two tools still flag mostly different places: 10 of 52 juice-shop Findings overlap a Semgrep group (8 of 52 Semgrep groups), and 1 of 7 in ai-kyc-platform.
+- Auditor multi-file Findings are Findings whose Evidence spans more than one file. 44 of 52 juice-shop Findings do. Semgrep ran its OSS engine (`engine_kind` OSS on every result) and had no result with a trace into another file, so it has no counterpart.
 
 ### Primary Provisions and consent/erasure
 
 | Target | Auditor Primary Provisions | Semgrep Primary Provisions (CWE route) | Auditor CON/RET Findings | Semgrep CON/RET predictions |
 |---|---|---|---|---|
-| juice-shop | 10 | 1 | 2 | 0 |
+| juice-shop | 11 | 1 | 3 | 0 |
 | ai-kyc-platform | 3 | 2 | 0 | 0 |
 | trackmyrupee | 2 | 1 | 4 | 0 |
 | singharya-e-kyc | 0 | 0 | 0 | 0 |
@@ -91,11 +92,11 @@ A Timeout means Semgrep did not finish that analysis, so juice-shop has 3 incomp
 
 ### Severity
 
-| Auditor band | WARNING |
-|---|---|
-| high | 2 |
+| Auditor band | ERROR | WARNING |
+|---|---|---|
+| high | 2 | 9 |
 
-- Two Auditor Findings overlap a Semgrep group, one in juice-shop and one in ai-kyc-platform, both at WARNING. That is too few for a conclusion.
+- Eleven Auditor Findings overlap a Semgrep group (10 in juice-shop, 1 in ai-kyc-platform), all in the Auditor's high band; the highest overlapping Semgrep severity is ERROR for 2 and WARNING for 9. Semgrep severity is a rule-author label, not a DPDP Severity, so this shows only that the overlapping sites are ones Semgrep also ranks above INFO.
 - Semgrep also emitted MEDIUM severity on juice-shop results. The overlap comparison ranks MEDIUM below INFO, and no Finding's highest overlapping Semgrep severity was MEDIUM.
 
 ## Limits
@@ -104,7 +105,7 @@ A Timeout means Semgrep did not finish that analysis, so juice-shop has 3 incomp
 - Semgrep registry rulesets are not pinned. Rerunning later can change rule counts and results.
 - Coverage is incomplete: juice-shop has 3 Timeouts and trackmyrupee has 166 errors (see the errors table).
 - Semgrep ran its OSS engine only, so Auditor multi-file Evidence has no Semgrep counterpart in this run.
-- The severity comparison rests on two overlaps and supports no conclusion.
+- The severity comparison rests on eleven overlaps on two Targets and supports no general conclusion.
 - The masked `semgrep.json` departs from raw Semgrep output (see Method).
 
 ## Reproduce
