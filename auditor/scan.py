@@ -47,12 +47,14 @@ def run_inventory(source: str, *, commit: str | None = None,
 def run_scan(source: str, *, commit: str | None = None, provider: str | None = None,
              model: str | None = None, cache_dir: Path = Path(".dpdp-cache"),
              targets_dir: Path = Path("targets"),
-             on_stage: Callable[[str], None] | None = None) -> dict:
+             on_stage: Callable[[str], None] | None = None,
+             session: LLMSession | None = None) -> dict:
     started = _now()
     target = resolve_target(source, commit=commit, targets_dir=targets_dir)
     files, excluded = iter_target_files(target.root, target.name)
-    session = LLMSession.from_env(cache_dir=cache_dir, provider=provider, model=model)
-    session.probe()
+    if session is None:
+        session = LLMSession.from_env(cache_dir=cache_dir, provider=provider, model=model)
+        session.probe()
     probed = session.summary()
     if probed["mode"] == "cache-only":
         print(f"LLM cache-only mode: {probed['reason']}", file=sys.stderr)
