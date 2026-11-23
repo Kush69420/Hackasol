@@ -151,10 +151,15 @@ def assemble(matches, llm=None) -> AssemblyResult:
         excerpt = evidence[0]['excerpt']
         missing = {'status': 'not assessed', 'cache_key': sha256(excerpt.encode()).hexdigest()}
         guidance = guidance_for(match.issue_type)
-        triage = llm.ask('triage', excerpt, {
+        # Triage weighs the whole Finding: every Evidence location (bounded), its Exposure and Data Category.
+        triage_input = '\n\n'.join(f"{ev['file']}:{ev['start_line']}-{ev['end_line']}\n{ev['excerpt']}"
+                                   for ev in evidence[:10])
+        triage = llm.ask('triage', triage_input, {
             'issue_type': match.issue_type, 'rule': match.rule_id,
-            'provisions': retrieve_provisions([match.issue_type], excerpt),
-            'examples': retrieve_examples(match.issue_type, excerpt),
+            'data_category': category, 'exposure': rated.exposure.level,
+            'data_flow': flow[:12],
+            'provisions': retrieve_provisions([match.issue_type], triage_input),
+            'examples': retrieve_examples(match.issue_type, triage_input),
         }) if llm else dict(missing)
         tailored = llm.ask('fix', excerpt, {'issue_type': match.issue_type, 'guidance': guidance}) if llm else dict(missing)
         reviews = [m.legal_review for m, _, _ in group if m.legal_review]
