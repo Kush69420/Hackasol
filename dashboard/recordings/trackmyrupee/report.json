@@ -3832,12 +3832,12 @@
         "step_counts": null,
         "live_probes": [
           {
-            "status": "Inconclusive",
-            "meaning": "not run or inconclusive; no effect on the static verdict",
+            "status": "Not Confirmed",
+            "meaning": "enforcement observed",
             "assertion": "consent-after-withdrawal",
             "method": "POST",
             "route": "/settings/consent/withdraw/",
-            "reason": "The browser did not observe an accepted withdrawal POST",
+            "reason": "The Processing Operation was unavailable after withdrawal",
             "request": "Auditor-created account; values: [masked]",
             "response": "Account profile availability compared before and after withdrawal; values: [masked]"
           },
@@ -4018,7 +4018,7 @@
             "assertion": "comparable-ease",
             "method": "BROWSER",
             "route": "/accounts/signup/ → /settings/consent/withdraw/",
-            "reason": "Comparable grant and withdrawal interactions were not both recorded: the browser did not observe an accepted withdrawal POST",
+            "reason": "Grant recorded 3 interactions and withdrawal 2; the Report does not establish a common starting point or Purpose link",
             "request": "Signup and withdrawal interactions; values: [masked]",
             "response": "Counts include clicks and checkbox changes, excluding text entry"
           }
@@ -9573,7 +9573,7 @@
     "live_probe_run": {
       "target": "trackmyrupee",
       "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
-      "observed_at": "2026-11-23T14:19:33+00:00"
+      "observed_at": "2026-11-23T21:28:56+00:00"
     }
   },
   "executive_summary": {

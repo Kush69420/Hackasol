@@ -6,7 +6,7 @@ The Auditor scans a Target Application and maps Personal Data mishandling to Ind
 
 Three Indian Target Applications come first, all Secondary Targets:
 
-- [TrackMyRupee](docs/targets/trackmyrupee.md): Consent Assessment. In one local Live Probe run, six assertions were Not Confirmed and two browser assertions were Inconclusive. The Replay Mode Report shows these outcomes beside the static criteria; the committed deliverable Report is static.
+- [TrackMyRupee](docs/targets/trackmyrupee.md): Consent Assessment. In one local Live Probe run, seven assertions were Not Confirmed and one browser assertion was Inconclusive. The Replay Mode Report shows these outcomes beside the static criteria; the committed deliverable Report is static.
 - [ai-kyc-platform](docs/targets/ai-kyc-platform.md): Government Identifiers, masked in every Report format.
 - [singharya E-KYC](docs/targets/singharya-e-kyc.md): the Report has no Findings. This is the honest outcome of the existing Rules on this pin, not a claim that the code is compliant.
 

@@ -107,10 +107,10 @@
         "dir": "dashboard/recordings/trackmyrupee",
         "events": 5,
         "recording_sha256": "273429590efe0cb091bf82234146bdb230d01651acfe40450c5930c466eae2d6",
-        "report_sha256": "a90ec705a2cec42951df1867bd9ed9bad3b21a91091c37a6e94a9fa312efec56",
+        "report_sha256": "8aa9a514d88023c474bc965ffe2333cc6a15f2a127e8ee612e1ea87993b356f0",
         "live_probe_overlay": {
           "note": "The recorded Report carries forward historical Live Probe outcomes written by `dpdp-audit probe` against a clean copy of the pinned revision. The deliverable Report remains the static scan alone. The outcomes sit on the Consent Assessment criteria (`live_probes`, `live_probe_run`) and create no Finding; Replay Mode shows past results. The disposable Django instance ran in debug mode on loopback HTTP with a throwaway signing key and fresh SQLite so no real accounts or data were used. It raised the signup limit from 3/h per IP (finance_tracker/settings.py:419-425) to 100/h to create the run's accounts; rate limiting was not under test. It required email verification and used a file mailbox to verify synthetic accounts without sending mail. It used PostHog SDK 3.25.0 (the pin requires posthog>=3.5.0; 8.1.0 changed capture and removed module-level identify), a synthetic PostHog key and a run-scoped loopback sink to observe only this run's analytics without external delivery.",
-          "observed_at": "2026-11-23T14:19:33+00:00",
+          "observed_at": "2026-11-23T21:28:56+00:00",
           "target_commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
           "criteria": [
             {
@@ -118,8 +118,8 @@
               "outcomes": [
                 {
                   "assertion": "consent-after-withdrawal",
-                  "status": "Inconclusive",
-                  "reason": "The browser did not observe an accepted withdrawal POST"
+                  "status": "Not Confirmed",
+                  "reason": "The Processing Operation was unavailable after withdrawal"
                 },
                 {
                   "assertion": "consent-declined:consent_email",
@@ -159,7 +159,7 @@
                 {
                   "assertion": "comparable-ease",
                   "status": "Inconclusive",
-                  "reason": "Comparable grant and withdrawal interactions were not both recorded: the browser did not observe an accepted withdrawal POST"
+                  "reason": "Grant recorded 3 interactions and withdrawal 2; the Report does not establish a common starting point or Purpose link"
                 }
               ]
             }
