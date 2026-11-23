@@ -11,8 +11,8 @@
     "commit": "2a66c603ea543aea6ab642c472431a27846b9e63"
   },
   "scan": {
-    "started_at": "2026-11-23T12:14:30.780777+00:00",
-    "finished_at": "2026-11-23T12:14:38.612302+00:00",
+    "started_at": "2026-11-23T12:41:10.295317+00:00",
+    "finished_at": "2026-11-23T12:41:31.873451+00:00",
     "exclusions": [
       "**/.git/**",
       "**/node_modules/**",
@@ -21,7 +21,7 @@
       "frontend/**/*.spec.ts"
     ],
     "files_scanned": 1060,
-    "files_excluded": 77722,
+    "files_excluded": 507,
     "rule_count": 65
   },
   "llm": {
@@ -6297,78 +6297,6 @@
       "fix_patch": null
     },
     {
-      "id": "SEC-11-84cd32175eeb",
-      "issue_type": "SEC-11",
-      "rules_fired": [
-        "SEC-11-ts-jsonp-response"
-      ],
-      "kind": "safeguard",
-      "classification": "technical",
-      "evidence": [
-        {
-          "file": "routes/currentUser.ts",
-          "start_line": 58,
-          "end_line": 58,
-          "excerpt": "      res.jsonp(response)"
-        }
-      ],
-      "data_flow": [],
-      "personal_data_element": null,
-      "data_category": "Authentication Secret",
-      "processing_operation": "Expose",
-      "exposure": {
-        "level": "Internal-Restricted",
-        "derived_from": [
-          {
-            "file": "routes/currentUser.ts",
-            "start_line": 58,
-            "end_line": 58,
-            "excerpt": "      res.jsonp(response)"
-          }
-        ]
-      },
-      "primary_provision": "DPDP-Rule-6(1)(a)",
-      "other_provisions": [
-        "CWE-319",
-        "CWE-614",
-        "CWE-942"
-      ],
-      "penalty_ceiling": {
-        "parent_section": "DPDP-Act-8(5)",
-        "amount_inr_crore": 250
-      },
-      "enforceable_from": "2027-05-13",
-      "cvss": {
-        "status": "scored",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M",
-        "score": 7.9
-      },
-      "risk_matrix": {
-        "tier": "B",
-        "exposure": "Internal-Restricted",
-        "cell": "medium"
-      },
-      "severity": {
-        "band": "high",
-        "justification": "protected Data Category Authentication Secret has Internal-Restricted Exposure based on Evidence at routes/currentUser.ts:58; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33)."
-      },
-      "recommended_fix": {
-        "guidance": "Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry.",
-        "tailored": {
-          "status": "not assessed",
-          "cache_key": "7f538902246a2ff4fbf01f1d408db2f491365828b044697dbe5d1553e7bb885a"
-        }
-      },
-      "status": "open",
-      "legal_review": null,
-      "llm_triage": {
-        "status": "not assessed",
-        "cache_key": "d4d690c7ade346f17045ae632d4159dfb8ec3806c00ad8efc2dc84d308c209a1"
-      },
-      "live_probe": null,
-      "fix_patch": null
-    },
-    {
       "id": "SEC-11-d7922190cbda",
       "issue_type": "SEC-11",
       "rules_fired": [
@@ -6895,6 +6823,78 @@
       "llm_triage": {
         "status": "not assessed",
         "cache_key": "6cc9e7484ca39b841f5f2c2e5b62dc774a4df0630b1c893f3b174a3bdbac5ac6"
+      },
+      "live_probe": null,
+      "fix_patch": null
+    },
+    {
+      "id": "SEC-11-84cd32175eeb",
+      "issue_type": "SEC-11",
+      "rules_fired": [
+        "SEC-11-ts-jsonp-response"
+      ],
+      "kind": "safeguard",
+      "classification": "technical",
+      "evidence": [
+        {
+          "file": "routes/currentUser.ts",
+          "start_line": 58,
+          "end_line": 58,
+          "excerpt": "      res.jsonp(response)"
+        }
+      ],
+      "data_flow": [],
+      "personal_data_element": null,
+      "data_category": "Contact",
+      "processing_operation": "Expose",
+      "exposure": {
+        "level": "Internal-Restricted",
+        "derived_from": [
+          {
+            "file": "routes/currentUser.ts",
+            "start_line": 58,
+            "end_line": 58,
+            "excerpt": "      res.jsonp(response)"
+          }
+        ]
+      },
+      "primary_provision": "DPDP-Rule-6(1)(a)",
+      "other_provisions": [
+        "CWE-319",
+        "CWE-614",
+        "CWE-942"
+      ],
+      "penalty_ceiling": {
+        "parent_section": "DPDP-Act-8(5)",
+        "amount_inr_crore": 250
+      },
+      "enforceable_from": "2027-05-13",
+      "cvss": {
+        "status": "scored",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M",
+        "score": 7.9
+      },
+      "risk_matrix": {
+        "tier": "C",
+        "exposure": "Internal-Restricted",
+        "cell": "low"
+      },
+      "severity": {
+        "band": "high",
+        "justification": "protected Data Category Contact has Internal-Restricted Exposure based on Evidence at routes/currentUser.ts:58; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33)."
+      },
+      "recommended_fix": {
+        "guidance": "Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry.",
+        "tailored": {
+          "status": "not assessed",
+          "cache_key": "7f538902246a2ff4fbf01f1d408db2f491365828b044697dbe5d1553e7bb885a"
+        }
+      },
+      "status": "open",
+      "legal_review": null,
+      "llm_triage": {
+        "status": "not assessed",
+        "cache_key": "d4d690c7ade346f17045ae632d4159dfb8ec3806c00ad8efc2dc84d308c209a1"
       },
       "live_probe": null,
       "fix_patch": null
@@ -12901,13 +12901,13 @@
       "SEC-10-49d347fcf67d",
       "SEC-10-d70f56f17198",
       "SEC-11-5a71594e3942",
-      "SEC-11-84cd32175eeb",
       "SEC-11-d7922190cbda",
       "SEC-07-2301fc553793",
       "SEC-07-4edf88d6607a",
       "SEC-10-d0971bb44714",
       "SEC-11-5ab639d2a92e",
       "SEC-11-7958164b1c64",
+      "SEC-11-84cd32175eeb",
       "SEC-07-10d210fbc583",
       "SEC-07-19eb83125bf7",
       "SEC-07-2bc6d0295d98",

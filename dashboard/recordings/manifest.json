@@ -11,14 +11,14 @@
         "md": "reports/juice-shop/report.md",
         "html": "reports/juice-shop/report.html",
         "pdf": "reports/juice-shop/report.pdf",
-        "content_sha256": "04532cacfe1ca827425d4b391150cf76fb90e947adb74574b92087c85def8199",
+        "content_sha256": "9c1ebca9a9ae804be1e84874cd47b10d398d58eb740c6bc5bad2e51984f83b3b",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/juice-shop",
         "events": 5,
-        "recording_sha256": "b03e3aed521187513b38bd3739fb51f029977f01a1e30f9b2832fed90cd9411f",
-        "report_sha256": "8e9ce524e3d595b2be9b206910bf4b6d920685e486228cf58eba945c522f19d7",
+        "recording_sha256": "17849c3c11906b620632ae849850e233b162973673582680afe38045fc59e0c6",
+        "report_sha256": "69b15ba527bbb85be780fd45484c290c16abe85b6ac7634097a1b3a0f805795e",
         "live_probe_overlay": {
           "note": "The recorded Report is the static scan plus Live Probe outcomes written by `dpdp-audit probe` against the pinned image on a disposable local instance; the deliverable Report is the static scan alone. Playback shows the probe outcomes as past results.",
           "image": "dpdp/juice-shop:c9f99228",
@@ -33,7 +33,7 @@
         }
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:00:17.438561+00:00",
+        "scan_started_at": "2026-11-23T12:39:22.300401+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -67,11 +67,11 @@
       "recording": {
         "dir": "dashboard/recordings/ai-kyc-platform",
         "events": 5,
-        "recording_sha256": "79ea59ea1b05f6c3ff4bef61727d14c96d921552e82a6b4fbfd89cd062de6080",
-        "report_sha256": "580a2335fc9fc0caa6b3318929d85de1248304a94f09628579ea89bde943679b"
+        "recording_sha256": "6f4c316022798a552de2cde6f50b19d3ba104b186ef6a86ecca81277942acfc4",
+        "report_sha256": "6cbf954421ee7e6757eb2eccb9ca356ce30fecae75d32a4c99ef5a2dfb2c093f"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:00:25.882550+00:00",
+        "scan_started_at": "2026-11-23T12:39:47.852926+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -106,11 +106,11 @@
       "recording": {
         "dir": "dashboard/recordings/trackmyrupee",
         "events": 5,
-        "recording_sha256": "1a2a0836c62100627c6b5509993f081f058cbe670d691e1d34cf0d6618a70329",
-        "report_sha256": "ca00be54b58f64e0cdebffbc59d0801eb86f231f7a7ec1818e682e7f53d511f0",
+        "recording_sha256": "1c068a752e15c89dde7f7530b24c2c760f9995ec82b37fc1429003f0c44ea545",
+        "report_sha256": "339264a78049e96b596f65e2c8a0d8bb0c6bdfcc74fc69a71dfc27846d832084",
         "live_probe_overlay": {
-          "note": "The recorded Report is the static scan plus Live Probe outcomes written by `dpdp-audit probe` against a local server at the pinned revision (temp SQLite, console email backend, loopback analytics sink); the deliverable Report is the static scan alone. The outcomes sit on the Consent Assessment criteria (`live_probes`, `live_probe_run`) and create no Finding. Playback shows them as past results.",
-          "observed_at": "2026-11-23T12:02:07+00:00",
+          "note": "The recorded Report is the static scan plus Live Probe outcomes written by `dpdp-audit probe` against a local server at the pinned revision (temp SQLite, console email backend, loopback analytics sink); the deliverable Report is the static scan alone. The outcomes sit on the Consent Assessment criteria (`live_probes`, `live_probe_run`) and create no Finding. Playback shows them as past results. The local test instance raised the signup rate limit from 3/h per IP (finance_tracker/settings.py:419-425) so one probe run could create its accounts; rate limiting was not under test.",
+          "observed_at": "2026-11-23T12:49:20+00:00",
           "target_commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
           "criteria": [
             {
@@ -134,15 +134,15 @@
                 },
                 {
                   "assertion": "analytics-declined",
-                  "status": "Not Confirmed"
+                  "status": "Inconclusive"
                 },
                 {
                   "assertion": "analytics-withdrawn",
-                  "status": "Not Confirmed"
+                  "status": "Inconclusive"
                 },
                 {
                   "assertion": "withdrawal-data-removal",
-                  "status": "Not Confirmed"
+                  "status": "Inconclusive"
                 }
               ]
             },
@@ -159,7 +159,7 @@
         }
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:00:29.285378+00:00",
+        "scan_started_at": "2026-11-23T12:48:46.640947+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -194,11 +194,11 @@
       "recording": {
         "dir": "dashboard/recordings/singharya-e-kyc",
         "events": 5,
-        "recording_sha256": "bebbe253a515260c05dc18d33b6ab121fdcea98aba5a305c32171edcf05b9c1e",
-        "report_sha256": "71e605a2907a8079f63acd54d195f1a64439d6cfeca3286234dbb9ca2ff2bc9d"
+        "recording_sha256": "fb6bc2a87fb8c876bf10d244973f42f8ba99a3c2802ea7c2676ff03889b1004b",
+        "report_sha256": "af5d19047c7aafe626d9988ed593e8356b4ea8153746ad20412f9e0122dab466"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:00:37.552929+00:00",
+        "scan_started_at": "2026-11-23T12:41:05.640149+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -227,17 +227,17 @@
         "md": "reports/juice-shop-fork/report.md",
         "html": "reports/juice-shop-fork/report.html",
         "pdf": "reports/juice-shop-fork/report.pdf",
-        "content_sha256": "95089c5d7a73e25066b75df85be0459594e96f0e31b005c18804e394b048c95e",
+        "content_sha256": "ffcc4c9f8c9160e9a836ab56810925b1e95aded6e8edbfba001d24d849cbbe2d",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/juice-shop-fork",
         "events": 5,
-        "recording_sha256": "ffc73f22d189fb806340a7c4a8e64023d5701ee6075cc94489bea2b633247728",
-        "report_sha256": "14eca7a5823021c02d6a87ba754962f6ce2ddbe39110343de2475cc830f4dec6"
+        "recording_sha256": "47173ea14bc867e9812bb22ede6caaaec161e1d2cf3e3aa0cd65fbb6ad2001c1",
+        "report_sha256": "96bea62d0c4f642089451866836ac39b4cb9100e17dd495e6bacb9811c1b1b92"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T12:14:41.898661+00:00",
+        "scan_started_at": "2026-11-23T12:41:38.689558+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",

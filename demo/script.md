@@ -27,7 +27,7 @@ Open the three Indian Target Applications first. All three are Secondary Targets
 
 **Live:** scan `targets/trackmyrupee` (pinned at `47990e4f19d7debea70c5d56bab77e3c3f051546`), then open the Consent Assessment section of its html or md Report.
 **Recorded:** click **Replay Mode (recorded trackmyrupee scan)**, then open the same section.
-**Expected state:** the seven criteria (recorded, specific, enforced server-side, withdrawable with comparable ease, propagated to Data Processors, preceded by notice, verifiable parental consent), each with Evidence or a "not determinable" reason, and the grant and withdrawal step counts the Report records. The committed Report and its recording hold no Live Probe outcome; the TrackMyRupee note records a separate single-run Live Probe on one local instance that did not confirm any consent-enforcement violation, which does not establish deletion at Data Processors.
+**Expected state:** the seven criteria (recorded, specific, enforced server-side, withdrawable with comparable ease, propagated to Data Processors, preceded by notice, verifiable parental consent), each with Evidence or a "not determinable" reason, and the grant and withdrawal step counts the Report records. The committed Report is static; the recording carries the single local Live Probe run: three declined-consent signup assertions Not Confirmed and five assertions Inconclusive. This does not establish deletion at Data Processors.
 
 **ai-kyc-platform: Government Identifiers.**
 

@@ -49,12 +49,12 @@ Penalty Ceilings: ₹250 crore, ₹50 crore; statutory maximum under the Schedul
 - SEC-10-49d347fcf67d — Enforceable From 2027-05-13
 - SEC-10-d70f56f17198 — Enforceable From 2027-05-13
 - SEC-11-5a71594e3942 — Enforceable From 2027-05-13
-- SEC-11-84cd32175eeb — Enforceable From 2027-05-13
 - SEC-11-d7922190cbda — Enforceable From 2027-05-13
 - SEC-07-2301fc553793 — Enforceable From 2027-05-13
 - SEC-10-d0971bb44714 — Enforceable From 2027-05-13
 - SEC-11-5ab639d2a92e — Enforceable From 2027-05-13
 - SEC-11-7958164b1c64 — Enforceable From 2027-05-13
+- SEC-11-84cd32175eeb — Enforceable From 2027-05-13
 - SEC-07-10d210fbc583 — Enforceable From 2027-05-13
 - SEC-07-19eb83125bf7 — Enforceable From 2027-05-13
 - SEC-07-2bc6d0295d98 — Enforceable From 2027-05-13
@@ -2084,36 +2084,6 @@ Recommended fix: Serve every route that carries Personal Data over TLS only, and
 
 LLM triage: not assessed; cache key: d241ac22b2731a66b8e953703b30fa9381d3e0c7a6ddf748a4e429e326e61691
 
-### SEC-11-84cd32175eeb — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
-
-Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. protected Data Category Authentication Secret has Internal-Restricted Exposure based on Evidence at routes/currentUser.ts:58; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
-
-Exposure: Internal-Restricted; Evidence: routes/currentUser.ts:58–58
-
-Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
-
-Other Provisions: CWE-319 — CWE-319, CWE-614 — CWE-614, CWE-942 — CWE-942
-
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
-
-Status: open.
-
-Evidence:
-
-routes/currentUser.ts:58–58
-
-```
-      res.jsonp(response)
-```
-
-Data Flow:
-
-- None recorded.
-
-Recommended fix: Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry. Tailored: not assessed
-
-LLM triage: not assessed; cache key: d4d690c7ade346f17045ae632d4159dfb8ec3806c00ad8efc2dc84d308c209a1
-
 ### SEC-11-d7922190cbda — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
 
 Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. protected Data Category Authentication Secret has Internal-Restricted Exposure based on Evidence at lib/insecurity.ts:192; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
@@ -2333,6 +2303,36 @@ Data Flow:
 Recommended fix: Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry. Tailored: not assessed
 
 LLM triage: not assessed; cache key: 6cc9e7484ca39b841f5f2c2e5b62dc774a4df0630b1c893f3b174a3bdbac5ac6
+
+### SEC-11-84cd32175eeb — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. protected Data Category Contact has Internal-Restricted Exposure based on Evidence at routes/currentUser.ts:58; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: routes/currentUser.ts:58–58
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-319 — CWE-319, CWE-614 — CWE-614, CWE-942 — CWE-942
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/currentUser.ts:58–58
+
+```
+      res.jsonp(response)
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry. Tailored: not assessed
+
+LLM triage: not assessed; cache key: d4d690c7ade346f17045ae632d4159dfb8ec3806c00ad8efc2dc84d308c209a1
 
 ### SEC-07-10d210fbc583 — Missing authentication or ownership check on a route returning Personal Data
 
@@ -4514,39 +4514,39 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 
 ## Statutory Penalty Ceilings and Enforcement Timeline
 
-Statutory maximum per Schedule; not a predicted or estimated fine. The actual penalty is determined by the Data Protection Board under section 33(2) factors. Ceilings apply per breach instance and are never added together.
+Statutory maximum per Schedule; not a predicted or estimated fine. The actual penalty is determined by the Data Protection Board under section 33(2) factors. Ceilings apply per breach instance and are never added together. Under the Report's Applicability Assumptions, only applicable Primary Provisions contribute to the highest ceiling. Related and conditional Provisions and Findings that need legal review do not contribute.
 
 Highest applicable ceiling: ₹250 crore (DPDP-Rule-6(1)(a), DPDP-Rule-6(1)(b), DPDP-Rule-6(1)(c), DPDP-Rule-6(1)(d), DPDP-Rule-6(1)(e)). Ceilings are not summed into a total exposure figure.
 
-| Provision | Schedule entry | Statutory maximum | Findings | Severity mix |
+| Provision | Schedule entry | Statutory maximum | Finding applicability | Severity mix |
 | --- | --- | --- | --- | --- |
-| DPDP-Rule-6(1)(a) | Schedule, item 1 | ₹250 crore | SEC-09-8d1d55111ce2, SEC-09-e51d3cb1437b, SEC-11-ad5b2106f4e8, SEC-01-d85a743d0415, SEC-04-4da51857d7fb, SEC-04-bebc3e7f55ae, SEC-04-f14b443a57f1, SEC-10-19fa227ef322, SEC-10-20b8955c0a3e, SEC-10-49d347fcf67d, SEC-10-d70f56f17198, SEC-11-5a71594e3942, SEC-11-84cd32175eeb, SEC-11-d7922190cbda, SEC-10-d0971bb44714, SEC-11-5ab639d2a92e, SEC-11-7958164b1c64, SEC-02-03b1356ecc57, SEC-02-0f4631e6a05d, SEC-02-b6efa0cd2309, SEC-02-e0994a7481e3 | high: 17, medium: 4 |
-| DPDP-Rule-6(1)(b) | Schedule, item 1 | ₹250 crore | SEC-07-2d4f025671b7, SEC-07-46e1db7b8927, SEC-07-84fd091ad6cb, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-05-9922f06ca9e3, SEC-05-c695dda06010, SEC-07-4edf88d6607a, SEC-07-2301fc553793, SEC-07-10d210fbc583, SEC-07-19eb83125bf7, SEC-07-2bc6d0295d98, SEC-07-6462097d19a8, SEC-07-f9f89e15bbe6 | high: 15, medium: 5 |
-| DPDP-Rule-6(1)(c) | Schedule, item 1 | ₹250 crore | MON-01-8c5728dfea11 | low: 1 |
-| DPDP-Rule-6(1)(d) | Schedule, item 1 | ₹250 crore | SEC-14-14740ebe6dcc, SEC-14-c5e9ac6a126d | low: 2 |
-| DPDP-Rule-6(1)(e) | Schedule, item 1 | ₹250 crore | SEC-13-394d3dbca514 | medium: 1 |
-| DPDP-Rule-13(4) | Schedule, item 4 | ₹150 crore | TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b | medium: 2 |
-| DPDP-Act-11(1)(a) | Schedule, item 7 | ₹50 crore | RIG-01-a9383e4db278 | low: 1 |
-| DPDP-Act-11(1)(b) | Schedule, item 7 | ₹50 crore | RIG-01-a9383e4db278 | low: 1 |
-| DPDP-Act-12(2) | Schedule, item 7 | ₹50 crore | RIG-02-f7117cbcde8b | low: 1 |
-| DPDP-Act-12(3) | Schedule, item 7 | ₹50 crore | RET-02-4696497b9137 | low: 1 |
-| DPDP-Act-16(1) | Schedule, item 7 | ₹50 crore | TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b | medium: 2 |
-| DPDP-Act-6(1) | Schedule, item 7 | ₹50 crore | SEC-07-2d4f025671b7, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-07-2bc6d0295d98 | high: 9, medium: 1 |
-| DPDP-Act-8(7) | Schedule, item 7 | ₹50 crore | RET-02-4696497b9137 | low: 1 |
-| DPDP-Act-8(7)(a) | Schedule, item 7 | ₹50 crore | RET-01-e43b9adccd2d | low: 1 |
-| DPDP-Act-8(7)(b) | Schedule, item 7 | ₹50 crore | RET-02-4696497b9137 | low: 1 |
-| DPDP-Rule-14 | Schedule, item 7 | ₹50 crore | RIG-01-a9383e4db278, RIG-02-f7117cbcde8b | low: 2 |
-| DPDP-Rule-15 | Schedule, item 7 | ₹50 crore | TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b | medium: 2 |
-| DPDP-Rule-8(1) | Schedule, item 7 | ₹50 crore | RET-03-41bffe4101f9 | low: 1 |
-| DPDP-Rule-8(2) | Schedule, item 7 | ₹50 crore | RET-03-41bffe4101f9 | low: 1 |
-| DPDP-Rule-8(3) | Schedule, item 7 | ₹50 crore | SEC-13-394d3dbca514 | medium: 1 |
-| DPDP-Rules-Schedule-Third | Schedule, item 7 | ₹50 crore | RET-03-41bffe4101f9 | low: 1 |
+| DPDP-Rule-6(1)(a) | Schedule, item 1 | ₹250 crore | Applicable Primary Provision: SEC-09-8d1d55111ce2, SEC-09-e51d3cb1437b, SEC-11-ad5b2106f4e8, SEC-01-d85a743d0415, SEC-04-4da51857d7fb, SEC-04-bebc3e7f55ae, SEC-04-f14b443a57f1, SEC-10-19fa227ef322, SEC-10-20b8955c0a3e, SEC-10-49d347fcf67d, SEC-10-d70f56f17198, SEC-11-5a71594e3942, SEC-11-d7922190cbda, SEC-10-d0971bb44714, SEC-11-5ab639d2a92e, SEC-11-7958164b1c64, SEC-11-84cd32175eeb, SEC-02-03b1356ecc57, SEC-02-0f4631e6a05d, SEC-02-b6efa0cd2309, SEC-02-e0994a7481e3 | high: 17, medium: 4 |
+| DPDP-Rule-6(1)(b) | Schedule, item 1 | ₹250 crore | Applicable Primary Provision: SEC-07-2d4f025671b7, SEC-07-46e1db7b8927, SEC-07-84fd091ad6cb, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-05-9922f06ca9e3, SEC-05-c695dda06010, SEC-07-4edf88d6607a, SEC-07-2301fc553793, SEC-07-10d210fbc583, SEC-07-19eb83125bf7, SEC-07-2bc6d0295d98, SEC-07-6462097d19a8, SEC-07-f9f89e15bbe6 | high: 15, medium: 5 |
+| DPDP-Rule-6(1)(c) | Schedule, item 1 | ₹250 crore | Applicable Primary Provision: MON-01-8c5728dfea11 | low: 1 |
+| DPDP-Rule-6(1)(d) | Schedule, item 1 | ₹250 crore | Applicable Primary Provision: SEC-14-14740ebe6dcc, SEC-14-c5e9ac6a126d | low: 2 |
+| DPDP-Rule-6(1)(e) | Schedule, item 1 | ₹250 crore | Applicable Primary Provision: SEC-13-394d3dbca514 | medium: 1 |
+| DPDP-Rule-13(4) | Schedule, item 4 | ₹150 crore | Conditional Provision: TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b | medium: 2 |
+| DPDP-Act-11(1)(a) | Schedule, item 7 | ₹50 crore | Applicable Primary Provision: RIG-01-a9383e4db278 | low: 1 |
+| DPDP-Act-11(1)(b) | Schedule, item 7 | ₹50 crore | Related Provision: RIG-01-a9383e4db278 | low: 1 |
+| DPDP-Act-12(2) | Schedule, item 7 | ₹50 crore | Applicable Primary Provision: RIG-02-f7117cbcde8b | low: 1 |
+| DPDP-Act-12(3) | Schedule, item 7 | ₹50 crore | Applicable Primary Provision: RET-02-4696497b9137 | low: 1 |
+| DPDP-Act-16(1) | Schedule, item 7 | ₹50 crore | Needs Legal Review (breach not established): TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b | medium: 2 |
+| DPDP-Act-6(1) | Schedule, item 7 | ₹50 crore | Related Provision: SEC-07-2d4f025671b7, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-07-2bc6d0295d98 | high: 9, medium: 1 |
+| DPDP-Act-8(7) | Schedule, item 7 | ₹50 crore | Related Provision: RET-02-4696497b9137 | low: 1 |
+| DPDP-Act-8(7)(a) | Schedule, item 7 | ₹50 crore | Applicable Primary Provision: RET-01-e43b9adccd2d | low: 1 |
+| DPDP-Act-8(7)(b) | Schedule, item 7 | ₹50 crore | Related Provision: RET-02-4696497b9137 | low: 1 |
+| DPDP-Rule-14 | Schedule, item 7 | ₹50 crore | Related Provision: RIG-01-a9383e4db278, RIG-02-f7117cbcde8b | low: 2 |
+| DPDP-Rule-15 | Schedule, item 7 | ₹50 crore | Related Provision: TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b | medium: 2 |
+| DPDP-Rule-8(1) | Schedule, item 7 | ₹50 crore | Conditional Provision: RET-03-41bffe4101f9 | low: 1 |
+| DPDP-Rule-8(2) | Schedule, item 7 | ₹50 crore | Conditional Provision: RET-03-41bffe4101f9 | low: 1 |
+| DPDP-Rule-8(3) | Schedule, item 7 | ₹50 crore | Related Provision: SEC-13-394d3dbca514 | medium: 1 |
+| DPDP-Rules-Schedule-Third | Schedule, item 7 | ₹50 crore | Conditional Provision: RET-03-41bffe4101f9 | low: 1 |
 
 ### Enforcement timeline (days relative to scan date 2026-11-23)
 
 | Enforceable From | Status | Findings |
 | --- | --- | --- |
-| 2027-05-13 | enforceable in 171 days | SEC-09-8d1d55111ce2, SEC-07-2d4f025671b7, SEC-07-46e1db7b8927, SEC-07-84fd091ad6cb, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-09-e51d3cb1437b, SEC-11-ad5b2106f4e8, SEC-01-d85a743d0415, SEC-04-4da51857d7fb, SEC-04-bebc3e7f55ae, SEC-04-f14b443a57f1, SEC-05-9922f06ca9e3, SEC-05-c695dda06010, SEC-07-4edf88d6607a, SEC-10-19fa227ef322, SEC-10-20b8955c0a3e, SEC-10-49d347fcf67d, SEC-10-d70f56f17198, SEC-11-5a71594e3942, SEC-11-84cd32175eeb, SEC-11-d7922190cbda, SEC-07-2301fc553793, SEC-10-d0971bb44714, SEC-11-5ab639d2a92e, SEC-11-7958164b1c64, SEC-07-10d210fbc583, SEC-07-19eb83125bf7, SEC-07-2bc6d0295d98, SEC-07-6462097d19a8, SEC-07-f9f89e15bbe6, TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b, SEC-02-03b1356ecc57, SEC-02-0f4631e6a05d, SEC-02-b6efa0cd2309, SEC-02-e0994a7481e3, SEC-13-394d3dbca514, MON-01-8c5728dfea11, SEC-14-14740ebe6dcc, SEC-14-c5e9ac6a126d, RET-01-e43b9adccd2d, RET-02-4696497b9137, RET-03-41bffe4101f9, RIG-01-a9383e4db278, RIG-02-f7117cbcde8b |
+| 2027-05-13 | enforceable in 171 days | SEC-09-8d1d55111ce2, SEC-07-2d4f025671b7, SEC-07-46e1db7b8927, SEC-07-84fd091ad6cb, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-09-e51d3cb1437b, SEC-11-ad5b2106f4e8, SEC-01-d85a743d0415, SEC-04-4da51857d7fb, SEC-04-bebc3e7f55ae, SEC-04-f14b443a57f1, SEC-05-9922f06ca9e3, SEC-05-c695dda06010, SEC-07-4edf88d6607a, SEC-10-19fa227ef322, SEC-10-20b8955c0a3e, SEC-10-49d347fcf67d, SEC-10-d70f56f17198, SEC-11-5a71594e3942, SEC-11-d7922190cbda, SEC-07-2301fc553793, SEC-10-d0971bb44714, SEC-11-5ab639d2a92e, SEC-11-7958164b1c64, SEC-11-84cd32175eeb, SEC-07-10d210fbc583, SEC-07-19eb83125bf7, SEC-07-2bc6d0295d98, SEC-07-6462097d19a8, SEC-07-f9f89e15bbe6, TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b, SEC-02-03b1356ecc57, SEC-02-0f4631e6a05d, SEC-02-b6efa0cd2309, SEC-02-e0994a7481e3, SEC-13-394d3dbca514, MON-01-8c5728dfea11, SEC-14-14740ebe6dcc, SEC-14-c5e9ac6a126d, RET-01-e43b9adccd2d, RET-02-4696497b9137, RET-03-41bffe4101f9, RIG-01-a9383e4db278, RIG-02-f7117cbcde8b |
 
 ## Method, accuracy and limitations
 

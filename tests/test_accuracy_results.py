@@ -82,7 +82,7 @@ def test_accuracy_records_public_reproducible_command(tmp_path, monkeypatch):
     url = "https://user:synthetic-token@host/repo.git"
     assert cli.main(["accuracy", url, "--results", str(tmp_path / "results.md")]) == 0
     command = captured["command"]
-    assert "user" not in command and "synthetic-token" not in command
+    assert "user:" not in command and "synthetic-token" not in command and "@host" not in command
     assert "https://host/repo.git" in command
     assert "--commit " + "a" * 40 in command
     assert "--provider ollama --model actual-model" in command

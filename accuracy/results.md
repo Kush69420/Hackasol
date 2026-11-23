@@ -2,8 +2,8 @@
 
 - Target: juice-shop pinned at `c9f99228d9d56afb5f5ca7925376292f7fa44b13`
 - Reference: `accuracy/juice-shop.json` (47 confirmed, 5 not-determinable and excluded from scoring)
-- Command: `dpdp-audit accuracy targets/juice-shop --cache-only --cache-dir accuracy/cache --reference accuracy/juice-shop.json --results accuracy/results.md`
-- Rules digest: `a4813712d83b18c5178e929616b31d4810563ef59e8f6dc9d1e54aeb63ca990e`
+- Command: `dpdp-audit accuracy targets/juice-shop --cache-only --cache-dir accuracy/cache --reference accuracy/juice-shop.json --results accuracy/results.md --provider omp --model anthropic/claude-haiku-5-5`
+- Rules digest: `16c6f1df4175e43ee048dd0ee52eb36634b6740fefc8a67a204c6ad9e371f858`
 
 ## Static scoring (Primary Target)
 

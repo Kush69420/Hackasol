@@ -2409,15 +2409,15 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 
 ## Statutory Penalty Ceilings and Enforcement Timeline
 
-Statutory maximum per Schedule; not a predicted or estimated fine. The actual penalty is determined by the Data Protection Board under section 33(2) factors. Ceilings apply per breach instance and are never added together.
+Statutory maximum per Schedule; not a predicted or estimated fine. The actual penalty is determined by the Data Protection Board under section 33(2) factors. Ceilings apply per breach instance and are never added together. Under the Report's Applicability Assumptions, only applicable Primary Provisions contribute to the highest ceiling. Related and conditional Provisions and Findings that need legal review do not contribute.
 
-Highest applicable ceiling: ₹50 crore (DPDP-Act-14, DPDP-Act-6(1), DPDP-Rule-14(4)). Ceilings are not summed into a total exposure figure.
+Highest applicable ceiling: ₹50 crore (DPDP-Act-14, DPDP-Act-6(1)). Ceilings are not summed into a total exposure figure.
 
-| Provision | Schedule entry | Statutory maximum | Findings | Severity mix |
+| Provision | Schedule entry | Statutory maximum | Finding applicability | Severity mix |
 | --- | --- | --- | --- | --- |
-| DPDP-Act-14 | Schedule, item 7 | ₹50 crore | RIG-04-91983d63d6a4 | low: 1 |
-| DPDP-Act-6(1) | Schedule, item 7 | ₹50 crore | CON-03-5948c3734746, CON-03-94c021251539, CON-03-c8163452354e, CON-03-e9015c2df7d8 | low: 4 |
-| DPDP-Rule-14(4) | Schedule, item 7 | ₹50 crore | RIG-04-91983d63d6a4 | low: 1 |
+| DPDP-Act-14 | Schedule, item 7 | ₹50 crore | Applicable Primary Provision: RIG-04-91983d63d6a4 | low: 1 |
+| DPDP-Act-6(1) | Schedule, item 7 | ₹50 crore | Applicable Primary Provision: CON-03-5948c3734746, CON-03-94c021251539, CON-03-c8163452354e, CON-03-e9015c2df7d8 | low: 4 |
+| DPDP-Rule-14(4) | Schedule, item 7 | ₹50 crore | Related Provision: RIG-04-91983d63d6a4 | low: 1 |
 
 ### Enforcement timeline (days relative to scan date 2026-11-23)
 

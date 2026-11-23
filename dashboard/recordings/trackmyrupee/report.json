@@ -11,8 +11,8 @@
     "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546"
   },
   "scan": {
-    "started_at": "2026-11-23T12:00:29.285378+00:00",
-    "finished_at": "2026-11-23T12:00:35.214093+00:00",
+    "started_at": "2026-11-23T12:48:46.640947+00:00",
+    "finished_at": "2026-11-23T12:48:58.486994+00:00",
     "exclusions": [
       "**/.git/**",
       "**/node_modules/**",
@@ -3515,37 +3515,37 @@
             "response": "Signup response status and session issuance only; values: [masked]"
           },
           {
-            "status": "Not Confirmed",
-            "meaning": "enforcement observed",
+            "status": "Inconclusive",
+            "meaning": "not run or inconclusive; no effect on the static verdict",
             "assertion": "analytics-declined",
             "method": "POST",
             "route": "/accounts/signup/ → /accounts/login/",
             "purpose": "Analytics",
-            "reason": "No outbound request was observed after the decline or withdrawal while the granted control produced 1",
+            "reason": "A comparable login failed or the scoped outbound observation was unavailable",
             "request": "Signup and login with the tmr_consent=declined cookie; values: [masked]",
-            "response": "Local analytics sink request count after each request; no payloads retained"
+            "response": "Local count of PostHog events for the verified account and action window; no payloads retained by the Auditor"
           },
           {
-            "status": "Not Confirmed",
-            "meaning": "enforcement observed",
+            "status": "Inconclusive",
+            "meaning": "not run or inconclusive; no effect on the static verdict",
             "assertion": "analytics-withdrawn",
             "method": "POST",
             "route": "/api/prompts/ → /accounts/login/",
             "purpose": "Analytics",
-            "reason": "No outbound request was observed after the decline or withdrawal while the granted control produced 1",
+            "reason": "A comparable login failed or the scoped outbound observation was unavailable",
             "request": "Cookie choice accepted, then declined as the banner records it, then login; values: [masked]",
-            "response": "Local analytics sink request count after each request; no payloads retained"
+            "response": "Local count of PostHog events for the verified account and action window; no payloads retained by the Auditor"
           },
           {
-            "status": "Not Confirmed",
-            "meaning": "enforcement observed",
+            "status": "Inconclusive",
+            "meaning": "not run or inconclusive; no effect on the static verdict",
             "assertion": "withdrawal-data-removal",
             "method": "POST",
             "route": "/settings/consent/withdraw/",
             "purpose": "Account",
-            "reason": "The account no longer authenticated and no account-linked rows remained",
-            "request": "Auditor-created account withdrawal; values: [masked]",
-            "response": "Post-withdrawal authentication result and read-only count of account-linked rows; values: [masked]"
+            "reason": "The authenticated profile did not establish Auditor ownership; no withdrawal POST was sent",
+            "request": "Withdrawal POST requires the authenticated profile to match the Auditor-created account; values: [masked]",
+            "response": "When sent: post-withdrawal authentication and read-only count of account-linked rows; values: [masked]"
           }
         ]
       },
@@ -9116,7 +9116,7 @@
     "live_probe_run": {
       "target": "trackmyrupee",
       "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
-      "observed_at": "2026-11-23T12:02:07+00:00"
+      "observed_at": "2026-11-23T12:49:20+00:00"
     }
   },
   "executive_summary": {

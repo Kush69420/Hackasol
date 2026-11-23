@@ -670,19 +670,19 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 
 ## Statutory Penalty Ceilings and Enforcement Timeline
 
-Statutory maximum per Schedule; not a predicted or estimated fine. The actual penalty is determined by the Data Protection Board under section 33(2) factors. Ceilings apply per breach instance and are never added together.
+Statutory maximum per Schedule; not a predicted or estimated fine. The actual penalty is determined by the Data Protection Board under section 33(2) factors. Ceilings apply per breach instance and are never added together. Under the Report's Applicability Assumptions, only applicable Primary Provisions contribute to the highest ceiling. Related and conditional Provisions and Findings that need legal review do not contribute.
 
 Highest applicable ceiling: ₹250 crore (DPDP-Rule-6(1)(a), DPDP-Rule-6(1)(c)). Ceilings are not summed into a total exposure figure.
 
-| Provision | Schedule entry | Statutory maximum | Findings | Severity mix |
+| Provision | Schedule entry | Statutory maximum | Finding applicability | Severity mix |
 | --- | --- | --- | --- | --- |
-| DPDP-Rule-6(1)(a) | Schedule, item 1 | ₹250 crore | SEC-11-f02c64b4ece0, SEC-03-9a0640bc6639, SEC-03-efb9664725b2, SEC-02-1c18323367ce | high: 3, medium: 1 |
-| DPDP-Rule-6(1)(c) | Schedule, item 1 | ₹250 crore | SEC-12-e7116519cc6a, MON-01-72fc143c58bf | medium: 1, low: 1 |
-| DPDP-Act-13 | Schedule, item 7 | ₹50 crore | RIG-03-5210dafdc63d | low: 1 |
-| DPDP-Act-8(10) | Schedule, item 7 | ₹50 crore | RIG-03-5210dafdc63d | low: 1 |
-| DPDP-Act-8(9) | Schedule, item 7 | ₹50 crore | RIG-03-5210dafdc63d | low: 1 |
-| DPDP-Rule-14(3) | Schedule, item 7 | ₹50 crore | RIG-03-5210dafdc63d | low: 1 |
-| DPDP-Rule-9 | Schedule, item 7 | ₹50 crore | RIG-03-5210dafdc63d | low: 1 |
+| DPDP-Rule-6(1)(a) | Schedule, item 1 | ₹250 crore | Applicable Primary Provision: SEC-11-f02c64b4ece0, SEC-03-9a0640bc6639, SEC-03-efb9664725b2, SEC-02-1c18323367ce | high: 3, medium: 1 |
+| DPDP-Rule-6(1)(c) | Schedule, item 1 | ₹250 crore | Applicable Primary Provision: SEC-12-e7116519cc6a, MON-01-72fc143c58bf | medium: 1, low: 1 |
+| DPDP-Act-13 | Schedule, item 7 | ₹50 crore | Related Provision: RIG-03-5210dafdc63d | low: 1 |
+| DPDP-Act-8(10) | Schedule, item 7 | ₹50 crore | Applicable Primary Provision: RIG-03-5210dafdc63d | low: 1 |
+| DPDP-Act-8(9) | Schedule, item 7 | ₹50 crore | Related Provision: RIG-03-5210dafdc63d | low: 1 |
+| DPDP-Rule-14(3) | Schedule, item 7 | ₹50 crore | Related Provision: RIG-03-5210dafdc63d | low: 1 |
+| DPDP-Rule-9 | Schedule, item 7 | ₹50 crore | Related Provision: RIG-03-5210dafdc63d | low: 1 |
 
 ### Enforcement timeline (days relative to scan date 2026-11-23)
 

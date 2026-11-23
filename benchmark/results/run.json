@@ -14,7 +14,7 @@
   "masking": "auditor.masking.mask_for_report on string values under results[] and errors[]; keys path, check_id and fingerprint are unchanged",
   "targets": {
     "juice-shop": {
-      "fetched_at_utc": "2026-11-23T10:15:47Z",
+      "fetched_at_utc": "2026-11-23T12:40:56Z",
       "commit": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
       "dirty_checkout": false,
       "exclude": [
@@ -41,7 +41,7 @@
       }
     },
     "ai-kyc-platform": {
-      "fetched_at_utc": "2026-11-23T10:16:04Z",
+      "fetched_at_utc": "2026-11-23T12:41:09Z",
       "commit": "70a821487c193be445810d836dd9b9b9ae22eb18",
       "dirty_checkout": false,
       "exclude": [
@@ -65,7 +65,7 @@
       }
     },
     "trackmyrupee": {
-      "fetched_at_utc": "2026-11-23T10:16:08Z",
+      "fetched_at_utc": "2026-11-23T12:41:15Z",
       "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
       "dirty_checkout": false,
       "exclude": [
@@ -90,7 +90,7 @@
       }
     },
     "singharya-e-kyc": {
-      "fetched_at_utc": "2026-11-23T10:16:32Z",
+      "fetched_at_utc": "2026-11-23T12:41:34Z",
       "commit": "e6e78d53edd30fd5be88dcd82d5afc1a2010d025",
       "dirty_checkout": false,
       "exclude": [
