@@ -11,14 +11,17 @@ validation are the production checks; an invalid answer counts as a miss, never 
 import argparse
 import json
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+
+import httpx
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from auditor.llm import LLMSession  # noqa: E402
-from auditor.llm.providers import PROVIDERS  # noqa: E402
+from auditor.llm.providers import PROVIDERS, Ollama  # noqa: E402
 
 EVAL = ROOT / 'accuracy/llm-eval'
 TRIAGE_INPUTS = ROOT / 'training/data/eval/triage-inputs.jsonl'
@@ -54,15 +57,32 @@ def macro_f1(pairs):
     return sum(scores) / len(scores) if scores else None
 
 
-def evaluate(spec, items, cache_root, workers):
+class _EvalOllama(Ollama):
+    """The Auditor's Ollama request, with a longer timeout for large local models and an optional think flag."""
+
+    def __init__(self, model, timeout, think):
+        super().__init__(model, httpx.Client(timeout=timeout))
+        self.think = think
+
+    def complete(self, system, user):
+        payload = {'model': self.model, 'stream': False, 'format': 'json', 'options': {'temperature': 0},
+                   'messages': [{'role': 'system', 'content': system}, {'role': 'user', 'content': user}]}
+        if self.think is not None:
+            payload['think'] = self.think
+        return self.post(self.base + '/chat', payload)['message']['content']
+
+
+def evaluate(spec, items, cache_root, workers, timeout=900, think=None):
     name, target = spec.split('=', 1)
     provider_name, model = target.split(':', 1)
-    session = LLMSession(cache_root / name, PROVIDERS[provider_name](model))
+    provider = _EvalOllama(model, timeout, think) if provider_name == 'ollama' else PROVIDERS[provider_name](model)
+    session = LLMSession(cache_root / name, provider)
+    started = time.monotonic()
     session.probe()
     with ThreadPoolExecutor(max_workers=workers) as pool:
         answers = list(pool.map(lambda item: session.ask(item[0], item[1], item[2]), items))
     result = {'name': name, 'provider': provider_name, 'model': model, 'mode': session.mode,
-              'cache_hits': session.cache_hits, 'roles': {}}
+              'cache_hits': session.cache_hits, 'wall_seconds': round(time.monotonic() - started, 1), 'roles': {}}
     for role, key in (('classification', 'data_category'), ('triage', 'verdict')):
         rows = [(item[3], answer) for item, answer in zip(items, answers) if item[0] == role]
         predicted = [(gold, (a.get('value') or {}).get(key) if a['status'] == 'assessed' else None) for gold, a in rows]
@@ -103,10 +123,14 @@ def main(argv=None):
     parser.add_argument('--cache-root', type=Path, default=ROOT / 'training/cache/eval',
                         help='per-model verdict caches; point a model at an existing cache dir by name to replay it')
     parser.add_argument('--workers', type=int, default=4)
+    parser.add_argument('--timeout', type=float, default=900, help='seconds per Ollama request')
+    parser.add_argument('--think', choices=('default', 'on', 'off'), default='default',
+                        help="Ollama 'think' flag; default omits it, as the Auditor does")
     parser.add_argument('--out', type=Path, default=EVAL / 'results.json')
     args = parser.parse_args(argv)
+    think = {'default': None, 'on': True, 'off': False}[args.think]
     items = load_items()
-    results = [evaluate(spec, items, args.cache_root, args.workers) for spec in args.model]
+    results = [evaluate(spec, items, args.cache_root, args.workers, args.timeout, think) for spec in args.model]
     args.out.write_text(json.dumps(results, indent=2) + '\n', encoding='utf-8')
     print(table(results))
     return 0
