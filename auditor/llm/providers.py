@@ -100,7 +100,8 @@ class Omp:
         except (OSError, subprocess.SubprocessError, ValueError):
             return False, 'omp is unreachable or its model is unavailable'
     def complete(self, system, user):
-        result = self.runner(['omp', '-p', '--no-session', '--no-tools', '--no-extensions', '--no-skills', '--no-rules', '--no-context-files', '--model', self.model, '--system-prompt', system, user], capture_output=True, text=True, timeout=120, check=True)
+        # The user payload goes on stdin: a consent graph can exceed the kernel's per-argument limit.
+        result = self.runner(['omp', '-p', '--no-session', '--no-tools', '--no-extensions', '--no-skills', '--no-rules', '--no-context-files', '--model', self.model, '--system-prompt', system], input=user, capture_output=True, text=True, timeout=120, check=True)
         # omp prints Markdown; a model may wrap its JSON object in one fenced block.
         fenced = re.fullmatch(r'\s*```(?:json)?\s*\n(.*?)\n\s*```\s*', result.stdout, re.S)
         return fenced.group(1) if fenced else result.stdout

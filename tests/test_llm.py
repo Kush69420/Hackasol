@@ -42,7 +42,7 @@ def test_provider_masking_and_cache_replay(adapter, tmp_path, monkeypatch):
         body = {'content': [{'type': 'text', 'text': content}], 'choices': [{'message': {'content': content}}], 'candidates': [{'content': {'parts': [{'text': content}]}}], 'message': {'content': content}}
         return httpx.Response(200, json=body)
     def runner(args, **kwargs):
-        sent.append(' '.join(args))
+        sent.append(' '.join(args) + '\n' + kwargs.get('input', ''))
         return subprocess.CompletedProcess(args, 0, json.dumps(VALUE), '')
     provider = adapter('example-model', runner=runner) if adapter is Omp else adapter('example-model', client=httpx.Client(transport=httpx.MockTransport(handler)))
     session = LLMSession(tmp_path, provider)
