@@ -128,7 +128,7 @@ Run from the repository root:
 
 ## Published figures and reproduction
 
-Pinned run: Juice Shop `c9f99228`, LLM verdicts from `omp` / `anthropic/claude-haiku-5-5` (prompt versions in `cache/manifest.json`), replayed cache-only from `accuracy/cache/`.
+Pinned run: Juice Shop `c9f99228`, LLM verdicts from `omp` / `anthropic/claude-opus-5-5` (prompt versions in `cache/manifest.json`), replayed cache-only from `accuracy/cache/`.
 
 | Population | TP | FP | FN | Precision | Recall |
 |---|---:|---:|---:|---|---|
@@ -143,13 +143,15 @@ Previous published run (commit `7fb1236`, before the recall Rules): 16 TP, 6 FP,
 
 The 8 unmatched predictions: the 4 false positives and 1 anchor disagreement already adjudicated (MON-01-8c5728dfea11, RET-03-41bffe4101f9, SEC-02-0a13729d5971, SEC-02-0f4631e6a05d, SEC-02-e0994a7481e3), and 3 new sites the reference does not list: `routes/changePassword.ts:56` and `routes/resetPassword.ts:46` return the whole updated User row (the REF-026 pattern), and `routes/updateUserProfile.ts:42` sets the session cookie with no flags (the REF-036 pattern). They count as false positives because the reference is not edited after scoring. Still missed: REF-021 (anchor disagreement at `routes/authenticatedUsers.ts`) and REF-044 (MON-01, anchor disagreement).
 
+**Why the cache was regenerated.** Commit `69ac7bf` replaced the replay cache, the Juice Shop Report, `accuracy/results.md` and the manifest together. The previous manifest named `anthropic/claude-haiku-5-5` with `triage-v1` and `consent-v1`. The current manifest names `anthropic/claude-opus-5-5` with `triage-v2` and `consent-v2`; `classification-v1` and `fix-v1` are unchanged. A cache key covers the model, the prompt version and the masked context, so the model change re-keyed all four roles, not only triage and consent. The `-v2` prompts also changed the context: triage and consent now carry the retrieved Provisions (triage also the retrieved examples), and every citation must come from that retrieved set. The commit removed 178 cache entries and added 192: 79 classification-v1, 64 triage-v2, 1 consent-v2 and 48 fix-v1, all recorded as `omp` / `anthropic/claude-opus-5-5`. A cache-only replay of the regenerated cache gives 208 hits and 0 misses, and reproduces the precision and recall in the table above (0.8491 and 0.9574). All 159 Juice Shop citations resolve in the registry and appear in the retrieved set of their verdict.
+
 Reproduce:
 
 ```sh
 dpdp-audit accuracy targets/juice-shop --cache-only --cache-dir accuracy/cache
 ```
 
-The run prints `reproduces published run: yes` only when the target commit, Rules digest, provider, model, prompt versions and the miss counts all match `cache/manifest.json`. The published run has no unassessed field (208 cached verdicts). After a Rule or prompt change, refill the cache with a live run (`dpdp-audit scan targets/juice-shop --provider omp --model anthropic/claude-haiku-5-5 --cache-dir accuracy/cache`) and regenerate the manifest with `--write-manifest`.
+The run prints `reproduces published run: yes` only when the target commit, Rules digest, provider, model, prompt versions and the miss counts all match `cache/manifest.json`. The published run has no unassessed field (208 cached verdicts). After a Rule or prompt change, refill the cache with a live run (`dpdp-audit scan targets/juice-shop --provider omp --model anthropic/claude-opus-5-5 --cache-dir accuracy/cache`) and regenerate the manifest with `--write-manifest`.
 
 Each run also writes a reproducible results summary (metrics, the command, the Rules digest) to `accuracy/results.md`. Use `--results PATH` to write it elsewhere, for example `--results /tmp/results.md` to leave the committed file untouched.
 
@@ -158,6 +160,8 @@ Each run also writes a reproducible results summary (metrics, the command, the R
 The Labelled Corpus fixtures use one batched Semgrep run. Corpus evaluation now overlaps the Target scan, and fixtures whose inventory cannot produce TypeScript Data Flows skip the Node flow analyser. The Target still runs Semgrep in parallel chunks.
 
 The table gives three wall-clock timings in seconds per condition, with the **one-minute load average at the start of each run** in parentheses. Both versions ran the cache-only Juice Shop command above with `--provider omp --model anthropic/claude-haiku-5-5` and temporary paths for `--results` and `--out`. Timings include generation of the JSON, Markdown, HTML and PDF Reports. No live provider was contacted.
+
+The timings section was written at commit `0189aee`, when the manifest named `anthropic/claude-haiku-5-5` and the v1 prompts. The cache was regenerated in `69ac7bf` for `anthropic/claude-opus-5-5` (see above), so `--model anthropic/claude-haiku-5-5` in the timing command no longer matches any cached verdict.
 
 Cold runs started without Semgrep results; each warm run immediately followed its cold run using the same cache. Semgrep results live in `.dpdp-cache/semgrep/` by default and are keyed on the Semgrep version, the Rule YAML bytes and the scanned files' bytes. Set `DPDP_SEMGREP_CACHE` to an empty directory for a cold run without altering the default cache.
 

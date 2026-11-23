@@ -258,10 +258,12 @@ Decision: [ADR 0004](adr/0004-retrieval-grounding-and-fine-tuned-local-model.md)
 
 ## P3.1 Retrieval-grounded prompts
 
-- **Index.** At scan time the Auditor builds one offline, in-memory index from Provision registry excerpts, remediation catalogue entries and Labelled Corpus fixtures. It does not extract full-text statutes or index Target Application code.
-- **Retrieval.** Start from the Issue Type's primary and related Provisions, then their parents. Fill the remaining budget with BM25 over registry excerpts; triage also gets one nearest positive and one nearest negative fixture when available. Consent seeds CON-01 through CON-07 and queries the registry with its source-anchored graph.
-- **Prompts v2.** Triage and consent return `citations`; an id outside that request's retrieved set invalidates the verdict. Consent also returns a reading per criterion. The retrieved set participates in the cache key. Classification and fix remain on v1.
-- Regenerate `accuracy/cache` and its manifest, and record why.
+Status: done.
+
+- **Index.** At scan time the Auditor builds an offline, in-memory index on first use in a process. It has one BM25 over Provision registry excerpts and one BM25 per Issue Type over its Labelled Corpus fixtures, with one document per Rule and label. The remediation catalogue supplies the seed Provisions and Issue Type titles; it is not indexed. No statute PDF text is extracted or indexed, no index file is written, and Target Application code is not indexed. Returned fixture examples are truncated to 60 lines.
+- **Retrieval.** `retrieve_provisions` takes the Issue Type's primary and related Provisions, then their parents. If the seeds number fewer than k, it fills to k with BM25 over the masked query and the Issue Type titles. Triage uses k=8, and `retrieve_examples` returns the nearest positive and negative fixture when available. Consent seeds CON-01 through CON-07 (20 seed Provisions, parents included), then fills to k=24 with BM25 over the masked serialised consent graph.
+- **Prompts v2.** `triage-v2` and `consent-v2` carry the retrieved Provisions in their context (triage also the retrieved examples). A citation outside that request's retrieved set makes the response invalid, so the verdict is `not assessed`. Consent also returns a reading per criterion. The retrieved set is part of the cache key. Classification and fix remain on v1.
+- **Regenerate.** Done in `69ac7bf`. Triage and consent moved to v2 and the model moved to `anthropic/claude-opus-5-5`, so every cache key changed. The cache, the Juice Shop Report, `accuracy/results.md` and the manifest were regenerated together; the reason is in `accuracy/README.md`.
 
 Acceptance:
 - Retrieval recall@8 of each Issue Type's catalogue Provisions is 100%.
