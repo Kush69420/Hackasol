@@ -131,7 +131,7 @@ def test_publication_numbers_identical_across_json_markdown_html_and_pdf(tmp_pat
     assert primary["precision"] == round(2 / 3, 4) and primary["recall"] == round(2 / 3, 4)
     paths = write_reports(report, tmp_path / "report.json")
     assert json.loads(paths[0].read_text())["accuracy"] == report["accuracy"]
-    pdf = subprocess.run(["pdftotext", "-layout", str(paths[3]), "-"], check=True,
+    pdf = subprocess.run(["pdftotext", "-raw", str(paths[3]), "-"], check=True,
                          capture_output=True, text=True).stdout
     expected = [acc.ratio_text(primary["precision"], 2, 3), acc.ratio_text(primary["recall"], 2, 3),
                 "SEC-01-fixture-rule", "SEC-08-fixture-rule", "Measured accuracy", "cache-only",

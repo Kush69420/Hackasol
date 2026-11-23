@@ -55,6 +55,8 @@ The fix sets `httpOnly`, `secure` and `sameSite: 'strict'` on the cookie. The fr
 
 Logout check: built from PR #2 head `27be113` and driven in headless Chrome on the A4000 (register, log in, update the profile so the server sets the `httpOnly` cookie, log out through the navbar), the `token` cookie (`HttpOnly; Secure; SameSite=Strict`) survived logout and `GET /rest/user/whoami` still returned 200 with the user. Commit `b7ea732` on the PR branch adds `POST /rest/user/logout`, which clears the cookie with the same attributes and is called from the navbar and sidenav logout; the same flow then left no `token` cookie and `whoami` returned an empty body. A re-scan is not a certification of compliance.
 
+Restart check: at `b7ea732`, `updateAuthenticatedUsers` in `lib/insecurity.ts` re-set a restored session's `token` cookie with no attributes, so after a server restart a request carrying a valid token received `Set-Cookie: token=…; Path=/`. Commit `0cb0611` moves `tokenCookieOptions` into `lib/insecurity.ts` and uses it for every `token` cookie; the same check then returned `HttpOnly; Secure; SameSite=Strict`. Known limitation: logout clears the cookie, but the JWT stays valid server-side until it expires; `isAuthorized` is a plain `expressJwt` on 27 routes and the JWT challenges rely on that path, so revocation was not attempted.
+
 ## SEC-09
 
 The pinned Juice Shop Report identifies password-change logging as `SEC-01-d85a743d0415` at `frontend/src/app/Services/user.service.ts:54–55` and `server.ts:370`. It emits no SEC-09 Finding; a password-change group can therefore verify SEC-01 removal only, not SEC-09 removal.

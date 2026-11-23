@@ -177,3 +177,14 @@ The A4000 cold replay now takes about **31 seconds**, just over the 30-second ta
 In the A4000 cold profile, Target Semgrep was the largest measured scan phase (10.20 s before, 9.44 s after). Rule evaluation was 6.51/6.00 s, the two Target TypeScript analyser calls totalled 2.87/3.03 s, and LLM cache replay took 0.07/0.07 s (208 hits). Corpus prewarm was 2.73/3.37 s, included in the full corpus time of 7.11/6.09 s. The corpus overlapped the Target scan only after the change; its TypeScript flow subprocess count dropped from 130 to 2.
 
 Before and after, the Juice Shop Findings and Labelled Corpus results matched, and the accuracy Markdown was byte-identical. After excluding the scan timestamps, the full JSON Reports also matched for Juice Shop and the three Secondary Targets.
+
+## Held-out figures
+
+These Targets were not used to write or tune any Rule. Each reference list was written from the Target source by an LLM labeller (Claude Sonnet 5.5, medium reasoning) without access to the Auditor's output or Rules, adjudicated by a second LLM session (Claude Sonnet 5.5, high reasoning), and frozen in commit `ba5d1cf` before scoring. No human or lawyer reviewed them. Matching follows the same policy as the Reference Target.
+
+| Target | Commit | TP | FP | FN | Precision | Recall | Reference |
+|---|---|---|---|---|---|---|---|
+| ai-kyc-platform | `70a8214` | 4 | 3 | 14 | 0.57 | 0.22 | `accuracy/ai-kyc-platform.json` |
+| TrackMyRupee | `47990e4` | 4 | 1 | 35 | 0.80 | 0.10 | `accuracy/trackmyrupee.json` |
+
+Reproduce: `dpdp-audit accuracy targets/<target> --reference accuracy/<target>.json --cache-only --provider omp --model anthropic/claude-opus-5-5 --cache-dir accuracy/cache --results /tmp/r.md --out /tmp/r.json`.

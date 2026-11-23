@@ -1,0 +1,979 @@
+{
+ "format_version": 1,
+ "target": {
+  "name": "trackmyrupee",
+  "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546"
+ },
+ "exclusions": [
+  "static/vendor/**",
+  "staticfiles/**",
+  "**/migrations/**",
+  "**/*.min.js",
+  "**/*lock*"
+ ],
+ "scope_issue_types": [
+  "SEC-01",
+  "SEC-02",
+  "SEC-03",
+  "SEC-04",
+  "SEC-05",
+  "SEC-06",
+  "SEC-07",
+  "SEC-08",
+  "SEC-09",
+  "SEC-10",
+  "SEC-11",
+  "SEC-12",
+  "SEC-13",
+  "SEC-14",
+  "SEC-15",
+  "SEC-16",
+  "CON-01",
+  "CON-02",
+  "CON-03",
+  "CON-04",
+  "CON-05",
+  "CON-06",
+  "CON-07",
+  "CON-08",
+  "RET-01",
+  "RET-02",
+  "RET-03",
+  "RIG-01",
+  "RIG-02",
+  "RIG-03",
+  "RIG-04",
+  "CHI-01",
+  "CHI-02",
+  "TRF-01",
+  "TRF-02",
+  "MON-01"
+ ],
+ "entries": [
+  {
+   "id": "REF-001",
+   "issue_type": "SEC-02",
+   "file": "expenses/models.py",
+   "start_line": 830,
+   "end_line": 836,
+   "status": "confirmed",
+   "summary": "Expense amounts and descriptions are stored in ordinary model fields.",
+   "rationale": "The Expense model associates each row with a Data Principal and stores the date, Financial Data amount and description in ordinary DateField, DecimalField and TextField fields. The notice at templates/privacy_policy.html:295-299 states storage-level encryption is used but the application adds no field-level encryption.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Financial Data (expense amount, description)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "ITAct-43A",
+    "CWE-311"
+   ],
+   "evidence": [
+    "expenses/models.py:835: amount = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=_('Amount'))",
+    "expenses/models.py:836: description = models.TextField(verbose_name=_('Description'))"
+   ]
+  },
+  {
+   "id": "REF-002",
+   "issue_type": "SEC-02",
+   "file": "expenses/models.py",
+   "start_line": 180,
+   "end_line": 192,
+   "status": "confirmed",
+   "summary": "Account balances are stored in an ordinary decimal field.",
+   "rationale": "Account has a Data Principal foreign key, account name and balance, with the balance represented by a plain DecimalField. The privacy notice at templates/privacy_policy.html:295-299 states there is storage-level encryption but no additional application-level encryption for financial data.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Financial Data (account balance)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "ITAct-43A",
+    "CWE-311"
+   ],
+   "evidence": [
+    "expenses/models.py:189: balance = models.DecimalField("
+   ]
+  },
+  {
+   "id": "REF-003",
+   "issue_type": "SEC-02",
+   "file": "expenses/models.py",
+   "start_line": 1273,
+   "end_line": 1277,
+   "status": "confirmed",
+   "summary": "Income amount and source are stored in ordinary model fields.",
+   "rationale": "Income stores an identifiable Data Principal association alongside amount, description and source as ordinary DecimalField, TextField and CharField values. The privacy notice at templates/privacy_policy.html:295-299 describes storage-level encryption without a second application-level layer.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Financial Data (income amount, source, description)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "ITAct-43A",
+    "CWE-311"
+   ],
+   "evidence": [
+    "expenses/models.py:1275: amount = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=_('Amount'))",
+    "expenses/models.py:1276: description = models.TextField(blank=True, null=True, verbose_name=_('Description'))"
+   ]
+  },
+  {
+   "id": "REF-004",
+   "issue_type": "SEC-09",
+   "file": "static/js/expense_composer.js",
+   "start_line": 158,
+   "end_line": 164,
+   "status": "confirmed",
+   "summary": "A capital-event link puts an expense amount and description into the query string.",
+   "rationale": "capitalUrl constructs the link using the entered amount, date, description as note, account identifier and category as query parameters. These are Financial Data associated with the Data Principal using the expense composer, and become part of the URL when the link is followed.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Financial Data (expense amount, description)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "CWE-598"
+   ],
+   "evidence": [
+    "static/js/expense_composer.js:159: var q = ['amount=' + encodeURIComponent(S.v.amount), 'currency=' + encodeURIComponent(S.v.currency)];",
+    "static/js/expense_composer.js:161: if (S.v.description) q.push('note=' + encodeURIComponent(S.v.description));"
+   ]
+  },
+  {
+   "id": "REF-005",
+   "issue_type": "SEC-10",
+   "file": "static/js/expense_composer.js",
+   "start_line": 785,
+   "end_line": 802,
+   "status": "confirmed",
+   "summary": "An expense summary containing its amount is saved in sessionStorage.",
+   "rationale": "onSaved builds a toast summary from expense.amount_display and category, optionally including the account name. When leaving, finish writes that toast as JSON into sessionStorage. The summary contains Financial Data even though the storage entry has an expiry timestamp.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Financial Data (expense amount, category, account name)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "CWE-922"
+   ],
+   "evidence": [
+    "static/js/expense_composer.js:785: var parts = [j.expense.amount_display, j.expense.category];",
+    "static/js/expense_composer.js:800: try { sessionStorage.setItem(TOAST_KEY, JSON.stringify({ toast: toast, until: Date.now() + TOAST_MS })); } catch (e) { /* private mode */ }"
+   ]
+  },
+  {
+   "id": "REF-006",
+   "issue_type": "CON-03",
+   "file": "templates/account/signup.html",
+   "start_line": 135,
+   "end_line": 143,
+   "status": "confirmed",
+   "summary": "The signup consent control for financial transactions is pre-checked.",
+   "rationale": "The signup form describes processing income, expenses, budgets and savings goals and renders the consent_transactions checkbox with checked and required. The Data Principal must actively undo its default state; the form's signup handler records consent in expenses/forms.py:900-918.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Financial Data (consent over transactions)",
+   "provisions": [
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "templates/account/signup.html:143: <input class=\"form-check-input\" type=\"checkbox\" name=\"consent_transactions\" id=\"id_consent_transactions\" checked required style=\"width: 2.5em; height: 1.25em;\">"
+   ]
+  },
+  {
+   "id": "REF-007",
+   "issue_type": "CON-03",
+   "file": "templates/account/signup.html",
+   "start_line": 148,
+   "end_line": 156,
+   "status": "confirmed",
+   "summary": "The signup consent control for device and browser information is pre-checked.",
+   "rationale": "The signup form describes processing device and browser information and renders consent_device with checked and required. The Data Principal must actively undo its default state; expenses/forms.py:900-918 records the grant.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Profile data (device and browser information)",
+   "provisions": [
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "templates/account/signup.html:156: <input class=\"form-check-input\" type=\"checkbox\" name=\"consent_device\" id=\"id_consent_device\" checked required style=\"width: 2.5em; height: 1.25em;\">"
+   ]
+  },
+  {
+   "id": "REF-008",
+   "issue_type": "CON-03",
+   "file": "templates/expenses/dpdp_consent.html",
+   "start_line": 45,
+   "end_line": 53,
+   "status": "confirmed",
+   "summary": "The separate consent page pre-checks financial transaction consent.",
+   "rationale": "The standalone consent page renders consent_transactions as checked and required for processing income, expenses, budgets and savings goals. Its POST handler at expenses/views/misc.py:431-455 records a consent grant after receiving this control.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Financial Data",
+   "provisions": [
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "templates/expenses/dpdp_consent.html:53: <input class=\"form-check-input\" type=\"checkbox\" name=\"consent_transactions\" id=\"id_consent_transactions\" checked required style=\"width: 2.5em; height: 1.25em;\">"
+   ]
+  },
+  {
+   "id": "REF-009",
+   "issue_type": "CON-03",
+   "file": "templates/expenses/dpdp_consent.html",
+   "start_line": 58,
+   "end_line": 66,
+   "status": "confirmed",
+   "summary": "The separate consent page pre-checks device and browser consent.",
+   "rationale": "The standalone consent page renders consent_device as checked and required for device and browser information. Its POST handler at expenses/views/misc.py:431-455 records a consent grant after receiving this control.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Profile data (device and browser information)",
+   "provisions": [
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "templates/expenses/dpdp_consent.html:66: <input class=\"form-check-input\" type=\"checkbox\" name=\"consent_device\" id=\"id_consent_device\" checked required style=\"width: 2.5em; height: 1.25em;\">"
+   ]
+  },
+  {
+   "id": "REF-010",
+   "issue_type": "CON-03",
+   "file": "templates/account/signup.html",
+   "start_line": 119,
+   "end_line": 130,
+   "status": "confirmed",
+   "summary": "Signup submits email consent in a hidden default-on field.",
+   "rationale": "The email address Purpose covers account identification, login keys and notifications; the template supplies consent_email as a hidden input with value on rather than a Data Principal-controlled unchecked consent control. The form requires it at expenses/forms.py:884-888.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Contact (email address)",
+   "provisions": [
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "templates/account/signup.html:130: <input type=\"hidden\" name=\"consent_email\" value=\"on\">"
+   ]
+  },
+  {
+   "id": "REF-011",
+   "issue_type": "CON-03",
+   "file": "templates/expenses/dpdp_consent.html",
+   "start_line": 29,
+   "end_line": 40,
+   "status": "confirmed",
+   "summary": "The separate consent page submits email consent in a hidden default-on field.",
+   "rationale": "The page supplies consent_email as a hidden input with value on for email processing rather than an unchecked consent control. The server reads that value and records the grant along with the other controls at expenses/views/misc.py:431-455.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Contact (email address)",
+   "provisions": [
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "templates/expenses/dpdp_consent.html:40: <input type=\"hidden\" name=\"consent_email\" value=\"on\">"
+   ]
+  },
+  {
+   "id": "REF-012",
+   "issue_type": "RET-02",
+   "file": "expenses/views/settings.py",
+   "start_line": 144,
+   "end_line": 159,
+   "status": "not-determinable",
+   "summary": "Account erasure retains linked payment history under the former email and username.",
+   "rationale": "The erasure operation copies the Data Principal's email and username into PaymentHistory before deleting the account. expenses/models.py:2248-2261 uses SET_NULL and retains payment amounts and identifiers. This explicitly preserves identifiable Financial Data after account erasure. The privacy notice at templates/privacy_policy.html:375-378 says the app's own copy of payment history is deleted with the account, which the code does not do.",
+   "leads": [],
+   "reason": "Whether an applicable retention obligation or other lawful basis justifies retaining these payment records needs review.",
+   "personal_data": "Contact (email, username), Financial Data (payment records)",
+   "provisions": [
+    "DPDP-Act-12(3)",
+    "DPDP-Act-8(7)"
+   ],
+   "evidence": [
+    "expenses/views/settings.py:148: PaymentHistory.objects.filter(user=user).update(user_email=email or '', user_username=username)",
+    "expenses/models.py:2252: user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)"
+   ]
+  },
+  {
+   "id": "REF-013",
+   "issue_type": "CON-05",
+   "file": "expenses/views/settings.py",
+   "start_line": 246,
+   "end_line": 263,
+   "status": "confirmed",
+   "summary": "Withdrawal deletes the account locally but sends no deletion request to analytics or email processors.",
+   "rationale": "WithdrawConsentView dispatches delete_user_account, which deletes local data and cancels the Razorpay subscription (expenses/views/settings.py:105-123) but makes no call to PostHog, Brevo or Sentry. The notice admits this at templates/privacy_policy.html:388-391. PostHog receives a pseudonymous id and events (expenses/posthog_utils.py:108-115) and Brevo receives the email address.",
+   "personal_data": "Contact (email), Profile (pseudonymous id)",
+   "provisions": [
+    "DPDP-Act-6(6)",
+    "DPDP-Act-8(7)(b)"
+   ],
+   "evidence": [
+    "expenses/views/settings.py:257: dispatched = dispatch_account_deletion(user_id)",
+    "templates/privacy_policy.html:390: Deleting your account does not automatically delete data already sent to our service providers, for example analytics data if you accepted cookies, or emails delivered to you. Those providers keep dat"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-014",
+   "issue_type": "RIG-04",
+   "file": "templates/privacy_policy.html",
+   "start_line": 333,
+   "end_line": 337,
+   "status": "confirmed",
+   "summary": "The DPDP rights notice lists rights but omits nomination.",
+   "rationale": "The in-repository privacy notice expressly lists Data Principal rights under the DPDP Act, including access, correction, erasure, withdrawal and complaint, but the list does not mention nomination. Accounts contain Contact and Financial Data, including email and transactions.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Contact (email), Financial Data",
+   "provisions": [
+    "DPDP-Act-14"
+   ],
+   "evidence": [
+    "templates/privacy_policy.html:335: Under India's Digital Personal Data Protection Act 2023, you have the right to: (1) Access your personal data. (2) Correct inaccurate data. (3) Request erasure of your data. (4) Withdraw consent at an"
+   ]
+  },
+  {
+   "id": "REF-016",
+   "issue_type": "SEC-02",
+   "file": "expenses/models.py",
+   "start_line": 2664,
+   "end_line": 2698,
+   "status": "confirmed",
+   "summary": "Loan name, type, principal and start date are stored in ordinary model fields.",
+   "rationale": "Loan holds the Data Principal's loan name, principal and start date as plain CharField, DecimalField and DateField values; no field-level encryption exists in the app and the notice at templates/privacy_policy.html:295-299 says only storage-level encryption is used.",
+   "personal_data": "Financial Data (loan principal)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "ITAct-43A",
+    "CWE-311"
+   ],
+   "evidence": [
+    "expenses/models.py:2675: name = models.CharField(max_length=100, verbose_name=_('Loan Name'))",
+    "expenses/models.py:2686: initial_principal = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=_('Initial Principal Amount'))"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-017",
+   "issue_type": "SEC-02",
+   "file": "expenses/models.py",
+   "start_line": 3490,
+   "end_line": 3534,
+   "status": "confirmed",
+   "summary": "Insurance policy number, premium and sum assured are stored in ordinary fields.",
+   "rationale": "PhysicalAsset stores policy_number, premium_amount and sum_assured as plain CharField and DecimalField columns for the Data Principal; the notice states there is no application-level encryption.",
+   "personal_data": "Financial Data (insurance policy number, sum assured)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "ITAct-43A",
+    "CWE-311"
+   ],
+   "evidence": [
+    "expenses/models.py:3505: policy_number = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('Policy Number'))",
+    "expenses/models.py:3532: sum_assured = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True, verbose_name=_('Sum Assured'))"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-018",
+   "issue_type": "SEC-02",
+   "file": "expenses/models.py",
+   "start_line": 3291,
+   "end_line": 3306,
+   "status": "confirmed",
+   "summary": "Investment instrument names, units and average cost are stored in ordinary fields.",
+   "rationale": "Holding stores the instrument name, units and avg_cost as plain columns linked to the Data Principal's account, with no field-level protection.",
+   "personal_data": "Financial Data (holdings, units, cost)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "ITAct-43A",
+    "CWE-311"
+   ],
+   "evidence": [
+    "expenses/models.py:3294: instrument_name = models.CharField(max_length=255)",
+    "expenses/models.py:3305: units = models.DecimalField(max_digits=15, decimal_places=6, null=True, blank=True)"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-019",
+   "issue_type": "SEC-02",
+   "file": "expenses/models.py",
+   "start_line": 2389,
+   "end_line": 2396,
+   "status": "confirmed",
+   "summary": "Savings goal names and target and current amounts are stored in ordinary fields.",
+   "rationale": "SavingsGoal stores name, target_amount and current_amount as plain columns tied to the user; no field-level encryption.",
+   "personal_data": "Financial Data (goal amounts)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "ITAct-43A",
+    "CWE-311"
+   ],
+   "evidence": [
+    "expenses/models.py:2392: name = models.CharField(max_length=255, verbose_name=_('Goal Name'))",
+    "expenses/models.py:2393: target_amount = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=_('Target Amount'))"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-020",
+   "issue_type": "SEC-02",
+   "file": "expenses/models.py",
+   "start_line": 2648,
+   "end_line": 2656,
+   "status": "confirmed",
+   "summary": "Email recipients, subjects and full bodies are stored in ordinary text fields.",
+   "rationale": "EmailLog stores to_email, subject, body and html_body of every email sent, including monthly financial reports (expenses/management/commands/send_monthly_report.py) and contact messages, as plain TextFields written at expenses/email_backends.py:69-79.",
+   "personal_data": "Contact (email), Financial Data (report content)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "ITAct-43A",
+    "CWE-311"
+   ],
+   "evidence": [
+    "expenses/models.py:2650: to_email = models.EmailField()",
+    "expenses/models.py:2652: body = models.TextField()",
+    "expenses/email_backends.py:73: body=redact_secret_links(message.body),"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-022",
+   "issue_type": "SEC-09",
+   "file": "static/js/tmr_filter.js",
+   "start_line": 1488,
+   "end_line": 1516,
+   "status": "confirmed",
+   "summary": "Transaction search text, dates and filters are written to the page URL query string.",
+   "rationale": "buildQueryString sets search, start_date, end_date and every filter value as query parameters and applyStateToURLAndFetch writes them with history.replaceState; the list is then fetched with that query. Search text and filters about a Data Principal's transactions therefore sit in the URL, history and any access log. templates/components/analytics.html:26 itself notes that addresses carry search text.",
+   "personal_data": "Financial Data (search text, amounts, dates)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "CWE-598"
+   ],
+   "evidence": [
+    "static/js/tmr_filter.js:1488: params.set('search', this.state.search);",
+    "static/js/tmr_filter.js:1516: window.history.replaceState(null, '', newRelativePathQuery);"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-023",
+   "issue_type": "SEC-09",
+   "file": "static/js/refund_picker.js",
+   "start_line": 163,
+   "end_line": 163,
+   "status": "confirmed",
+   "summary": "The refund picker sends the typed transaction search in a query string.",
+   "rationale": "fetch(url + '?q=' + encodeURIComponent(query)) puts the text the Data Principal types to find one of their own transactions into the URL of a GET request (handled at expenses/views/expenses.py:359).",
+   "personal_data": "Financial Data (transaction search text)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "CWE-598"
+   ],
+   "evidence": [
+    "static/js/refund_picker.js:163: fetch(url + '?q=' + encodeURIComponent(query), {",
+    "expenses/views/expenses.py:359: query = (request.GET.get('q') or '').strip()[:80]"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-024",
+   "issue_type": "SEC-09",
+   "file": "templates/manifest.json",
+   "start_line": 40,
+   "end_line": 48,
+   "status": "confirmed",
+   "summary": "The PWA share target delivers shared text and URLs to the app as GET query parameters.",
+   "rationale": "share_target uses method GET with title, text and url params, so whatever a user shares into the app (for example a bank message) is carried in the query string of /expenses/share/ and prefilled by expenses/views/expenses.py (_prefill_text).",
+   "personal_data": "Financial Data (shared message text)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "CWE-598"
+   ],
+   "evidence": [
+    "templates/manifest.json:40: \"share_target\": {",
+    "templates/manifest.json:42: \"method\": \"GET\","
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-025",
+   "issue_type": "SEC-10",
+   "file": "static/js/tmr_filter.js",
+   "start_line": 150,
+   "end_line": 159,
+   "status": "confirmed",
+   "summary": "Transaction search text and filters are stored in sessionStorage.",
+   "rationale": "saveStateToStorage writes search, dates and filters as JSON into sessionStorage under tmr_filters:<page>. templates/partials/clear_saved_filters.html wipes it on user change, but the values sit in the browser for the session.",
+   "personal_data": "Financial Data (search text, filters)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "CWE-922"
+   ],
+   "evidence": [
+    "static/js/tmr_filter.js:150: saveStateToStorage() {",
+    "static/js/tmr_filter.js:159: sessionStorage.setItem(this.storageKey, JSON.stringify(toStore));"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-026",
+   "issue_type": "SEC-11",
+   "file": "mobile/capacitor.config.json",
+   "start_line": 4,
+   "end_line": 8,
+   "status": "confirmed",
+   "summary": "The mobile shell allows cleartext HTTP for the remote app origin.",
+   "rationale": "The Capacitor config loads https://trackmyrupee.com as the WebView server but sets cleartext true, permitting plain HTTP traffic in the app that renders the Data Principal's financial data. The server side forces HTTPS (settings.py:481), which limits but does not remove the client allowance.",
+   "personal_data": "Financial Data, Authentication Secret (session)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "CWE-319"
+   ],
+   "evidence": [
+    "mobile/capacitor.config.json:6: \"url\": \"https://trackmyrupee.com\",",
+    "mobile/capacitor.config.json:7: \"cleartext\": true"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-027",
+   "issue_type": "SEC-12",
+   "file": "expenses/views/export.py",
+   "start_line": 192,
+   "end_line": 222,
+   "status": "not-determinable",
+   "summary": "No application access log exists for reads of Personal Data; deployed proxy logging is unknown.",
+   "rationale": "Reads of expenses, accounts and exports leave no audit row (FinancialAuditLog is written only for changes, expenses/models.py:3689); gunicorn.conf.py sets no accesslog and settings.py LOGGING has no request logger. nginx.conf sets no access_log directive, so nginx default logging may apply in production.",
+   "personal_data": "Financial Data",
+   "provisions": [
+    "DPDP-Rule-6(1)(c)"
+   ],
+   "evidence": [
+    "gunicorn.conf.py:13: bind = f\"0.0.0.0:{os.environ.get('PORT', '8000')}\"",
+    "nginx.conf:1: # nginx.conf — Reference configuration for TrackMyRupee production reverse proxy"
+   ],
+   "leads": [],
+   "reason": "Whether any request or access logger runs in production depends on the deployed nginx and platform configuration, which is not in the repository. The production nginx access_log setting and the container platform log config would settle it."
+  },
+  {
+   "id": "REF-028",
+   "issue_type": "SEC-14",
+   "file": "docker-compose.yml",
+   "start_line": 1,
+   "end_line": 36,
+   "status": "not-determinable",
+   "summary": "The repository says no database backups are configured but another file says automated backups exist.",
+   "rationale": "templates/privacy_policy.html:363 and templates/email/account_deleted_email.html:11 state that no database backups are configured, while llms.txt:15 states automated backups. The deployment compose file runs only the web container with env_file .env and defines no backup job; the database is external through DATABASE_URL (settings.py:189-199).",
+   "personal_data": "Financial Data (whole database)",
+   "provisions": [
+    "DPDP-Rule-6(1)(d)"
+   ],
+   "evidence": [
+    "templates/privacy_policy.html:363: If you delete your account, your personal data and financial data are removed from our live database immediately. We do not currently configure database backups, so there are no backup copies of your ",
+    "llms.txt:15: - **Security First**: Storage-level encryption at rest (managed PostgreSQL on Supabase, Mumbai) and HTTPS in transit, with automated backups. No extra encryption layer inside the app."
+   ],
+   "leads": [],
+   "reason": "The database lives in a managed service outside the repository and the repository contradicts itself. The managed-database backup settings would settle it."
+  },
+  {
+   "id": "REF-029",
+   "issue_type": "SEC-16",
+   "file": "Dockerfile",
+   "start_line": 1,
+   "end_line": 34,
+   "status": "confirmed",
+   "summary": "The application container has no USER instruction and runs as root.",
+   "rationale": "The Dockerfile installs dependencies and sets ENTRYPOINT without any USER directive, so gunicorn runs as root in a container that also mounts the project directory and reads the .env secrets (docker-compose.yml volumes and env_file). The container processes all Financial Data.",
+   "personal_data": "Financial Data (processed by the container)",
+   "provisions": [
+    "DPDP-Rule-6(1)(b)",
+    "CWE-250"
+   ],
+   "evidence": [
+    "Dockerfile:3: FROM python:3.12-slim",
+    "Dockerfile:34: ENTRYPOINT [\"/app/entrypoint.sh\"]"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-030",
+   "issue_type": "MON-01",
+   "file": "finance_tracker/settings.py",
+   "start_line": 29,
+   "end_line": 40,
+   "status": "confirmed",
+   "summary": "The only monitoring configuration covers errors and sampled traces, not access or authentication events.",
+   "rationale": "Sentry is initialised with a 5 percent trace sample and local variables disabled; no alerting or review of access logs or login events is configured anywhere in the repository (ACCOUNT_RATE_LIMITS at settings.py:419-425 throttle but do not alert).",
+   "personal_data": "Contact, Financial Data",
+   "provisions": [
+    "DPDP-Rule-6(1)(c)"
+   ],
+   "evidence": [
+    "finance_tracker/settings.py:30: sentry_sdk.init(",
+    "finance_tracker/settings.py:34: traces_sample_rate=0.05,"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-032",
+   "issue_type": "CON-01",
+   "file": "expenses/management/commands/send_lifecycle_emails.py",
+   "start_line": 35,
+   "end_line": 43,
+   "status": "confirmed",
+   "summary": "Upgrade and tips drip emails are sent without checking consent or opt-out.",
+   "rationale": "The recipient query filters on is_active, tier and a non-empty email only; it never filters on profile.consent_granted and there is no drip opt-out. The consent text at templates/account/signup.html:125 limits email use to identification, login keys and notifications.",
+   "personal_data": "Contact (email), Financial Data (counts in drip content)",
+   "provisions": [
+    "DPDP-Act-4(1)",
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "expenses/management/commands/send_lifecycle_emails.py:35: free_users = User.objects.filter(",
+    "expenses/management/commands/send_lifecycle_emails.py:36: is_active=True,"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-033",
+   "issue_type": "CON-01",
+   "file": "expenses/management/commands/send_product_update.py",
+   "start_line": 78,
+   "end_line": 78,
+   "status": "confirmed",
+   "summary": "Product update emails go to every active user with an email, with no consent check.",
+   "rationale": "users = User.objects.filter(is_active=True).exclude(email=\"\") applies no consent_granted or preference filter.",
+   "personal_data": "Contact (email address, username)",
+   "provisions": [
+    "DPDP-Act-4(1)",
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "expenses/management/commands/send_product_update.py:78: users = User.objects.filter(is_active=True).exclude(email=\"\")"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-034",
+   "issue_type": "CON-01",
+   "file": "expenses/management/commands/send_announcements.py",
+   "start_line": 46,
+   "end_line": 53,
+   "status": "confirmed",
+   "summary": "Announcement emails and pushes go to every active user with no consent or preference check.",
+   "rationale": "users_qs selects active users and only tier narrows the audience; consent_granted is never read.",
+   "personal_data": "Contact (email, push subscription)",
+   "provisions": [
+    "DPDP-Act-4(1)",
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "expenses/management/commands/send_announcements.py:46: users_qs = User.objects.filter(is_active=True).exclude(username='demo').select_related('profile')",
+    "expenses/management/commands/send_announcements.py:53: target_users = list(users_qs)"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-035",
+   "issue_type": "CON-02",
+   "file": "expenses/forms.py",
+   "start_line": 878,
+   "end_line": 898,
+   "status": "confirmed",
+   "summary": "Signup requires email, financial and device consent together; none can be refused separately.",
+   "rationale": "consent_email, consent_transactions and consent_device are all required=True BooleanFields for three different Purposes, and signup() records one grant under one generic Purpose, so one acceptance covers every Purpose.",
+   "personal_data": "Contact, Financial Data, device and browser information",
+   "provisions": [
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "expenses/forms.py:884: consent_email = forms.BooleanField(",
+    "expenses/forms.py:889: consent_transactions = forms.BooleanField(",
+    "expenses/forms.py:894: consent_device = forms.BooleanField("
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-036",
+   "issue_type": "CON-02",
+   "file": "expenses/views/misc.py",
+   "start_line": 430,
+   "end_line": 466,
+   "status": "confirmed",
+   "summary": "The consent page accepts consent only if all three Purposes are agreed together.",
+   "rationale": "dpdp_consent_view grants consent only when consent_email and consent_transactions and consent_device (and age) are all on, otherwise it errors with 'agree to all data collection terms'.",
+   "personal_data": "Contact, Financial Data, device and browser information",
+   "provisions": [
+    "DPDP-Act-6(1)"
+   ],
+   "evidence": [
+    "expenses/views/misc.py:438: if consent_email and consent_transactions and consent_device and confirm_age:"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-037",
+   "issue_type": "CON-04",
+   "file": "expenses/views/settings.py",
+   "start_line": 246,
+   "end_line": 263,
+   "status": "not-determinable",
+   "summary": "The only withdrawal route is deleting the whole account; per-Purpose withdrawal is absent.",
+   "rationale": "WithdrawConsentView.form_valid dispatches account deletion; no route withdraws the email, financial or device consent individually. Notice section 6 (templates/privacy_policy.html:335) states that withdrawal results in account termination.",
+   "personal_data": "Contact, Financial Data",
+   "provisions": [
+    "DPDP-Act-6(4)"
+   ],
+   "evidence": [
+    "expenses/views/settings.py:257: dispatched = dispatch_account_deletion(user_id)",
+    "templates/privacy_policy.html:335: Under India's Digital Personal Data Protection Act 2023, you have the right to: (1) Access your personal data. (2) Correct inaccurate data. (3) Request erasure of your data. (4) Withdraw consent at an"
+   ],
+   "leads": [],
+   "reason": "Whether all-or-nothing withdrawal is of comparable ease under s.6(4), given the service cannot run without the data, is a legal judgement. A legal reading of s.6(4) with s.7 for this service would settle it."
+  },
+  {
+   "id": "REF-038",
+   "issue_type": "RET-01",
+   "file": "expenses/models.py",
+   "start_line": 770,
+   "end_line": 783,
+   "status": "confirmed",
+   "summary": "Invitee email addresses stay on invitation rows after the invitation is accepted, cancelled or expired.",
+   "rationale": "HouseholdInvitation.email holds the invited person's address; cancel_invitation (expenses/family/households.py:118) and expiry only set timestamps, and no job deletes concluded invitations, so the address of a person who may never join is kept.",
+   "personal_data": "Contact (invitee email)",
+   "provisions": [
+    "DPDP-Act-8(7)(a)"
+   ],
+   "evidence": [
+    "expenses/models.py:775: email = models.EmailField(blank=True)",
+    "expenses/family/households.py:99: email=(email or '').strip().lower(),"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-039",
+   "issue_type": "RET-01",
+   "file": "expenses/email_backends.py",
+   "start_line": 69,
+   "end_line": 79,
+   "status": "confirmed",
+   "summary": "Every sent email, including contact messages and invites to non-users, is kept indefinitely.",
+   "rationale": "EmailLog rows are created for every send and removed only when the account holder's own account is deleted (expenses/views/settings.py:92-102, matching user or to_email); rows for non-users and for contact messages sent to the support inbox are never purged.",
+   "personal_data": "Contact (email), message content",
+   "provisions": [
+    "DPDP-Act-8(7)(a)"
+   ],
+   "evidence": [
+    "expenses/email_backends.py:69: EmailLog.objects.create(",
+    "expenses/views/settings.py:101: query |= Q(to_email__iexact=email)"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-040",
+   "issue_type": "RET-02",
+   "file": "expenses/views/settings.py",
+   "start_line": 83,
+   "end_line": 89,
+   "status": "confirmed",
+   "summary": "Account erasure leaves failed ledger postings that carry the user id, amount and description.",
+   "rationale": "_delete_ledger removes JournalLine, JournalEntry and LedgerAccount only. LedgerPostingFailure has no user foreign key (expenses/models.py:531-547) so the cascade misses it, and its payload stores user_id, amount and description (expenses/models.py:950-962). Its own purge comment at reset_ledger.py:34 says it has no user.",
+   "personal_data": "Financial Data (amount, description), user id",
+   "provisions": [
+    "DPDP-Act-12(3)",
+    "DPDP-Act-8(7)"
+   ],
+   "evidence": [
+    "expenses/views/settings.py:87: JournalLine.objects.filter(journal_entry__user=user).delete()",
+    "expenses/models.py:542: payload = models.JSONField(default=dict, blank=True)",
+    "expenses/models.py:960: 'description': self.description,"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-041",
+   "issue_type": "RET-02",
+   "file": "expenses/views/settings.py",
+   "start_line": 46,
+   "end_line": 55,
+   "status": "not-determinable",
+   "summary": "A deletion-request record with email and username is kept indefinitely.",
+   "rationale": "log_and_notify_deletion writes DeletionRequestAuditLog (email, username, time) and the notice at templates/privacy_policy.html:368-371 says it is kept indefinitely.",
+   "personal_data": "Contact (email, username)",
+   "provisions": [
+    "DPDP-Act-12(3)",
+    "DPDP-Act-8(7)"
+   ],
+   "evidence": [
+    "expenses/views/settings.py:55: DeletionRequestAuditLog.objects.create(email=email, username=username)",
+    "expenses/models.py:3018: email = models.EmailField()"
+   ],
+   "leads": [],
+   "reason": "Whether keeping a minimal proof-of-deletion record is a permitted retention is a legal judgement; a legal view on s.8(7) retention for evidence of erasure would settle it."
+  },
+  {
+   "id": "REF-042",
+   "issue_type": "RIG-01",
+   "file": "templates/expenses/settings_home.html",
+   "start_line": 436,
+   "end_line": 477,
+   "status": "confirmed",
+   "summary": "The Data Summary shows only username, email, join date, plan and two counts.",
+   "rationale": "The DPDPA summary modal lists username, email, account created, subscription plan and the number of accounts and transactions (counts computed at expenses/views/settings.py:206-217). It omits loans, goals, holdings, insurance records, family shares, emergency sheet, consent records with IP and user agent, and the processors that receive data; the CSV export (expenses/views/export.py:164-189) also leaves out holdings, physical assets and consent events.",
+   "personal_data": "Contact, Financial Data, consent records",
+   "provisions": [
+    "DPDP-Act-11(1)(a)"
+   ],
+   "evidence": [
+    "templates/expenses/settings_home.html:440: <h5 class=\"modal-title fw-bold\" id=\"dataSummaryModalLabel\">{% trans \"Your Data Summary (DPDPA)\" %}</h5>",
+    "expenses/views/settings.py:216: context['num_accounts'] = cached_data['num_accounts']"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-043",
+   "issue_type": "TRF-01",
+   "file": "expenses/forms.py",
+   "start_line": 942,
+   "end_line": 944,
+   "status": "confirmed",
+   "summary": "Google reCAPTCHA v3 on the contact form is not listed as a recipient in the privacy notice.",
+   "rationale": "ContactForm adds ReCaptchaField(widget=ReCaptchaV3) when keys are set, so the visitor's browser and IP details go to Google on the contact page, but the service-provider table at templates/privacy_policy.html:197-253 lists Google only for Sign in with Google and Analytics.",
+   "personal_data": "Contact (IP, browser details)",
+   "provisions": [
+    "DPDP-Act-11(1)(b)"
+   ],
+   "evidence": [
+    "expenses/forms.py:944: self.fields['captcha'] = ReCaptchaField(widget=ReCaptchaV3)",
+    "templates/contact.html:73: {{ form.captcha }}"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-044",
+   "issue_type": "TRF-02",
+   "file": "expenses/posthog_utils.py",
+   "start_line": 85,
+   "end_line": 115,
+   "status": "confirmed",
+   "summary": "PostHog analytics defaults to the US host and the notice states United States.",
+   "rationale": "_get_client configures host https://us.i.posthog.com (also settings.py:397) and ph_capture sends a pseudonymous id and event properties at line 115 when analytics consent is present; templates/privacy_policy.html:237 states Region: United States. Cross-Border is a disclosure, not an unlawful transfer.",
+   "personal_data": "Profile (pseudonymous account id, plan tier)",
+   "provisions": [
+    "DPDP-Act-16(1)"
+   ],
+   "evidence": [
+    "expenses/posthog_utils.py:88: _ph.host = getattr(settings, 'POSTHOG_HOST', 'https://us.i.posthog.com')",
+    "expenses/posthog_utils.py:115: client.capture(posthog_distinct_id(user), event=event, properties=_scrub(properties))",
+    "templates/privacy_policy.html:237: <td>{% trans \"Page views, feature events, your plan tier and a pseudonymous ID. Not your email, username, descriptions or amounts. Region: United States.\" %}</td>"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-045",
+   "issue_type": "TRF-02",
+   "file": "finance_tracker/settings.py",
+   "start_line": 459,
+   "end_line": 461,
+   "status": "confirmed",
+   "summary": "Email is delivered through Brevo, which the notice places in the United States.",
+   "rationale": "The real email backend is anymail Brevo (expenses/email_backends.py:38-39) so recipient addresses and bodies go to Brevo; templates/privacy_policy.html:227 states Region: United States. Cross-Border disclosure only.",
+   "personal_data": "Contact (email), Financial Data (report content)",
+   "provisions": [
+    "DPDP-Act-16(1)"
+   ],
+   "evidence": [
+    "finance_tracker/settings.py:460: \"BREVO_API_KEY\": os.environ.get(\"BREVO_API_KEY\"),",
+    "expenses/email_backends.py:38: from anymail.backends.brevo import EmailBackend as BrevoBackend",
+    "templates/privacy_policy.html:227: <td>{% trans \"Your email address and the content of emails we send you, such as verification links, reminders and reports. Region: United States.\" %}</td>"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-046",
+   "issue_type": "TRF-02",
+   "file": "finance_tracker/settings.py",
+   "start_line": 29,
+   "end_line": 40,
+   "status": "confirmed",
+   "summary": "Sentry error monitoring is sent to a service the notice places in the United States.",
+   "rationale": "sentry_sdk.init sends error reports and traces; the notice states Region: United States for Sentry (templates/privacy_policy.html:242). Local variables are excluded, so the exposure is page and error text. Cross-Border disclosure only.",
+   "personal_data": "Profile (request URLs, error text)",
+   "provisions": [
+    "DPDP-Act-16(1)"
+   ],
+   "evidence": [
+    "finance_tracker/settings.py:30: sentry_sdk.init(",
+    "templates/privacy_policy.html:242: <td>{% trans \"Technical details about errors and performance, such as the page involved and the error message. Region: United States.\" %}</td>"
+   ],
+   "leads": [],
+   "reason": null
+  },
+  {
+   "id": "REF-047",
+   "issue_type": "TRF-02",
+   "file": "templates/components/analytics.html",
+   "start_line": 1,
+   "end_line": 70,
+   "status": "not-determinable",
+   "summary": "Google Analytics receives IP and page data when accepted; its storage location is not stated.",
+   "rationale": "When the visitor accepts cookies the snippet loads Google Analytics (GA_ID), which collects IP, device and pages (notice lines 138). The repository states no region for it.",
+   "personal_data": "Profile (IP address, device, pages)",
+   "provisions": [
+    "DPDP-Act-16(1)"
+   ],
+   "evidence": [
+    "templates/components/analytics.html:17: var GA_ID = '{{ GOOGLE_ANALYTICS_ID|default:\"\"|escapejs }}';"
+   ],
+   "leads": [],
+   "reason": "Google Analytics data location is not established by the code or the notice. The property data-region settings in the Google account would settle it."
+  },
+  {
+   "id": "REF-048",
+   "issue_type": "SEC-01",
+   "file": "expenses/views/mixins.py",
+   "start_line": 254,
+   "end_line": 254,
+   "status": "confirmed",
+   "summary": "A recurring loan repayment amount is written to the application log on the auto-deactivation path.",
+   "rationale": "When a recurring loan repayment is too small to cover interest, logger.error writes rt.amount, the loan id and the schedule id. The amount is a Data Principal's Financial Data and the ids join it to the loan and user. The 'expenses' logger runs at WARNING by default (settings.py LOGGING), so the ERROR record reaches the console handler. The method note's claim that all logger calls carry ids and exception types only does not hold here.",
+   "leads": [],
+   "reason": null,
+   "personal_data": "Financial Data (recurring loan repayment amount)",
+   "provisions": [
+    "DPDP-Rule-6(1)(a)",
+    "CWE-532"
+   ],
+   "evidence": [
+    "expenses/views/mixins.py:254: logger.error(\"Recurring loan repayment amount %s is too low to cover interest for loan %s; auto-deactivating schedule %s.\", rt.amount, rt.loan_id, rt.id)"
+   ]
+  }
+ ]
+}
