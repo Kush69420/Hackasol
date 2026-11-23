@@ -10,7 +10,7 @@ import time
 import uuid
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import File, FastAPI, HTTPException, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel, StrictStr
 
@@ -18,6 +18,7 @@ from auditor import scan as scan_module
 from auditor.masking import mask_for_report
 from auditor.registry import load_registry
 from auditor.report import write_reports
+from dashboard.backend import inputs as inputs_module
 from dashboard.backend import replay as replay_module
 from dashboard.backend.replay import ARTIFACTS, Clock, RecordingError, SystemClock
 
@@ -31,6 +32,11 @@ _UNSAFE = re.compile(r"[\s\x00-\x1f\x7f]")
 
 class ScanRequest(BaseModel):
     target: StrictStr
+
+
+class SnippetRequest(BaseModel):
+    code: StrictStr
+    language: StrictStr
 
 
 def validate_target(value: str) -> str:
@@ -146,12 +152,7 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
     from dashboard.backend.fixpatch import router as fixpatch_router; app.include_router(fixpatch_router(get_run))
     from dashboard.backend.legal import router as legal_router; app.include_router(legal_router(get_run))
 
-    @app.post("/api/scans", status_code=202)
-    def start_scan(body: ScanRequest):
-        try:
-            target = validate_target(body.target)
-        except ValueError as exc:
-            raise HTTPException(422, str(exc))
+    def launch(target: str) -> dict:
         run_id = uuid.uuid4().hex
         run = ScanRun(run_id, target)
         runs[run_id] = run
@@ -159,6 +160,30 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
                          args=(run, target, Path(reports_dir) / run_id),
                          kwargs={"cache_dir": cache_dir, "targets_dir": targets_dir}).start()
         return {"run_id": run_id, "mode": "live"}
+
+    @app.post("/api/scans", status_code=202)
+    def start_scan(body: ScanRequest):
+        try:
+            target = validate_target(body.target)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc))
+        return launch(target)
+
+    @app.post("/api/scans/upload", status_code=202)
+    def start_upload_scan(file: UploadFile = File(...)):
+        try:
+            directory = inputs_module.store_upload(file.filename, file.file, Path(targets_dir))
+        except inputs_module.InputRejected as exc:
+            raise HTTPException(exc.status, exc.message)
+        return launch(str(directory))
+
+    @app.post("/api/scans/snippet", status_code=202)
+    def start_snippet_scan(body: SnippetRequest):
+        try:
+            directory = inputs_module.write_snippet(body.code, body.language, Path(targets_dir))
+        except inputs_module.InputRejected as exc:
+            raise HTTPException(exc.status, exc.message)
+        return launch(str(directory))
 
     def bundle_for(name: str) -> Path:
         if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", name):

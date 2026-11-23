@@ -50,7 +50,7 @@ async function assertReportContent(page: Page) {
 }
 
 test("live dashboard", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/dashboard");
   await page.getByLabel("Target Application").fill("targets/juice-shop");
   await page.getByRole("button", { name: "Scan", exact: true }).click();
   await expect(page.getByTestId("provenance")).toHaveText(/Live|Cache-only/, { timeout: 120_000 });
@@ -65,7 +65,7 @@ test("replay dashboard", async ({ page }) => {
     const url = new URL(route.request().url());
     return url.hostname === "127.0.0.1" ? route.continue() : route.abort();
   });
-  await page.goto("/");
+  await page.goto("/dashboard");
   await page.getByRole("button", { name: /Replay Mode \(recorded Juice Shop scan\)/ }).click();
   await expect(page.getByTestId("provenance")).toHaveText("Replay Mode");
   await expect(page.getByTestId("run-status")).toHaveAttribute("data-status", "completed", {

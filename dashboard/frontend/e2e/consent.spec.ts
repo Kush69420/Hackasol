@@ -27,7 +27,7 @@ async function showReport(page: Page, withProbes: boolean, replay: boolean) {
       ...(withProbes ? { live_probe_run: { target: "Example", commit: "1234567890abcdef1234567890abcdef12345678", observed_at: "2026-01-01T12:00:00Z" } } : {}),
     },
   } }));
-  await page.goto("/");
+  await page.goto("/dashboard");
   if (replay) await page.getByRole("button", { name: /Replay Mode \(recorded Juice Shop scan\)/ }).click();
   else {
     await page.getByLabel("Target Application").fill("targets/example");

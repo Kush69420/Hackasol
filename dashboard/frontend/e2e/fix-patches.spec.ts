@@ -20,7 +20,7 @@ test("Open PR requires authorization, fork destination, and shows review context
     await route.fulfill({ json: { url: "https://example.invalid/pr/1" } });
   });
 
-  await page.goto("/");
+  await page.goto("/dashboard");
   await page.getByLabel("Target Application").fill("targets/juice-shop");
   await page.getByRole("button", { name: "Scan", exact: true }).click();
   await expect(page.getByTestId("run-status")).toHaveAttribute("data-status", "completed", { timeout: 120_000 });

@@ -20,7 +20,7 @@ test("Live Probe outcomes show masked Evidence", async ({ page }) => {
       delay(10_000, undefined, { ref: false }).then(() => { throw new Error("Synthetic Live Probe server did not start"); }),
     ]);
     if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("Invalid synthetic server port");
-    await page.goto("/");
+    await page.goto("/dashboard");
     await page.getByLabel("Target Application").fill("targets/juice-shop");
     await page.getByRole("button", { name: "Scan", exact: true }).click();
     await expect(page.getByTestId("run-status")).toHaveAttribute("data-status", "completed", { timeout: 120_000 });
