@@ -127,7 +127,7 @@ def accuracy_report():
 
 def test_publication_numbers_identical_across_json_markdown_html_and_pdf(tmp_path):
     report = accuracy_report()
-    primary = report["accuracy"]["primary_target"]
+    primary = report["accuracy"]["reference_target"]
     assert primary["precision"] == round(2 / 3, 4) and primary["recall"] == round(2 / 3, 4)
     paths = write_reports(report, tmp_path / "report.json")
     assert json.loads(paths[0].read_text())["accuracy"] == report["accuracy"]
@@ -140,13 +140,14 @@ def test_publication_numbers_identical_across_json_markdown_html_and_pdf(tmp_pat
     for text in (paths[1].read_text(), paths[2].read_text(), render_html(report)):
         for needle in expected:
             assert needle in text, needle
+    pdf_text = "".join(pdf.split())  # table cells may wrap differently with other fonts
     for needle in ("0.6667", "SEC-01-fixture-rule", "Measured accuracy"):
-        assert needle in pdf, needle
+        assert "".join(needle.split()) in pdf_text, needle
 
 
 def test_publication_schema_rejects_malformed_accuracy():
     report = accuracy_report()
-    report["accuracy"]["primary_target"]["precision"] = 1.5
+    report["accuracy"]["reference_target"]["precision"] = 1.5
     with pytest.raises(ReportValidationError):
         validate_report(report)
     report = accuracy_report()

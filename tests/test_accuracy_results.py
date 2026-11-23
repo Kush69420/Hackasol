@@ -15,7 +15,7 @@ def report(live_probe=None):
         "target": {"name": "t", "commit": "a" * 40},
         "findings": [{"id": "SEC-01-x", "issue_type": "SEC-01", "live_probe": live_probe}],
         "accuracy": {
-            "primary_target": {
+            "reference_target": {
                 "target": "t", "commit": "a" * 40, "reference": "ref.json", "tp": 2, "fp": 1, "fn": 1,
                 "precision": 0.6667, "recall": 0.6667,
                 "matches": [{"finding_id": "SEC-01-x", "reference_id": "REF-001"},

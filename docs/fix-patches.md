@@ -51,7 +51,9 @@ Disappearing Findings do not establish compliance; the Target test failures are 
 | Re-scan (same session, rules state) | selected Finding absent, none new; Findings before 56, after 55 on the fork clone |
 | Target tests | `tsc --noEmit` ok; server unit 157/157; API `user-profile` + `login` 31/31 (run with empty placeholder `build/` and `frontend/dist/` files in the scratch copy so the startup precondition check passes; the frontend was not built) |
 
-The fix sets `httpOnly`, `secure` and `sameSite: 'strict'` on the cookie. The frontend also writes and removes `token` through `cookieService`; an `httpOnly` cookie cannot be removed by that code, so browser behaviour was not exercised and needs review. A re-scan is not a certification of compliance.
+The fix sets `httpOnly`, `secure` and `sameSite: 'strict'` on the cookie. The frontend also writes and removes `token` through `cookieService`, which cannot remove an `httpOnly` cookie.
+
+Logout check: built from PR #2 head `27be113` and driven in headless Chrome on the A4000 (register, log in, update the profile so the server sets the `httpOnly` cookie, log out through the navbar), the `token` cookie (`HttpOnly; Secure; SameSite=Strict`) survived logout and `GET /rest/user/whoami` still returned 200 with the user. Commit `b7ea732` on the PR branch adds `POST /rest/user/logout`, which clears the cookie with the same attributes and is called from the navbar and sidenav logout; the same flow then left no `token` cookie and `whoami` returned an empty body. A re-scan is not a certification of compliance.
 
 ## SEC-09
 

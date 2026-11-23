@@ -163,14 +163,18 @@ def test_manifest_trackmyrupee_recording_differs_from_the_report_only_by_consent
     recorded = json.loads((ROOT / entry["recording"]["dir"] / "report.json").read_text(encoding="utf-8"))
     assert "live_probe_run" not in static["consent_assessment"]
     assert all("live_probes" not in row for row in static["consent_assessment"]["criteria"])
-    # only the scan timestamps and the Consent Assessment Live Probe fields may differ
+    # The frozen deliverable predates the 1.3.0 scan; TrackMyRupee has no accuracy
+    # section, so this migration changes only the version on its static content.
+    if (static["schema_version"], recorded["schema_version"]) == ("1.2.0", "1.3.0"):
+        static["schema_version"] = "1.3.0"
+    # Only the scan timestamps and the Consent Assessment Live Probe fields may differ.
     for report in (static, recorded):
         report["scan"] = {k: v for k, v in report["scan"].items() if k not in VOLATILE}
     assert without_consent_live_probes(recorded) == static
     run = recorded["consent_assessment"]["live_probe_run"]
     assert run == {"target": "trackmyrupee", "commit": PINS["trackmyrupee"], "observed_at": overlay["observed_at"]}
     assert overlay["target_commit"] == PINS["trackmyrupee"]
-    rows = [{"criterion": r["criterion"], "outcomes": [{"assertion": p["assertion"], "status": p["status"]}
+    rows = [{"criterion": r["criterion"], "outcomes": [{k: p[k] for k in ("assertion", "status", "reason")}
                                                        for p in r["live_probes"]]}
             for r in recorded["consent_assessment"]["criteria"] if r.get("live_probes")]
     assert rows == overlay["criteria"]

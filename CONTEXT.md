@@ -32,12 +32,12 @@ _Avoid_: Minor, kid
 A codebase the Auditor scans and reports on.
 _Avoid_: Target repo, victim app, project under test
 
-**Primary Target**:
-The Target Application whose Report is the main deliverable: OWASP Juice Shop, unmodified, at a pinned commit.
+**Reference Target**:
+The Target Application with the adjudicated reference list used for accuracy scoring: OWASP Juice Shop, unmodified, at a pinned commit. The Indian Targets, not the Reference Target, are featured in the demo.
 _Avoid_: Main app, demo app
 
 **Secondary Target**:
-Any other Target Application, scanned to show what the Primary Target lacks (Government Identifiers, real consent code) and that the checks generalise.
+Any Target Application other than the Reference Target, scanned to show what the Reference Target lacks (Government Identifiers, real consent code) and that the checks generalise.
 _Avoid_: Extra app, benchmark app
 
 **Evidence**:

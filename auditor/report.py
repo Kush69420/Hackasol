@@ -275,12 +275,12 @@ def _sections(report):
 
 
 def _accuracy_blocks(accuracy: dict) -> list:
-    """Measured accuracy: Primary Target and Labelled Corpus stay in separate tables."""
-    primary, corpus, llm = accuracy["primary_target"], accuracy["labelled_corpus"], accuracy["llm"]
+    """Measured accuracy: Reference Target and Labelled Corpus stay in separate tables."""
+    primary, corpus, llm = accuracy["reference_target"], accuracy["labelled_corpus"], accuracy["llm"]
     blocks = [("h", "Measured accuracy"), ("p", accuracy["method"])]
-    blocks.append(("p", f"Primary Target: canonical Findings for {primary['target']} at {primary['commit']} "
+    blocks.append(("p", f"Reference Target: canonical Findings for {primary['target']} at {primary['commit']} "
                         f"against {primary['reference']}."))
-    blocks.append(("table", (["Primary Target", "TP", "FP", "FN", "Precision", "Recall"],
+    blocks.append(("table", (["Reference Target", "TP", "FP", "FN", "Precision", "Recall"],
                              [[primary["target"], str(primary["tp"]), str(primary["fp"]), str(primary["fn"]),
                                ratio_text(primary["precision"], primary["tp"], primary["tp"] + primary["fp"]),
                                ratio_text(primary["recall"], primary["tp"], primary["tp"] + primary["fn"])]])))

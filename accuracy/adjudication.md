@@ -1,5 +1,7 @@
 # Juice Shop mismatch adjudication
 
+> **Historical record.** This adjudication covers the run published at commit `7fb1236` (16 TP / 6 FP / 31 FN). The recall Rules added afterwards were built from the gaps listed here, so most of these misses are now matched; the current figures and remaining misses (REF-021, REF-044) are in `accuracy/README.md` and `accuracy/results.md`.
+
 Reviewed against the pinned target and `docs/issue-types.md`. IDs below are the original unmatched predictions and references in `/tmp/acc/report.json`; a C can describe both sides of one disagreement. C does not by itself justify changing a valid reference anchor.
 
 | id | verdict | reason (target code) |

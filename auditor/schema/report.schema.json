@@ -19,7 +19,7 @@
     "consent_assessment"
   ],
   "properties": {
-    "schema_version": { "const": "1.2.0" },
+    "schema_version": { "const": "1.3.0" },
     "tool": {
       "type": "object",
       "additionalProperties": false,
@@ -187,9 +187,9 @@
     "accuracy": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["primary_target", "labelled_corpus", "llm", "method", "limitations"],
+      "required": ["reference_target", "labelled_corpus", "llm", "method", "limitations"],
       "properties": {
-        "primary_target": {
+        "reference_target": {
           "type": "object",
           "additionalProperties": false,
           "required": ["target", "commit", "reference", "tp", "fp", "fn", "precision", "recall",

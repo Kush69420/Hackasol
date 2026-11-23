@@ -132,7 +132,7 @@ Pinned run: Juice Shop `c9f99228`, LLM verdicts from `omp` / `anthropic/claude-h
 
 | Population | TP | FP | FN | Precision | Recall |
 |---|---:|---:|---:|---|---|
-| Primary Target, canonical Findings vs 47 confirmed entries (5 not determinable excluded) | 45 | 8 | 2 | 0.8491 (45/53) | 0.9574 (45/47) |
+| Reference Target, canonical Findings vs 47 confirmed entries (5 not determinable excluded) | 45 | 8 | 2 | 0.8491 (45/53) | 0.9574 (45/47) |
 | Labelled Corpus, Rule emissions on designed fixtures (one pair per Rule) | 65 | 0 | 0 | 1.0000 (65/65) | 1.0000 (65/65) |
 
 The two populations are not comparable: corpus pairs are designed cases, one per Rule, and show only that each Rule fires on its true positive and stays quiet on its near-miss.
@@ -153,4 +153,23 @@ The run prints `reproduces published run: yes` only when the target commit, Rule
 
 Each run also writes a reproducible results summary (metrics, the command, the Rules digest) to `accuracy/results.md`. Use `--results PATH` to write it elsewhere, for example `--results /tmp/results.md` to leave the committed file untouched.
 
-Speed: the Labelled Corpus fixtures are scanned in one batched Semgrep run and the Target scan in parallel chunks. Semgrep results are cached in `.dpdp-cache/semgrep/` (git-ignored), keyed on the Semgrep version, the exact Rule YAML bytes and every scanned file's bytes, so any Rule or Target change is a miss. Delete that directory (or set `DPDP_SEMGREP_CACHE`) for a cold run.
+### Cache-only replay timings
+
+The Labelled Corpus fixtures use one batched Semgrep run. Corpus evaluation now overlaps the Target scan, and fixtures whose inventory cannot produce TypeScript Data Flows skip the Node flow analyser. The Target still runs Semgrep in parallel chunks.
+
+The table gives three wall-clock timings in seconds per condition, with the **one-minute load average at the start of each run** in parentheses. Both versions ran the cache-only Juice Shop command above with `--provider omp --model anthropic/claude-haiku-5-5` and temporary paths for `--results` and `--out`. Timings include generation of the JSON, Markdown, HTML and PDF Reports. No live provider was contacted.
+
+Cold runs started without Semgrep results; each warm run immediately followed its cold run using the same cache. Semgrep results live in `.dpdp-cache/semgrep/` by default and are keyed on the Semgrep version, the Rule YAML bytes and the scanned files' bytes. Set `DPDP_SEMGREP_CACHE` to an empty directory for a cold run without altering the default cache.
+
+| Machine | Semgrep cache | Before: seconds (load) | After: seconds (load) |
+|---|---|---|---|
+| A4000 host (Xeon Gold 6226R, 64 logical CPUs) | Cold | 99.24 (0.22), 35.68 (8.72), 37.35 (5.68) | 30.91 (3.32), 30.83 (5.05), 31.37 (8.12) |
+| A4000 host | Warm | 27.13 (1.86), 25.74 (7.44), 24.35 (5.17) | 22.41 (5.75), 22.62 (4.84), 21.83 (7.92) |
+| Local workstation (Core Ultra 9 285H, 16 logical CPUs) | Cold | 45.65 (8.66), 38.16 (14.19), 39.57 (13.69) | 28.06 (11.17), 29.12 (12.52), 29.54 (14.87) |
+| Local workstation | Warm | 27.75 (14.45), 26.87 (13.59), 26.61 (12.98) | 19.10 (12.32), 22.78 (11.95), 19.03 (18.50) |
+
+The A4000 cold replay now takes about **31 seconds**, just over the 30-second target. A separate instrumented cold replay took 29.66 seconds. All three local cold runs met the target. Load varied across both series, and the first A4000 baseline (99.24 seconds) was an unexplained outlier.
+
+In the A4000 cold profile, Target Semgrep was the largest measured scan phase (10.20 s before, 9.44 s after). Rule evaluation was 6.51/6.00 s, the two Target TypeScript analyser calls totalled 2.87/3.03 s, and LLM cache replay took 0.07/0.07 s (208 hits). Corpus prewarm was 2.73/3.37 s, included in the full corpus time of 7.11/6.09 s. The corpus overlapped the Target scan only after the change; its TypeScript flow subprocess count dropped from 130 to 2.
+
+Before and after, the Juice Shop Findings and Labelled Corpus results matched, and the accuracy Markdown was byte-identical. After excluding the scan timestamps, the full JSON Reports also matched for Juice Shop and the three Secondary Targets.

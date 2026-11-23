@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "tool": {
     "name": "dpdp-audit",
     "version": "0.1.0"
@@ -11,8 +11,8 @@
     "commit": "e6e78d53edd30fd5be88dcd82d5afc1a2010d025"
   },
   "scan": {
-    "started_at": "2026-11-23T14:54:24.802170+00:00",
-    "finished_at": "2026-11-23T14:54:25.341390+00:00",
+    "started_at": "2026-11-23T14:31:00.965462+00:00",
+    "finished_at": "2026-11-23T14:31:01.523456+00:00",
     "exclusions": [
       "**/.git/**",
       "**/node_modules/**",
@@ -26,18 +26,18 @@
   },
   "llm": {
     "mode": "cache-only",
-    "provider": "omp",
-    "model": "anthropic/claude-opus-5-5",
+    "provider": "ollama",
+    "model": "llama3.1",
     "prompt_versions": {
       "classification": "classification-v1",
-      "triage": "triage-v2",
-      "consent": "consent-v2",
+      "triage": "triage-v1",
+      "consent": "consent-v1",
       "fix": "fix-v1"
     },
-    "cache_hits": 3,
-    "cache_misses": 0,
-    "not_assessed": 0,
-    "reason": "forced offline for artifact regeneration"
+    "cache_hits": 0,
+    "cache_misses": 3,
+    "not_assessed": 3,
+    "reason": "ollama is unreachable or authentication failed"
   },
   "applicability_assumptions": [
     {
@@ -71,66 +71,6 @@
     }
   ],
   "personal_data_map": [
-    {
-      "element": {
-        "name": "model:KycSessionInput.customer_identifier",
-        "data_category": "Profile",
-        "evidence": {
-          "file": "api/main.py",
-          "start_line": 47,
-          "end_line": 47,
-          "excerpt": "    customer_identifier: str = Field(min_length=3, max_length=254)"
-        }
-      },
-      "operations": []
-    },
-    {
-      "element": {
-        "name": "param:POST /api/kyc/sessions#body.customer_identifier",
-        "data_category": "Profile",
-        "evidence": {
-          "file": "api/main.py",
-          "start_line": 47,
-          "end_line": 47,
-          "excerpt": "    customer_identifier: str = Field(min_length=3, max_length=254)"
-        }
-      },
-      "operations": [
-        {
-          "operation": "Collect",
-          "evidence": {
-            "file": "api/main.py",
-            "start_line": 47,
-            "end_line": 47,
-            "excerpt": "    customer_identifier: str = Field(min_length=3, max_length=254)"
-          },
-          "note": "backend; fastapi; evidenced"
-        },
-        {
-          "operation": "Expose",
-          "evidence": {
-            "file": "api/main.py",
-            "start_line": 125,
-            "end_line": 131,
-            "excerpt": "    return KycSessionOutput(\n        session_id=session_id,\n        request_id=result[\"id\"],\n        customer_identifier=payload.customer_identifier.strip(),\n        «SECRET»,\n        environment=os.getenv(\"DIGIO_ENV\", \"sandbox\").lower(),\n    )"
-          },
-          "note": "backend; fastapi; evidenced"
-        }
-      ]
-    },
-    {
-      "element": {
-        "name": "model:KycSessionOutput.customer_identifier",
-        "data_category": "Profile",
-        "evidence": {
-          "file": "api/main.py",
-          "start_line": 55,
-          "end_line": 55,
-          "excerpt": "    customer_identifier: str"
-        }
-      },
-      "operations": []
-    },
     {
       "element": {
         "name": "model:KycSessionOutput.access_token_id",

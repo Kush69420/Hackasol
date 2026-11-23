@@ -1,4 +1,4 @@
-"""Django source inventory and Primary Target regression."""
+"""Django source inventory and Reference Target regression."""
 from pathlib import Path
 import json
 import subprocess
@@ -21,7 +21,7 @@ FIXTURE = ROOT / 'tests/fixtures/django'
 JUICE = ROOT / 'targets/juice-shop'
 KYC = ROOT / 'targets/ai-kyc-platform'
 
-# Cache-only scan of the pinned Primary Target before introducing Python analysers.
+# Cache-only scan of the pinned Reference Target before introducing Python analysers.
 JUICE_SHOP_FINDING_IDS = [
     'MON-01-8c5728dfea11', 'RET-01-e43b9adccd2d', 'RET-02-4696497b9137', 'RET-03-41bffe4101f9',
     'RIG-01-a9383e4db278', 'RIG-02-f7117cbcde8b', 'SEC-01-d85a743d0415', 'SEC-02-03b1356ecc57',
@@ -67,7 +67,7 @@ def test_django_data_flow_inventory():
     assert not any(f['element_id'] == 'model:Person.private_note' for f in inventory['python_flows'])
 
 
-@pytest.mark.skipif(not (JUICE / 'server.ts').exists(), reason='pinned Primary Target absent')
+@pytest.mark.skipif(not (JUICE / 'server.ts').exists(), reason='pinned Reference Target absent')
 def test_juice_shop_regression(tmp_path, monkeypatch):
     monkeypatch.setenv('OLLAMA_HOST', 'http://127.0.0.1:1')
     report = run_scan(str(JUICE), provider='ollama', cache_dir=tmp_path)

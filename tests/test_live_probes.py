@@ -155,12 +155,17 @@ def test_assertions_interaction_counts(grant, withdrawal, expected):
     assert comparable_ease(grant, withdrawal)[0] == expected
 
 
-@pytest.mark.parametrize(('enforced', 'expected'), [(False, 'Confirmed'), (True, 'Refuted')])
-def test_assertions_playwright_withdrawal_and_masking(enforced, expected, capsys):
+@pytest.mark.parametrize(('enforced', 'images', 'profile_mismatch', 'expected'), [
+    (False, 0, False, 'Confirmed'),
+    (True, 170, False, 'Refuted'),
+    (True, 0, True, 'inconclusive'),
+])
+def test_assertions_playwright_withdrawal_and_masking(enforced, images, profile_mismatch, expected, capsys, monkeypatch):
+    monkeypatch.setattr('auditor.probes.trackmyrupee.SETTLE', 0)
     spec = importlib.util.spec_from_file_location('consent_fixture', Path(__file__).parent / 'fixtures/probes/consent_server.py')
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    server = module.Server(enforced=enforced)
+    server = module.Server(enforced=enforced, images=images, profile_mismatch=profile_mismatch)
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
     try:
@@ -168,8 +173,14 @@ def test_assertions_playwright_withdrawal_and_masking(enforced, expected, capsys
         outcomes = run(report, f'http://127.0.0.1:{server.server_port}')
         assert outcomes[0]['result'] == expected
         assert outcomes[1]['result'] == 'inconclusive'
-        assert '3 interactions' in outcomes[1]['reason']
-        assert 'withdrawal 2' in outcomes[1]['reason']
+        assert server.withdrawal_form_read
+        if profile_mismatch:
+            assert not server.withdrawn
+            assert 'no withdrawal POST was sent' in outcomes[0]['reason']
+        else:
+            assert server.withdrawn
+            assert '3 interactions' in outcomes[1]['reason']
+            assert 'withdrawal 2' in outcomes[1]['reason']
         serialized = json.dumps(outcomes) + capsys.readouterr().out
         for value in server.account.values():
             assert value not in serialized
@@ -249,6 +260,30 @@ def _consent_results(server, origin, sink):
     return {item['assertion']: item for item in run_consent(origin, sink, server.db_path)}
 
 
+def test_tmr_verifies_its_account_and_grants_consent_before_withdrawing(tmr_consent, monkeypatch, caplog):
+    server, origin, sink = tmr_consent('enforced', verification=True, consent_redirect=True)
+    monkeypatch.setenv('DPDP_TMR_MAIL_DIR', str(server.mailbox))
+    caplog.set_level('INFO', logger='httpx')
+    results = _consent_results(server, origin, sink)
+    assert server.verification_posts == server.consent_posts == server.withdrawal_posts == 1
+    assert all(item['result'] == 'Refuted' for item in results.values())
+    assert server.verification_keys and all(key not in json.dumps(results) + caplog.text
+                                            for key in server.verification_keys)
+
+
+@pytest.mark.parametrize('mailbox_configured', [False, True])
+def test_tmr_pending_verification_cookie_does_not_authorize_withdrawal(tmr_consent, monkeypatch, mailbox_configured):
+    server, origin, sink = tmr_consent('enforced', verification=True, foreign_confirmation=True)
+    if mailbox_configured:
+        monkeypatch.setenv('DPDP_TMR_MAIL_DIR', str(server.mailbox))
+    else:
+        monkeypatch.delenv('DPDP_TMR_MAIL_DIR', raising=False)
+    results = _consent_results(server, origin, sink)
+    assert server.verification_posts == server.consent_posts == server.withdrawal_posts == 0
+    assert results['withdrawal-data-removal']['result'] == 'inconclusive'
+    assert 'verification' in results['withdrawal-data-removal']['reason']
+
+
 def test_tmr_consent_not_confirmed_when_enforced(tmr_consent):
     server, origin, sink = tmr_consent('enforced')
     results = _consent_results(server, origin, sink)
@@ -296,9 +331,11 @@ def test_tmr_consent_inconclusive_when_control_signup_fails(tmr_consent):
     assert 'control signup' in results['consent-declined:consent_device']['reason']
 
 
-def test_tmr_withdrawal_skips_session_with_mismatched_profile(tmr_consent):
-    server, origin, sink = tmr_consent('profile-mismatch')
+def test_tmr_withdrawal_skips_session_with_mismatched_profile(tmr_consent, monkeypatch):
+    server, origin, sink = tmr_consent('profile-mismatch', verification=True, consent_redirect=True)
+    monkeypatch.setenv('DPDP_TMR_MAIL_DIR', str(server.mailbox))
     results = _consent_results(server, origin, sink)
+    assert server.verification_posts == server.consent_posts == 1
     assert server.withdrawal_form_read
     assert server.withdrawal_posts == 0
     assert results['withdrawal-data-removal']['result'] == 'inconclusive'

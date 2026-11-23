@@ -163,7 +163,7 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
     def bundle_for(name: str) -> Path:
         if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", name):
             raise HTTPException(404, "No recording for that name")
-        if name == replay_module.PRIMARY_TARGET and bundle_dir is not None:
+        if name == replay_module.REFERENCE_TARGET and bundle_dir is not None:
             return Path(bundle_dir)
         return Path(recordings_dir) / name
 

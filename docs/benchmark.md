@@ -1,6 +1,6 @@
 # Semgrep benchmark
 
-Plain Semgrep registry rulesets, run over the four pinned Target Applications and compared with the committed HEAD Auditor reports. juice-shop is the Primary Target and has a reference list (`accuracy/juice-shop.json`); the three Secondary Targets have none, so they get run counts only.
+Plain Semgrep registry rulesets, run over the four pinned Target Applications and compared with the committed HEAD Auditor reports. juice-shop is the Reference Target and has a reference list (`accuracy/juice-shop.json`); the three Secondary Targets have none, so they get run counts only.
 
 ## Method
 
@@ -38,7 +38,7 @@ A Timeout means Semgrep did not finish that analysis, so juice-shop has 3 incomp
 
 ## Results
 
-### Primary Target reference (juice-shop: 47 confirmed, 5 not determinable)
+### Reference Target reference (juice-shop: 47 confirmed, 5 not determinable)
 
 | Scoring | Tool | TP | FP | FN | Excluded | Precision | Recall |
 |---|---|---|---|---|---|---|---|

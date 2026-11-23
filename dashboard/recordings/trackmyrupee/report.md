@@ -466,19 +466,19 @@ Issue Types: CON-01
 
 Linked identifiers: purpose:templates/account/signup.html:124:130, purpose:templates/account/signup.html:140:143, purpose:templates/account/signup.html:153:156, purpose:templates/expenses/dpdp_consent.html:34:40, purpose:templates/expenses/dpdp_consent.html:50:53, purpose:templates/expenses/dpdp_consent.html:63:66, operation:expenses/posthog_utils.py:115, operation:expenses/posthog_utils.py:135, enforcement:expenses/middleware.py:147, enforcement:expenses/posthog_utils.py:108, enforcement:expenses/posthog_utils.py:125
 
-Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:49:20+00:00): Inconclusive (not run or inconclusive; no effect on the static verdict) — consent-after-withdrawal: Grant, withdrawal or pre-withdrawal operation was not established Static verdict above is unchanged.
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T14:19:33+00:00): Inconclusive (not run or inconclusive; no effect on the static verdict) — consent-after-withdrawal: The browser did not observe an accepted withdrawal POST Static verdict above is unchanged.
 
-Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:49:20+00:00): Not Confirmed (enforcement observed) — consent-declined:consent_email: Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional) Static verdict above is unchanged.
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T14:19:33+00:00): Not Confirmed (enforcement observed) — consent-declined:consent_email: Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional) Static verdict above is unchanged.
 
-Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:49:20+00:00): Not Confirmed (enforcement observed) — consent-declined:consent_transactions: Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional) Static verdict above is unchanged.
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T14:19:33+00:00): Not Confirmed (enforcement observed) — consent-declined:consent_transactions: Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional) Static verdict above is unchanged.
 
-Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:49:20+00:00): Not Confirmed (enforcement observed) — consent-declined:consent_device: Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional) Static verdict above is unchanged.
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T14:19:33+00:00): Not Confirmed (enforcement observed) — consent-declined:consent_device: Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional) Static verdict above is unchanged.
 
-Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:49:20+00:00): Inconclusive (not run or inconclusive; no effect on the static verdict) — analytics-declined: A comparable login failed or the scoped outbound observation was unavailable Static verdict above is unchanged.
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T14:19:33+00:00): Not Confirmed (enforcement observed) — analytics-declined: No outbound event was observed after the decline or withdrawal while the granted control produced 2 Static verdict above is unchanged.
 
-Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:49:20+00:00): Inconclusive (not run or inconclusive; no effect on the static verdict) — analytics-withdrawn: A comparable login failed or the scoped outbound observation was unavailable Static verdict above is unchanged.
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T14:19:33+00:00): Not Confirmed (enforcement observed) — analytics-withdrawn: No outbound event was observed after the decline or withdrawal while the granted control produced 2 Static verdict above is unchanged.
 
-Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:49:20+00:00): Inconclusive (not run or inconclusive; no effect on the static verdict) — withdrawal-data-removal: The authenticated profile did not establish Auditor ownership; no withdrawal POST was sent Static verdict above is unchanged.
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T14:19:33+00:00): Not Confirmed (enforcement observed) — withdrawal-data-removal: The account no longer authenticated and no account-linked rows remained Static verdict above is unchanged.
 
 templates/account/signup.html:124–124
 
@@ -1113,7 +1113,7 @@ Linked identifiers: grant_paths:templates/account/signup.html:171, grant_paths:t
 
 Static step counts: {   "grant": [     null,     null   ],   "withdrawal": [     null   ] }
 
-Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:49:20+00:00): Inconclusive (not run or inconclusive; no effect on the static verdict) — comparable-ease: Comparable grant and withdrawal interactions were not both recorded Static verdict above is unchanged.
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T14:19:33+00:00): Inconclusive (not run or inconclusive; no effect on the static verdict) — comparable-ease: Comparable grant and withdrawal interactions were not both recorded: the browser did not observe an accepted withdrawal POST Static verdict above is unchanged.
 
 templates/account/signup.html:171–171
 

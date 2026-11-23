@@ -6,11 +6,11 @@ The Auditor scans a Target Application and maps Personal Data mishandling to Ind
 
 Three Indian Target Applications come first, all Secondary Targets:
 
-- [TrackMyRupee](docs/targets/trackmyrupee.md): Consent Assessment. The note records a single-run Live Probe on one local instance that did not confirm any consent-enforcement violation; the recorded Replay Report carries those outcomes beside the static criteria, while the committed Report holds none.
+- [TrackMyRupee](docs/targets/trackmyrupee.md): Consent Assessment. In one local Live Probe run, six assertions were Not Confirmed and two browser assertions were Inconclusive. The Replay Mode Report shows these outcomes beside the static criteria; the committed deliverable Report is static.
 - [ai-kyc-platform](docs/targets/ai-kyc-platform.md): Government Identifiers, masked in every Report format.
 - [singharya E-KYC](docs/targets/singharya-e-kyc.md): the Report has no Findings. This is the honest outcome of the existing Rules on this pin, not a claim that the code is compliant.
 
-Juice Shop, the Primary Target at `c9f99228`, follows as the benchmark for accuracy: `dpdp-audit accuracy` scores its Findings against the ground truth in [`accuracy/juice-shop.json`](accuracy/juice-shop.json). Clones and pins are under [Set-up](#set-up).
+Juice Shop, the Reference Target at `c9f99228`, follows as the benchmark for accuracy: `dpdp-audit accuracy` scores its Findings against the ground truth in [`accuracy/juice-shop.json`](accuracy/juice-shop.json). Clones and pins are under [Set-up](#set-up).
 
 ## Installation
 
@@ -43,7 +43,7 @@ Every Rule has a Labelled Corpus pair, `corpus/<rule-id>/positive/` and `negativ
 
 ## Slice 1 coverage (Juice Shop)
 
-`tests/test_juice_shop_slice_1.py` scans the pinned Primary Target (`targets/juice-shop` at `c9f99228`) in cache-only mode and checks each case:
+`tests/test_juice_shop_slice_1.py` scans the pinned Reference Target (`targets/juice-shop` at `c9f99228`) in cache-only mode and checks each case:
 
 | Issue Type | Case | Rules |
 |---|---|---|
@@ -68,9 +68,9 @@ Excluded from Juice Shop scans: `data/static/codefixes/**`, `test/**`, `frontend
 
 ## Slice 2 coverage
 
-Slice 2 adds a Rule, with a Labelled Corpus pair, for every remaining catalogue Issue Type. `tests/test_slice2.py` checks them: `-k pinned` scans the Primary Target, and `-k corpus` and `-k legal` need no Target.
+Slice 2 adds a Rule, with a Labelled Corpus pair, for every remaining catalogue Issue Type. `tests/test_slice2.py` checks them: `-k pinned` scans the Reference Target, and `-k corpus` and `-k legal` need no Target.
 
-| Primary Target outcome | Issue Types |
+| Reference Target outcome | Issue Types |
 |---|---|
 | Finding | SEC-14 (EFS store without backup selection), MON-01 (no monitoring of Personal Data stores) |
 | Conditional (Third Schedule class, AA-3) | RET-03 |
@@ -93,7 +93,7 @@ Every scan probes its configured LLM provider. If unavailable, cache-only mode r
 - `auditor/analysers/` and `auditor/ts/`: configuration and TypeScript analysers; `auditor/rules/`: Rules.
 - `rules/semgrep/`: Semgrep Rules; `corpus/`: Labelled Corpus.
 - `dashboard/`: Dashboard backend, React frontend and Replay Mode recordings (`dashboard/recordings/`); `reports/`: generated Reports (submission Reports tracked, see below); `demo/`: presenter script and comparison tool.
-- `targets/`: ignored Target Application clones, including the pinned Primary Target.
+- `targets/`: ignored Target Application clones, including the pinned Reference Target.
 - `docs/`: Issue Types and architecture decisions.
 
 See the [Target Application decision](docs/adr/0001-target-applications.md) and [hybrid engine and LLM decision](docs/adr/0003-hybrid-engine-llm-required.md).
@@ -104,7 +104,7 @@ See the [Target Application decision](docs/adr/0001-target-applications.md) and 
 |---|---|
 | Scanner and its source | [`auditor/`](auditor/) with Rules in [`auditor/rules/`](auditor/rules/) and [`rules/semgrep/`](rules/semgrep/) |
 | Secondary Target Reports (TrackMyRupee, ai-kyc-platform, singharya E-KYC) | [`reports/trackmyrupee/report.md`](reports/trackmyrupee/report.md), [`reports/ai-kyc-platform/report.md`](reports/ai-kyc-platform/report.md), [`reports/singharya-e-kyc/report.md`](reports/singharya-e-kyc/report.md); json, html and pdf beside each |
-| Primary Target Report (unmodified Juice Shop at `c9f99228`) | [`reports/juice-shop/report.md`](reports/juice-shop/report.md), [json](reports/juice-shop/report.json), [html](reports/juice-shop/report.html), [pdf](reports/juice-shop/report.pdf) |
+| Reference Target Report (unmodified Juice Shop at `c9f99228`) | [`reports/juice-shop/report.md`](reports/juice-shop/report.md), [json](reports/juice-shop/report.json), [html](reports/juice-shop/report.html), [pdf](reports/juice-shop/report.pdf) |
 | Rules List | [`RULES.md`](RULES.md) (regenerate with `dpdp-audit rules list`) |
 
 Also: [Live Probes](docs/live-probes.md), [Fix Patches](docs/fix-patches.md), [build plan](docs/plan.md), [domain glossary](CONTEXT.md), [eight-step demo script](demo/script.md) and the [Replay Mode manifest](dashboard/recordings/manifest.json).
@@ -125,7 +125,7 @@ Scanning needs no network once the clones exist; the ignored `targets/` director
 | TrackMyRupee | `https://github.com/OmkarPathak/TrackMyRupee` → `targets/trackmyrupee` | `47990e4f19d7debea70c5d56bab77e3c3f051546` |
 | ai-kyc-platform | `https://github.com/JhashankKumar/ai-kyc-platform` → `targets/ai-kyc-platform` | `70a821487c193be445810d836dd9b9b9ae22eb18` |
 | singharya E-KYC | `https://github.com/singharya-btech/ML-Based-E-KYC-Fraud-Detection-System` → `targets/singharya-e-kyc` | `e6e78d53edd30fd5be88dcd82d5afc1a2010d025` |
-| Juice Shop (Primary) | `https://github.com/juice-shop/juice-shop` → `targets/juice-shop` | `c9f99228d9d56afb5f5ca7925376292f7fa44b13` |
+| Juice Shop (Reference) | `https://github.com/juice-shop/juice-shop` → `targets/juice-shop` | `c9f99228d9d56afb5f5ca7925376292f7fa44b13` |
 | Juice Shop fork PR head | `https://github.com/TanKaizokuO/juice-shop` (branch `dpdp-fix-patches`) → `targets/juice-shop-fork` | `2a66c603ea543aea6ab642c472431a27846b9e63` |
 
 ```sh
@@ -140,7 +140,7 @@ git -C targets/juice-shop checkout c9f99228d9d56afb5f5ca7925376292f7fa44b13
 DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/dpdp-audit scan targets/juice-shop --format json   # writes reports/juice-shop/report.{json,md,html,pdf}
 ```
 
-The scan above is the offline setup example; it writes the four Report files to `reports/juice-shop/` and prints the LLM mode on stderr. The published Juice Shop Report uses the cached Opus 5.5 verdicts from the accuracy run. The Report's `llm` block states which provider, model and prompt versions ran. Uncached fields in an offline scan are “not assessed”; cached classification can add Elements that Rules then evaluate, while triage does not add or remove Findings. See [LLM configuration](#llm-configuration).
+The scan above is the documented Reference Target command; it writes the four Report files to `reports/juice-shop/` and prints the LLM mode on stderr. The committed Juice Shop Report uses the cached Opus 5.5 verdicts from the accuracy run (`llm.mode`, `llm.provider`, `llm.model` and `llm.prompt_versions` in the Report state exactly what ran; uncached LLM fields are "not assessed"). Cached classification can add Elements that Rules then evaluate; triage never adds or removes a Finding. With a reachable provider, set `DPDP_LLM_PROVIDER` (`anthropic`, `openai`, `gemini`, `ollama` or `omp`), `DPDP_LLM_MODEL` and the matching key as described under [LLM configuration](#llm-configuration).
 
 ### Dashboard and Replay Mode
 

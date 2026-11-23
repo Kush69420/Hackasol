@@ -1,4 +1,4 @@
-// Field names follow auditor/schema/report.schema.json (schema_version 1.2.0).
+// Field names follow auditor/schema/report.schema.json (schema_version 1.3.0).
 export type Band = "critical" | "high" | "medium" | "low";
 export const BANDS: Band[] = ["critical", "high", "medium", "low"];
 

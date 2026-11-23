@@ -20,6 +20,15 @@ def inventory(root):
     return files, json.loads(result.stdout)
 
 
+def test_python_only_flows_do_not_require_node(tmp_path, monkeypatch):
+    def unexpected_node(*args, **kwargs):
+        pytest.fail("the TypeScript analyser cannot emit a flow for this inventory")
+
+    monkeypatch.setattr(subprocess, "run", unexpected_node)
+    flow = {"element_id": "model:Account.email", "steps": []}
+    assert trace_flows(tmp_path, [], {"python_flows": [flow]}) == [flow]
+
+
 def test_fixture_join_and_negatives():
     files, data = inventory(FIXTURE)
     flows = trace_flows(FIXTURE, files, data)
@@ -73,8 +82,8 @@ def test_finale_wrapper_keeps_elements_without_duplicate_steps(tmp_path):
     assert 'wrapper' in exposed[0]['note']
 
 
-@pytest.mark.skipif(not TARGET.exists(), reason='Primary Target unavailable')
-def test_primary_target_flows():
+@pytest.mark.skipif(not TARGET.exists(), reason='Reference Target unavailable')
+def test_reference_target_flows():
     files, data = inventory(TARGET)
     flows = trace_flows(TARGET, files, data)
     cases = [
@@ -95,7 +104,7 @@ def test_primary_target_flows():
                 assert all(s['note'] == 'masked' for s in responses)
 
 
-@pytest.mark.skipif(not TARGET.exists(), reason='Primary Target unavailable')
+@pytest.mark.skipif(not TARGET.exists(), reason='Reference Target unavailable')
 def test_review_author_collection_flow():
     files, data = inventory(TARGET)
     flows = trace_flows(TARGET, files, data)
