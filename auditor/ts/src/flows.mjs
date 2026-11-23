@@ -125,38 +125,84 @@ function responses(project, inventory, model, field) {
     let handler;
     walk(sf, n => { if ((ts.isFunctionDeclaration(n) || ts.isArrowFunction(n) || ts.isFunctionExpression(n)) && inRange(sf, n, route.handler) && (!handler || n.end - n.pos > handler.end - handler.pos)) handler = n; });
     if (!handler) continue;
-    const vars = new Set(), derived = new Set(), masked = new Set();
+    const variables = new Map(), additions = new Map(), aliases = new Map();
+    const add = (key, value) => { if (!additions.has(key)) additions.set(key, []); additions.get(key).push(value); };
     walk(handler, n => {
-      if (ts.isVariableDeclaration(n) && ts.isIdentifier(n.name) && n.initializer) {
-        let found = false; walk(n.initializer, x => { if (ts.isCallExpression(x) && ts.isPropertyAccessExpression(x.expression) && names.includes(text(x.expression.expression)) && ['findAll','findOne','findByPk'].includes(x.expression.name.text)) found = true; });
-        if (found) vars.add(n.name.text);
+      if (ts.isVariableDeclaration(n) && ts.isIdentifier(n.name) && n.initializer) variables.set(n.name.text, n.initializer);
+      if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression)) {
+        if (['forEach', 'map'].includes(n.expression.name.text)) {
+          const cb = n.arguments[0];
+          if (cb?.parameters?.[0] && ts.isIdentifier(cb.parameters[0].name)) aliases.set(cb.parameters[0].name.text, n.expression.expression);
+        }
+        if (n.expression.name.text === 'push') for (const arg of n.arguments) add(text(n.expression.expression), arg);
       }
+      if (ts.isBinaryExpression(n) && n.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isPropertyAccessExpression(n.left)) add(text(n.left.expression), n);
     });
-    if (!vars.size) continue;
-    // Track derived response variables, including values populated in forEach callbacks.
-    walk(handler, n => {
-      if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression) && n.expression.name.text === 'forEach' && vars.has(text(n.expression.expression))) {
-        const cb = n.arguments[0]; if (cb?.parameters?.[0] && ts.isIdentifier(cb.parameters[0].name)) vars.add(cb.parameters[0].name.text);
+    const merge = parts => parts.filter(Boolean);
+    function trace(node, seen = new Set()) {
+      if (!node || seen.has(node)) return [];
+      const next = new Set(seen); next.add(node);
+      if (ts.isIdentifier(node)) {
+        return merge([...(variables.has(node.text) ? trace(variables.get(node.text), next) : []),
+          ...(aliases.has(node.text) ? trace(aliases.get(node.text), next) : []),
+          ...(additions.get(node.text) ?? []).flatMap(n => trace(n, next))]);
       }
-    });
-    const references = (n, set) => { let found = false; walk(n, x => { if (ts.isIdentifier(x) && set.has(x.text)) found = true; }); return found; };
-    // Resolve intermediate variables and output containers to a fixed point.
-    for (let pass = 0; pass < 4; pass++) walk(handler, n => {
-      if (ts.isVariableDeclaration(n) && ts.isIdentifier(n.name) && n.initializer && references(n.initializer, new Set([...vars, ...derived]))) derived.add(n.name.text);
-      if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression) && n.expression.name.text === 'push' && n.arguments.some(a => references(a, derived))) derived.add(text(n.expression.expression));
-      if (ts.isBinaryExpression(n) && ts.isPropertyAccessExpression(n.left) && n.operatorToken.kind === ts.SyntaxKind.EqualsToken && references(n.right, new Set([...vars, ...derived]))) derived.add(text(n.left.expression));
-    });
-    walk(handler, n => {
-      let target, value;
-      if (ts.isBinaryExpression(n) && ts.isPropertyAccessExpression(n.left) && n.left.name.text === field && n.operatorToken.kind === ts.SyntaxKind.EqualsToken) { target = text(n.left.expression); value = n.right; }
-      if (ts.isPropertyAssignment(n) && name(n) === field && ts.isObjectLiteralExpression(n.parent) && ts.isVariableDeclaration(n.parent.parent)) { target = text(n.parent.parent.name); value = n.initializer; }
-      if (target && value && /(?:replace|substring|slice|repeat|mask)/i.test(text(value))) masked.add(target);
-    });
+      if (ts.isPropertyAccessExpression(node)) {
+        if (node.name.text !== field) return [];
+        return trace(node.expression, next).map(x => ({ ...x, scalar: true }));
+      }
+      if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isPropertyAccessExpression(node.left)) {
+        return trace(node.right, next).map(x => ({ ...x, projection: node }));
+      }
+      if (ts.isObjectLiteralExpression(node)) {
+        return node.properties.flatMap(p => {
+          if (ts.isPropertyAssignment(p)) return trace(p.initializer, next).map(x => ({ ...x, projection: x.projection ?? p }));
+          if (ts.isShorthandPropertyAssignment(p)) return trace(p.name, next);
+          if (ts.isSpreadAssignment(p)) return trace(p.expression, next);
+          return [];
+        });
+      }
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && /^mask$/i.test(node.expression.text)) {
+        return node.arguments.flatMap(a => trace(a, next)).map(x => x.scalar ? { ...x, masked: true } : x);
+      }
+      if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
+        const receiver = node.expression.expression, method = node.expression.name.text;
+        if (names.includes(text(receiver)) && ['findAll', 'findOne', 'findByPk'].includes(method)) {
+          const options = node.arguments.find(ts.isObjectLiteralExpression);
+          const attributes = options?.properties.find(p => ts.isPropertyAssignment(p) && name(p) === 'attributes');
+          if (attributes && ts.isPropertyAssignment(attributes)) {
+            const value = attributes.initializer;
+            const excluded = ts.isObjectLiteralExpression(value) && value.properties.find(p => ts.isPropertyAssignment(p) && name(p) === 'exclude');
+            const list = ts.isArrayLiteralExpression(value) ? value : excluded && ts.isPropertyAssignment(excluded) && ts.isArrayLiteralExpression(excluded.initializer) ? excluded.initializer : null;
+            if (list) {
+              const contains = list.elements.some(e => ts.isStringLiteral(e) && e.text === field);
+              if (excluded ? contains : !contains) return [];
+              return [{ projection: attributes, masked: false }];
+            }
+          }
+          return [{ projection: null, masked: false }];
+        }
+        if (method === 'map' && node.arguments[0] && (ts.isArrowFunction(node.arguments[0]) || ts.isFunctionExpression(node.arguments[0]))) {
+          const cb = node.arguments[0];
+          return trace(cb.body, next);
+        }
+        const receiverParts = trace(receiver, next);
+        const args = node.arguments.flatMap(a => trace(a, next));
+        if (/^(replace|replaceAll|substring|slice|repeat|mask)$/i.test(method)) {
+          return [...receiverParts.map(x => x.scalar ? { ...x, masked: true } : x), ...args];
+        }
+        return [...receiverParts, ...args];
+      }
+      const parts = [];
+      ts.forEachChild(node, child => { parts.push(...trace(child, next)); });
+      return parts;
+    }
     walk(handler, n => {
       if (!ts.isCallExpression(n) || !ts.isPropertyAccessExpression(n.expression) || !['json','send'].includes(n.expression.name.text) || !/^res(?:\.|$)/.test(text(n.expression.expression)) || !n.arguments[0]) return;
-      if (!references(n.arguments[0], new Set([...vars, ...derived]))) return;
-      const isMasked = masked.size > 0;
-      result.push({ source: coord(sf, n), note: isMasked ? 'masked' : '', route });
+      const matches = trace(n.arguments[0]);
+      if (!matches.length) return;
+      const projected = matches.find(x => x.projection);
+      result.push({ source: coord(sf, projected?.projection ?? n), note: matches.every(x => x.masked) ? 'masked' : '', route });
     });
   }
   return result;
@@ -174,7 +220,14 @@ function finaleResponseHook(project, route) {
   if (!loop) return null;
   let hook = null;
   walk(loop.statement, n => {
-    if (ts.isCallExpression(n) && text(n.expression) === 'resource.all.send.before') hook = coord(sf, n);
+    if (!ts.isCallExpression(n) || text(n.expression) !== 'resource.all.send.before') return;
+    const callback = n.arguments[0];
+    if (!callback || !(ts.isArrowFunction(callback) || ts.isFunctionExpression(callback)) || !callback.parameters[2] || !ts.isIdentifier(callback.parameters[2].name)) return;
+    const instance = `${callback.parameters[2].name.text}.instance`;
+    walk(callback.body, assignment => {
+      if (!ts.isBinaryExpression(assignment) || assignment.operatorToken.kind !== ts.SyntaxKind.EqualsToken || text(assignment.left) !== instance || !ts.isObjectLiteralExpression(assignment.right)) return;
+      if (assignment.right.properties.some(p => ts.isPropertyAssignment(p) && name(p) === 'data' && text(p.initializer) === instance)) hook = coord(sf, n);
+    });
   });
   return hook;
 }
@@ -388,9 +441,10 @@ export function extractFlows(project, inventory) {
             // Finale list/read response defaults apply only where an explicit handler does not intercept the same endpoint.
             for (const read of routes.filter(r => r.origin === 'finale' && r.method === 'GET' && r.model === route.model && !(r.finale?.exclude_attributes ?? []).includes(field.name))) {
               if (routes.some(r => r.origin === 'explicit' && r.method === 'GET' && r.normalised_path === read.normalised_path && r.handler)) continue;
-              steps.push(step(id, 'Expose', 'response', read.registration, 'finale generated read response', 'inferred'));
               const hook = finaleResponseHook(project, read);
-              if (hook) steps.push(step(id, 'Expose', 'response', hook, 'finale generated read response wrapper', 'inferred'));
+              const source = hook ?? read.registration;
+              if (!hook || !steps.some(s => s.operation === 'Expose' && s.source.file === source.file && s.source.start_line === source.start_line && s.source.end_line === source.end_line))
+                steps.push(step(id, 'Expose', 'response', source, hook ? 'finale generated read response wrapper' : 'finale generated read response', 'inferred'));
             }
             flows.push({ element_id: id, steps });
           }

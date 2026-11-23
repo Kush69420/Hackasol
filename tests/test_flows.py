@@ -33,6 +33,45 @@ def test_fixture_join_and_negatives():
             route[key] = value
         assert not trace_flows(FIXTURE, files, changed)
 
+@pytest.mark.parametrize(
+    ('handler', 'expected_line', 'masked'),
+    [('excluded', None, False), ('included', 10, False), ('mapped', 17, False),
+     ('omitted', None, False), ('masked', 30, True), ('unmasked', 37, False),
+     ('objectOmitted', None, False), ('maskFunction', 49, True)],
+)
+def test_response_projections_and_field_masking(handler, expected_line, masked):
+    files, data = inventory(FIXTURE)
+    lines = (FIXTURE / 'routes/response.ts').read_text().splitlines()
+    start = next(i for i, line in enumerate(lines, 1) if line.startswith(f'export function {handler}('))
+    end = next(i for i in range(start + 1, len(lines) + 1) if lines[i - 1] == '}')
+    data['routes'].append({
+        'method': 'GET', 'origin': 'explicit', 'normalised_path': '/response/' + handler,
+        'handler': {'file': 'routes/response.ts', 'start_line': start, 'end_line': end},
+    })
+    flow = next(f for f in trace_flows(FIXTURE, files, data) if f['element_id'] == 'model:Thing.email')
+    exposed = [s for s in flow['steps'] if s['stage'] == 'response' and s['source']['file'] == 'routes/response.ts']
+    if expected_line is None:
+        assert not exposed
+    else:
+        assert len(exposed) == 1
+        assert exposed[0]['source']['start_line'] == expected_line
+        assert (exposed[0]['note'] == 'masked') == masked
+
+
+def test_finale_wrapper_keeps_elements_without_duplicate_steps(tmp_path):
+    import shutil
+
+    shutil.copytree(FIXTURE, tmp_path, dirs_exist_ok=True)
+    shutil.copyfile(FIXTURE / 'wrapper/server.ts', tmp_path / 'server.ts')
+    files, data = inventory(tmp_path)
+    flow = next(f for f in trace_flows(tmp_path, files, data) if f['element_id'] == 'model:Thing.email')
+    exposed = [s for s in flow['steps'] if s['operation'] == 'Expose']
+    assert len(exposed) == 1
+    assert exposed[0]['source']['file'] == 'server.ts'
+    assert exposed[0]['source']['start_line'] == 5
+    assert exposed[0]['source']['end_line'] == 8
+    assert 'wrapper' in exposed[0]['note']
+
 
 @pytest.mark.skipif(not TARGET.exists(), reason='Primary Target unavailable')
 def test_primary_target_flows():
