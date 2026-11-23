@@ -376,11 +376,14 @@ SECRET_SHAPES = {
     "provider key": r"\b(?:sk_live|sk_test|ghp|gho|xox[bp])[_-][A-Za-z0-9-]{10,}",
     "bearer token": r"\bBearer[ \t]+[A-Za-z0-9._~+/=-]{16,}",
 }
+CACHE_KEY_SHA256 = re.compile(r'(?:"cache_key"\s*:\s*"[0-9a-fA-F]{64}"|\bcache key: [0-9a-fA-F]{64}\b)')
 
 
 def leaks(text: str) -> list[str]:
     found = [label for label, pattern in SECRET_SHAPES.items() if re.search(pattern, text)]
-    if any(_aadhaar(m) for m in re.findall(r"(?<!\d)\d{4}[ -]?\d{4}[ -]?\d{4}(?!\d)", text)):
+    # A digit run inside a labelled cache digest is not an Aadhaar number.
+    without_cache_keys = CACHE_KEY_SHA256.sub(" ", text)
+    if any(_aadhaar(m) for m in re.findall(r"(?<!\d)\d{4}[ -]?\d{4}[ -]?\d{4}(?!\d)", without_cache_keys)):
         found.append("Aadhaar")
     if any(_luhn(m) for m in re.findall(r"(?<![0-9A-Za-z])(?:\d[ -]?){12,18}\d(?![0-9A-Za-z])", text)):
         found.append("card number")
@@ -399,6 +402,17 @@ def test_masking_detector_catches_every_canary_class():
     for canary in (CANARY_KEY, CANARY_JWT, CANARY_AWS, CANARY_PROVIDER, CANARY_BEARER, CANARY_AADHAAR, CANARY_CARD):
         assert leaks(f'"excerpt": "value = {canary}"'), canary
     assert leaks("«SECRET» «AADHAAR» 2345 6789 0123") == []
+
+
+def test_masking_detector_distinguishes_cache_digests_from_identifiers():
+    identifier = CANARY_AADHAAR.replace(" ", "")
+    digest = "a" * 26 + identifier + "b" * 26
+    assert leaks(f'{{"cache_key": "{digest}"}}') == []
+    assert leaks(f"cache key: {digest}\n") == []
+    assert leaks(f"<p>cache key: {digest}</p>") == []
+    assert leaks(f'{{"excerpt": "{digest}"}}') == ["Aadhaar"]
+    assert leaks(f"cache key: {digest}f") == ["Aadhaar"]
+    assert leaks(f'{{"cache_key": "{identifier}"}}') == ["Aadhaar"]
 
 
 def test_masking_no_canary_in_reports_recordings_or_script():
