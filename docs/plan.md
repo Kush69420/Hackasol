@@ -258,14 +258,9 @@ Decision: [ADR 0004](adr/0004-retrieval-grounding-and-fine-tuned-local-model.md)
 
 ## P3.1 Retrieval-grounded prompts
 
-- **Index.** `dpdp-audit rag build` (proposed) builds a committed index from:
-  - registry entries;
-  - the official Act and Rules text, segmented and joined to registry ids;
-  - catalogue guidance;
-  - Labelled Corpus fixtures.
-  Statute segments without a registry id are dropped and listed.
-- **Retrieval.** Start from the Issue Type's Provisions and their parents, then expand with BM25 over statute segments and add the nearest fixtures with BM25. Retrieval is deterministic and offline.
-- **Prompts v2.** Triage and consent return `citations`. A citation outside the retrieved set makes the verdict invalid, so it is "not assessed". Consent v2 also returns a verdict per criterion. Classification and fix get v2 prompts with worked examples, but no statute.
+- **Index.** At scan time the Auditor builds one offline, in-memory index from Provision registry excerpts, remediation catalogue entries and Labelled Corpus fixtures. It does not extract full-text statutes or index Target Application code.
+- **Retrieval.** Start from the Issue Type's primary and related Provisions, then their parents. Fill the remaining budget with BM25 over registry excerpts; triage also gets one nearest positive and one nearest negative fixture when available. Consent seeds CON-01 through CON-07 and queries the registry with its source-anchored graph.
+- **Prompts v2.** Triage and consent return `citations`; an id outside that request's retrieved set invalidates the verdict. Consent also returns a reading per criterion. The retrieved set participates in the cache key. Classification and fix remain on v1.
 - Regenerate `accuracy/cache` and its manifest, and record why.
 
 Acceptance:

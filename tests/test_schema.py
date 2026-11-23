@@ -2,7 +2,9 @@
 
 import pytest
 
+from auditor.consent.criteria import assess_consent
 from auditor.schema import SCHEMA_VERSION, ReportValidationError, validate_finding, validate_report
+from test_consent_assessment_criteria import empty_graph
 
 CACHE_KEY = "a" * 64
 CVSS_VECTOR = "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N"
@@ -17,14 +19,14 @@ def element(name="email", data_category="Contact"):
     return {"name": name, "data_category": data_category, "evidence": evidence()}
 
 
-def assessed(value):
+def assessed(value, prompt_version="fix-v1"):
     return {
         "status": "assessed",
         "value": value,
         "cache_key": CACHE_KEY,
         "provider": "anthropic",
         "model": "claude-test",
-        "prompt_version": "fix-v1",
+        "prompt_version": prompt_version,
     }
 
 
@@ -83,7 +85,7 @@ def make_report(findings=(), mode="live", reason=None, **overrides):
             "mode": mode,
             "provider": "anthropic",
             "model": "claude-test",
-            "prompt_versions": {"triage": "triage-v1"},
+            "prompt_versions": {"triage": "triage-v2"},
             "cache_hits": 0,
             "cache_misses": 0,
             "not_assessed": 0,
@@ -184,7 +186,8 @@ def test_full_report_with_every_section_is_valid():
     full = finding(
         data_flow=[{"operation": "Log", "evidence": evidence(start=20, end=24), "note": "request logger"}],
         other_provisions=["CWE-532", "DPDP-Rule-8(3)"],
-        llm_triage=assessed({"verdict": "true-positive", "reason": "The email is written to the request log."}),
+        llm_triage=assessed({"verdict": "true-positive", "reason": "The email is written to the request log.",
+                            "citations": ["CWE-532"]}, "triage-v2"),
         recommended_fix={
             "guidance": "Mask the identifier before it reaches the log sink.",
             "tailored": assessed("Replace the email with a salted hash in the logger call."),
@@ -210,6 +213,26 @@ def test_full_report_with_every_section_is_valid():
     )
 
     validate_report(report)
+
+
+def test_v2_triage_needs_citations_but_v1_reports_still_validate():
+    value = {"verdict": "uncertain", "reason": "Evidence is incomplete."}
+    validate_finding(finding(llm_triage=assessed(value, "triage-v1")))
+    with pytest.raises(ReportValidationError):
+        validate_finding(finding(llm_triage=assessed(value, "triage-v2")))
+
+
+def test_v2_consent_verdict_needs_criterion_citations():
+    row = {"criterion": "recorded", "reading": "not determinable", "reason": "No records shown.",
+           "citations": ["DPDP-Act-6(10)"]}
+    value = {"assessment": "Evidence is incomplete.", "criteria": [row], "citations": []}
+    consent = assess_consent(empty_graph(), [], None)
+    consent["llm_reasoning"] = assessed(value, "consent-v2")
+    report = make_report(consent_assessment=consent)
+    validate_report(report)
+    del row["citations"]
+    with pytest.raises(ReportValidationError):
+        validate_report(report)
 
 
 REJECTED_FINDINGS = {

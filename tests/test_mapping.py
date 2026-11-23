@@ -135,7 +135,14 @@ def test_exposure_needs_evidence():
 def test_triage_does_not_drop_finding():
     class LLM:
         def ask(self, role, excerpt, context):
-            return {'status': 'assessed', 'value': {'verdict': 'false-positive', 'reason': 'Review'}, 'cache_key': 'a' * 64, 'provider': 'omp', 'model': 'test', 'prompt_version': '1'} if role == 'triage' else {'status': 'not assessed', 'cache_key': 'b' * 64}
+            if role != 'triage':
+                return {'status': 'not assessed', 'cache_key': 'b' * 64}
+            assert context['issue_type'] == 'SEC-01' and context['rule'] == match().rule_id
+            assert {'DPDP-Rule-6(1)(a)', 'CWE-532'} <= {row['id'] for row in context['provisions']}
+            assert [row['label'] for row in context['examples']] == ['positive', 'negative']
+            return {'status': 'assessed', 'value': {'verdict': 'false-positive', 'reason': 'Review',
+                                                    'citations': ['DPDP-Rule-6(1)(a)']},
+                    'cache_key': 'a' * 64, 'provider': 'omp', 'model': 'test', 'prompt_version': 'triage-v2'}
     assert one(match(), llm=LLM())['llm_triage']['value']['verdict'] == 'false-positive'
     assert one(match())['llm_triage']['status'] == 'not assessed'
 

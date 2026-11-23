@@ -8,7 +8,7 @@ from .cache import Cache, cache_key
 from .prompts import PROMPT_VERSION, system_prompt, valid_value
 from .providers import PROVIDERS
 
-DEFAULT_MODELS = {'anthropic': 'claude-haiku-5-5', 'openai': 'gpt-6.1-terra', 'gemini': 'gemini-2.5-flash', 'ollama': 'llama3.1', 'omp': 'anthropic/claude-haiku-5-5'}
+DEFAULT_MODELS = {'anthropic': 'claude-haiku-5-5', 'openai': 'gpt-6.1-terra', 'gemini': 'gemini-2.5-flash', 'ollama': 'llama3.1', 'omp': 'anthropic/claude-opus-5-5'}
 
 
 def _mask_object(value):
@@ -57,7 +57,9 @@ class LLMSession:
         masked_context = _mask_object(context)
         key = cache_key(masked, version, self.provider.model, masked_context)
         cached = self.cache.get(key)
-        if isinstance(cached, dict) and cached.get('model') == self.provider.model and cached.get('prompt_version') == version and cached.get('provider') in PROVIDERS and valid_value(role, cached.get('value')):
+        if (isinstance(cached, dict) and cached.get('model') == self.provider.model
+                and cached.get('prompt_version') == version and cached.get('provider') in PROVIDERS
+                and valid_value(role, cached.get('value'), masked_context)):
             self.cache_hits += 1
             return {'status': 'assessed', 'value': cached['value'], 'cache_key': key, 'provider': cached['provider'], 'model': cached['model'], 'prompt_version': version}
         self.cache_misses += 1
@@ -65,7 +67,7 @@ class LLMSession:
             try:
                 payload = json.dumps({'evidence': masked, 'context': masked_context}, ensure_ascii=False)
                 value = _mask_object(json.loads(self.provider.complete(system_prompt(role), payload)))
-                if not valid_value(role, value):
+                if not valid_value(role, value, masked_context):
                     raise ValueError('Invalid response shape')
                 record = {'input': masked, 'context': masked_context, 'value': value, 'provider': self.provider.name, 'model': self.provider.model, 'prompt_version': version}
                 self.cache.put(key, record)

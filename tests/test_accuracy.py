@@ -118,7 +118,7 @@ def accuracy_report():
     report = make_report(findings, mode="cache-only", reason="forced")
     report["target"]["commit"] = reference()["target"]["commit"]
     report["llm"].update(provider="anthropic", model="claude-test")
-    report["llm"]["prompt_versions"] = {"triage": "triage-v1"}
+    report["llm"]["prompt_versions"] = {"triage": "triage-v2"}
     report["accuracy"] = acc.build_accuracy(report, reference(), CORPUS, reference_path="tests/fixtures/accuracy/reference.json",
                                             cache_dir=REPO / "no-such-cache")
     validate_report(report)
@@ -222,7 +222,7 @@ def test_cache_replay_missing_verdict_is_a_miss_and_not_full_reproduction(tmp_pa
 def test_cache_replay_manifest_must_match_rules_digest_and_provenance(tmp_path):
     report = make_report(mode="cache-only", reason="forced")
     report["llm"].update(provider="anthropic", model="claude-test", cache_hits=3, cache_misses=0, not_assessed=0)
-    report["llm"]["prompt_versions"] = {"triage": "triage-v1"}
+    report["llm"]["prompt_versions"] = {"triage": "triage-v2"}
     assert acc.replay_status(report, tmp_path)["reproduces_published_run"] is False  # no manifest
     acc.write_manifest(report, tmp_path)
     manifest = json.loads((tmp_path / acc.MANIFEST_NAME).read_text())

@@ -6,10 +6,12 @@ import httpx
 import jsonschema
 import pytest
 
-from auditor.llm import LLMSession
+from auditor.llm import LLMSession, _mask_object
 from auditor.llm import prompts
 from auditor.llm.providers import Anthropic, Gemini, Ollama, Omp, OpenAI
+from auditor.llm.cache import cache_key
 from auditor.masking import contains_unmasked_material, mask_for_egress, mask_for_report
+from auditor.registry import load_registry
 
 
 # Twelve digits with a valid Verhoeff check digit.
@@ -19,7 +21,8 @@ EMAIL = 'alice@example.com'
 JWT = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.signature'
 PASSWORD = 'very-private-password'
 EVIDENCE = f'{AADHAAR}\n{PAN}\n{EMAIL}\n{JWT}\npassword="{PASSWORD}"'
-VALUE = {'verdict': 'true-positive', 'reason': 'Evidence supports the Finding.'}
+PROVISION = 'DPDP-Act-8(5)'
+VALUE = {'verdict': 'true-positive', 'reason': 'Evidence supports the Finding.', 'citations': [PROVISION]}
 
 
 @pytest.mark.parametrize('adapter', [Anthropic, OpenAI, Gemini, Ollama, Omp])
@@ -44,7 +47,8 @@ def test_provider_masking_and_cache_replay(adapter, tmp_path, monkeypatch):
     provider = adapter('example-model', runner=runner) if adapter is Omp else adapter('example-model', client=httpx.Client(transport=httpx.MockTransport(handler)))
     session = LLMSession(tmp_path, provider)
     session.probe()
-    result = session.ask('triage', EVIDENCE, {'contact': EMAIL, 'password': PASSWORD})
+    context = {'contact': EMAIL, 'password': PASSWORD, 'provisions': [{'id': PROVISION}]}
+    result = session.ask('triage', EVIDENCE, context)
     assert result['status'] == 'assessed'
     assert result['value'] == VALUE
     if adapter is Omp:
@@ -62,13 +66,13 @@ def test_provider_masking_and_cache_replay(adapter, tmp_path, monkeypatch):
             assert sensitive not in data
     session.mode = 'cache-only'
     session.reason = 'unreachable'
-    assert session.ask('triage', EVIDENCE, {'password': PASSWORD, 'contact': EMAIL}) == result
+    assert session.ask('triage', EVIDENCE, dict(reversed(tuple(context.items())))) == result
     assert session.ask('triage', EVIDENCE + '\nchanged')['status'] == 'not assessed'
-    monkeypatch.setitem(prompts.PROMPT_VERSION, 'triage', 'triage-v2')
-    assert session.ask('triage', EVIDENCE, {'contact': EMAIL, 'password': PASSWORD})['status'] == 'not assessed'
     monkeypatch.setitem(prompts.PROMPT_VERSION, 'triage', 'triage-v1')
+    assert session.ask('triage', EVIDENCE, context)['status'] == 'not assessed'
+    monkeypatch.setitem(prompts.PROMPT_VERSION, 'triage', 'triage-v2')
     provider.model = 'another-model'
-    assert session.ask('triage', EVIDENCE, {'contact': EMAIL, 'password': PASSWORD})['status'] == 'not assessed'
+    assert session.ask('triage', EVIDENCE, context)['status'] == 'not assessed'
     schema = json.loads(Path('auditor/schema/report.schema.json').read_text())
     jsonschema.validate(session.summary(), schema['properties']['llm'])
 
@@ -153,3 +157,51 @@ def test_invalid_provider_response_is_not_assessed(tmp_path):
     session.probe()
     assert session.ask('triage', 'Evidence')['status'] == 'not assessed'
     assert not list(tmp_path.glob('*.json'))
+
+
+def test_registry_context_preserves_every_provision():
+    context = {'provisions': [dict(id=p.id, citation=p.citation, title=p.title, text=p.excerpt)
+                              for p in load_registry().values()]}
+    assert _mask_object(context) == context
+
+
+@pytest.mark.parametrize('role, value', [
+    ('triage', {**VALUE, 'citations': ['CWE-639']}),
+    ('consent', {'assessment': 'Incomplete.', 'criteria': [], 'citations': ['CWE-639']}),
+    ('consent', {'assessment': 'Incomplete.', 'criteria': [
+        {'criterion': 'recorded', 'reading': 'not determinable', 'reason': 'No record shown.',
+         'citations': ['CWE-639']},
+    ], 'citations': [PROVISION]}),
+])
+def test_out_of_set_citation_is_not_assessed(tmp_path, role, value):
+    provider = Omp('test', runner=lambda args, **_: subprocess.CompletedProcess(args, 0, json.dumps(value), ''))
+    session = LLMSession(tmp_path, provider)
+    session.mode = 'live'
+    context = {'provisions': [{'id': PROVISION}]}
+    result = session.ask(role, 'Evidence', context)
+    assert result['status'] == 'not assessed'
+    assert session.cache.get(result['cache_key']) is None
+
+    session.cache.put(result['cache_key'], {
+        'provider': 'omp', 'model': 'test', 'prompt_version': prompts.PROMPT_VERSION[role], 'value': value,
+    })
+    session.mode = 'cache-only'
+    assert session.ask(role, 'Evidence', context)['status'] == 'not assessed'
+
+
+def test_v1_triage_cache_value_is_not_accepted_for_v2(tmp_path):
+    session = LLMSession(tmp_path, Omp('test'))
+    context = {'provisions': [{'id': PROVISION}]}
+    old_value = {'verdict': 'true-positive', 'reason': 'Evidence supports the Finding.'}
+    assert prompts.PROMPT_VERSION['triage'] == 'triage-v2'
+    for version in ('triage-v1', 'triage-v2'):
+        key = cache_key('Evidence', version, 'test', context)
+        session.cache.put(key, {'provider': 'omp', 'model': 'test', 'prompt_version': version, 'value': old_value})
+        assert session.ask('triage', 'Evidence', context)['status'] == 'not assessed'
+
+
+def test_changing_provisions_changes_cache_key(tmp_path):
+    session = LLMSession(tmp_path, Omp('test'))
+    first = session.ask('triage', 'Evidence', {'provisions': [{'id': PROVISION}]})
+    second = session.ask('triage', 'Evidence', {'provisions': [{'id': 'CWE-639'}]})
+    assert first['cache_key'] != second['cache_key']

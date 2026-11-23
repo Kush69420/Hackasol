@@ -153,7 +153,7 @@
               }
             },
             "graph": { "type": "object" },
-            "llm_reasoning": { "$ref": "#/$defs/llmField" },
+            "llm_reasoning": { "$ref": "#/$defs/consentLlmField" },
             "live_probe_run": {
               "type": "object", "additionalProperties": false,
               "required": ["target", "commit", "observed_at"],
@@ -330,6 +330,10 @@
         }
       ]
     },
+    "llmCitations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
     "triageField": {
       "allOf": [
         { "$ref": "#/$defs/llmField" },
@@ -343,7 +347,53 @@
                 "required": ["verdict", "reason"],
                 "properties": {
                   "verdict": { "enum": ["true-positive", "false-positive", "uncertain"] },
-                  "reason": { "type": "string", "minLength": 1 }
+                  "reason": { "type": "string", "minLength": 1 },
+                  "citations": { "$ref": "#/$defs/llmCitations" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["prompt_version"],
+            "properties": { "prompt_version": { "const": "triage-v2" } }
+          },
+          "then": { "properties": { "value": { "required": ["citations"] } } }
+        }
+      ]
+    },
+    "consentLlmField": {
+      "allOf": [
+        { "$ref": "#/$defs/llmField" },
+        {
+          "if": {
+            "required": ["prompt_version"],
+            "properties": { "prompt_version": { "const": "consent-v2" } }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["assessment", "criteria", "citations"],
+                "properties": {
+                  "assessment": { "type": "string", "minLength": 1 },
+                  "criteria": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["criterion", "reading", "reason", "citations"],
+                      "properties": {
+                        "criterion": { "type": "string", "minLength": 1 },
+                        "reading": { "enum": ["met", "not met", "not determinable"] },
+                        "reason": { "type": "string", "minLength": 1 },
+                        "citations": { "$ref": "#/$defs/llmCitations" }
+                      }
+                    }
+                  },
+                  "citations": { "$ref": "#/$defs/llmCitations" }
                 }
               }
             }

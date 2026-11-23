@@ -5,6 +5,7 @@ from hashlib import sha256
 from auditor import registry, severity
 from auditor.exposure import ExposureDecision
 from auditor.masking import mask_for_report
+from auditor.rag import retrieve_examples, retrieve_provisions
 from auditor.remediation import guidance_for, load_catalogue
 from auditor.schema import validate_finding
 
@@ -150,7 +151,11 @@ def assemble(matches, llm=None) -> AssemblyResult:
         excerpt = evidence[0]['excerpt']
         missing = {'status': 'not assessed', 'cache_key': sha256(excerpt.encode()).hexdigest()}
         guidance = guidance_for(match.issue_type)
-        triage = llm.ask('triage', excerpt, {'issue_type': match.issue_type, 'rule': match.rule_id}) if llm else dict(missing)
+        triage = llm.ask('triage', excerpt, {
+            'issue_type': match.issue_type, 'rule': match.rule_id,
+            'provisions': retrieve_provisions([match.issue_type], excerpt),
+            'examples': retrieve_examples(match.issue_type, excerpt),
+        }) if llm else dict(missing)
         tailored = llm.ask('fix', excerpt, {'issue_type': match.issue_type, 'guidance': guidance}) if llm else dict(missing)
         reviews = [m.legal_review for m, _, _ in group if m.legal_review]
         trf = next((m for m, _, _ in group if m.issue_type == 'TRF-02' and not m.destination_restricted), None)

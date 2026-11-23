@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from hashlib import sha256
 
 from auditor.probes.assessments import TRI_STATE_MEANING, tri_state
+from auditor.rag import retrieve_provisions
 
 
 _CRITERIA = (
@@ -15,6 +16,7 @@ _CRITERIA = (
     ('preceded by notice', ('CON-07',), ('controls', 'notices')),
     ('verifiable parental consent', ('CHI-01',), ()),
 )
+_CONSENT_ISSUE_TYPES = tuple(f'CON-{number:02}' for number in range(1, 8))
 
 
 def assess_consent(graph, findings, llm):
@@ -165,8 +167,11 @@ def assess_consent(graph, findings, llm):
         reasoning = {'status': 'not assessed', 'cache_key': sha256(serialized.encode()).hexdigest()}
     else:
         # The session masks both the serialized graph and its context before egress and caching.
-        reasoning = llm.ask('consent', serialized,
-                            {'instruction': 'Reason across the source-anchored graph; do not infer missing links or change Findings.'})
+        reasoning = llm.ask('consent', serialized, {
+            'instruction': 'Reason across the source-anchored graph; do not infer missing links or change Findings.',
+            'criteria': [criterion for criterion, _, _ in _CRITERIA],
+            'provisions': retrieve_provisions(_CONSENT_ISSUE_TYPES, serialized, k=24),
+        })
     return {'criteria': rows, 'graph': graph, 'llm_reasoning': reasoning}
 
 
