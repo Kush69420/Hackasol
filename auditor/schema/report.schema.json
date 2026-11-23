@@ -19,7 +19,7 @@
     "consent_assessment"
   ],
   "properties": {
-    "schema_version": { "const": "1.3.0" },
+    "schema_version": { "const": "1.4.0" },
     "tool": {
       "type": "object",
       "additionalProperties": false,
@@ -56,7 +56,7 @@
     "llm": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["mode", "provider", "model", "prompt_versions", "cache_hits", "cache_misses", "not_assessed", "reason"],
+      "required": ["mode", "provider", "model", "prompt_versions", "cache_hits", "cache_misses", "not_assessed", "reason", "roles"],
       "properties": {
         "mode": { "enum": ["live", "cache-only"], "description": "cache-only: no provider reachable; only matching cached verdicts replayed" },
         "provider": { "enum": ["anthropic", "openai", "gemini", "ollama", "omp"] },
@@ -74,7 +74,8 @@
         "cache_hits": { "type": "integer", "minimum": 0 },
         "cache_misses": { "type": "integer", "minimum": 0 },
         "not_assessed": { "type": "integer", "minimum": 0, "description": "LLM fields left 'not assessed' in this Report" },
-        "reason": { "type": ["string", "null"], "description": "Why the run is cache-only; null when live" }
+        "reason": { "type": ["string", "null"], "description": "Why the run is cache-only; null when live" },
+        "roles": { "$ref": "#/$defs/llmRoles" }
       },
       "if": { "properties": { "mode": { "const": "cache-only" } } },
       "then": { "properties": { "reason": { "type": "string", "minLength": 1 } } },
@@ -230,7 +231,7 @@
           "type": "object",
           "additionalProperties": false,
           "required": ["mode", "provider", "model", "prompt_version", "cache_hits", "cache_misses",
-                       "not_assessed", "reproduces_published_run", "replay_problems"],
+                       "not_assessed", "reproduces_published_run", "replay_problems", "roles"],
           "properties": {
             "mode": { "enum": ["live", "cache-only"] },
             "provider": { "type": "string", "minLength": 1 },
@@ -239,7 +240,8 @@
             "cache_hits": { "$ref": "#/$defs/count" }, "cache_misses": { "$ref": "#/$defs/count" },
             "not_assessed": { "$ref": "#/$defs/count" },
             "reproduces_published_run": { "type": "boolean" },
-            "replay_problems": { "type": "array", "items": { "type": "string" } }
+            "replay_problems": { "type": "array", "items": { "type": "string" } },
+            "roles": { "$ref": "#/$defs/llmRoles" }
           }
         },
         "method": { "type": "string", "minLength": 1 },
@@ -301,6 +303,31 @@
       "properties": {
         "element": { "$ref": "#/$defs/element" },
         "operations": { "type": "array", "items": { "$ref": "#/$defs/flowStep" } }
+      }
+    },
+    "llmRoute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "model", "mode", "reason"],
+      "properties": {
+        "provider": { "enum": ["anthropic", "openai", "gemini", "ollama", "omp"] },
+        "model": { "type": "string", "minLength": 1 },
+        "mode": { "enum": ["live", "cache-only"] },
+        "reason": { "type": ["string", "null"] }
+      },
+      "if": { "properties": { "mode": { "const": "cache-only" } } },
+      "then": { "properties": { "reason": { "type": "string", "minLength": 1 } } },
+      "else": { "properties": { "reason": { "type": "null" } } }
+    },
+    "llmRoles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "triage", "consent", "fix"],
+      "properties": {
+        "classification": { "$ref": "#/$defs/llmRoute" },
+        "triage": { "$ref": "#/$defs/llmRoute" },
+        "consent": { "$ref": "#/$defs/llmRoute" },
+        "fix": { "$ref": "#/$defs/llmRoute" }
       }
     },
     "llmField": {

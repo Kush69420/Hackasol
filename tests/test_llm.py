@@ -6,7 +6,7 @@ import httpx
 import jsonschema
 import pytest
 
-from auditor.llm import LLMSession, _mask_object
+from auditor.llm import LLMSession, ROLES, _mask_object, parse_role_models, role_overrides
 from auditor.llm import prompts
 from auditor.llm.providers import Anthropic, Gemini, Ollama, Omp, OpenAI
 from auditor.llm.cache import cache_key
@@ -64,8 +64,7 @@ def test_provider_masking_and_cache_replay(adapter, tmp_path, monkeypatch):
     for data in sent + [p.read_text() for p in tmp_path.glob('*.json')]:
         for sensitive in (AADHAAR, PAN, EMAIL, JWT, PASSWORD):
             assert sensitive not in data
-    session.mode = 'cache-only'
-    session.reason = 'unreachable'
+    session.force_cache_only('unreachable')
     assert session.ask('triage', EVIDENCE, dict(reversed(tuple(context.items())))) == result
     assert session.ask('triage', EVIDENCE + '\nchanged')['status'] == 'not assessed'
     monkeypatch.setitem(prompts.PROMPT_VERSION, 'triage', 'triage-v1')
@@ -74,7 +73,7 @@ def test_provider_masking_and_cache_replay(adapter, tmp_path, monkeypatch):
     provider.model = 'another-model'
     assert session.ask('triage', EVIDENCE, context)['status'] == 'not assessed'
     schema = json.loads(Path('auditor/schema/report.schema.json').read_text())
-    jsonschema.validate(session.summary(), schema['properties']['llm'])
+    jsonschema.validate(session.summary(), {**schema['properties']['llm'], '$defs': schema['$defs']})
 
 
 def test_masking_modes_and_line_anchors():
@@ -173,10 +172,12 @@ def test_registry_context_preserves_every_provision():
          'citations': ['CWE-639']},
     ], 'citations': [PROVISION]}),
 ])
-def test_out_of_set_citation_is_not_assessed(tmp_path, role, value):
+def test_out_of_set_citation_is_not_assessed(tmp_path, role, value, monkeypatch):
     provider = Omp('test', runner=lambda args, **_: subprocess.CompletedProcess(args, 0, json.dumps(value), ''))
     session = LLMSession(tmp_path, provider)
-    session.mode = 'live'
+    monkeypatch.setattr('auditor.llm.providers.shutil.which', lambda _: '/usr/bin/omp')
+    session.probe()
+    assert session.mode == 'live'
     context = {'provisions': [{'id': PROVISION}]}
     result = session.ask(role, 'Evidence', context)
     assert result['status'] == 'not assessed'
@@ -185,7 +186,7 @@ def test_out_of_set_citation_is_not_assessed(tmp_path, role, value):
     session.cache.put(result['cache_key'], {
         'provider': 'omp', 'model': 'test', 'prompt_version': prompts.PROMPT_VERSION[role], 'value': value,
     })
-    session.mode = 'cache-only'
+    session.force_cache_only('test')
     assert session.ask(role, 'Evidence', context)['status'] == 'not assessed'
 
 
@@ -207,11 +208,129 @@ def test_changing_provisions_changes_cache_key(tmp_path):
     assert first['cache_key'] != second['cache_key']
 
 
-def test_omp_json_inside_markdown_fence_is_assessed(tmp_path):
+def test_omp_json_inside_markdown_fence_is_assessed(tmp_path, monkeypatch):
     value = {'data_category': 'Contact', 'reason': 'An email address column.'}
     fenced = '```json\n' + json.dumps(value) + '\n```\n'
     session = LLMSession(tmp_path, Omp('test', runner=lambda args, **_: subprocess.CompletedProcess(args, 0, fenced, '')))
-    session.mode = 'live'
+    monkeypatch.setattr('auditor.llm.providers.shutil.which', lambda _: '/usr/bin/omp')
+    session.probe()
+    assert session.mode == 'live'
     result = session.ask('classification', 'column email')
     assert result['status'] == 'assessed'
     assert result['value'] == value
+
+
+class Fake:
+    """Provider stand-in that counts probes and completions, so routing is observable."""
+    def __init__(self, name, model, answer, outcome=(True, None)):
+        self.name, self.model, self.answer, self.outcome = name, model, answer, outcome
+        self.probes = self.calls = 0
+
+    def available(self):
+        self.probes += 1
+        return self.outcome
+
+    def complete(self, system, user):
+        self.calls += 1
+        return json.dumps(self.answer)
+
+
+CLASSIFICATION = {'data_category': 'Contact', 'reason': 'An email address column.'}
+
+
+@pytest.mark.parametrize('spec', [
+    ['triage'],
+    ['triage=ollama'],
+    ['triage=ollama:'],
+    ['triage=ollama:  '],
+    ['judge=ollama:llama3.1'],
+    ['triage=gpt:x'],
+    ['triage=ollama:a', 'triage=openai:b'],
+])
+def test_parse_role_models_rejects_malformed_specs(spec):
+    with pytest.raises(ValueError):
+        parse_role_models(spec)
+
+
+def test_parse_role_models_splits_at_first_equals_and_first_colon():
+    assert parse_role_models(None) == {}
+    assert parse_role_models([]) == {}
+    assert parse_role_models(['classification=ollama:qwen3.8:27b']) == {'classification': ('ollama', 'qwen3.8:27b')}
+
+
+def test_role_overrides_lists_only_routes_that_differ():
+    llm = {'provider': 'anthropic', 'model': 'claude-test', 'roles': {
+        'classification': {'provider': 'anthropic', 'model': 'claude-test'},
+        'triage': {'provider': 'openai', 'model': 'gpt-test'},
+        'consent': {'provider': 'ollama', 'model': 'claude-test'},
+        'fix': {'provider': 'anthropic', 'model': 'claude-test'},
+    }}
+    assert role_overrides(llm) == {'triage': {'provider': 'openai', 'model': 'gpt-test'},
+                                   'consent': {'provider': 'ollama', 'model': 'claude-test'}}
+
+
+def test_each_role_is_answered_by_its_routed_provider(tmp_path):
+    default = Fake('anthropic', 'claude-test', CLASSIFICATION)
+    routed = Fake('openai', 'gpt-test', VALUE)
+    session = LLMSession(tmp_path, default, role_providers={'triage': routed})
+    session.probe()
+    assert session.mode == 'live'
+    context = {'provisions': [{'id': PROVISION}]}
+    result = session.ask('triage', EVIDENCE, context)
+    assert result['status'] == 'assessed'
+    assert (result['provider'], result['model']) == ('openai', 'gpt-test')
+    assert session.ask('classification', 'column email')['provider'] == 'anthropic'
+    assert (routed.calls, default.calls) == (1, 1)
+    assert session.cache.get(result['cache_key'])['provider'] == 'openai'
+    assert session.summary()['roles']['triage'] == {'provider': 'openai', 'model': 'gpt-test', 'mode': 'live', 'reason': None}
+
+    session.force_cache_only('test')
+    assert session.ask('triage', EVIDENCE, context) == result
+    assert (routed.calls, default.calls) == (1, 1)
+
+
+def test_unavailable_route_puts_only_its_roles_in_cache_mode(tmp_path):
+    default = Fake('anthropic', 'claude-test', CLASSIFICATION)
+    routed = Fake('openai', 'gpt-test', VALUE, outcome=(False, 'OPENAI_API_KEY is not set'))
+    session = LLMSession(tmp_path, default, role_providers={'triage': routed})
+    session.probe()
+    assert session.mode == 'cache-only'
+    assert session.reason == 'triage: OPENAI_API_KEY is not set'
+    roles = session.summary()['roles']
+    assert roles['triage'] == {'provider': 'openai', 'model': 'gpt-test', 'mode': 'cache-only', 'reason': 'OPENAI_API_KEY is not set'}
+    assert roles['classification']['mode'] == 'live'
+    assert session.ask('triage', EVIDENCE, {'provisions': [{'id': PROVISION}]})['status'] == 'not assessed'
+    assert routed.calls == 0
+
+
+def test_probe_checks_each_distinct_provider_once(tmp_path):
+    default = Fake('anthropic', 'claude-test', CLASSIFICATION)
+    routed = Fake('openai', 'gpt-test', VALUE)
+    session = LLMSession(tmp_path, default, role_providers={'triage': routed, 'fix': routed})
+    session.probe()
+    assert (default.probes, routed.probes) == (1, 1)
+    assert session.mode == 'live'
+
+
+def test_force_cache_only_puts_every_role_in_cache_mode(tmp_path):
+    provider = Fake('anthropic', 'claude-test', CLASSIFICATION)
+    session = LLMSession(tmp_path, provider)
+    session.probe()
+    session.force_cache_only('forced by test')
+    assert session.mode == 'cache-only'
+    assert session.reason == 'forced by test'
+    roles = session.summary()['roles']
+    assert set(roles) == set(ROLES)
+    assert {route['mode'] for route in roles.values()} == {'cache-only'}
+    assert session.ask('classification', 'column email')['status'] == 'not assessed'
+    assert provider.calls == 0
+
+
+def test_from_env_shares_one_instance_per_provider_and_model(tmp_path):
+    routes = parse_role_models(['triage=ollama:llama3.1', 'consent=ollama:qwen3.8:27b', 'fix=ollama:qwen3.8:27b'])
+    session = LLMSession.from_env(tmp_path, provider='ollama', model='llama3.1', role_models=routes)
+    assert session.role_providers['triage'] is session.provider
+    assert session.role_providers['classification'] is session.provider
+    assert session.role_providers['consent'] is session.role_providers['fix']
+    assert session.role_providers['consent'] is not session.provider
+    assert session.role_providers['consent'].model == 'qwen3.8:27b'

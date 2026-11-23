@@ -272,19 +272,14 @@ Acceptance:
 
 ## P3.2 Per-role routing and the held-out evaluation
 
-- **Routing.** A provider and model per role, set by `--role-model ROLE=PROVIDER:MODEL` or `DPDP_LLM_ROLES`. The report schema's `llm` block, the accuracy manifest and the dashboard record each role separately.
-- **Held-out set.** Built only from the Report Targets:
-  - classification: hand-checked Data Categories for unresolved Elements;
-  - triage: verdicts derived from `accuracy/juice-shop.json` matches;
-  - consent: per-criterion labels for TrackMyRupee and the consent fixtures.
-- **Evaluation command.** `dpdp-audit llm-eval` (proposed) reports the following per role and model:
-  - the primary metric (classification macro-F1, triage accuracy, consent per-criterion agreement);
-  - JSON validity;
-  - citation validity;
-  - latency.
-- **Baselines.** Measure the hosted default and the zero-shot base-model candidates. Candidates run on Ollama on the A4000.
+Status: done.
 
-Acceptance: one evaluation table covers the hosted default and every base candidate, and names the chosen base model.
+- **Routing.** `--role-model ROLE=PROVIDER:MODEL` (repeatable, on `scan`, `accuracy` and `python -m auditor.llm.prewarm`) gives classification, triage, consent or fix its own provider and model; roles not named use `--provider`/`--model`. Each role is probed separately: a role whose provider is unreachable replays its cache only, and the top-level `llm.mode` is `live` only when every role is live. The Report (schema 1.4.0) records `llm.roles` with each role's provider, model, mode and reason, and the Markdown, HTML and PDF Reports list the roles when they differ from the default. The accuracy manifest records each role's provider and model, and the replay check names the role whose model changed; a manifest without roles is read as every role on the top-level model.
+- **Held-out set.** Built only from the Report Targets ([`accuracy/llm-eval/`](../accuracy/llm-eval/README.md)): 136 classification rows (hand-checked Data Categories for unresolved Elements; null for out-of-taxonomy) and 52 Juice Shop triage verdicts derived from `accuracy/juice-shop.json` matches. No consent gold set was built.
+- **Evaluation command.** `dpdp-audit llm-eval [--role-model classification=PROVIDER:MODEL] [--role-model triage=PROVIDER:MODEL] [--default PROVIDER:MODEL]` (`auditor/llm/evaluate.py`) runs the production prompts and validity checks, counts an invalid answer as wrong, and prints one row per role: accuracy and, for classification, macro-F1, each with a 95% percentile bootstrap interval (`--bootstrap 1000 --seed 0`), plus valid answers and triage `uncertain` count. Verdicts are cached by model, so a rerun replays them.
+- **Baselines.** Measured on the hosted default and Qwen3.8 27B on Ollama on the A4000 (thinking off; results in the README). Opus 5.5 stays the model for every role.
+
+Acceptance: one evaluation table covers the hosted default and every candidate measured.
 
 ## P3.3 Distilled training set
 

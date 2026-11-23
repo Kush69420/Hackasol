@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.3.0",
+  "schema_version": "1.4.0",
   "tool": {
     "name": "dpdp-audit",
     "version": "0.1.0"
@@ -11,8 +11,8 @@
     "commit": "70a821487c193be445810d836dd9b9b9ae22eb18"
   },
   "scan": {
-    "started_at": "2026-11-23T16:18:07.865833+00:00",
-    "finished_at": "2026-11-23T16:18:09.791452+00:00",
+    "started_at": "2026-11-23T20:48:15.665614+00:00",
+    "finished_at": "2026-11-23T20:48:18.017248+00:00",
     "exclusions": [
       "**/.git/**",
       "**/node_modules/**",
@@ -37,7 +37,33 @@
     "cache_hits": 27,
     "cache_misses": 0,
     "not_assessed": 0,
-    "reason": "forced offline for artifact regeneration"
+    "reason": "forced offline for artifact regeneration",
+    "roles": {
+      "classification": {
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "mode": "cache-only",
+        "reason": "forced offline for artifact regeneration"
+      },
+      "triage": {
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "mode": "cache-only",
+        "reason": "forced offline for artifact regeneration"
+      },
+      "consent": {
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "mode": "cache-only",
+        "reason": "forced offline for artifact regeneration"
+      },
+      "fix": {
+        "provider": "omp",
+        "model": "anthropic/claude-opus-5-5",
+        "mode": "cache-only",
+        "reason": "forced offline for artifact regeneration"
+      }
+    }
   },
   "applicability_assumptions": [
     {

@@ -13,6 +13,7 @@ from pathlib import Path
 
 from auditor import legal_view
 from auditor.accuracy import ratio_text
+from auditor.llm import role_overrides
 from auditor.registry import load_registry
 from auditor.remediation import load_catalogue
 
@@ -268,6 +269,7 @@ def _sections(report):
         ["Cache misses", str(llm["cache_misses"])], ["LLM fields not assessed", str(llm["not_assessed"])],
         ["Cache-only reason", llm["reason"] or "not applicable"],
     ]
+    method_rows += [[f"LLM role {role}", f"{route['provider']}/{route['model']}"] for role, route in role_overrides(llm).items()]
     method.append(("table", (["Method", "Value"], method_rows)))
     if "accuracy" in report:
         method.extend(_accuracy_blocks(report["accuracy"]))
@@ -298,12 +300,13 @@ def _accuracy_blocks(accuracy: dict) -> list:
              ratio_text(row["recall"], row["tp"], row["tp"] + row["fn"])]
             for row in [*corpus["rules"], corpus["totals"]]]
     blocks.append(("table", (["Rule", "TP", "FP", "FN", "TN", "Precision", "Recall"], rows)))
+    overrides = [[f"LLM role {role}", f"{route['provider']}/{route['model']}"] for role, route in role_overrides(llm).items()]
     blocks.append(("table", (["Accuracy LLM provenance", "Value"], [
         ["Cache mode", llm["mode"]], ["Provider", llm["provider"]], ["Model", llm["model"]],
         ["Prompt version", llm["prompt_version"] or "none"], ["Cache hits", str(llm["cache_hits"])],
         ["Cache misses", str(llm["cache_misses"])], ["Not assessed", str(llm["not_assessed"])],
         ["Reproduces published run", "yes" if llm["reproduces_published_run"] else "no"],
-        ["Replay problems", "; ".join(llm["replay_problems"]) or "none"]])))
+        ["Replay problems", "; ".join(llm["replay_problems"]) or "none"], *overrides])))
     blocks.append(("h", "Limitations"))
     blocks.append(("list", list(accuracy["limitations"])))
     return blocks

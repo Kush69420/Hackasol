@@ -7,6 +7,24 @@
   "rules_digest": "16c6f1df4175e43ee048dd0ee52eb36634b6740fefc8a67a204c6ad9e371f858",
   "provider": "omp",
   "model": "anthropic/claude-opus-5-5",
+  "roles": {
+    "classification": {
+      "provider": "omp",
+      "model": "anthropic/claude-opus-5-5"
+    },
+    "triage": {
+      "provider": "omp",
+      "model": "anthropic/claude-opus-5-5"
+    },
+    "consent": {
+      "provider": "omp",
+      "model": "anthropic/claude-opus-5-5"
+    },
+    "fix": {
+      "provider": "omp",
+      "model": "anthropic/claude-opus-5-5"
+    }
+  },
   "prompt_version": "classification: classification-v1, consent: consent-v2, fix: fix-v1, triage: triage-v2",
   "prompt_versions": {
     "classification": "classification-v1",

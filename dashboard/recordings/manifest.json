@@ -11,14 +11,14 @@
         "md": "reports/juice-shop/report.md",
         "html": "reports/juice-shop/report.html",
         "pdf": "reports/juice-shop/report.pdf",
-        "content_sha256": "ea587d55f928a9fc23833f181ac01f16dde70266c1d911314f07790d7b3a79bc",
+        "content_sha256": "e2ee23fcf06b1cdbe2ef3861d3cf68dd680923b439d6e3d79d542a956d297ffe",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/juice-shop",
         "events": 5,
-        "recording_sha256": "5743f1417b00137d92d3e25d6e55d8b06a03b9726d0e5e9ed90f68e15d53b03c",
-        "report_sha256": "852f773737c51eec3b8f13bc3ddd3a392ea55648fcf29d9ceaa795c22bfb0f3c",
+        "recording_sha256": "5a253c2dc66865ee413d2af259c9e2ec1015cf5f09f295f45e8e64f989fdf6a6",
+        "report_sha256": "168c4694240bc2590d8289afde3190cfce32dae545e16258acfc771ebe22335b",
         "live_probe_overlay": {
           "note": "The recorded Report carries forward historical Live Probe outcomes written by `dpdp-audit probe` against the pinned image on a disposable local instance. The deliverable Report has no Live Probe overlay; playback shows past results.",
           "image": "dpdp/juice-shop:c9f99228",
@@ -33,7 +33,7 @@
         }
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T16:18:18.474817+00:00",
+        "scan_started_at": "2026-11-23T20:48:27.289334+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "omp",
         "llm_model": "anthropic/claude-opus-5-5",
@@ -61,17 +61,17 @@
         "md": "reports/ai-kyc-platform/report.md",
         "html": "reports/ai-kyc-platform/report.html",
         "pdf": "reports/ai-kyc-platform/report.pdf",
-        "content_sha256": "ddc4c4ed192454baaa6ebba027243a1dfbe938d7358777cd6797faa43d65052d",
+        "content_sha256": "74d6a8ac78871e6473bbd08aac916aa5ea980cfaf11a5e2fff8172d5a984eb59",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/ai-kyc-platform",
         "events": 5,
-        "recording_sha256": "247b72f3d1f42e9e25b1cedaaeef29f4be00cedf85a55b4c6a8d9183a6c88e0b",
-        "report_sha256": "12455070388c48466b27587292cff6866512a21773ca309504415ab0aed71dff"
+        "recording_sha256": "3bd03850c12a2982aef674817955249eaa5a52a455cb7a3e01ff5640e1db74d4",
+        "report_sha256": "cd45678238f8ecd0e1b6095138707df9b805f99b5fe46c7a9e605a2e1ef2dccb"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T16:18:12.211596+00:00",
+        "scan_started_at": "2026-11-23T20:48:20.274013+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "omp",
         "llm_model": "anthropic/claude-opus-5-5",
@@ -100,14 +100,14 @@
         "md": "reports/trackmyrupee/report.md",
         "html": "reports/trackmyrupee/report.html",
         "pdf": "reports/trackmyrupee/report.pdf",
-        "content_sha256": "497303f59381e494ebb65defc51cc040c0611bae3769d1d042361e06d5f75eff",
+        "content_sha256": "c3118e7d239a7b8a374d13e948946c3007e04fece510f0c456f4268374839ff1",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/trackmyrupee",
         "events": 5,
-        "recording_sha256": "9abf9bb919765479d0803a8d6fb5a7459fde573f702163a36738d9ea2f2b1914",
-        "report_sha256": "b678b60ae33b99f618120fa3fe85c52e879bd242c4bf5f07790a1f6a4cc41b4e",
+        "recording_sha256": "273429590efe0cb091bf82234146bdb230d01651acfe40450c5930c466eae2d6",
+        "report_sha256": "a90ec705a2cec42951df1867bd9ed9bad3b21a91091c37a6e94a9fa312efec56",
         "live_probe_overlay": {
           "note": "The recorded Report carries forward historical Live Probe outcomes written by `dpdp-audit probe` against a clean copy of the pinned revision. The deliverable Report remains the static scan alone. The outcomes sit on the Consent Assessment criteria (`live_probes`, `live_probe_run`) and create no Finding; Replay Mode shows past results. The disposable Django instance ran in debug mode on loopback HTTP with a throwaway signing key and fresh SQLite so no real accounts or data were used. It raised the signup limit from 3/h per IP (finance_tracker/settings.py:419-425) to 100/h to create the run's accounts; rate limiting was not under test. It required email verification and used a file mailbox to verify synthetic accounts without sending mail. It used PostHog SDK 3.25.0 (the pin requires posthog>=3.5.0; 8.1.0 changed capture and removed module-level identify), a synthetic PostHog key and a run-scoped loopback sink to observe only this run's analytics without external delivery.",
           "observed_at": "2026-11-23T14:19:33+00:00",
@@ -167,7 +167,7 @@
         }
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T16:18:17.276566+00:00",
+        "scan_started_at": "2026-11-23T20:48:26.376077+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "omp",
         "llm_model": "anthropic/claude-opus-5-5",
@@ -196,17 +196,17 @@
         "md": "reports/singharya-e-kyc/report.md",
         "html": "reports/singharya-e-kyc/report.html",
         "pdf": "reports/singharya-e-kyc/report.pdf",
-        "content_sha256": "68d00c0bf10ee6cbb935a5ba4202e7eeae88a8feb75eb1f92cebaa039f65cf5c",
+        "content_sha256": "9d542012a67ff3453c8d91c2912301bb6491cd072d583be7f162b0d6c54620fa",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/singharya-e-kyc",
         "events": 5,
-        "recording_sha256": "58fc5e9297e278fede58c00319f7c7da617c6087ba9a40e7f11b35ca22041d58",
-        "report_sha256": "c9178b58584dbbd5fee75cc8e747a4a9e5241f1081a2a1c0bb5f60ed151761c0"
+        "recording_sha256": "fcd320078292d058874172ea45678712e66319395e78d001f23610eb64d764a5",
+        "report_sha256": "2febcd285cdb848f087e21f3bf1828f3e4e0573dc5875358f3ed41302fe2c186"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T16:18:10.652991+00:00",
+        "scan_started_at": "2026-11-23T20:48:18.630190+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "omp",
         "llm_model": "anthropic/claude-opus-5-5",
@@ -235,17 +235,17 @@
         "md": "reports/juice-shop-fork/report.md",
         "html": "reports/juice-shop-fork/report.html",
         "pdf": "reports/juice-shop-fork/report.pdf",
-        "content_sha256": "80b8d14efa4076e6de6b13a86bbb11fbeeb0755e27700541c22e4104ab64b8f5",
+        "content_sha256": "ff15aac818775326b0596b2054929c75e81f28f5edd8022b56c629742bc14dcd",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/juice-shop-fork",
         "events": 5,
-        "recording_sha256": "d7dad2238f3ce10f92a04f8ccc96ad028ad2f9ab6cb01bbc145b874c37b00f6d",
-        "report_sha256": "bf2de2dbbf3e94c7cc687a370b39eaf416a0ff0f98eab4841bf055a65de3a84a"
+        "recording_sha256": "bf2b40f1eee06868e7d57ca965396c441d039581709080ad2dccb6a76958714b",
+        "report_sha256": "5d53fbb07762ffe1d4145775016c1f5ea87a5bb123960c5ef4cb66de0739c79c"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T16:18:18.091584+00:00",
+        "scan_started_at": "2026-11-23T20:58:23.011095+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "omp",
         "llm_model": "anthropic/claude-opus-5-5",

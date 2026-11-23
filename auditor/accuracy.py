@@ -16,6 +16,8 @@ import hashlib
 import json
 from pathlib import Path, PurePosixPath
 
+from auditor.llm import ROLES, role_overrides
+
 REPO = Path(__file__).resolve().parents[1]
 REFERENCE_PATH = Path("accuracy/juice-shop.json")
 CACHE_DIR = Path("accuracy/cache")
@@ -189,6 +191,7 @@ def build_manifest(report: dict, cache_dir: Path = CACHE_DIR) -> dict:
             "target": {"name": report["target"]["name"], "commit": report["target"]["commit"]},
             "rules_digest": rules_digest(),
             "provider": llm["provider"], "model": llm["model"],
+            "roles": {role: {"provider": route["provider"], "model": route["model"]} for role, route in llm["roles"].items()},
             "prompt_version": prompt_version(llm), "prompt_versions": dict(llm["prompt_versions"]),
             "cache_identity": CACHE_IDENTITY, "cache_dir": Path(cache_dir).as_posix(),
             # Fields the published run itself left unassessed (provider gave no valid verdict); a replay
@@ -213,11 +216,17 @@ def replay_status(report: dict, cache_dir: Path = CACHE_DIR) -> dict:
         manifest = None
         problems.append(f"no replay manifest at {Path(cache_dir) / MANIFEST_NAME}")
     if manifest:
+        # A manifest written before per-role routing has no roles: every role then ran on the top-level route.
+        manifest_roles = manifest.get("roles") or {
+            role: {"provider": manifest["provider"], "model": manifest["model"]} for role in ROLES}
         expected = {"target commit": (manifest["target"]["commit"], report["target"]["commit"]),
                     "Rules digest": (manifest["rules_digest"], rules_digest()),
                     "provider": (manifest["provider"], llm["provider"]),
                     "model": (manifest["model"], llm["model"]),
                     "prompt version": (manifest["prompt_version"], prompt_version(llm))}
+        for role in ROLES:
+            expected[f"{role} provider"] = (manifest_roles[role]["provider"], llm["roles"][role]["provider"])
+            expected[f"{role} model"] = (manifest_roles[role]["model"], llm["roles"][role]["model"])
         problems += [f"{name} differs from the manifest" for name, (want, got) in expected.items() if want != got]
     if llm["mode"] != "cache-only":
         problems.append("run was not cache-only")
@@ -229,7 +238,8 @@ def replay_status(report: dict, cache_dir: Path = CACHE_DIR) -> dict:
             "prompt_version": prompt_version(llm), "cache_hits": llm["cache_hits"],
             "cache_misses": llm["cache_misses"], "not_assessed": llm["not_assessed"],
             "reproduces_published_run": not problems,
-            "replay_problems": problems}
+            "replay_problems": problems,
+            "roles": {role: dict(route) for role, route in llm["roles"].items()}}
 
 
 # --- cache-only scan and full accuracy block ------------------------------------------------
@@ -242,7 +252,7 @@ def forced_cache_only():
     from auditor.llm import LLMSession
 
     def probe(self):
-        self.mode, self.reason = "cache-only", "forced by dpdp-audit accuracy --cache-only"
+        self.force_cache_only("forced by dpdp-audit accuracy --cache-only")
 
     with mock.patch.object(LLMSession, "probe", probe):
         yield
@@ -261,7 +271,7 @@ def build_accuracy(report: dict, reference: dict, corpus: dict, *, reference_pat
 
 def run_accuracy(target: str, *, reference_path: Path = REFERENCE_PATH, cache_dir: Path = CACHE_DIR,
                  provider: str | None = None, model: str | None = None, commit: str | None = None,
-                 write_manifest_file: bool = False) -> dict:
+                 role_models: dict | None = None, write_manifest_file: bool = False) -> dict:
     """Cache-only scan, scoring and corpus evaluation; returns the validated Report with `accuracy`."""
     from concurrent.futures import ThreadPoolExecutor
 
@@ -271,7 +281,8 @@ def run_accuracy(target: str, *, reference_path: Path = REFERENCE_PATH, cache_di
     reference = load_reference(reference_path)
     # The corpus uses its own fixtures and no LLM; it can run while the Target is scanned.
     with forced_cache_only(), ThreadPoolExecutor(max_workers=1) as pool:
-        target_report = pool.submit(run_scan, target, commit=commit, provider=provider, model=model, cache_dir=cache_dir)
+        target_report = pool.submit(run_scan, target, commit=commit, provider=provider, model=model,
+                                    role_models=role_models, cache_dir=cache_dir)
         corpus = evaluate_corpus()
         report = target_report.result()
     if write_manifest_file:
@@ -302,6 +313,7 @@ def summary_lines(accuracy: dict) -> list[str]:
                      f"{llm['cache_hits']} hit(s), {llm['cache_misses']} miss(es), {llm['not_assessed']} not assessed; "
                      f"reproduces published run: {'yes' if llm['reproduces_published_run'] else 'no'}")
         lines += [f"  - {p}" for p in llm["replay_problems"]]
+        lines += [f"LLM role {role}: {route['provider']}/{route['model']}" for role, route in role_overrides(llm).items()]
     return lines
 
 
@@ -415,6 +427,7 @@ def render_results_markdown(report: dict, reference: dict, *, command: str, dige
               f"- Cache: {llm['cache_hits']} hit(s), {llm['cache_misses']} miss(es), {llm['not_assessed']} not assessed",
               f"- Reproduces published run: {'yes' if llm['reproduces_published_run'] else 'no'}"]
     lines += [f"  - {p}" for p in llm["replay_problems"]]
+    lines += [f"- LLM role {role}: {route['provider']}/{route['model']}" for role, route in role_overrides(llm).items()]
     lines += ["", "## Method", "", accuracy["method"], "", "## Limitations", ""]
     lines += [f"- {item}" for item in accuracy["limitations"]]
     return "\n".join(lines) + "\n"

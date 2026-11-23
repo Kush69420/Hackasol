@@ -45,9 +45,11 @@ ADR 0003 stands: every Finding comes from the deterministic core, and the LLM ne
 
 ## Outcome
 
-This outcome covers the Retrieval section only (P3.1 in `docs/plan.md`). The fine-tuned model and per-role routing are not covered.
+This outcome covers Retrieval (P3.1 in `docs/plan.md`) and Routing (P3.2).
 
 - **Corpus.** The index is built from the committed Provision registry excerpts and the Labelled Corpus fixtures. The remediation catalogue supplies seed Provisions and Issue Type titles; it is not a document set. No statute PDF text (indiacode or egazette) is extracted or indexed, and there is no index file or build command.
 - **Retrieval.** Triage receives 8 Provisions and the nearest positive and negative fixture. Consent receives 24 Provisions: 20 seed Provisions for CON-01 to CON-07, then BM25 over the masked serialised consent graph. These counts are set in `auditor/mapping.py` and `auditor/consent/criteria.py`; the decision above does not state them.
 - **Grounding.** A citation outside the retrieved set makes the response invalid, and the field is `not assessed`, as decided.
 - **Regeneration.** Commit `69ac7bf` replaced the cache, the Juice Shop Report, `accuracy/results.md` and the manifest. The model changed from `anthropic/claude-haiku-5-5` to `anthropic/claude-opus-5-5` for every role, so the regeneration was a model change as well as a prompt change. The commit removed 178 cache entries and added 192: 79 classification-v1, 64 triage-v2, 1 consent-v2 and 48 fix-v1, all via `omp`.
+- **Routing.** Built as decided: `--role-model ROLE=PROVIDER:MODEL` sets a role's provider and model, and the Report (schema 1.4.0, `llm.roles`) and the accuracy manifest record each role. Cache keys are unchanged (masked input, prompt version, model, context), so two routes with the same model name under different providers would share entries; each cached record names its provider.
+- **Model choice.** `dpdp-audit llm-eval` on the held-out set: Opus 5.5 classification accuracy 86.5% (95% CI 79.8–93.3), triage 76.9% (65.4–86.5); Qwen3.8 27B on Ollama, thinking off, 57.7% (48.1–67.3) and 73.1% (59.6–84.6). Every role stays on Opus 5.5.

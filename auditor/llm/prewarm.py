@@ -12,19 +12,19 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from auditor.llm import LLMSession
+from auditor.llm import LLMSession, parse_role_models
 from auditor.scan import run_scan
 
 
 class _MissRecorder(LLMSession):
     """Cache-only session that records the arguments of every unanswered ask."""
 
-    def __init__(self, cache_dir, provider):
-        super().__init__(cache_dir, provider)
+    def __init__(self, cache_dir, provider, role_providers):
+        super().__init__(cache_dir, provider, role_providers)
         self.misses = {}
 
     def probe(self):
-        self.mode, self.reason = 'cache-only', 'prewarm capture'
+        self.force_cache_only('prewarm capture')
 
     def ask(self, role, snippet, context=None):
         result = super().ask(role, snippet, context)
@@ -33,16 +33,16 @@ class _MissRecorder(LLMSession):
         return result
 
 
-def prewarm(source, *, cache_dir, provider=None, model=None, commit=None, workers=8, max_rounds=4,
+def prewarm(source, *, cache_dir, provider=None, model=None, role_models=None, commit=None, workers=8, max_rounds=4,
             targets_dir=Path('targets'), log=print):
     """Return per-round counts; the last round has zero misses unless the provider kept failing."""
-    live = LLMSession.from_env(cache_dir=cache_dir, provider=provider, model=model)
+    live = LLMSession.from_env(cache_dir=cache_dir, provider=provider, model=model, role_models=role_models)
     live.probe()
     if live.mode != 'live':
         raise RuntimeError(f'provider is not reachable: {live.reason}')
     rounds, failed = [], set()
     for number in range(1, max_rounds + 1):
-        recorder = _MissRecorder(cache_dir, live.provider)
+        recorder = _MissRecorder(cache_dir, live.provider, live.role_providers)
         run_scan(source, commit=commit, cache_dir=cache_dir, targets_dir=targets_dir, session=recorder)
         pending = {key: args for key, args in recorder.misses.items() if key not in failed}
         if not pending:
@@ -64,12 +64,17 @@ def main(argv=None):
     parser.add_argument('--cache-dir', type=Path, default=Path('.dpdp-cache'))
     parser.add_argument('--provider')
     parser.add_argument('--model')
+    parser.add_argument('--role-model', action='append', metavar='ROLE=PROVIDER:MODEL')
     parser.add_argument('--commit')
     parser.add_argument('--workers', type=int, default=8)
     parser.add_argument('--max-rounds', type=int, default=4)
     args = parser.parse_args(argv)
+    try:
+        role_models = parse_role_models(args.role_model)
+    except ValueError as exc:
+        parser.error(str(exc))
     rounds = prewarm(args.target, cache_dir=args.cache_dir, provider=args.provider, model=args.model,
-                     commit=args.commit, workers=args.workers, max_rounds=args.max_rounds)
+                     role_models=role_models, commit=args.commit, workers=args.workers, max_rounds=args.max_rounds)
     return 0 if rounds and rounds[-1]['asked'] == 0 else 1
 
 

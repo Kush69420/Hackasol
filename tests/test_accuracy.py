@@ -235,6 +235,37 @@ def test_cache_replay_manifest_must_match_rules_digest_and_provenance(tmp_path):
     assert status["reproduces_published_run"] is False and "Rules digest differs from the manifest" in status["replay_problems"]
 
 
+def test_cache_replay_manifest_checks_each_role_route(tmp_path):
+    report = make_report(mode="cache-only", reason="forced")
+    report["llm"].update(provider="anthropic", model="claude-test", cache_hits=3, cache_misses=0, not_assessed=0)
+    report["llm"]["prompt_versions"] = {"triage": "triage-v2"}
+    report["llm"]["roles"]["triage"] = {"provider": "openai", "model": "gpt-test", "mode": "cache-only", "reason": "forced"}
+    acc.write_manifest(report, tmp_path)
+    manifest = json.loads((tmp_path / acc.MANIFEST_NAME).read_text())
+    assert manifest["roles"]["triage"]["model"] == "gpt-test"
+    assert acc.replay_status(report, tmp_path)["reproduces_published_run"] is True
+    manifest["roles"]["triage"]["model"] = "other"
+    (tmp_path / acc.MANIFEST_NAME).write_text(json.dumps(manifest))
+    status = acc.replay_status(report, tmp_path)
+    assert status["reproduces_published_run"] is False
+    assert "triage model differs from the manifest" in status["replay_problems"]
+
+
+def test_cache_replay_manifest_without_roles_still_reproduces(tmp_path):
+    report = make_report(mode="cache-only", reason="forced")
+    report["llm"].update(provider="anthropic", model="claude-test", cache_hits=3, cache_misses=0, not_assessed=0)
+    report["llm"]["prompt_versions"] = {"triage": "triage-v2"}
+    acc.write_manifest(report, tmp_path)
+    manifest = json.loads((tmp_path / acc.MANIFEST_NAME).read_text())
+    del manifest["roles"]
+    (tmp_path / acc.MANIFEST_NAME).write_text(json.dumps(manifest))
+    assert acc.replay_status(report, tmp_path)["reproduces_published_run"] is True
+    report["llm"]["roles"]["triage"]["model"] = "other"
+    status = acc.replay_status(report, tmp_path)
+    assert status["reproduces_published_run"] is False
+    assert "triage model differs from the manifest" in status["replay_problems"]
+
+
 # --- reference list -------------------------------------------------------------------------
 
 REFERENCE = REPO / "accuracy" / "juice-shop.json"

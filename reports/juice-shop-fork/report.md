@@ -5061,7 +5061,7 @@ Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only
 | Target source | targets/juice-shop-fork |
 | Exclusions | **/.git/**, **/node_modules/**, data/static/codefixes/**, test/**, frontend/**/*.spec.ts |
 | Files scanned | 1042 |
-| Files excluded | 495 |
+| Files excluded | 457 |
 | Rule count | 65 |
 | LLM provider | omp |
 | LLM model | anthropic/claude-opus-5-5 |

@@ -7,6 +7,7 @@ import pytest
 from auditor import cli, scan
 from auditor.exclusions import exclusions_for, iter_target_files
 from auditor.inputs import resolve_target
+from auditor.llm import ROLES
 from auditor.schema import ReportValidationError, validate_report
 
 
@@ -85,16 +86,18 @@ def test_exclusions(tmp_path):
 def test_report_and_cli(tmp_path, monkeypatch, capsys, mode):
     class FakeSession:
         @classmethod
-        def from_env(cls, cache_dir, provider=None, model=None):
+        def from_env(cls, cache_dir, provider=None, model=None, role_models=None):
             return cls()
 
         def probe(self):
             pass
 
         def summary(self):
+            reason = "unreachable" if mode == "cache-only" else None
+            route = {"provider": "openai", "model": "test-model", "mode": mode, "reason": reason}
             return {"mode": mode, "provider": "openai", "model": "test-model",
                     "prompt_versions": {}, "cache_hits": 0, "cache_misses": 0,
-                    "not_assessed": 0, "reason": "unreachable" if mode == "cache-only" else None}
+                    "not_assessed": 0, "reason": reason, "roles": {role: dict(route) for role in ROLES}}
 
     monkeypatch.setattr(scan, "LLMSession", FakeSession)
     target = tmp_path / "app"
@@ -122,3 +125,64 @@ def test_validation_failure_does_not_write(tmp_path, monkeypatch, capsys):
     assert cli.main(["scan", str(tmp_path), "--out", str(destination)]) == 1
     assert not destination.exists()
     assert "invalid Report" in capsys.readouterr().err
+
+
+def test_role_model_flags_reach_the_session(tmp_path, monkeypatch):
+    seen = {}
+
+    class FakeSession:
+        @classmethod
+        def from_env(cls, cache_dir, provider=None, model=None, role_models=None):
+            seen["role_models"] = role_models
+            return cls()
+
+        def probe(self):
+            pass
+
+        def summary(self):
+            routes = {role: {"provider": "anthropic", "model": "claude-test", "mode": "live", "reason": None}
+                      for role in ROLES}
+            routes["triage"] = {"provider": "openai", "model": "gpt-test", "mode": "live", "reason": None}
+            return {"mode": "live", "provider": "anthropic", "model": "claude-test",
+                    "prompt_versions": {}, "cache_hits": 0, "cache_misses": 0,
+                    "not_assessed": 0, "reason": None, "roles": routes}
+
+    monkeypatch.setattr(scan, "LLMSession", FakeSession)
+    target = tmp_path / "app"
+    target.mkdir()
+    (target / "app.txt").write_text("application", encoding="utf-8")
+    destination = tmp_path / "report.json"
+    assert cli.main(["scan", str(target), "--out", str(destination), "--role-model", "triage=openai:gpt-test"]) == 0
+    assert seen["role_models"] == {"triage": ("openai", "gpt-test")}
+    report = json.loads(destination.read_text(encoding="utf-8"))
+    validate_report(report)
+    assert report["llm"]["roles"]["triage"]["provider"] == "openai"
+
+
+def test_malformed_role_model_is_a_usage_error(tmp_path, capsys):
+    with pytest.raises(SystemExit) as exit_info:
+        cli.main(["scan", str(tmp_path), "--role-model", "judge=ollama:llama3.1"])
+    assert exit_info.value.code == 2
+    assert "judge" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("command", ["scan", "accuracy", "llm-eval"])
+def test_role_model_flag_is_listed_in_help(command, capsys):
+    with pytest.raises(SystemExit) as exit_info:
+        cli.main([command, "--help"])
+    assert exit_info.value.code == 0
+    assert "--role-model ROLE=PROVIDER:MODEL" in capsys.readouterr().out
+
+
+def test_llm_eval_dispatches_to_the_evaluator(monkeypatch):
+    from auditor.llm import evaluate
+
+    seen = {}
+
+    def fake_run(args):
+        seen["args"] = args
+        return 7
+
+    monkeypatch.setattr(evaluate, "run", fake_run)
+    assert cli.main(["llm-eval", "--role-model", "triage=openai:gpt-test"]) == 7
+    assert seen["args"].role_model == ["triage=openai:gpt-test"]

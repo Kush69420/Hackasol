@@ -83,6 +83,8 @@ SEC-03 and CHI-* are covered only on synthetic corpus cases; the Coverage Matrix
 
 Set `DPDP_LLM_PROVIDER` to `anthropic`, `openai`, `gemini`, `ollama` or `omp`, and optionally set `DPDP_LLM_MODEL`. Hosted providers use `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` or `GEMINI_API_KEY`, respectively. Ollama uses `OLLAMA_HOST`; `omp` runs headlessly and must be available on PATH. Personal Data is masked before LLM egress.
 
+To give one role its own model, add `--role-model ROLE=PROVIDER:MODEL` (repeatable; roles `classification`, `triage`, `consent`, `fix`) to `dpdp-audit scan` or `dpdp-audit accuracy`, for example `--role-model classification=ollama:qwen3.8:27b`. Roles not named use the default provider and model. Each role's provider is probed separately, and the Report records every role's provider, model and mode in `llm.roles`.
+
 Every scan probes its configured LLM provider. If unavailable, cache-only mode replays matching entries; uncached LLM fields are `not assessed`. The Report discloses this through `llm.mode` and `llm.reason`, and the command reports it on stderr. Cache-only mode does not imply that unassessed fields were assessed.
 
 ## Retrieval grounding, dataset and local models
@@ -95,12 +97,12 @@ Every scan probes its configured LLM provider. If unavailable, cache-only mode r
 
 **Local fine-tune.** On an RTX A4000 we trained a QLoRA adapter (rank 16, learning rate 2e-4, 4,096-token rows, 2 epochs) on `unsloth/Qwen3-8B-bnb-4bit` over the 1,190 training rows: 34 minutes, 8.6 GB peak reserved memory, validation loss 0.292 → 0.235. The merged model was quantised to Q5_K_M and served through Ollama as `dpdp-auditor:ft-20261123-2033`; it returned valid answers on a classification and a triage smoke prompt. It was not scored on the held-out set, and the Auditor does not use it. Scripts and the run record: [`training/`](training/README.md), [`training/runs/ft-20261123-2033.json`](training/runs/ft-20261123-2033.json).
 
-**Model comparison.** `training/evaluate.py` scores any model on the held-out Report Target set in [`accuracy/llm-eval/`](accuracy/llm-eval/README.md) (136 classification rows, 52 Juice Shop triage labels), using the production prompts and validity checks; an invalid answer counts as wrong.
+**Model comparison.** `dpdp-audit llm-eval` scores models on the held-out Report Target set in [`accuracy/llm-eval/`](accuracy/llm-eval/README.md) (136 classification rows, of which 104 have a Data Category, and 52 Juice Shop triage labels), using the production prompts and validity checks; an invalid answer counts as wrong. `--role-model classification=PROVIDER:MODEL` and `--role-model triage=PROVIDER:MODEL` choose each role's model (default `--default omp:anthropic/claude-opus-5-5`), and every metric carries a 95% percentile bootstrap interval (1,000 resamples, seed 0).
 
-| Model | Classification accuracy | Classification macro-F1 | Triage accuracy | Valid answers |
+| Model | Classification accuracy (95% CI) | Classification macro-F1 (95% CI) | Triage accuracy (95% CI) | Valid answers |
 |---|---:|---:|---:|---:|
-| Opus 5.5 (`omp`) | 86.5% | 41.8% | 76.9% | 188/188 |
-| Qwen3.8 27B (Ollama, thinking off) | 57.7% | 32.7% | 73.1% | 188/188 |
+| Opus 5.5 (`omp`) | 86.5% (79.8–93.3) | 41.8% (31.4–65.3) | 76.9% (65.4–86.5) | 188/188 |
+| Qwen3.8 27B (Ollama, thinking off) | 57.7% (48.1–67.3) | 32.7% (19.3–54.0) | 73.1% (59.6–84.6) | 188/188 |
 
 Qwen3.8 ran on the A4000 with 23% of the model on the CPU, at about 10 seconds per item.
 

@@ -1,5 +1,6 @@
 """accuracy/results.md renderer and the cache-only no-network guarantee."""
 from auditor import accuracy as acc
+from auditor.llm import ROLES
 
 REFERENCE = {"target": {"name": "t", "commit": "a" * 40}, "entries": [
     {"id": "REF-001", "issue_type": "SEC-01", "status": "confirmed", "file": "a", "start_line": 1, "end_line": 2},
@@ -25,7 +26,9 @@ def report(live_probe=None):
             "labelled_corpus": {"rules": [{"rule_id": "SEC-01-r", **row}], "totals": row},
             "llm": {"mode": "cache-only", "provider": "p", "model": "m", "prompt_version": "v1", "cache_hits": 3,
                     "cache_misses": 1, "not_assessed": 1, "reproduces_published_run": False,
-                    "replay_problems": ["1 cache miss(es)"]},
+                    "replay_problems": ["1 cache miss(es)"],
+                    "roles": {role: {"provider": "p", "model": "m", "mode": "cache-only", "reason": "forced"}
+                              for role in ROLES}},
             "method": "METHOD", "limitations": ["LIM"]}}
 
 
@@ -73,7 +76,8 @@ def test_accuracy_records_public_reproducible_command(tmp_path, monkeypatch):
 
     result = report()
     result["target"].update(kind="git", source="https://host/repo.git")
-    result["llm"] = {"provider": "ollama", "model": "actual-model"}
+    result["llm"] = {"provider": "ollama", "model": "actual-model",
+                     "roles": {role: {"provider": "ollama", "model": "actual-model"} for role in ROLES}}
     captured = {}
     monkeypatch.setattr(cli, "run_accuracy", lambda *a, **kw: result)
     monkeypatch.setattr(cli, "write_reports", lambda *a: None)
@@ -86,3 +90,22 @@ def test_accuracy_records_public_reproducible_command(tmp_path, monkeypatch):
     assert "https://host/repo.git" in command
     assert "--commit " + "a" * 40 in command
     assert "--provider ollama --model actual-model" in command
+
+
+def test_accuracy_passes_role_models_and_repeats_them_in_the_command(tmp_path, monkeypatch):
+    from auditor import cli
+
+    result = report()
+    result["target"].update(kind="git", source="https://host/repo.git")
+    result["llm"] = {"provider": "ollama", "model": "actual-model",
+                     "roles": {role: {"provider": "ollama", "model": "actual-model"} for role in ROLES}}
+    result["llm"]["roles"]["triage"] = {"provider": "openai", "model": "gpt-test"}
+    seen, captured = {}, {}
+    monkeypatch.setattr(cli, "run_accuracy", lambda *a, **kw: seen.update(kw) or result)
+    monkeypatch.setattr(cli, "write_reports", lambda *a: None)
+    monkeypatch.setattr(cli, "load_reference", lambda *a: REFERENCE)
+    monkeypatch.setattr(cli, "write_results", lambda *a, **kw: captured.update(kw))
+    assert cli.main(["accuracy", "https://host/repo.git", "--results", str(tmp_path / "results.md"),
+                     "--role-model", "triage=openai:gpt-test"]) == 0
+    assert seen["role_models"] == {"triage": ("openai", "gpt-test")}
+    assert "--role-model triage=openai:gpt-test" in captured["command"]

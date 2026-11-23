@@ -3,6 +3,7 @@
 import pytest
 
 from auditor.consent.criteria import assess_consent
+from auditor.llm import ROLES
 from auditor.schema import SCHEMA_VERSION, ReportValidationError, validate_finding, validate_report
 from test_consent_assessment_criteria import empty_graph
 
@@ -90,6 +91,10 @@ def make_report(findings=(), mode="live", reason=None, **overrides):
             "cache_misses": 0,
             "not_assessed": 0,
             "reason": reason,
+            "roles": {
+                role: {"provider": "anthropic", "model": "claude-test", "mode": mode, "reason": reason}
+                for role in ROLES
+            },
         },
         "applicability_assumptions": [
             {
@@ -272,3 +277,38 @@ def test_cache_only_report_without_reason_is_rejected():
 def test_duplicate_finding_ids_are_rejected():
     with pytest.raises(ReportValidationError, match="duplicate finding id SEC-01-0123456789ab"):
         validate_report(make_report([finding(), finding()]))
+
+
+def test_mixed_role_report_is_valid():
+    report = make_report([finding()])
+    report["llm"]["mode"] = "cache-only"
+    report["llm"]["reason"] = "triage: OPENAI_API_KEY is not set"
+    report["llm"]["roles"]["triage"] = {"provider": "openai", "model": "gpt-test", "mode": "cache-only", "reason": "OPENAI_API_KEY is not set"}
+    validate_report(report)
+
+
+def test_llm_route_reason_must_follow_its_mode():
+    report = make_report(mode="cache-only", reason="No provider reachable; replaying cached verdicts.")
+    report["llm"]["roles"]["triage"]["reason"] = None
+    with pytest.raises(ReportValidationError):
+        validate_report(report)
+    report = make_report()
+    report["llm"]["roles"]["fix"]["reason"] = "stale"
+    with pytest.raises(ReportValidationError):
+        validate_report(report)
+
+
+def test_llm_roles_are_exactly_the_four_prompt_roles():
+    assert set(ROLES) == {"classification", "triage", "consent", "fix"}
+    report = make_report()
+    del report["llm"]["roles"]["fix"]
+    with pytest.raises(ReportValidationError):
+        validate_report(report)
+    report = make_report()
+    report["llm"]["roles"]["judge"] = {"provider": "anthropic", "model": "claude-test", "mode": "live", "reason": None}
+    with pytest.raises(ReportValidationError):
+        validate_report(report)
+    report = make_report()
+    del report["llm"]["roles"]
+    with pytest.raises(ReportValidationError):
+        validate_report(report)

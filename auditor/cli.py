@@ -9,6 +9,7 @@ import sys
 
 from auditor.accuracy import (CACHE_DIR, CorpusError, REFERENCE_PATH, RESULTS_PATH, evaluate_corpus, load_reference,
                               run_accuracy, summary_lines, write_results)
+from auditor.llm import parse_role_models, role_overrides
 from auditor.masking import public_source
 from auditor.report import write_reports
 from auditor.rules_list import generate_rules_list
@@ -26,6 +27,8 @@ def main(argv: list[str] | None = None) -> int:
     scan.add_argument("--commit", help="Git commit to check out for a Git URL")
     scan.add_argument("--provider", choices=["anthropic", "openai", "gemini", "ollama", "omp"])
     scan.add_argument("--model")
+    scan.add_argument("--role-model", action="append", metavar="ROLE=PROVIDER:MODEL",
+                      help="route one LLM role to its own provider and model (repeatable)")
     scan.add_argument("--cache-dir", type=Path, default=Path(".dpdp-cache"))
     scan.add_argument("--inventory-only", action="store_true",
                       help="write the source-anchored application inventory instead of a Report")
@@ -40,6 +43,8 @@ def main(argv: list[str] | None = None) -> int:
     accuracy.add_argument("--commit", help="Git commit to check out for a Git URL")
     accuracy.add_argument("--provider", choices=["anthropic", "openai", "gemini", "ollama", "omp"])
     accuracy.add_argument("--model")
+    accuracy.add_argument("--role-model", action="append", metavar="ROLE=PROVIDER:MODEL",
+                          help="route one LLM role to its own provider and model (repeatable)")
     accuracy.add_argument("--cache-dir", type=Path, default=CACHE_DIR)
     accuracy.add_argument("--write-manifest", action="store_true",
                           help="record the replay manifest in the cache dir (regeneration after a Rule or prompt change)")
@@ -79,12 +84,18 @@ def main(argv: list[str] | None = None) -> int:
     rules = commands.add_parser("rules", help="Rules shipped with the Auditor")
     rules.add_subparsers(dest="rules_command", required=True).add_parser(
         "list", help="print the Rules List (RULES.md) generated from the Rule files")
+    from auditor.llm import evaluate
+    llm_eval = commands.add_parser("llm-eval", help="score each LLM role on the held-out labelled set")
+    evaluate.add_arguments(llm_eval)
     args = parser.parse_args(argv)
     if args.command == "rules":
         sys.stdout.write(generate_rules_list())
         return 0
     if args.command == "accuracy":
         return _accuracy(args, parser)
+    if args.command == "llm-eval":
+        from auditor.llm import evaluate
+        return evaluate.run(args)
     if args.command == "probe":
         from auditor.probes import probe_report
         try:
@@ -145,7 +156,7 @@ def main(argv: list[str] | None = None) -> int:
             default_name = "inventory.json"
         else:
             report = run_scan(args.target, commit=args.commit, provider=args.provider,
-                              model=args.model, cache_dir=args.cache_dir)
+                              model=args.model, role_models=_role_models(parser, args), cache_dir=args.cache_dir)
             default_name = "report.sarif" if args.format == "sarif" else "report.json"
         destination = args.out or Path("reports") / report["target"]["name"] / default_name
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -164,6 +175,14 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
+def _role_models(parser, args) -> dict:
+    """--role-model specs as {role: (provider, model)}; a malformed spec is a usage error (exit status 2)."""
+    try:
+        return parse_role_models(args.role_model)
+    except ValueError as exc:
+        parser.error(str(exc))
+
+
 def _accuracy(args, parser) -> int:
     try:
         if args.corpus_only:
@@ -173,8 +192,8 @@ def _accuracy(args, parser) -> int:
         if not args.target:
             parser.error("accuracy needs a target unless --corpus-only is given")
         report = run_accuracy(args.target, reference_path=args.reference, cache_dir=args.cache_dir,
-                              provider=args.provider, model=args.model, commit=args.commit,
-                              write_manifest_file=args.write_manifest)
+                              provider=args.provider, model=args.model, role_models=_role_models(parser, args),
+                              commit=args.commit, write_manifest_file=args.write_manifest)
         destination = args.out or Path("reports") / report["target"]["name"] / "report.json"
         write_reports(report, destination)
         if args.results:
@@ -183,6 +202,8 @@ def _accuracy(args, parser) -> int:
             if report["target"].get("kind") == "git" and report["target"].get("commit"):
                 parts += ["--commit", report["target"]["commit"]]
             parts += ["--provider", report["llm"]["provider"], "--model", report["llm"]["model"]]
+            for role, route in role_overrides(report["llm"]).items():
+                parts += ["--role-model", f"{role}={route['provider']}:{route['model']}"]
             command = "dpdp-audit accuracy " + " ".join(shlex.quote(p) for p in parts)
             write_results(report, load_reference(args.reference), command=command, path=args.results)
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError, ReportValidationError, CorpusError) as exc:
