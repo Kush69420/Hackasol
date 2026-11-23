@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { BANDS, Band, Evidence, Finding, FlowStep, Provision, Report, ScanEvent } from "./types";
 import { LiveProbes, LiveProbeEvidence } from "./LiveProbes";
 import { FixPatches } from "./FixPatches";
+import { LegalView } from "./LegalView";
+import { ConsentAssessment } from "./ConsentAssessment";
 
 const STAGES: [string, string][] = [
   ["inventory", "Inventory"],
@@ -165,6 +167,8 @@ export function App() {
             </div>
           </section>
           {mode !== "recorded" && <LiveProbes runId={runId} onReport={setReport} />}
+          <ConsentAssessment assessment={report.consent_assessment} replay={mode === "recorded"} />
+          <LegalView runId={runId} />
           {mode !== "recorded" && <FixPatches runId={runId} findings={report.findings} />}
 
           <section aria-label="Findings">

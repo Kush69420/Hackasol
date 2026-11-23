@@ -10,6 +10,7 @@ import { createProject } from './project.mjs';
 import { extractNextjs } from './nextjs.mjs';
 import { extractOrm } from './orm.mjs';
 import { extractReact } from './react.mjs';
+import { extractExposureFacts } from './exposure_facts.mjs';
 
 const request = JSON.parse(readFileSync(0, 'utf8'));
 const project = createProject(request.root, request.files);
@@ -17,6 +18,7 @@ const project = createProject(request.root, request.files);
 const out = {
   ...extractRoutes(project),
   ...extractModels(project),
+  ...extractExposureFacts(project),
   ...extractFrontend(project),
 };
 for (const [key, values] of Object.entries(extractNextjs(project))) out[key].push(...values);

@@ -2,45 +2,74 @@
 
 ## Applicability Assumptions
 
-- AA-1: The Act applies: the Target Application processes digital Personal Data in India, or offers goods or services to Data Principals in India. Provisions: DPDP-Act-3 — Section 3. Dependent Findings: SEC-07-2d4f025671b7, SEC-08-a535cd15b04b, SEC-04-bebc3e7f55ae, SEC-10-d70f56f17198, SEC-10-d0971bb44714, SEC-08-177006878772, TRF-02-56fc1119eb9b, SEC-02-03b1356ecc57, SEC-02-0f4631e6a05d, SEC-02-b6efa0cd2309, SEC-02-e0994a7481e3, MON-01-8c5728dfea11, SEC-14-c5e9ac6a126d, RET-03-ae3018401243, RIG-01-a9383e4db278, RIG-02-f7117cbcde8b
+- AA-1: The Act applies: the Target Application processes digital Personal Data in India, or offers goods or services to Data Principals in India. Provisions: DPDP-Act-3 — Section 3. Dependent Findings: SEC-07-2d4f025671b7, SEC-07-46e1db7b8927, SEC-07-84fd091ad6cb, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-09-e51d3cb1437b, SEC-04-4da51857d7fb, SEC-04-bebc3e7f55ae, SEC-04-f14b443a57f1, SEC-10-19fa227ef322, SEC-10-20b8955c0a3e, SEC-10-49d347fcf67d, SEC-10-d70f56f17198, SEC-07-2301fc553793, SEC-07-4edf88d6607a, SEC-10-d0971bb44714, SEC-07-10d210fbc583, SEC-07-19eb83125bf7, SEC-07-2bc6d0295d98, SEC-07-6462097d19a8, SEC-07-f9f89e15bbe6, TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b, SEC-02-03b1356ecc57, SEC-02-0f4631e6a05d, SEC-02-b6efa0cd2309, SEC-02-e0994a7481e3, MON-01-8c5728dfea11, SEC-14-14740ebe6dcc, SEC-14-c5e9ac6a126d, RET-03-ae3018401243, RIG-01-a9383e4db278, RIG-02-f7117cbcde8b
 
-- AA-2: The Data Fiduciary is not a Significant Data Fiduciary; its duties are shown as conditional. Provisions: DPDP-Act-10 — Section 10. Dependent Findings: TRF-02-56fc1119eb9b
+- AA-2: The Data Fiduciary is not a Significant Data Fiduciary; its duties are shown as conditional. Provisions: DPDP-Act-10 — Section 10. Dependent Findings: TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b
 
 - AA-3: The Data Fiduciary is not a Third Schedule class; its duties are shown as conditional. Provisions: DPDP-Rule-8(1) — Rule 8(1), DPDP-Rules-Schedule-Third — Third Schedule. Dependent Findings: RET-03-ae3018401243
 
-- AA-4: Processing relies on consent unless the code shows a section 7 legitimate use, such as processing an order the Data Principal placed. Provisions: DPDP-Act-7 — Section 7. Dependent Findings: SEC-07-2d4f025671b7, SEC-08-a535cd15b04b, SEC-08-177006878772
+- AA-4: Processing relies on consent unless the code shows a section 7 legitimate use, such as processing an order the Data Principal placed. Provisions: DPDP-Act-7 — Section 7. Dependent Findings: SEC-07-2d4f025671b7, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-07-2bc6d0295d98
 
 ## Executive summary
 
 | Severity | DPDP obligation | security dependent on Personal Data | Safeguard |
 | --- | --- | --- | --- |
 | critical | 0 | 0 | 0 |
-| high | 0 | 5 | 2 |
-| medium | 1 | 5 | 0 |
-| low | 3 | 2 | 0 |
+| high | 0 | 22 | 8 |
+| medium | 2 | 9 | 0 |
+| low | 3 | 3 | 0 |
 
 Penalty Ceilings: ₹250 crore, ₹50 crore; statutory maximum under the Schedule; the Board sets any amount.
 
-### Fix before 14 May 2027
+### Fix before 13 May 2027
 
-- SEC-07-2d4f025671b7 — Enforceable From 2027-05-14
-- SEC-08-a535cd15b04b — Enforceable From 2027-05-14
-- SEC-11-ad5b2106f4e8 — Enforceable From 2027-05-14
-- SEC-04-bebc3e7f55ae — Enforceable From 2027-05-14
-- SEC-05-c695dda06010 — Enforceable From 2027-05-14
-- SEC-10-d70f56f17198 — Enforceable From 2027-05-14
-- SEC-10-d0971bb44714 — Enforceable From 2027-05-14
-- SEC-08-177006878772 — Enforceable From 2027-05-14
-- TRF-02-56fc1119eb9b — Enforceable From 2027-05-14
-- SEC-02-03b1356ecc57 — Enforceable From 2027-05-14
-- SEC-02-0f4631e6a05d — Enforceable From 2027-05-14
-- SEC-02-b6efa0cd2309 — Enforceable From 2027-05-14
-- SEC-02-e0994a7481e3 — Enforceable From 2027-05-14
-- MON-01-8c5728dfea11 — Enforceable From 2027-05-14
-- SEC-14-c5e9ac6a126d — Enforceable From 2027-05-14
-- RET-03-ae3018401243 — Enforceable From 2027-05-14
-- RIG-01-a9383e4db278 — Enforceable From 2027-05-14
-- RIG-02-f7117cbcde8b — Enforceable From 2027-05-14
+- SEC-07-2d4f025671b7 — Enforceable From 2027-05-13
+- SEC-07-46e1db7b8927 — Enforceable From 2027-05-13
+- SEC-07-84fd091ad6cb — Enforceable From 2027-05-13
+- SEC-08-445c2a32bf62 — Enforceable From 2027-05-13
+- SEC-08-5b7f92b613ca — Enforceable From 2027-05-13
+- SEC-08-6260b655a69b — Enforceable From 2027-05-13
+- SEC-08-a535cd15b04b — Enforceable From 2027-05-13
+- SEC-08-ca532d12729b — Enforceable From 2027-05-13
+- SEC-08-cefb92be21c6 — Enforceable From 2027-05-13
+- SEC-08-d0cbdc68911f — Enforceable From 2027-05-13
+- SEC-08-d23c91065882 — Enforceable From 2027-05-13
+- SEC-09-e51d3cb1437b — Enforceable From 2027-05-13
+- SEC-11-ad5b2106f4e8 — Enforceable From 2027-05-13
+- SEC-04-4da51857d7fb — Enforceable From 2027-05-13
+- SEC-04-bebc3e7f55ae — Enforceable From 2027-05-13
+- SEC-04-f14b443a57f1 — Enforceable From 2027-05-13
+- SEC-05-9922f06ca9e3 — Enforceable From 2027-05-13
+- SEC-05-c695dda06010 — Enforceable From 2027-05-13
+- SEC-10-19fa227ef322 — Enforceable From 2027-05-13
+- SEC-10-20b8955c0a3e — Enforceable From 2027-05-13
+- SEC-10-49d347fcf67d — Enforceable From 2027-05-13
+- SEC-10-d70f56f17198 — Enforceable From 2027-05-13
+- SEC-11-5a71594e3942 — Enforceable From 2027-05-13
+- SEC-11-84cd32175eeb — Enforceable From 2027-05-13
+- SEC-11-d7922190cbda — Enforceable From 2027-05-13
+- SEC-07-2301fc553793 — Enforceable From 2027-05-13
+- SEC-07-4edf88d6607a — Enforceable From 2027-05-13
+- SEC-10-d0971bb44714 — Enforceable From 2027-05-13
+- SEC-11-5ab639d2a92e — Enforceable From 2027-05-13
+- SEC-11-7958164b1c64 — Enforceable From 2027-05-13
+- SEC-07-10d210fbc583 — Enforceable From 2027-05-13
+- SEC-07-19eb83125bf7 — Enforceable From 2027-05-13
+- SEC-07-2bc6d0295d98 — Enforceable From 2027-05-13
+- SEC-07-6462097d19a8 — Enforceable From 2027-05-13
+- SEC-07-f9f89e15bbe6 — Enforceable From 2027-05-13
+- TRF-02-0ff246d3b291 — Enforceable From 2027-05-13
+- TRF-02-56fc1119eb9b — Enforceable From 2027-05-13
+- SEC-02-03b1356ecc57 — Enforceable From 2027-05-13
+- SEC-02-0f4631e6a05d — Enforceable From 2027-05-13
+- SEC-02-b6efa0cd2309 — Enforceable From 2027-05-13
+- SEC-02-e0994a7481e3 — Enforceable From 2027-05-13
+- MON-01-8c5728dfea11 — Enforceable From 2027-05-13
+- SEC-14-14740ebe6dcc — Enforceable From 2027-05-13
+- SEC-14-c5e9ac6a126d — Enforceable From 2027-05-13
+- RET-03-ae3018401243 — Enforceable From 2027-05-13
+- RIG-01-a9383e4db278 — Enforceable From 2027-05-13
+- RIG-02-f7117cbcde8b — Enforceable From 2027-05-13
 
 ## Personal Data Map
 
@@ -135,7 +164,7 @@ Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
 
 Other Provisions: CWE-639 — CWE-639, OWASP-API1-2023 — API1:2023, DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
 
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -193,7 +222,7 @@ models/user.ts:70–75
 ```
       «SECRET»
         type: DataTypes.STRING,
-        set (clearTextPassword: string) {
+        set («SECRET») {
           this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
         }
       }, // vuln-code-snippet end weakPasswordChallenge
@@ -243,98 +272,122 @@ Recommended fix: Require authentication on every route that returns Personal Dat
 
 LLM triage: not assessed; cache key: 06d0b7dcb4cb545f26a85a9a86a9b7919c19ebcea9dadc40e0850476dc97913a
 
-### SEC-08-a535cd15b04b — Over-exposed responses (whole model or nested records serialised)
+### SEC-07-46e1db7b8927 — Missing authentication or ownership check on a route returning Personal Data
 
-Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. collection:reviewsCollection.author (Profile) has Public Exposure based on Evidence at server.ts:672; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. model:Recycle.AddressId (Contact) has Public Exposure based on Evidence at server.ts:420; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
 
-Exposure: Public; Evidence: server.ts:672–672
+Exposure: Public; Evidence: server.ts:420–420
 
 Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
 
-Other Provisions: DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
+Other Provisions: CWE-639 — CWE-639, OWASP-API1-2023 — API1:2023
 
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
 
 Status: open.
 
 Evidence:
 
-routes/showProductReviews.ts:45–45
+routes/recycles.ts:12–16
 
 ```
-      res.json(utils.queryResultToJson(reviews))
+  RecycleModel.findAll({
+    where: {
+      id: JSON.parse(req.params.id)
+    }
+  }).then((Recycle) => {
 ```
 
-server.ts:672–672
+server.ts:420–420
 
 ```
-  app.get('/rest/products/:id/reviews', showProductReviews())
+  app.get('/api/Recycles/:id', recycles.getRecycleItem())
 ```
 
-routes/createProductReviews.ts:26–26
+models/recycle.ts:33–35
 
 ```
-        author: req.body.author,
+      AddressId: {
+        type: DataTypes.INTEGER
+      },
 ```
 
 Data Flow:
 
-- Collect — frontend/src/app/product-details/product-details.component.ts:80–80; component; ts-join; inferred; Account email, or an anonymous fallback; model identity inferred from account response
-- Collect — frontend/src/app/product-details/product-details.component.ts:91–91; component; ts-join; evidenced
-- Collect — frontend/src/app/Services/product-review.service.ts:29–29; service; ts-join; evidenced
-- Collect — server.ts:673–673; route; ts-join; evidenced; PUT /rest/products/:id/reviews
-- Collect — routes/createProductReviews.ts:26–26; handler; ts-join; evidenced
-- Store — routes/createProductReviews.ts:26–26; storage; ts-join; evidenced; insert into reviewsCollection
-- Expose — routes/showProductReviews.ts:45–45; response; ts-join; evidenced; author not projected out; GET /rest/products/:id/reviews
+- None recorded.
 
-Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+Recommended fix: Require authentication on every route that returns Personal Data, and check on each request that the authenticated Data Principal owns the record or holds a role authorised for it. Do not let an identifier supplied in the path or body decide ownership. Apply the check to every method on the route, because Rule 6(1)(b) requires access to the resources holding Personal Data to be controlled. Tailored: not assessed
 
-LLM triage: not assessed; cache key: a2bcf5d674f635a26899a39150b2abc8246f3e3f8d8507c08a933df068fd36e1
+LLM triage: not assessed; cache key: dc708f5bab94728ec68fa9345a04be4f0d363962b36e002418c37c2cd358c001
 
-### SEC-11-ad5b2106f4e8 — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
+### SEC-07-84fd091ad6cb — Missing authentication or ownership check on a route returning Personal Data
 
-Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:640; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. model:User.email (Contact) has Public Exposure based on Evidence at server.ts:643; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
 
-Exposure: Public; Evidence: server.ts:640–640, server.ts:430–430, server.ts:440–451, server.ts:452–452, server.ts:453–453, server.ts:454–454, server.ts:540–546
+Exposure: Public; Evidence: server.ts:643–643, server.ts:388–388, server.ts:440–451, server.ts:452–452, server.ts:453–453, server.ts:454–454, server.ts:540–546
 
-Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
 
-Other Provisions: CWE-319 — CWE-319, CWE-614 — CWE-614, CWE-942 — CWE-942
+Other Provisions: CWE-639 — CWE-639, OWASP-API1-2023 — API1:2023
 
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
 
 Status: open.
 
 Evidence:
 
-server.ts:185–185
+routes/order.ts:45–45
 
 ```
-  app.use(cors())
+          const fileWriter = doc.pipe(fs.createWriteStream(path.join('ftp/', pdfFile)))
 ```
 
-server.ts:640–640
+server.ts:294–294
 
 ```
-  app.get('/rest/user/authentication-details', utils.asyncHandler(authenticatedUsers()))
+  app.use('/ftp', serveIndexMiddleware, serveIndex('ftp', { icons: true })) // vuln-code-snippet vuln-line directoryListingChallenge
 ```
 
-server.ts:670–670
+models/user.ts:56–69
 
 ```
-  app.get('/rest/memories', utils.asyncHandler(getMemories()))
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
 ```
 
-server.ts:672–672
+models/wallet.ts:35–41
 
 ```
-  app.get('/rest/products/:id/reviews', showProductReviews())
+      balance: {
+        type: DataTypes.INTEGER,
+        validate: {
+          isInt: true
+        },
+        defaultValue: 0
+      }
 ```
 
-server.ts:430–430
+server.ts:643–643
 
 ```
-  app.use('/rest/user/authentication-details', security.isAuthorized())
+  app.post('/rest/basket/:id/checkout', placeOrder())
+```
+
+server.ts:388–388
+
+```
+  app.use('/rest/basket', security.isAuthorized(), security.appendUserId())
 ```
 
 server.ts:440–451
@@ -344,8 +397,8 @@ server.ts:440–451
     if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {
       if (req.body.email.length !== 0 && req.body.password.length !== 0) {
         req.body.email = req.body.email.trim()
-        req.body.password = req.body.password.trim()
-        req.body.passwordRepeat = req.body.passwordRepeat.trim()
+        req.body.«SECRET»)
+        req.body.«SECRET»)
       } else {
         res.status(400).send(res.__('Invalid email/password cannot be empty'))
       }
@@ -388,221 +441,30 @@ Data Flow:
 
 - None recorded.
 
-Recommended fix: Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry. Tailored: not assessed
+Recommended fix: Require authentication on every route that returns Personal Data, and check on each request that the authenticated Data Principal owns the record or holds a role authorised for it. Do not let an identifier supplied in the path or body decide ownership. Apply the check to every method on the route, because Rule 6(1)(b) requires access to the resources holding Personal Data to be controlled. Tailored: not assessed
 
-LLM triage: not assessed; cache key: 7e11e87b1a870e44f1c616f5efa493e58d2640ffa2abfa88a8295e0e24c0574f
+LLM triage: not assessed; cache key: db5517d2a235d309ae31c85252e6a58f2c2ad20ae6da29c3972f22133e198145
 
-### SEC-04-bebc3e7f55ae — Weak or missing password hashing
+### SEC-08-445c2a32bf62 — Over-exposed responses (whole model or nested records serialised)
 
-Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. model:User.password (Authentication Secret) has Internal-Restricted Exposure based on Evidence at models/user.ts:70; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:540; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
 
-Exposure: Internal-Restricted; Evidence: models/user.ts:70–75, lib/insecurity.ts:41–41
-
-Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
-
-Other Provisions: CWE-916 — CWE-916
-
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
-
-Status: open.
-
-Evidence:
-
-models/user.ts:70–75
-
-```
-      «SECRET»
-        type: DataTypes.STRING,
-        set (clearTextPassword: string) {
-          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
-        }
-      }, // vuln-code-snippet end weakPasswordChallenge
-```
-
-lib/insecurity.ts:41–41
-
-```
-export const hash = (data: string) => crypto.createHash('md5').update(data).digest('hex')
-```
-
-Data Flow:
-
-- Collect — frontend/src/app/register/register.component.html:28–29; form; ts-join; evidenced
-- Collect — frontend/src/app/register/register.component.ts:99–99; component; ts-join; evidenced
-- Collect — frontend/src/app/Services/user.service.ts:38–38; service; ts-join; evidenced
-- Collect — server.ts:540–546; route; ts-join; inferred; POST /api/Users
-- Collect — server.ts:440–451; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
-- Collect — server.ts:452–452; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
-- Collect — server.ts:453–453; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
-- Collect — server.ts:454–454; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
-- Collect — server.ts:540–546; handler; ts-join; inferred; finale generated handler
-- Store — models/user.ts:70–75; model; ts-join; inferred; finale generated model write
-- Expose — routes/saveLoginIp.ts:33–33; response; ts-join; evidenced
-- Store — data/datacreator.ts:192–201; model; semgrep:op-store-sequelize-create; evidenced; password referenced in $VAR
-- Store — data/datacreator.ts:326–329; model; semgrep:op-store-sequelize-create; evidenced; password referenced in $VAR
-- Expose — routes/authenticatedUsers.ts:14–31; response; semgrep:op-expose-response-json; evidenced; password referenced in $VAR
-- Store — routes/changePassword.ts:51–51; model; semgrep:op-store-sequelize-update; evidenced; password referenced in $VAR
-- Store — routes/resetPassword.ts:44–44; model; semgrep:op-store-sequelize-update; evidenced; password referenced in $VAR
-
-Recommended fix: Store Authentication Secrets with a current, salted, deliberately slow password hashing function, never with a plain or fast unsalted digest. Re-hash each existing record with the new function the next time the Data Principal authenticates. Rule 6(1)(a) requires protection of the Personal Data these secrets guard, and a weak hash removes that protection once the store is read. Tailored: not assessed
-
-LLM triage: not assessed; cache key: b0f84242fcd9123e2247cfb5c5daf48c29514c2d92adf609c43389ec01f8be7c
-
-### SEC-05-c695dda06010 — Hard-coded secret or committed .env protecting Personal Data
-
-Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. protected Data Category Authentication Secret has Internal-Restricted Exposure based on Evidence at lib/insecurity.ts:21; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
-
-Exposure: Internal-Restricted; Evidence: lib/insecurity.ts:21–21, lib/insecurity.ts:54–54
-
-Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
-
-Other Provisions: CWE-798 — CWE-798
-
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
-
-Status: open.
-
-Evidence:
-
-lib/insecurity.ts:21–21
-
-```
-[hard-coded signing material masked]
-```
-
-lib/insecurity.ts:54–54
-
-```
-export const authorize = (user = {}) => jwt.sign(user, privateKey, { expiresIn: '6h', algorithm: 'RS256' })
-```
-
-Data Flow:
-
-- None recorded.
-
-Recommended fix: Move credentials and keys that protect Personal Data out of source files and configuration into a secret store or the runtime environment. Rotate any value that has already been committed, and exclude .env and key files from version control and build context. Restrict the secret store to the identities that need it, as Rule 6(1)(b) requires for the systems that hold Personal Data. Tailored: not assessed
-
-LLM triage: not assessed; cache key: b47dd25f565fe450e15e2be653162e5aaeab4a3c2cfc71a1a65513bc711aaf7d
-
-### SEC-10-d70f56f17198 — Personal Data in localStorage, sessionStorage, cookies or outbound headers
-
-Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. storage:localStorage.token (Authentication Secret) has Internal-Restricted Exposure based on Evidence at frontend/src/app/login/login.component.ts:150; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
-
-Exposure: Internal-Restricted; Evidence: frontend/src/app/login/login.component.ts:150–150, frontend/src/app/oauth/oauth.component.ts:52–52, frontend/src/app/payment/payment.component.ts:233–233, frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54, frontend/src/app/Services/request.interceptor.ts:16–16
-
-Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
-
-Other Provisions: CWE-922 — CWE-922
-
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
-
-Status: open.
-
-Evidence:
-
-frontend/src/app/login/login.component.ts:150–150
-
-```
-    localStorage.setItem('token', authentication.token)
-```
-
-frontend/src/app/oauth/oauth.component.ts:52–52
-
-```
-        localStorage.setItem('token', authentication.token)
-```
-
-frontend/src/app/payment/payment.component.ts:233–233
-
-```
-          localStorage.setItem('token', data.token)
-```
-
-frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54
-
-```
-        localStorage.setItem('token', authentication.token)
-```
-
-frontend/src/app/Services/request.interceptor.ts:16–16
-
-```
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-```
-
-Data Flow:
-
-- Store — frontend/src/app/login/login.component.ts:150–150; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
-- Store — frontend/src/app/oauth/oauth.component.ts:52–52; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
-- Store — frontend/src/app/payment/payment.component.ts:233–233; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
-- Store — frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
-
-Recommended fix: Do not write Personal Data or Authentication Secrets to localStorage, sessionStorage, cookies or outbound headers beyond what the session strictly needs. Keep identity in an opaque session identifier held server-side, and keep only non-Personal Data preferences in the browser. Where a value must be held client-side, protect it as Rule 6(1)(a) requires. Tailored: not assessed
-
-LLM triage: not assessed; cache key: e2fdbc2769d3a837477c845efe6a42ecc948dc935a7e469a7556df7284577042
-
-### SEC-10-d0971bb44714 — Personal Data in localStorage, sessionStorage, cookies or outbound headers
-
-Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. storage:localStorage.email (Contact) has Internal-Restricted Exposure based on Evidence at frontend/src/app/login/login.component.ts:106; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
-
-Exposure: Internal-Restricted; Evidence: frontend/src/app/login/login.component.ts:106–106, frontend/src/app/Services/request.interceptor.ts:23–23
-
-Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
-
-Other Provisions: CWE-922 — CWE-922
-
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
-
-Status: open.
-
-Evidence:
-
-frontend/src/app/login/login.component.ts:106–106
-
-```
-        localStorage.setItem('email', user.email)
-```
-
-frontend/src/app/Services/request.interceptor.ts:23–23
-
-```
-          'X-User-Email': String(localStorage.getItem('email'))
-```
-
-Data Flow:
-
-- Store — frontend/src/app/login/login.component.ts:106–106; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key email
-
-Recommended fix: Do not write Personal Data or Authentication Secrets to localStorage, sessionStorage, cookies or outbound headers beyond what the session strictly needs. Keep identity in an opaque session identifier held server-side, and keep only non-Personal Data preferences in the browser. Where a value must be held client-side, protect it as Rule 6(1)(a) requires. Tailored: not assessed
-
-LLM triage: not assessed; cache key: 4e4fde50a6c15af2e7a1d17866b529515c468982b96d1b842e544de131ac7ac2
-
-### SEC-08-177006878772 — Over-exposed responses (whole model or nested records serialised)
-
-Severity: medium; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 5.7. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:640; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 5.7. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
-
-Exposure: Public; Evidence: server.ts:640–640, server.ts:430–430, server.ts:440–451, server.ts:452–452, server.ts:453–453, server.ts:454–454, server.ts:540–546
+Exposure: Public; Evidence: server.ts:540–546
 
 Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
 
 Other Provisions: DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
 
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
 
 Status: open.
 
 Evidence:
 
-routes/authenticatedUsers.ts:12–12
+server.ts:523–523
 
 ```
-    const users = await UserModel.findAll()
-```
-
-server.ts:640–640
-
-```
-  app.get('/rest/user/authentication-details', utils.asyncHandler(authenticatedUsers()))
+    { name: 'User', exclude: ['password', 'totpSecret'], model: UserModel },
 ```
 
 models/user.ts:44–55
@@ -667,6 +529,893 @@ models/user.ts:105–108
       },
 ```
 
+server.ts:540–546
+
+```
+    const resource = finale.resource({
+      model,
+      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],
+      excludeAttributes: exclude,
+      pagination: false,
+      include
+    })
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+
+LLM triage: not assessed; cache key: ef7f086d0ad9c3a8f7f6555176aa63a68eaf54b808657d2b3500501539836a6d
+
+### SEC-08-5b7f92b613ca — Over-exposed responses (whole model or nested records serialised)
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:636; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:636–636
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/changePassword.ts:56–56
+
+```
+      res.json({ user })
+```
+
+routes/changePassword.ts:45–45
+
+```
+      const user = await UserModel.findByPk(loggedInUser.data.id)
+```
+
+models/user.ts:44–55
+
+```
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+        set (username: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            username = security.sanitizeLegacy(username)
+          } else {
+            username = security.sanitizeSecure(username)
+          }
+          this.setDataValue('username', username)
+        }
+      },
+```
+
+models/user.ts:56–69
+
+```
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
+```
+
+models/user.ts:70–75
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        set («SECRET») {
+          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
+        }
+      }, // vuln-code-snippet end weakPasswordChallenge
+```
+
+models/user.ts:97–100
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+models/user.ts:101–104
+
+```
+      lastLoginIp: {
+        type: DataTypes.STRING,
+        defaultValue: '0.0.0.0'
+      },
+```
+
+models/user.ts:105–108
+
+```
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue:«SECRET».svg'
+      },
+```
+
+models/user.ts:109–112
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+server.ts:636–636
+
+```
+  app.post('/rest/user/change-password', utils.asyncHandler(changePassword()))
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 3fe30e0e848cc0b84862bd7038ecdefb3573e1039b3e4bd183c984d18a864099
+
+### SEC-08-6260b655a69b — Over-exposed responses (whole model or nested records serialised)
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:658; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:658–658
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/saveLoginIp.ts:33–33
+
+```
+        res.json(updatedUser)
+```
+
+routes/saveLoginIp.ts:31–31
+
+```
+        const user = await UserModel.findByPk(loggedInUser.data.id)
+```
+
+models/user.ts:44–55
+
+```
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+        set (username: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            username = security.sanitizeLegacy(username)
+          } else {
+            username = security.sanitizeSecure(username)
+          }
+          this.setDataValue('username', username)
+        }
+      },
+```
+
+models/user.ts:56–69
+
+```
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
+```
+
+models/user.ts:70–75
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        set («SECRET») {
+          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
+        }
+      }, // vuln-code-snippet end weakPasswordChallenge
+```
+
+models/user.ts:97–100
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+models/user.ts:101–104
+
+```
+      lastLoginIp: {
+        type: DataTypes.STRING,
+        defaultValue: '0.0.0.0'
+      },
+```
+
+models/user.ts:105–108
+
+```
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue:«SECRET».svg'
+      },
+```
+
+models/user.ts:109–112
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+server.ts:658–658
+
+```
+  app.get('/rest/saveLoginIp', utils.asyncHandler(saveLoginIp()))
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 7b54a7b39fb400514de4410f6e9ccf8b325a932029f55f4fdd3c04894716a46b
+
+### SEC-08-a535cd15b04b — Over-exposed responses (whole model or nested records serialised)
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. collection:reviewsCollection.author (Profile) has Public Exposure based on Evidence at server.ts:672; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:672–672
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/showProductReviews.ts:45–45
+
+```
+      res.json(utils.queryResultToJson(reviews))
+```
+
+server.ts:672–672
+
+```
+  app.get('/rest/products/:id/reviews', showProductReviews())
+```
+
+routes/createProductReviews.ts:26–26
+
+```
+        author: req.body.author,
+```
+
+Data Flow:
+
+- Collect — frontend/src/app/product-details/product-details.component.ts:80–80; component; ts-join; inferred; Account email, or an anonymous fallback; model identity inferred from account response
+- Collect — frontend/src/app/product-details/product-details.component.ts:91–91; component; ts-join; evidenced
+- Collect — frontend/src/app/Services/product-review.service.ts:29–29; service; ts-join; evidenced
+- Collect — server.ts:673–673; route; ts-join; evidenced; PUT /rest/products/:id/reviews
+- Collect — routes/createProductReviews.ts:26–26; handler; ts-join; evidenced
+- Store — routes/createProductReviews.ts:26–26; storage; ts-join; evidenced; insert into reviewsCollection
+- Expose — routes/showProductReviews.ts:45–45; response; ts-join; evidenced; author not projected out; GET /rest/products/:id/reviews
+
+Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+
+LLM triage: not assessed; cache key: a2bcf5d674f635a26899a39150b2abc8246f3e3f8d8507c08a933df068fd36e1
+
+### SEC-08-ca532d12729b — Over-exposed responses (whole model or nested records serialised)
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:637; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:637–637
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/resetPassword.ts:46–46
+
+```
+          res.json({ user: updatedUser })
+```
+
+routes/resetPassword.ts:42–42
+
+```
+        const user = await UserModel.findByPk(data.UserId)
+```
+
+models/user.ts:44–55
+
+```
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+        set (username: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            username = security.sanitizeLegacy(username)
+          } else {
+            username = security.sanitizeSecure(username)
+          }
+          this.setDataValue('username', username)
+        }
+      },
+```
+
+models/user.ts:56–69
+
+```
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
+```
+
+models/user.ts:70–75
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        set («SECRET») {
+          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
+        }
+      }, // vuln-code-snippet end weakPasswordChallenge
+```
+
+models/user.ts:97–100
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+models/user.ts:101–104
+
+```
+      lastLoginIp: {
+        type: DataTypes.STRING,
+        defaultValue: '0.0.0.0'
+      },
+```
+
+models/user.ts:105–108
+
+```
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue:«SECRET».svg'
+      },
+```
+
+models/user.ts:109–112
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+server.ts:637–637
+
+```
+  app.post('/rest/user/reset-password', utils.asyncHandler(resetPassword()))
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+
+LLM triage: not assessed; cache key: ab1c43257342cfc2598bc6c730e80befe61e0359554a0d95f0297d06e39ddfe0
+
+### SEC-08-cefb92be21c6 — Over-exposed responses (whole model or nested records serialised)
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:670; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:670–670
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/memory.ts:25–25
+
+```
+    res.status(200).json({ status: 'success', data: memories })
+```
+
+routes/memory.ts:24–24
+
+```
+    const memories = await MemoryModel.findAll({ include: [UserModel] })
+```
+
+models/user.ts:44–55
+
+```
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+        set (username: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            username = security.sanitizeLegacy(username)
+          } else {
+            username = security.sanitizeSecure(username)
+          }
+          this.setDataValue('username', username)
+        }
+      },
+```
+
+models/user.ts:56–69
+
+```
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
+```
+
+models/user.ts:70–75
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        set («SECRET») {
+          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
+        }
+      }, // vuln-code-snippet end weakPasswordChallenge
+```
+
+models/user.ts:97–100
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+models/user.ts:101–104
+
+```
+      lastLoginIp: {
+        type: DataTypes.STRING,
+        defaultValue: '0.0.0.0'
+      },
+```
+
+models/user.ts:105–108
+
+```
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue:«SECRET».svg'
+      },
+```
+
+models/user.ts:109–112
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+server.ts:670–670
+
+```
+  app.get('/rest/memories', utils.asyncHandler(getMemories()))
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 56d840ee851dc028ccd23aa22dce27656c25431b3b8467eec7a219bd44bce4de
+
+### SEC-08-d0cbdc68911f — Over-exposed responses (whole model or nested records serialised)
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:639; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:639–639
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/currentUser.ts:29–33
+
+```
+          for (const field of requestedFields) {
+            if (user?.data[field as keyof typeof user.data] !== undefined) {
+              baseUser[field] = user?.data[field as keyof typeof user.data]
+            }
+          }
+```
+
+routes/currentUser.ts:31–31
+
+```
+              baseUser[field] = user?.data[field as keyof typeof user.data]
+```
+
+models/user.ts:44–55
+
+```
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+        set (username: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            username = security.sanitizeLegacy(username)
+          } else {
+            username = security.sanitizeSecure(username)
+          }
+          this.setDataValue('username', username)
+        }
+      },
+```
+
+models/user.ts:56–69
+
+```
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
+```
+
+models/user.ts:70–75
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        set («SECRET») {
+          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
+        }
+      }, // vuln-code-snippet end weakPasswordChallenge
+```
+
+models/user.ts:97–100
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+models/user.ts:101–104
+
+```
+      lastLoginIp: {
+        type: DataTypes.STRING,
+        defaultValue: '0.0.0.0'
+      },
+```
+
+models/user.ts:105–108
+
+```
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue:«SECRET».svg'
+      },
+```
+
+models/user.ts:109–112
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+server.ts:639–639
+
+```
+  app.get('/rest/user/whoami', utils.asyncHandler(retrieveLoggedInUser()))
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 1333185a75d58bc5823f57cf88063024d9a2025d81ff3487d185aec6ea7ab38f
+
+### SEC-08-d23c91065882 — Over-exposed responses (whole model or nested records serialised)
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:635; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:635–635
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/login.ts:24–24
+
+```
+        const «SECRET»)
+```
+
+models/user.ts:44–55
+
+```
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+        set (username: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            username = security.sanitizeLegacy(username)
+          } else {
+            username = security.sanitizeSecure(username)
+          }
+          this.setDataValue('username', username)
+        }
+      },
+```
+
+models/user.ts:56–69
+
+```
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
+```
+
+models/user.ts:70–75
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        set («SECRET») {
+          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
+        }
+      }, // vuln-code-snippet end weakPasswordChallenge
+```
+
+models/user.ts:97–100
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+models/user.ts:101–104
+
+```
+      lastLoginIp: {
+        type: DataTypes.STRING,
+        defaultValue: '0.0.0.0'
+      },
+```
+
+models/user.ts:105–108
+
+```
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue:«SECRET».svg'
+      },
+```
+
+models/user.ts:109–112
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+server.ts:635–635
+
+```
+  app.post('/rest/user/login', login())
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 190a115abeaa8f5bf7f50fdcc36f40a5c99c1746837dbffd5d3084e701d5b46a
+
+### SEC-09-e51d3cb1437b — Personal Data or Authentication Secrets in URLs or query strings
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. param:GET /rest/user/security-question?email (Contact) has Public Exposure based on Evidence at server.ts:638; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:638–638
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-598 — CWE-598
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/securityQuestion.ts:13–13
+
+```
+    const email = query.email
+```
+
+server.ts:638–638
+
+```
+  app.get('/rest/user/security-question', utils.asyncHandler(securityQuestion()))
+```
+
+Data Flow:
+
+- Collect — frontend/src/app/Services/security-question.service.ts:25–25; service; ts-join; evidenced; Query parameter appended to the request URL.
+- Log — server.ts:370–370; log; config; evidenced; Morgan combined logs the request URL including its query; file pattern: logs/access.log.%DATE%; retention: 365 days.
+
+Recommended fix: Send Personal Data and Authentication Secrets in request bodies or headers, never in the path or query string, because URLs are written to logs, caches and browser history. Where an identifier must travel in a URL, use an opaque, short-lived token that reveals nothing about the Data Principal. This keeps the Rule 6(1)(a) protection intact on links that are logged and cached. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 211c764ad6f13a3ac213c39def234c38e3a63a7062bcdacd33dc6c32d27dad8e
+
+### SEC-11-ad5b2106f4e8 — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:640; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:640–640, server.ts:430–430, server.ts:440–451, server.ts:452–452, server.ts:453–453, server.ts:454–454, server.ts:540–546
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-319 — CWE-319, CWE-614 — CWE-614, CWE-942 — CWE-942
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+server.ts:185–185
+
+```
+  app.use(cors())
+```
+
+server.ts:640–640
+
+```
+  app.get('/rest/user/authentication-details', utils.asyncHandler(authenticatedUsers()))
+```
+
+server.ts:670–670
+
+```
+  app.get('/rest/memories', utils.asyncHandler(getMemories()))
+```
+
+server.ts:672–672
+
+```
+  app.get('/rest/products/:id/reviews', showProductReviews())
+```
+
 server.ts:430–430
 
 ```
@@ -680,8 +1429,8 @@ server.ts:440–451
     if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {
       if (req.body.email.length !== 0 && req.body.password.length !== 0) {
         req.body.email = req.body.email.trim()
-        req.body.password = req.body.password.trim()
-        req.body.passwordRepeat = req.body.passwordRepeat.trim()
+        req.body.«SECRET»)
+        req.body.«SECRET»)
       } else {
         res.status(400).send(res.__('Invalid email/password cannot be empty'))
       }
@@ -724,9 +1473,1329 @@ Data Flow:
 
 - None recorded.
 
-Recommended fix: Serialise only the fields a response needs, using explicit allow-lists or response shapes rather than whole models or nested records. Remove Personal Data Elements the requester is not entitled to see, so each response stays within the Purpose for which the data was collected under §6(1). Apply the same field limits on every route that returns the same record, as Rule 6(1)(b) requires for access control. Tailored: not assessed
+Recommended fix: Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry. Tailored: not assessed
 
-LLM triage: not assessed; cache key: 63cb85dcdf0ec0c9247fd95986163d2099b087c2f5ed54c7f8742eecfefa4939
+LLM triage: not assessed; cache key: 7e11e87b1a870e44f1c616f5efa493e58d2640ffa2abfa88a8295e0e24c0574f
+
+### SEC-04-4da51857d7fb — Weak or missing password hashing
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. model:SecurityAnswer.answer (Authentication Secret) has Internal-Restricted Exposure based on Evidence at models/securityAnswer.ts:45; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: models/securityAnswer.ts:45–45
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-916 — CWE-916
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+models/securityAnswer.ts:45–45
+
+```
+          this.setDataValue('answer', security.hmac(answer))
+```
+
+lib/insecurity.ts:42–42
+
+```
+[keyed hash helper; key masked]
+```
+
+Data Flow:
+
+- Collect — frontend/src/app/register/register.component.html:93–95; form; ts-join; evidenced
+- Collect — frontend/src/app/register/register.component.ts:109–109; component; ts-join; evidenced
+- Collect — frontend/src/app/Services/security-answer.service.ts:21–21; service; ts-join; evidenced
+- Collect — server.ts:540–546; route; ts-join; inferred; POST /api/SecurityAnswers
+- Collect — server.ts:540–546; handler; ts-join; inferred; finale generated handler
+- Store — models/securityAnswer.ts:42–47; model; ts-join; inferred; finale generated model write
+- Expose — server.ts:625–631; response; ts-join; inferred; finale generated read response wrapper
+- Store — data/datacreator.ts:707–707; model; semgrep:op-store-sequelize-create; evidenced; answer referenced in $VAR
+- Log — data/datacreator.ts:708–708; log; semgrep:op-log-logger; evidenced; answer referenced in $VAR
+
+Recommended fix: Store Authentication Secrets with a current, salted, deliberately slow password hashing function, never with a plain or fast unsalted digest. Re-hash each existing record with the new function the next time the Data Principal authenticates. Rule 6(1)(a) requires protection of the Personal Data these secrets guard, and a weak hash removes that protection once the store is read. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 1215c234200da77aa762d1b86dc55acab7b421fc424728a657bc72d23854466e
+
+### SEC-04-bebc3e7f55ae — Weak or missing password hashing
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. model:User.password (Authentication Secret) has Internal-Restricted Exposure based on Evidence at models/user.ts:70; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: models/user.ts:70–75, lib/insecurity.ts:41–41
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-916 — CWE-916
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+models/user.ts:70–75
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        set («SECRET») {
+          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
+        }
+      }, // vuln-code-snippet end weakPasswordChallenge
+```
+
+lib/insecurity.ts:41–41
+
+```
+export const hash = (data: string) => crypto.createHash('md5').update(data).digest('hex')
+```
+
+Data Flow:
+
+- Collect — frontend/src/app/register/register.component.html:28–29; form; ts-join; evidenced
+- Collect — frontend/src/app/register/register.component.ts:99–99; component; ts-join; evidenced
+- Collect — frontend/src/app/Services/user.service.ts:38–38; service; ts-join; evidenced
+- Collect — server.ts:540–546; route; ts-join; inferred; POST /api/Users
+- Collect — server.ts:440–451; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:452–452; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:453–453; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:454–454; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:540–546; handler; ts-join; inferred; finale generated handler
+- Store — models/user.ts:70–75; model; ts-join; inferred; finale generated model write
+- Expose — routes/saveLoginIp.ts:33–33; response; ts-join; evidenced
+- Store — data/datacreator.ts:192–201; model; semgrep:op-store-sequelize-create; evidenced; password referenced in $VAR
+- Store — data/datacreator.ts:326–329; model; semgrep:op-store-sequelize-create; evidenced; password referenced in $VAR
+- Expose — routes/authenticatedUsers.ts:14–31; response; semgrep:op-expose-response-json; evidenced; password referenced in $VAR
+- Store — routes/changePassword.ts:51–51; model; semgrep:op-store-sequelize-update; evidenced; password referenced in $VAR
+- Store — routes/resetPassword.ts:44–44; model; semgrep:op-store-sequelize-update; evidenced; password referenced in $VAR
+
+Recommended fix: Store Authentication Secrets with a current, salted, deliberately slow password hashing function, never with a plain or fast unsalted digest. Re-hash each existing record with the new function the next time the Data Principal authenticates. Rule 6(1)(a) requires protection of the Personal Data these secrets guard, and a weak hash removes that protection once the store is read. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 0e596b70764e8e65ac826812bc61a70c7fbe697bfd7f99aa54ef0d8d9a1d248f
+
+### SEC-04-f14b443a57f1 — Weak or missing password hashing
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. model:User.password (Authentication Secret) has Internal-Restricted Exposure based on Evidence at routes/login.ts:34; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: routes/login.ts:34–34
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-916 — CWE-916
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/login.ts:34–34
+
+```
+    models.sequelize.query(`SELECT * FROM Users WHERE email = '${req.body.email || ''}' AND «SECRET»')}' AND deletedAt IS NULL`, { model: UserModel, plain: true }) // vuln-code-snippet vuln-line loginAdminChallenge loginBenderChallenge loginJimChallenge
+```
+
+lib/insecurity.ts:41–41
+
+```
+export const hash = (data: string) => crypto.createHash('md5').update(data).digest('hex')
+```
+
+Data Flow:
+
+- Collect — frontend/src/app/register/register.component.html:28–29; form; ts-join; evidenced
+- Collect — frontend/src/app/register/register.component.ts:99–99; component; ts-join; evidenced
+- Collect — frontend/src/app/Services/user.service.ts:38–38; service; ts-join; evidenced
+- Collect — server.ts:540–546; route; ts-join; inferred; POST /api/Users
+- Collect — server.ts:440–451; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:452–452; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:453–453; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:454–454; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:540–546; handler; ts-join; inferred; finale generated handler
+- Store — models/user.ts:70–75; model; ts-join; inferred; finale generated model write
+- Expose — routes/saveLoginIp.ts:33–33; response; ts-join; evidenced
+- Store — data/datacreator.ts:192–201; model; semgrep:op-store-sequelize-create; evidenced; password referenced in $VAR
+- Store — data/datacreator.ts:326–329; model; semgrep:op-store-sequelize-create; evidenced; password referenced in $VAR
+- Expose — routes/authenticatedUsers.ts:14–31; response; semgrep:op-expose-response-json; evidenced; password referenced in $VAR
+- Store — routes/changePassword.ts:51–51; model; semgrep:op-store-sequelize-update; evidenced; password referenced in $VAR
+- Store — routes/resetPassword.ts:44–44; model; semgrep:op-store-sequelize-update; evidenced; password referenced in $VAR
+
+Recommended fix: Store Authentication Secrets with a current, salted, deliberately slow password hashing function, never with a plain or fast unsalted digest. Re-hash each existing record with the new function the next time the Data Principal authenticates. Rule 6(1)(a) requires protection of the Personal Data these secrets guard, and a weak hash removes that protection once the store is read. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 1ee8121a57f78261fcda27860cd5f16395c1b46dd69d0aa071dc591ff2289a67
+
+### SEC-05-9922f06ca9e3 — Hard-coded secret or committed .env protecting Personal Data
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. model:SecurityAnswer.answer (Authentication Secret) has Internal-Restricted Exposure based on Evidence at lib/insecurity.ts:42; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: lib/insecurity.ts:42–42
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: CWE-798 — CWE-798
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+lib/insecurity.ts:42–42
+
+```
+[hard-coded key material masked]
+```
+
+models/securityAnswer.ts:42–47
+
+```
+      answer: {
+        type: DataTypes.STRING,
+        set (answer: string) {
+          this.setDataValue('answer', security.hmac(answer))
+        }
+      }
+```
+
+Data Flow:
+
+- Collect — frontend/src/app/register/register.component.html:93–95; form; ts-join; evidenced
+- Collect — frontend/src/app/register/register.component.ts:109–109; component; ts-join; evidenced
+- Collect — frontend/src/app/Services/security-answer.service.ts:21–21; service; ts-join; evidenced
+- Collect — server.ts:540–546; route; ts-join; inferred; POST /api/SecurityAnswers
+- Collect — server.ts:540–546; handler; ts-join; inferred; finale generated handler
+- Store — models/securityAnswer.ts:42–47; model; ts-join; inferred; finale generated model write
+- Expose — server.ts:625–631; response; ts-join; inferred; finale generated read response wrapper
+- Store — data/datacreator.ts:707–707; model; semgrep:op-store-sequelize-create; evidenced; answer referenced in $VAR
+- Log — data/datacreator.ts:708–708; log; semgrep:op-log-logger; evidenced; answer referenced in $VAR
+
+Recommended fix: Move credentials and keys that protect Personal Data out of source files and configuration into a secret store or the runtime environment. Rotate any value that has already been committed, and exclude .env and key files from version control and build context. Restrict the secret store to the identities that need it, as Rule 6(1)(b) requires for the systems that hold Personal Data. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 9c0f618c4c299741a4bad4bf5ed1c25726bfa69fc5fd51fd439271604d10bddf
+
+### SEC-05-c695dda06010 — Hard-coded secret or committed .env protecting Personal Data
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. protected Data Category Authentication Secret has Internal-Restricted Exposure based on Evidence at lib/insecurity.ts:21; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: lib/insecurity.ts:21–21, lib/insecurity.ts:54–54
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: CWE-798 — CWE-798
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+lib/insecurity.ts:21–21
+
+```
+[hard-coded signing material masked]
+```
+
+lib/insecurity.ts:54–54
+
+```
+export const authorize = (user = {}) => jwt.sign(user, privateKey, { expiresIn: '6h', algorithm: 'RS256' })
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Move credentials and keys that protect Personal Data out of source files and configuration into a secret store or the runtime environment. Rotate any value that has already been committed, and exclude .env and key files from version control and build context. Restrict the secret store to the identities that need it, as Rule 6(1)(b) requires for the systems that hold Personal Data. Tailored: not assessed
+
+LLM triage: not assessed; cache key: b47dd25f565fe450e15e2be653162e5aaeab4a3c2cfc71a1a65513bc711aaf7d
+
+### SEC-10-19fa227ef322 — Personal Data in localStorage, sessionStorage, cookies or outbound headers
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. storage:localStorage.token (Authentication Secret) has Internal-Restricted Exposure based on Evidence at frontend/src/app/payment/payment.component.ts:233; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: frontend/src/app/payment/payment.component.ts:233–233
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-922 — CWE-922
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+frontend/src/app/payment/payment.component.ts:233–233
+
+```
+          localStorage.setItem('token', data.token)
+```
+
+frontend/src/app/Services/request.interceptor.ts:16–16
+
+```
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+```
+
+Data Flow:
+
+- Store — frontend/src/app/login/login.component.ts:150–150; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/oauth/oauth.component.ts:52–52; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/payment/payment.component.ts:233–233; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+
+Recommended fix: Do not write Personal Data or Authentication Secrets to localStorage, sessionStorage, cookies or outbound headers beyond what the session strictly needs. Keep identity in an opaque session identifier held server-side, and keep only non-Personal Data preferences in the browser. Where a value must be held client-side, protect it as Rule 6(1)(a) requires. Tailored: not assessed
+
+LLM triage: not assessed; cache key: b5e636f4a12b28a4c97cf79cd02affe05dc639b1c49f39a8f557570eee85a900
+
+### SEC-10-20b8955c0a3e — Personal Data in localStorage, sessionStorage, cookies or outbound headers
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. storage:localStorage.token (Authentication Secret) has Internal-Restricted Exposure based on Evidence at frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-922 — CWE-922
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54
+
+```
+        localStorage.setItem('token', authentication.token)
+```
+
+frontend/src/app/Services/request.interceptor.ts:16–16
+
+```
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+```
+
+Data Flow:
+
+- Store — frontend/src/app/login/login.component.ts:150–150; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/oauth/oauth.component.ts:52–52; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/payment/payment.component.ts:233–233; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+
+Recommended fix: Do not write Personal Data or Authentication Secrets to localStorage, sessionStorage, cookies or outbound headers beyond what the session strictly needs. Keep identity in an opaque session identifier held server-side, and keep only non-Personal Data preferences in the browser. Where a value must be held client-side, protect it as Rule 6(1)(a) requires. Tailored: not assessed
+
+LLM triage: not assessed; cache key: ed87088f8b7c8f59411dc981fa1117dbbb0bf2c23c8f1ce5d4969bdcffb81261
+
+### SEC-10-49d347fcf67d — Personal Data in localStorage, sessionStorage, cookies or outbound headers
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. storage:localStorage.token (Authentication Secret) has Internal-Restricted Exposure based on Evidence at frontend/src/app/oauth/oauth.component.ts:52; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: frontend/src/app/oauth/oauth.component.ts:52–52
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-922 — CWE-922
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+frontend/src/app/oauth/oauth.component.ts:52–52
+
+```
+        localStorage.setItem('token', authentication.token)
+```
+
+frontend/src/app/Services/request.interceptor.ts:16–16
+
+```
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+```
+
+Data Flow:
+
+- Store — frontend/src/app/login/login.component.ts:150–150; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/oauth/oauth.component.ts:52–52; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/payment/payment.component.ts:233–233; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+
+Recommended fix: Do not write Personal Data or Authentication Secrets to localStorage, sessionStorage, cookies or outbound headers beyond what the session strictly needs. Keep identity in an opaque session identifier held server-side, and keep only non-Personal Data preferences in the browser. Where a value must be held client-side, protect it as Rule 6(1)(a) requires. Tailored: not assessed
+
+LLM triage: not assessed; cache key: ed87088f8b7c8f59411dc981fa1117dbbb0bf2c23c8f1ce5d4969bdcffb81261
+
+### SEC-10-d70f56f17198 — Personal Data in localStorage, sessionStorage, cookies or outbound headers
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. storage:localStorage.token (Authentication Secret) has Internal-Restricted Exposure based on Evidence at frontend/src/app/login/login.component.ts:150; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: frontend/src/app/login/login.component.ts:150–150, frontend/src/app/oauth/oauth.component.ts:52–52, frontend/src/app/payment/payment.component.ts:233–233, frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54, frontend/src/app/Services/request.interceptor.ts:16–16
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-922 — CWE-922
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+frontend/src/app/login/login.component.ts:150–150
+
+```
+    localStorage.setItem('token', authentication.token)
+```
+
+frontend/src/app/oauth/oauth.component.ts:52–52
+
+```
+        localStorage.setItem('token', authentication.token)
+```
+
+frontend/src/app/payment/payment.component.ts:233–233
+
+```
+          localStorage.setItem('token', data.token)
+```
+
+frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54
+
+```
+        localStorage.setItem('token', authentication.token)
+```
+
+frontend/src/app/Services/request.interceptor.ts:16–16
+
+```
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+```
+
+Data Flow:
+
+- Store — frontend/src/app/login/login.component.ts:150–150; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/oauth/oauth.component.ts:52–52; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/payment/payment.component.ts:233–233; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+- Store — frontend/src/app/two-factor-auth-enter/two-factor-auth-enter.component.ts:54–54; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key token
+
+Recommended fix: Do not write Personal Data or Authentication Secrets to localStorage, sessionStorage, cookies or outbound headers beyond what the session strictly needs. Keep identity in an opaque session identifier held server-side, and keep only non-Personal Data preferences in the browser. Where a value must be held client-side, protect it as Rule 6(1)(a) requires. Tailored: not assessed
+
+LLM triage: not assessed; cache key: e2fdbc2769d3a837477c845efe6a42ecc948dc935a7e469a7556df7284577042
+
+### SEC-11-5a71594e3942 — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. protected Data Category Authentication Secret has Internal-Restricted Exposure based on Evidence at routes/updateUserProfile.ts:42; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: routes/updateUserProfile.ts:42–42
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-319 — CWE-319, CWE-614 — CWE-614, CWE-942 — CWE-942
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/updateUserProfile.ts:42–42
+
+```
+      res.cookie('token', updatedToken)
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry. Tailored: not assessed
+
+LLM triage: not assessed; cache key: d241ac22b2731a66b8e953703b30fa9381d3e0c7a6ddf748a4e429e326e61691
+
+### SEC-11-84cd32175eeb — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. protected Data Category Authentication Secret has Internal-Restricted Exposure based on Evidence at routes/currentUser.ts:58; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: routes/currentUser.ts:58–58
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-319 — CWE-319, CWE-614 — CWE-614, CWE-942 — CWE-942
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/currentUser.ts:58–58
+
+```
+      res.jsonp(response)
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry. Tailored: not assessed
+
+LLM triage: not assessed; cache key: d4d690c7ade346f17045ae632d4159dfb8ec3806c00ad8efc2dc84d308c209a1
+
+### SEC-11-d7922190cbda — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. protected Data Category Authentication Secret has Internal-Restricted Exposure based on Evidence at lib/insecurity.ts:192; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: lib/insecurity.ts:192–192
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-319 — CWE-319, CWE-614 — CWE-614, CWE-942 — CWE-942
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+lib/insecurity.ts:192–192
+
+```
+        res.cookie('token', token)
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 194307395f9c65c99a6aa48b9fab45b9d7459dd561757163e6a2fdd02215ca24
+
+### SEC-07-2301fc553793 — Missing authentication or ownership check on a route returning Personal Data
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. model:User.email (Contact) has Internal-Restricted Exposure based on Evidence at server.ts:294; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: server.ts:294–294
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: CWE-639 — CWE-639, OWASP-API1-2023 — API1:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+server.ts:294–294
+
+```
+  app.use('/ftp', serveIndexMiddleware, serveIndex('ftp', { icons: true })) // vuln-code-snippet vuln-line directoryListingChallenge
+```
+
+models/user.ts:56–69
+
+```
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
+```
+
+models/wallet.ts:35–41
+
+```
+      balance: {
+        type: DataTypes.INTEGER,
+        validate: {
+          isInt: true
+        },
+        defaultValue: 0
+      }
+```
+
+Data Flow:
+
+- Store — routes/order.ts:45–45; file write; served directory
+
+Recommended fix: Require authentication on every route that returns Personal Data, and check on each request that the authenticated Data Principal owns the record or holds a role authorised for it. Do not let an identifier supplied in the path or body decide ownership. Apply the check to every method on the route, because Rule 6(1)(b) requires access to the resources holding Personal Data to be controlled. Tailored: not assessed
+
+LLM triage: not assessed; cache key: b53d80cd65ad04f5a4d42f7e1dbb5f7c30a35c44de517d0b622f43b04cde88ed
+
+### SEC-07-4edf88d6607a — Missing authentication or ownership check on a route returning Personal Data
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. param:GET /rest/user/security-question?email (Contact) has Internal-Restricted Exposure based on Evidence at server.ts:306; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: server.ts:306–306
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: CWE-639 — CWE-639, OWASP-API1-2023 — API1:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+server.ts:306–306
+
+```
+  app.use('/support/logs', serveIndexMiddleware, serveIndex('logs', { icons: true, view: 'details' })) // vuln-code-snippet vuln-line accessLogDisclosureChallenge
+```
+
+server.ts:362–369
+
+```
+  const accessLogStream = getStream({
+    filename: path.resolve('logs/access.log.%DATE%'),
+    date_format: 'YYYY-MM-DD',
+    audit_file: 'logs/audit.json',
+    frequency: 'daily',
+    verbose: false,
+    max_logs: '365d'
+  })
+```
+
+server.ts:370–370
+
+```
+  app.use(morgan('combined', { stream: accessLogStream }))
+```
+
+routes/securityQuestion.ts:13–13
+
+```
+    const email = query.email
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Require authentication on every route that returns Personal Data, and check on each request that the authenticated Data Principal owns the record or holds a role authorised for it. Do not let an identifier supplied in the path or body decide ownership. Apply the check to every method on the route, because Rule 6(1)(b) requires access to the resources holding Personal Data to be controlled. Tailored: not assessed
+
+LLM triage: not assessed; cache key: f1a51fb9c6b605ae48212126eb765f6f19f5e4379b67975c9f30e631c0037659
+
+### SEC-10-d0971bb44714 — Personal Data in localStorage, sessionStorage, cookies or outbound headers
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 7.9. storage:localStorage.email (Contact) has Internal-Restricted Exposure based on Evidence at frontend/src/app/login/login.component.ts:106; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: frontend/src/app/login/login.component.ts:106–106, frontend/src/app/Services/request.interceptor.ts:23–23
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-922 — CWE-922
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+frontend/src/app/login/login.component.ts:106–106
+
+```
+        localStorage.setItem('email', user.email)
+```
+
+frontend/src/app/Services/request.interceptor.ts:23–23
+
+```
+          'X-User-Email': String(localStorage.getItem('email'))
+```
+
+Data Flow:
+
+- Store — frontend/src/app/login/login.component.ts:106–106; storage; semgrep:op-store-localstorage-set; evidenced; localStorage key email
+
+Recommended fix: Do not write Personal Data or Authentication Secrets to localStorage, sessionStorage, cookies or outbound headers beyond what the session strictly needs. Keep identity in an opaque session identifier held server-side, and keep only non-Personal Data preferences in the browser. Where a value must be held client-side, protect it as Rule 6(1)(a) requires. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 4e4fde50a6c15af2e7a1d17866b529515c468982b96d1b842e544de131ac7ac2
+
+### SEC-11-5ab639d2a92e — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. protected Data Category Profile has Internal-Restricted Exposure based on Evidence at terraform/networking.tf:157; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: terraform/networking.tf:157–166
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-319 — CWE-319, CWE-614 — CWE-614, CWE-942 — CWE-942
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+terraform/networking.tf:157–166
+
+```
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.juice_shop.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.juice_shop.arn
+  }
+}
+```
+
+models/address.ts:41–43
+
+```
+      fullName: {
+        type: DataTypes.STRING
+      },
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 6cc9e7484ca39b841f5f2c2e5b62dc774a4df0630b1c893f3b174a3bdbac5ac6
+
+### SEC-11-7958164b1c64 — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
+
+Severity: high; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 7.9. protected Data Category Profile has Internal-Restricted Exposure based on Evidence at infrastructure/terraform/networking.tf:157; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 7.9. Primary Provision Rule 6(1)(a) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: infrastructure/terraform/networking.tf:157–166
+
+Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
+
+Other Provisions: CWE-319 — CWE-319, CWE-614 — CWE-614, CWE-942 — CWE-942
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+infrastructure/terraform/networking.tf:157–166
+
+```
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.juice_shop.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.juice_shop.arn
+  }
+}
+```
+
+models/address.ts:41–43
+
+```
+      fullName: {
+        type: DataTypes.STRING
+      },
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Serve every route that carries Personal Data over TLS only, and set Secure, HttpOnly and SameSite attributes on session cookies. Replace wildcard cross-origin rules with an explicit list of trusted origins. These transport and session controls are part of the safeguards Rule 6(1)(a) requires for the Personal Data they carry. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 6cc9e7484ca39b841f5f2c2e5b62dc774a4df0630b1c893f3b174a3bdbac5ac6
+
+### SEC-07-10d210fbc583 — Missing authentication or ownership check on a route returning Personal Data
+
+Severity: medium; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 5.7. collection:ordersCollection.email (Contact) has Public Exposure based on Evidence at server.ts:663; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 5.7. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:663–663
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: CWE-639 — CWE-639, OWASP-API1-2023 — API1:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/orderHistory.ts:17–17
+
+```
+      const order = await ordersCollection.find({ email: updatedEmail })
+```
+
+routes/orderHistory.ts:16–16
+
+```
+      const updatedEmail = email.replace(/[aeiou]/gi, '*')
+```
+
+data/datacreator.ts:798–798
+
+```
+        email,
+```
+
+server.ts:663–663
+
+```
+  app.get('/rest/order-history', utils.asyncHandler(orderHistory()))
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Require authentication on every route that returns Personal Data, and check on each request that the authenticated Data Principal owns the record or holds a role authorised for it. Do not let an identifier supplied in the path or body decide ownership. Apply the check to every method on the route, because Rule 6(1)(b) requires access to the resources holding Personal Data to be controlled. Tailored: not assessed
+
+LLM triage: not assessed; cache key: e09814f1911dc1a59c714d9298c1a817c79b08efc76c4bbfa35d677dd15655b2
+
+### SEC-07-19eb83125bf7 — Missing authentication or ownership check on a route returning Personal Data
+
+Severity: medium; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M, score 5.7. collection:ordersCollection.email (Contact) has Public Exposure based on Evidence at server.ts:660; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:M scores 5.7. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:660–660
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: CWE-639 — CWE-639, OWASP-API1-2023 — API1:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/dataExport.ts:33–33
+
+```
+          orders = await db.ordersCollection.find({ email: updatedEmail })
+```
+
+routes/dataExport.ts:22–22
+
+```
+        const updatedEmail = email.replace(/[aeiou]/gi, '*')
+```
+
+data/datacreator.ts:798–798
+
+```
+        email,
+```
+
+server.ts:660–660
+
+```
+  app.post('/rest/user/data-export', security.appendUserId(), utils.asyncHandler(dataExport()))
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Require authentication on every route that returns Personal Data, and check on each request that the authenticated Data Principal owns the record or holds a role authorised for it. Do not let an identifier supplied in the path or body decide ownership. Apply the check to every method on the route, because Rule 6(1)(b) requires access to the resources holding Personal Data to be controlled. Tailored: not assessed
+
+LLM triage: not assessed; cache key: ed6adec9e084f1af9e714681af304e4c7a3c14cda03aed8a71bdf69ea5e07d25
+
+### SEC-07-2bc6d0295d98 — Missing authentication or ownership check on a route returning Personal Data
+
+Severity: medium; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 5.7. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:640; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 5.7. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:640–640, server.ts:430–430, server.ts:440–451, server.ts:452–452, server.ts:453–453, server.ts:454–454, server.ts:540–546
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: CWE-639 — CWE-639, OWASP-API1-2023 — API1:2023, DPDP-Act-6(1) — Section 6(1), CWE-213 — CWE-213, OWASP-API3-2023 — API3:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+routes/authenticatedUsers.ts:12–12
+
+```
+    const users = await UserModel.findAll()
+```
+
+server.ts:640–640
+
+```
+  app.get('/rest/user/authentication-details', utils.asyncHandler(authenticatedUsers()))
+```
+
+models/user.ts:44–55
+
+```
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+        set (username: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            username = security.sanitizeLegacy(username)
+          } else {
+            username = security.sanitizeSecure(username)
+          }
+          this.setDataValue('username', username)
+        }
+      },
+```
+
+models/user.ts:56–69
+
+```
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
+```
+
+models/user.ts:70–75
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        set («SECRET») {
+          this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
+        }
+      }, // vuln-code-snippet end weakPasswordChallenge
+```
+
+models/user.ts:97–100
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+models/user.ts:101–104
+
+```
+      lastLoginIp: {
+        type: DataTypes.STRING,
+        defaultValue: '0.0.0.0'
+      },
+```
+
+models/user.ts:105–108
+
+```
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue:«SECRET».svg'
+      },
+```
+
+models/user.ts:109–112
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+server.ts:430–430
+
+```
+  app.use('/rest/user/authentication-details', security.isAuthorized())
+```
+
+server.ts:440–451
+
+```
+  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {
+    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {
+      if (req.body.email.length !== 0 && req.body.password.length !== 0) {
+        req.body.email = req.body.email.trim()
+        req.body.«SECRET»)
+        req.body.«SECRET»)
+      } else {
+        res.status(400).send(res.__('Invalid email/password cannot be empty'))
+      }
+    }
+    next()
+  })
+```
+
+server.ts:452–452
+
+```
+  app.post('/api/Users', verify.registerAdminChallenge())
+```
+
+server.ts:453–453
+
+```
+  app.post('/api/Users', verify.passwordRepeatChallenge()) // vuln-code-snippet hide-end
+```
+
+server.ts:454–454
+
+```
+  app.post('/api/Users', verify.emptyUserRegistration())
+```
+
+server.ts:540–546
+
+```
+    const resource = finale.resource({
+      model,
+      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],
+      excludeAttributes: exclude,
+      pagination: false,
+      include
+    })
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Require authentication on every route that returns Personal Data, and check on each request that the authenticated Data Principal owns the record or holds a role authorised for it. Do not let an identifier supplied in the path or body decide ownership. Apply the check to every method on the route, because Rule 6(1)(b) requires access to the resources holding Personal Data to be controlled. Tailored: not assessed
+
+LLM triage: not assessed; cache key: f551a751e307c1522503ef223052266073d4e46a3bf6f49c76a40ad2bb7888c0
+
+### SEC-07-6462097d19a8 — Missing authentication or ownership check on a route returning Personal Data
+
+Severity: medium; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 5.7. model:User.username (Profile) has Public Exposure based on Evidence at server.ts:395; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 5.7. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:395–395, server.ts:395–395, server.ts:440–451, server.ts:452–452, server.ts:453–453, server.ts:454–454, server.ts:540–546
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: CWE-639 — CWE-639, OWASP-API1-2023 — API1:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+server.ts:395–395
+
+```
+  app.get('/api/Users', security.isAuthorized())
+```
+
+server.ts:396–397
+
+```
+  app.route('/api/Users/:id')
+    .get(security.isAuthorized())
+```
+
+models/user.ts:44–55
+
+```
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+        set (username: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            username = security.sanitizeLegacy(username)
+          } else {
+            username = security.sanitizeSecure(username)
+          }
+          this.setDataValue('username', username)
+        }
+      },
+```
+
+models/user.ts:56–69
+
+```
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        set (email: string) {
+          if (utils.isChallengeEnabled(challenges.persistedXssUserChallenge)) {
+            challengeUtils.solveIf(challenges.persistedXssUserChallenge, () => {
+              return email?.includes('<iframe src="javascript:alert(`xss`)">') ?? false
+            })
+          } else {
+            email = security.sanitizeSecure(email)
+          }
+          this.setDataValue('email', email)
+…
+```
+
+models/user.ts:97–100
+
+```
+      «SECRET»
+        type: DataTypes.STRING,
+        defaultValue: ''
+      },
+```
+
+models/user.ts:101–104
+
+```
+      lastLoginIp: {
+        type: DataTypes.STRING,
+        defaultValue: '0.0.0.0'
+      },
+```
+
+models/user.ts:105–108
+
+```
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue:«SECRET».svg'
+      },
+```
+
+server.ts:440–451
+
+```
+  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {
+    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {
+      if (req.body.email.length !== 0 && req.body.password.length !== 0) {
+        req.body.email = req.body.email.trim()
+        req.body.«SECRET»)
+        req.body.«SECRET»)
+      } else {
+        res.status(400).send(res.__('Invalid email/password cannot be empty'))
+      }
+    }
+    next()
+  })
+```
+
+server.ts:452–452
+
+```
+  app.post('/api/Users', verify.registerAdminChallenge())
+```
+
+server.ts:453–453
+
+```
+  app.post('/api/Users', verify.passwordRepeatChallenge()) // vuln-code-snippet hide-end
+```
+
+server.ts:454–454
+
+```
+  app.post('/api/Users', verify.emptyUserRegistration())
+```
+
+server.ts:540–546
+
+```
+    const resource = finale.resource({
+      model,
+      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],
+      excludeAttributes: exclude,
+      pagination: false,
+      include
+    })
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Require authentication on every route that returns Personal Data, and check on each request that the authenticated Data Principal owns the record or holds a role authorised for it. Do not let an identifier supplied in the path or body decide ownership. Apply the check to every method on the route, because Rule 6(1)(b) requires access to the resources holding Personal Data to be controlled. Tailored: not assessed
+
+LLM triage: not assessed; cache key: f3a90f944b5c791d3be4fe9d3549b08a75edf7e29833d47d30f008fdccb80906
+
+### SEC-07-f9f89e15bbe6 — Missing authentication or ownership check on a route returning Personal Data
+
+Severity: medium; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L, score 5.7. protected Data Category Profile has Public Exposure based on Evidence at server.ts:413; CVSS CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:L scores 5.7. Primary Provision Rule 6(1)(b) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Public; Evidence: server.ts:413–413, server.ts:413–413, server.ts:440–451, server.ts:452–452, server.ts:453–453, server.ts:454–454, server.ts:540–546
+
+Primary Provision: DPDP-Rule-6(1)(b) — Rule 6(1)(b)
+
+Other Provisions: CWE-639 — CWE-639, OWASP-API1-2023 — API1:2023
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+server.ts:413–413
+
+```
+  app.get('/api/Complaints', security.isAuthorized())
+```
+
+models/complaint.ts:28–30
+
+```
+      UserId: {
+        type: DataTypes.INTEGER
+      },
+```
+
+server.ts:440–451
+
+```
+  app.post('/api/Users', (req: Request, res: Response, next: NextFunction) => {
+    if (req.body.email !== undefined && req.body.password !== undefined && req.body.passwordRepeat !== undefined) {
+      if (req.body.email.length !== 0 && req.body.password.length !== 0) {
+        req.body.email = req.body.email.trim()
+        req.body.«SECRET»)
+        req.body.«SECRET»)
+      } else {
+        res.status(400).send(res.__('Invalid email/password cannot be empty'))
+      }
+    }
+    next()
+  })
+```
+
+server.ts:452–452
+
+```
+  app.post('/api/Users', verify.registerAdminChallenge())
+```
+
+server.ts:453–453
+
+```
+  app.post('/api/Users', verify.passwordRepeatChallenge()) // vuln-code-snippet hide-end
+```
+
+server.ts:454–454
+
+```
+  app.post('/api/Users', verify.emptyUserRegistration())
+```
+
+server.ts:540–546
+
+```
+    const resource = finale.resource({
+      model,
+      endpoints: [`/api/${name}s`, `/api/${name}s/:id`],
+      excludeAttributes: exclude,
+      pagination: false,
+      include
+    })
+```
+
+Data Flow:
+
+- None recorded.
+
+Recommended fix: Require authentication on every route that returns Personal Data, and check on each request that the authenticated Data Principal owns the record or holds a role authorised for it. Do not let an identifier supplied in the path or body decide ownership. Apply the check to every method on the route, because Rule 6(1)(b) requires access to the resources holding Personal Data to be controlled. Tailored: not assessed
+
+LLM triage: not assessed; cache key: df498a4e8f3c6bfdad84a0e722d7d7c71aae26e9c1fec0acb2eeafd93f0a2a28
+
+### TRF-02-0ff246d3b291 — Personal Data sent or stored outside India (disclosure, capped at Medium; Needs Legal Review unless the destination is restricted under §16)
+
+Severity: medium; CVSS N/A (Disclosure Finding: processing presumed lawful, owed to the Data Principal); Risk Matrix cell medium (C, Cross-Border). model:User.email (Contact) has Cross-Border Exposure based on Evidence at infrastructure/terraform/variables.tf:1; Risk Matrix C/Cross-Border cell is medium, capped at medium for disclosure. Primary Provision Section 16(1) has Penalty Ceiling ₹50 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Cross-Border; Evidence: infrastructure/terraform/variables.tf:1–5, infrastructure/terraform/main.tf:1–3, infrastructure/terraform/networking.tf:249–261
+
+Primary Provision: DPDP-Act-16(1) — Section 16(1)
+
+Other Provisions: DPDP-Rule-15 — Rule 15, DPDP-Rule-13(4) — Rule 13(4)
+
+Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-13.
+
+Status: Needs Legal Review.
+
+Legal reading — DPDP-Act-16(1) — Section 16(1): Transfer is lawful unless the destination is restricted by notification; this region is a deployment default, not evidence of deployed geography.
+
+Legal reading — DPDP-Act-11(1)(b) — Section 11(1)(b): The Data Principal may be owed a summary of evidenced sharing; configured storage alone does not establish sharing.
+
+Evidence:
+
+infrastructure/terraform/variables.tf:1–5
+
+```
+variable "aws_region" {
+  description = "AWS region for deployment"
+  type        = string
+  default     = "eu-west-1"
+}
+```
+
+infrastructure/terraform/main.tf:1–3
+
+```
+provider "aws" {
+  region = var.aws_region
+}
+```
+
+infrastructure/terraform/networking.tf:249–261
+
+```
+resource "aws_efs_file_system" "juice_shop_data" {
+  «SECRET»
+  encrypted      = var.efs_encrypted
+
+  performance_mode = "generalPurpose"
+  throughput_mode  = "bursting"
+
+  tags = {
+    Name        = "${var.project_name}-sqlite-data"
+    Project     = var.project_name
+    Environment = var.environment
+  }
+…
+```
+
+Data Flow:
+
+- Collect — frontend/src/app/register/register.component.html:16–17; form; ts-join; evidenced
+- Collect — frontend/src/app/register/register.component.ts:98–98; component; ts-join; evidenced
+- Collect — frontend/src/app/Services/user.service.ts:38–38; service; ts-join; evidenced
+- Collect — server.ts:540–546; route; ts-join; inferred; POST /api/Users
+- Collect — server.ts:440–451; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:452–452; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:453–453; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:454–454; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Users
+- Collect — server.ts:540–546; handler; ts-join; inferred; finale generated handler
+- Store — models/user.ts:56–69; model; ts-join; inferred; finale generated model write
+- Expose — routes/saveLoginIp.ts:33–33; response; ts-join; evidenced
+- Expose — server.ts:625–631; response; ts-join; inferred; finale generated read response wrapper
+- Store — data/datacreator.ts:192–201; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
+- Store — data/datacreator.ts:326–329; model; semgrep:op-store-sequelize-create; evidenced; email referenced in $VAR
+
+Recommended fix: Record the destination of each outbound transfer of Personal Data, and check it against any restriction the Central Government has notified under §16(1). Rule 15 governs data made available to foreign States, and Rule 13(4) applies where a Significant Data Fiduciary is involved. Send any flow whose destination is not restricted to legal review, and state the destination in the notice. Tailored: not assessed
+
+LLM triage: not assessed; cache key: aa8d17bf032cfb34aaf8a3f52aa41b5889ba01e80069257df15dd3ff57c865cf
 
 ### TRF-02-56fc1119eb9b — Personal Data sent or stored outside India (disclosure, capped at Medium; Needs Legal Review unless the destination is restricted under §16)
 
@@ -738,7 +2807,7 @@ Primary Provision: DPDP-Act-16(1) — Section 16(1)
 
 Other Provisions: DPDP-Rule-15 — Rule 15, DPDP-Rule-13(4) — Rule 13(4)
 
-Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-13.
 
 Status: Needs Legal Review.
 
@@ -815,7 +2884,7 @@ Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
 
 Other Provisions: ITAct-43A — Section 43A, CWE-311 — CWE-311
 
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -879,7 +2948,7 @@ Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
 
 Other Provisions: ITAct-43A — Section 43A, CWE-311 — CWE-311
 
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -943,7 +3012,7 @@ Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
 
 Other Provisions: ITAct-43A — Section 43A, CWE-311 — CWE-311
 
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -1019,7 +3088,7 @@ Primary Provision: DPDP-Rule-6(1)(a) — Rule 6(1)(a)
 
 Other Provisions: ITAct-43A — Section 43A, CWE-311 — CWE-311
 
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -1092,7 +3161,7 @@ Primary Provision: DPDP-Rule-6(1)(c) — Rule 6(1)(c)
 
 Other Provisions: none
 
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -1124,6 +3193,86 @@ Recommended fix: Set up alerting or scheduled review on the access logs and auth
 
 LLM triage: not assessed; cache key: 090328308fd397a9e287d197691d5218fb2cfd41a52fdc0cc2f8d03867de6b06
 
+### SEC-14-14740ebe6dcc — No backup for Personal Data stores
+
+Severity: low; CVSS N/A (Compliance Gap: no CVSS score, so the band is the Risk Matrix cell); Risk Matrix cell low (C, Internal-Restricted). model:Address.fullName (Profile) has Internal-Restricted Exposure based on Evidence at infrastructure/terraform/networking.tf:249; Risk Matrix C/Internal-Restricted cell is low. Primary Provision Rule 6(1)(d) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
+
+Exposure: Internal-Restricted; Evidence: infrastructure/terraform/networking.tf:249–261
+
+Primary Provision: DPDP-Rule-6(1)(d) — Rule 6(1)(d)
+
+Other Provisions: none
+
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
+
+Status: open.
+
+Evidence:
+
+infrastructure/terraform/networking.tf:249–261
+
+```
+resource "aws_efs_file_system" "juice_shop_data" {
+  «SECRET»
+  encrypted      = var.efs_encrypted
+
+  performance_mode = "generalPurpose"
+  throughput_mode  = "bursting"
+
+  tags = {
+    Name        = "${var.project_name}-sqlite-data"
+    Project     = var.project_name
+    Environment = var.environment
+  }
+…
+```
+
+infrastructure/terraform/main.tf:35–97
+
+```
+resource "aws_ecs_task_definition" "juice_shop" {
+  family                   = "${var.project_name}-task"
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = var.task_cpu
+  memory                   = var.task_memory
+  execution_role_arn       = aws_iam_role.ecs_execution.arn
+
+  container_definitions = jsonencode([
+    {
+      name      = var.project_name
+      image     = "${var.ecr_repository_url}:${var.container_tag}"
+…
+```
+
+models/address.ts:41–43
+
+```
+      fullName: {
+        type: DataTypes.STRING
+      },
+```
+
+Data Flow:
+
+- Collect — frontend/src/app/address-create/address-create.component.html:14–14; form; ts-join; evidenced
+- Collect — frontend/src/app/address-create/address-create.component.ts:91–91; component; ts-join; evidenced
+- Collect — frontend/src/app/Services/address.service.ts:35–35; service; ts-join; evidenced
+- Collect — server.ts:540–546; route; ts-join; inferred; PUT /api/Addresss/:id
+- Collect — server.ts:482–482; middleware; ts-join; evidenced; Explicit route before finale: PUT /api/Addresss/:id
+- Collect — server.ts:540–546; handler; ts-join; inferred; finale generated handler
+- Store — models/address.ts:41–43; model; ts-join; inferred; finale generated model write
+- Expose — routes/address.ts:12–12; response; ts-join; evidenced
+- Expose — routes/address.ts:20–20; response; ts-join; evidenced
+- Collect — frontend/src/app/Services/address.service.ts:30–30; service; ts-join; evidenced
+- Collect — server.ts:540–546; route; ts-join; inferred; POST /api/Addresss
+- Collect — server.ts:480–480; middleware; ts-join; evidenced; Explicit route before finale: POST /api/Addresss
+- Store — data/datacreator.ts:253–262; model; semgrep:op-store-sequelize-create; evidenced; fullName referenced in $VAR
+
+Recommended fix: Back up every persistent store that holds Personal Data on a schedule, with encrypted copies held apart from the primary store. Test restoration before relying on the backups, and record the recovery point and recovery time each store must meet. Rule 6(1)(d) requires appropriate measures to continue processing if the data is compromised, and tested backups are the usual means of meeting it. Tailored: not assessed
+
+LLM triage: not assessed; cache key: 44617509f5746ed42e1b16231e9d01cf027e1719df44d37c40b5c4e8d47740bb
+
 ### SEC-14-c5e9ac6a126d — No backup for Personal Data stores
 
 Severity: low; CVSS N/A (Compliance Gap: no CVSS score, so the band is the Risk Matrix cell); Risk Matrix cell low (C, Internal-Restricted). model:Address.fullName (Profile) has Internal-Restricted Exposure based on Evidence at terraform/networking.tf:249; Risk Matrix C/Internal-Restricted cell is low. Primary Provision Rule 6(1)(d) has Penalty Ceiling ₹250 crore (maximum under the Schedule; actual amount set by the Board under s.33).
@@ -1134,7 +3283,7 @@ Primary Provision: DPDP-Rule-6(1)(d) — Rule 6(1)(d)
 
 Other Provisions: none
 
-Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹250 crore (DPDP-Act-8(5)); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -1214,7 +3363,7 @@ Primary Provision: DPDP-Rule-8(2) — Rule 8(2)
 
 Other Provisions: DPDP-Rule-8(1) — Rule 8(1), DPDP-Rules-Schedule-Third — Third Schedule
 
-Penalty Ceiling: ₹50 crore (DPDP-Act-8(7)); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹50 crore (DPDP-Act-8(7)); Enforceable From: 2027-05-13.
 
 Status: conditional.
 
@@ -1269,7 +3418,7 @@ Primary Provision: DPDP-Act-11(1)(a) — Section 11(1)(a)
 
 Other Provisions: DPDP-Act-11(1)(b) — Section 11(1)(b), DPDP-Rule-14 — Rule 14
 
-Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -1368,7 +3517,7 @@ models/user.ts:70–75
 ```
       «SECRET»
         type: DataTypes.STRING,
-        set (clearTextPassword: string) {
+        set («SECRET») {
           this.setDataValue('password', security.hash(clearTextPassword)) // vuln-code-snippet vuln-line weakPasswordChallenge
         }
       }, // vuln-code-snippet end weakPasswordChallenge
@@ -1471,7 +3620,7 @@ Primary Provision: DPDP-Act-12(2) — Section 12(2)
 
 Other Provisions: DPDP-Rule-14 — Rule 14
 
-Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -1828,8 +3977,8 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 | DPDP-Act-5(1) | Section 5(1) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
 | DPDP-Act-5(2) | Section 5(2) | not code-checkable | none |
 | DPDP-Act-5(3) | Section 5(3) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
-| DPDP-Act-6 | Section 6 | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-03-django-default-selected, CON-04-django-comparable-paths, CON-04-express-withdrawal-path, CON-05-express-processor-withdrawal, CON-06-django-incomplete-record, CON-06-sequelize-consent-record, CON-07-angular-consent-notice, CON-07-django-unitemised-notice, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author |
-| DPDP-Act-6(1) | Section 6(1) | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-03-django-default-selected, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author |
+| DPDP-Act-6 | Section 6 | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-03-django-default-selected, CON-04-django-comparable-paths, CON-04-express-withdrawal-path, CON-05-express-processor-withdrawal, CON-06-django-incomplete-record, CON-06-sequelize-consent-record, CON-07-angular-consent-notice, CON-07-django-unitemised-notice, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-08-ts-whole-model-serialisation |
+| DPDP-Act-6(1) | Section 6(1) | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-03-django-default-selected, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-08-ts-whole-model-serialisation |
 | DPDP-Act-6(2) | Section 6(2) | not code-checkable | none |
 | DPDP-Act-6(3) | Section 6(3) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
 | DPDP-Act-6(4) | Section 6(4) | not determinable | CON-04-django-comparable-paths, CON-04-express-withdrawal-path |
@@ -1840,7 +3989,7 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 | DPDP-Act-6(9) | Section 6(9) | not code-checkable | none |
 | DPDP-Act-6(10) | Section 6(10) | not determinable | CON-06-django-incomplete-record, CON-06-sequelize-consent-record |
 | DPDP-Act-7 | Section 7 | not determinable | CON-01-express-enforcement |
-| DPDP-Act-8 | Section 8 | not determinable | CON-05-express-processor-withdrawal, RET-01-express-purpose-end, RET-02-express-erasure-request, RIG-03-express-grievance, TRF-01-undisclosed-processor-transfer |
+| DPDP-Act-8 | Section 8 | not determinable | CON-05-express-processor-withdrawal, RET-01-express-purpose-end, RET-01-sequelize-soft-delete, RET-02-express-erasure-request, RIG-03-express-grievance, TRF-01-undisclosed-processor-transfer |
 | DPDP-Act-8(1) | Section 8(1) | not code-checkable | none |
 | DPDP-Act-8(2) | Section 8(2) | not code-checkable | TRF-01-undisclosed-processor-transfer |
 | DPDP-Act-8(3) | Section 8(3) | not code-checkable | none |
@@ -1849,8 +3998,8 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 | DPDP-Act-8(4) | Section 8(4) | not code-checkable | none |
 | DPDP-Act-8(5) | Section 8(5) | not code-checkable | none |
 | DPDP-Act-8(6) | Section 8(6) | not code-checkable | none |
-| DPDP-Act-8(7) | Section 8(7) | not determinable | CON-05-express-processor-withdrawal, RET-01-express-purpose-end, RET-02-express-erasure-request |
-| DPDP-Act-8(7)(a) | Section 8(7)(a) | not determinable | RET-01-express-purpose-end |
+| DPDP-Act-8(7) | Section 8(7) | not determinable | CON-05-express-processor-withdrawal, RET-01-express-purpose-end, RET-01-sequelize-soft-delete, RET-02-express-erasure-request |
+| DPDP-Act-8(7)(a) | Section 8(7)(a) | not determinable | RET-01-express-purpose-end, RET-01-sequelize-soft-delete |
 | DPDP-Act-8(7)(b) | Section 8(7)(b) | not determinable | CON-05-express-processor-withdrawal, RET-02-express-erasure-request |
 | DPDP-Act-8(8) | Section 8(8) | not code-checkable | none |
 | DPDP-Act-8(8)(a) | Section 8(8)(a) | not code-checkable | none |
@@ -2010,10 +4159,10 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 | DPDP-Rule-3(c)(i) | Rule 3(c)(i) | not determinable | CON-04-django-comparable-paths, CON-04-express-withdrawal-path |
 | DPDP-Rule-4 | Rule 4 | not code-checkable | none |
 | DPDP-Rule-5 | Rule 5 | not code-checkable | none |
-| DPDP-Rule-6 | Rule 6 | not determinable | MON-01-monitoring-coverage, SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-fastapi-wildcard-cors, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
-| DPDP-Rule-6(1) | Rule 6(1) | not determinable | MON-01-monitoring-coverage, SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-fastapi-wildcard-cors, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
-| DPDP-Rule-6(1)(a) | Rule 6(1)(a) | not determinable | SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-fastapi-wildcard-cors, SEC-11-ts-wildcard-cors, SEC-15-committed-personal-data |
-| DPDP-Rule-6(1)(b) | Rule 6(1)(b) | static | SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
+| DPDP-Rule-6 | Rule 6 | not determinable | MON-01-monitoring-coverage, SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-constant-key-verifier, SEC-04-ts-md5-credential-compare, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-hmac-key, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-lossy-owner-key, SEC-07-ts-public-personal-data-directory, SEC-07-ts-unauthenticated-record-read, SEC-07-ts-unchecked-nested-records, SEC-07-ts-unscoped-authenticated-read, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-08-ts-whole-model-serialisation, SEC-09-ts-query-authentication-secret, SEC-09-ts-query-personal-data, SEC-10-ts-storage-header, SEC-10-ts-token-storage-site, SEC-11-fastapi-wildcard-cors, SEC-11-terraform-plaintext-listener, SEC-11-ts-jsonp-response, SEC-11-ts-session-cookie-flags, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
+| DPDP-Rule-6(1) | Rule 6(1) | not determinable | MON-01-monitoring-coverage, SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-constant-key-verifier, SEC-04-ts-md5-credential-compare, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-hmac-key, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-lossy-owner-key, SEC-07-ts-public-personal-data-directory, SEC-07-ts-unauthenticated-record-read, SEC-07-ts-unchecked-nested-records, SEC-07-ts-unscoped-authenticated-read, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-08-ts-whole-model-serialisation, SEC-09-ts-query-authentication-secret, SEC-09-ts-query-personal-data, SEC-10-ts-storage-header, SEC-10-ts-token-storage-site, SEC-11-fastapi-wildcard-cors, SEC-11-terraform-plaintext-listener, SEC-11-ts-jsonp-response, SEC-11-ts-session-cookie-flags, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
+| DPDP-Rule-6(1)(a) | Rule 6(1)(a) | not determinable | SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-constant-key-verifier, SEC-04-ts-md5-credential-compare, SEC-04-ts-md5-password-hash, SEC-09-ts-query-authentication-secret, SEC-09-ts-query-personal-data, SEC-10-ts-storage-header, SEC-10-ts-token-storage-site, SEC-11-fastapi-wildcard-cors, SEC-11-terraform-plaintext-listener, SEC-11-ts-jsonp-response, SEC-11-ts-session-cookie-flags, SEC-11-ts-wildcard-cors, SEC-15-committed-personal-data |
+| DPDP-Rule-6(1)(b) | Rule 6(1)(b) | static | SEC-05-ts-hardcoded-hmac-key, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-lossy-owner-key, SEC-07-ts-public-personal-data-directory, SEC-07-ts-unauthenticated-record-read, SEC-07-ts-unchecked-nested-records, SEC-07-ts-unscoped-authenticated-read, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-08-ts-whole-model-serialisation, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
 | DPDP-Rule-6(1)(c) | Rule 6(1)(c) | not determinable | MON-01-monitoring-coverage, SEC-12-express-access-logging |
 | DPDP-Rule-6(1)(d) | Rule 6(1)(d) | static | SEC-14-terraform-store-backup |
 | DPDP-Rule-6(1)(e) | Rule 6(1)(e) | not determinable | SEC-13-ts-access-log-retention |
@@ -2053,6 +4202,36 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 | DPDP-Rules-Schedule-Sixth | Sixth Schedule | not code-checkable | none |
 | DPDP-Rules-Schedule-Seventh | Seventh Schedule | not code-checkable | none |
 
+## Statutory Penalty Ceilings and Enforcement Timeline
+
+Statutory maximum per Schedule; not a predicted or estimated fine. The actual penalty is determined by the Data Protection Board under section 33(2) factors. Ceilings apply per breach instance and are never added together.
+
+Highest applicable ceiling: ₹250 crore (DPDP-Rule-6(1)(a), DPDP-Rule-6(1)(b), DPDP-Rule-6(1)(c), DPDP-Rule-6(1)(d)). Ceilings are not summed into a total exposure figure.
+
+| Provision | Schedule entry | Statutory maximum | Findings | Severity mix |
+| --- | --- | --- | --- | --- |
+| DPDP-Rule-6(1)(a) | Schedule, item 1 | ₹250 crore | SEC-09-e51d3cb1437b, SEC-11-ad5b2106f4e8, SEC-04-4da51857d7fb, SEC-04-bebc3e7f55ae, SEC-04-f14b443a57f1, SEC-10-19fa227ef322, SEC-10-20b8955c0a3e, SEC-10-49d347fcf67d, SEC-10-d70f56f17198, SEC-11-5a71594e3942, SEC-11-84cd32175eeb, SEC-11-d7922190cbda, SEC-10-d0971bb44714, SEC-11-5ab639d2a92e, SEC-11-7958164b1c64, SEC-02-03b1356ecc57, SEC-02-0f4631e6a05d, SEC-02-b6efa0cd2309, SEC-02-e0994a7481e3 | high: 15, medium: 4 |
+| DPDP-Rule-6(1)(b) | Schedule, item 1 | ₹250 crore | SEC-07-2d4f025671b7, SEC-07-46e1db7b8927, SEC-07-84fd091ad6cb, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-05-9922f06ca9e3, SEC-05-c695dda06010, SEC-07-2301fc553793, SEC-07-4edf88d6607a, SEC-07-10d210fbc583, SEC-07-19eb83125bf7, SEC-07-2bc6d0295d98, SEC-07-6462097d19a8, SEC-07-f9f89e15bbe6 | high: 15, medium: 5 |
+| DPDP-Rule-6(1)(c) | Schedule, item 1 | ₹250 crore | MON-01-8c5728dfea11 | low: 1 |
+| DPDP-Rule-6(1)(d) | Schedule, item 1 | ₹250 crore | SEC-14-14740ebe6dcc, SEC-14-c5e9ac6a126d | low: 2 |
+| DPDP-Rule-13(4) | Schedule, item 4 | ₹150 crore | TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b | medium: 2 |
+| DPDP-Act-11(1)(a) | Schedule, item 7 | ₹50 crore | RIG-01-a9383e4db278 | low: 1 |
+| DPDP-Act-11(1)(b) | Schedule, item 7 | ₹50 crore | RIG-01-a9383e4db278 | low: 1 |
+| DPDP-Act-12(2) | Schedule, item 7 | ₹50 crore | RIG-02-f7117cbcde8b | low: 1 |
+| DPDP-Act-16(1) | Schedule, item 7 | ₹50 crore | TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b | medium: 2 |
+| DPDP-Act-6(1) | Schedule, item 7 | ₹50 crore | SEC-07-2d4f025671b7, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-07-2bc6d0295d98 | high: 9, medium: 1 |
+| DPDP-Rule-14 | Schedule, item 7 | ₹50 crore | RIG-01-a9383e4db278, RIG-02-f7117cbcde8b | low: 2 |
+| DPDP-Rule-15 | Schedule, item 7 | ₹50 crore | TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b | medium: 2 |
+| DPDP-Rule-8(1) | Schedule, item 7 | ₹50 crore | RET-03-ae3018401243 | low: 1 |
+| DPDP-Rule-8(2) | Schedule, item 7 | ₹50 crore | RET-03-ae3018401243 | low: 1 |
+| DPDP-Rules-Schedule-Third | Schedule, item 7 | ₹50 crore | RET-03-ae3018401243 | low: 1 |
+
+### Enforcement timeline (days relative to scan date 2026-11-23)
+
+| Enforceable From | Status | Findings |
+| --- | --- | --- |
+| 2027-05-13 | enforceable in 171 days | SEC-07-2d4f025671b7, SEC-07-46e1db7b8927, SEC-07-84fd091ad6cb, SEC-08-445c2a32bf62, SEC-08-5b7f92b613ca, SEC-08-6260b655a69b, SEC-08-a535cd15b04b, SEC-08-ca532d12729b, SEC-08-cefb92be21c6, SEC-08-d0cbdc68911f, SEC-08-d23c91065882, SEC-09-e51d3cb1437b, SEC-11-ad5b2106f4e8, SEC-04-4da51857d7fb, SEC-04-bebc3e7f55ae, SEC-04-f14b443a57f1, SEC-05-9922f06ca9e3, SEC-05-c695dda06010, SEC-10-19fa227ef322, SEC-10-20b8955c0a3e, SEC-10-49d347fcf67d, SEC-10-d70f56f17198, SEC-11-5a71594e3942, SEC-11-84cd32175eeb, SEC-11-d7922190cbda, SEC-07-2301fc553793, SEC-07-4edf88d6607a, SEC-10-d0971bb44714, SEC-11-5ab639d2a92e, SEC-11-7958164b1c64, SEC-07-10d210fbc583, SEC-07-19eb83125bf7, SEC-07-2bc6d0295d98, SEC-07-6462097d19a8, SEC-07-f9f89e15bbe6, TRF-02-0ff246d3b291, TRF-02-56fc1119eb9b, SEC-02-03b1356ecc57, SEC-02-0f4631e6a05d, SEC-02-b6efa0cd2309, SEC-02-e0994a7481e3, MON-01-8c5728dfea11, SEC-14-14740ebe6dcc, SEC-14-c5e9ac6a126d, RET-03-ae3018401243, RIG-01-a9383e4db278, RIG-02-f7117cbcde8b |
+
 ## Method, accuracy and limitations
 
 Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only mode replays matching cached LLM fields; uncached fields are not assessed. Live Probe outcomes, when available, appear with their Findings.
@@ -2065,12 +4244,12 @@ Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only
 | Exclusions | **/.git/**, **/node_modules/**, data/static/codefixes/**, test/**, frontend/**/*.spec.ts |
 | Files scanned | 1060 |
 | Files excluded | 77722 |
-| Rule count | 51 |
+| Rule count | 65 |
 | LLM provider | ollama |
 | LLM model | llama3.1 |
 | Prompt versions | classification: classification-v1, triage: triage-v1, consent: consent-v1, fix: fix-v1 |
 | LLM mode | cache-only |
 | Cache hits | 0 |
-| Cache misses | 138 |
-| LLM fields not assessed | 138 |
+| Cache misses | 196 |
+| LLM fields not assessed | 196 |
 | Cache-only reason | ollama is unreachable or authentication failed |

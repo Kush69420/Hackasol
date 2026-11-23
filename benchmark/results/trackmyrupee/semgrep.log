@@ -1,0 +1,35 @@
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 1063 files with 1145 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  <multilang>      79     709          Community    1145                                                                
+  python          273     420                                                                                           
+  html              1     209                                                                                           
+  js              154      79                                                                                           
+  json              4      11                                                                                           
+  yaml             39       6                                                                                           
+  bash              4       4                                                                                           
+  swift             2       3                                                                                           
+  java            118       2                                                                                           
+  dockerfile        6       1                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 478 (478 blocking)
+ • Rules run: 674
+ • Targets scanned: 1063
+ • Parsed lines: ~99.3%
+ • Scan skipped: 
+   ◦ Files larger than  files 1.0 MB: 7
+   ◦ Files matching .semgrepignore patterns: 249
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 674 rules on 1063 files: 478 findings.

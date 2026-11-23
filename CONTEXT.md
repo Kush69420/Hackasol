@@ -201,5 +201,5 @@ The maximum penalty the Act's Schedule allows for breaching a Provision's parent
 _Avoid_: Fine, penalty amount, exposure
 
 **Enforceable From**:
-The date a Finding's Primary Provision commences under the Act and Rules (14 May 2027 for Rules 3 and 5–16, eighteen months after Gazette publication on 14 Nov 2025); it is shown on the Finding and never changes Severity.
+The date a Finding's Primary Provision commences under the Act and Rules (13 May 2027 for Rules 3 and 5–16, eighteen months after Gazette publication on 13 Nov 2025); it is shown on the Finding and never changes Severity.
 _Avoid_: Effective date, deadline, go-live

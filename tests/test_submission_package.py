@@ -117,9 +117,17 @@ def test_manifest_fork_rescan_pairs_with_the_pinned_baseline():
     before = json.loads((ROOT / entries["juice-shop"]["report"]["json"]).read_text(encoding="utf-8"))
     after = json.loads((ROOT / entries[FORK]["report"]["json"]).read_text(encoding="utf-8"))
     result = compare(before, after)
-    assert [i.split("-")[0] for i in result["gone"]] == ["RET", "SEC", "SEC"]
-    assert result["new"] == []
-    assert not any(i.startswith("SEC-09") for i in result["gone"]), "the pinned Report emits no SEC-09 Finding"
+    assert result["gone"] == rescan["gone"] == [
+        "RET-01-e43b9adccd2d",
+        "RET-02-4696497b9137",
+        "SEC-01-d85a743d0415",
+        "SEC-07-4edf88d6607a",
+        "SEC-09-8d1d55111ce2",
+        "SEC-13-394d3dbca514",
+    ]
+    # SEC-07-4edf88d6607a keeps its id but its Element and Evidence files change with the fix,
+    # so the comparison counts it as gone and new.
+    assert result["new"] == rescan["new"] == ["SEC-07-4edf88d6607a"]
 
 
 def test_manifest_juice_shop_recording_differs_from_the_report_only_by_live_probe_outcomes():
@@ -140,9 +148,40 @@ def test_manifest_juice_shop_recording_differs_from_the_report_only_by_live_prob
     assert any(recorded_by_id[i]["live_probe"]["route"] == "/rest/memories" for i in confirmed)
 
 
+def without_consent_live_probes(report: dict) -> dict:
+    stripped = copy.deepcopy(report)
+    stripped["consent_assessment"].pop("live_probe_run", None)
+    for row in stripped["consent_assessment"]["criteria"]:
+        row.pop("live_probes", None)
+    return stripped
+
+
+def test_manifest_trackmyrupee_recording_differs_from_the_report_only_by_consent_live_probes():
+    entry = next(e for e in load_manifest()["entries"] if e["name"] == "trackmyrupee")
+    overlay = entry["recording"]["live_probe_overlay"]
+    static = json.loads((ROOT / entry["report"]["json"]).read_text(encoding="utf-8"))
+    recorded = json.loads((ROOT / entry["recording"]["dir"] / "report.json").read_text(encoding="utf-8"))
+    assert "live_probe_run" not in static["consent_assessment"]
+    assert all("live_probes" not in row for row in static["consent_assessment"]["criteria"])
+    # only the scan timestamps and the Consent Assessment Live Probe fields may differ
+    for report in (static, recorded):
+        report["scan"] = {k: v for k, v in report["scan"].items() if k not in VOLATILE}
+    assert without_consent_live_probes(recorded) == static
+    run = recorded["consent_assessment"]["live_probe_run"]
+    assert run == {"target": "trackmyrupee", "commit": PINS["trackmyrupee"], "observed_at": overlay["observed_at"]}
+    assert overlay["target_commit"] == PINS["trackmyrupee"]
+    rows = [{"criterion": r["criterion"], "outcomes": [{"assertion": p["assertion"], "status": p["status"]}
+                                                       for p in r["live_probes"]]}
+            for r in recorded["consent_assessment"]["criteria"] if r.get("live_probes")]
+    assert rows == overlay["criteria"]
+    assert {"Confirmed", "Not Confirmed", "Inconclusive"} >= {o["status"] for r in rows for o in r["outcomes"]}
+    # a probe never creates or changes a Finding
+    assert recorded["findings"] == static["findings"]
+
+
 def test_manifest_non_probe_reports_are_the_recorded_reports():
     for entry in load_manifest()["entries"]:
-        if entry["name"] != "juice-shop":
+        if entry["name"] not in ("juice-shop", "trackmyrupee"):
             assert entry["report"]["content_sha256"] == content_sha256(ROOT / entry["recording"]["dir"] / "report.json")
             for fmt in ("report.md", "report.html"):
                 assert (ROOT / entry["report"]["json"]).parent.joinpath(fmt).read_bytes() == \

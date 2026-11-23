@@ -48,7 +48,7 @@ def finding(**overrides):
         "primary_provision": "DPDP-Rule-6(1)(a)",
         "other_provisions": ["CWE-532"],
         "penalty_ceiling": {"parent_section": "DPDP-Act-8(5)", "amount_inr_crore": 250},
-        "enforceable_from": "2027-05-14",
+        "enforceable_from": "2027-05-13",
         "cvss": {"status": "scored", "vector": CVSS_VECTOR, "score": 6.9},
         "risk_matrix": {"tier": "A", "exposure": "Internal-Broad", "cell": "high"},
         "severity": {"band": "high", "justification": "Contact data reaches a shared log."},

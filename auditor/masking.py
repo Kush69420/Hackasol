@@ -46,11 +46,15 @@ def _secret_literal(value):
 
 
 def _mask(text: str, *, egress: bool, code_aware: bool = False) -> str:
+    # Mask URL userinfo before any other substitution can split it.
+    text = re.sub(r'''(\b[A-Za-z][A-Za-z0-9+.-]*://)[^\s/?#@'"`<>]*@''',
+                  r'\1«URL_CREDENTIALS»@', text)
     text = _sub(text, r'data:image/[A-Za-z0-9.+-]+;base64,[A-Za-z0-9+/=\r\n]+', 'BIOMETRIC_PAYLOAD', re.I)
     text = _sub(text, r'(?<![A-Za-z0-9+/=])[A-Za-z0-9+/=]{200,}(?![A-Za-z0-9+/=])', 'BINARY')
     text = _sub(text, r'-----BEGIN [^-\n]*PRIVATE KEY-----[\s\S]*?-----END [^-\n]*PRIVATE KEY-----', 'SECRET')
     text = _sub(text, r'\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b', 'SECRET')
     text = _sub(text, r'\bAKIA[0-9A-Z]{16}\b|\bBearer[ \t]+[A-Za-z0-9._~+/=-]+', 'SECRET', re.I)
+    # URL userinfo is handled before the other masks.
     # Replace the complete assignment, including quoted values with spaces.
     # Masking stays conservative (a variable name is masked too); only the code-aware check, used to
     # decide whether a Fix Patch diff still holds a secret value, exempts code references.
@@ -88,6 +92,11 @@ def mask_for_egress(text: str) -> str:
 
 def mask_for_report(text: str) -> str:
     return _mask(text, egress=False)
+
+
+def public_source(source: str) -> str:
+    """Remove URL userinfo from public Target provenance."""
+    return re.sub(r'''(\b[A-Za-z][A-Za-z0-9+.-]*://)[^\s/?#@'"`<>]*@''', r'\1', source)
 
 
 def contains_unmasked_material(code: str) -> bool:

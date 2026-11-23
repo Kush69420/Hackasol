@@ -20,8 +20,14 @@ BUCKET = RuleSpec('SEC-16-terraform-public-storage', 'SEC-16', 'Public Personal 
 ROOT = RuleSpec('SEC-16-docker-root-container', 'SEC-16', 'Root container serving a Personal Data store', 'config', 'technical', VECTOR, ('dockerfile', 'terraform'))
 
 
-def _source(record):
-    return min(record['sources'], key=lambda s: (len(PurePosixPath(s['file']).parts), s['file'], s['start_line']))
+def _module(coord):
+    return str(PurePosixPath(coord['file']).parent)
+
+
+def _source(record, module=None):
+    """Canonical source of a record; with ``module`` only a source declared in that Terraform directory."""
+    sources = [s for s in record['sources'] if module is None or _module(s) == module]
+    return min(sources, key=lambda s: (len(PurePosixPath(s['file']).parts), s['file'], s['start_line']))
 
 
 def _text(ctx, coord):
@@ -160,24 +166,29 @@ def _efs_stores(ctx):
     if not elements:
         return
     # A task must mount the named EFS resource; an unrelated EFS declaration is not a store nexus.
+    # Identical declarations recur once per deployment tree (Terraform directory); each tree is
+    # its own deployment, so the store is assessed per tree while repeats inside one tree merge.
     for store in _records(ctx, 'aws_efs_file_system'):
         ref = 'aws_efs_file_system.' + store['name']
         for task in _records(ctx, 'aws_ecs_task_definition'):
+            modules = sorted({_module(s) for s in store['sources']} & {_module(s) for s in task['sources']})
+            if not modules:
+                continue
             text = _text(ctx, _source(task))
             if ref not in text or not re.search(r'\b(?:mountPoints|containerPath)\b', text):
                 continue
             # SQLite or an explicitly database-labelled mount links the volume to the model store.
             if not re.search(r'\b(?:sqlite|database|postgres|mysql)\b', text, re.I):
                 continue
-            yield store, task, elements[0]
+            for module in modules:
+                yield store, task, elements[0], module
 
 
-def _has_backup(ctx, store):
+def _has_backup(ctx, store, module):
     ref = 'aws_efs_file_system.' + store['name']
-    plans = {r['name'] for r in _records(ctx, 'aws_backup_plan')}
-    store_dirs = {str(PurePosixPath(s['file']).parent) for s in store['sources']}
+    plans = {r['name'] for r in _records(ctx, 'aws_backup_plan') if any(_module(s) == module for s in r['sources'])}
     for selection in _records(ctx, 'aws_backup_selection'):
-        if not any(str(PurePosixPath(s['file']).parent) in store_dirs for s in selection['sources']):
+        if not any(_module(s) == module for s in selection['sources']):
             continue
         text = _text(ctx, _source(selection))
         plan = re.search(r'aws_backup_plan\.(\w+)', text)
@@ -189,10 +200,10 @@ def _has_backup(ctx, store):
 @rule(BACKUP)
 def missing_backup(ctx):
     out = []
-    for store, task, element in _efs_stores(ctx):
-        if _has_backup(ctx, store):
+    for store, task, element, module in _efs_stores(ctx):
+        if _has_backup(ctx, store, module):
             continue
-        coords = [_source(store), _source(task), element['source']]
+        coords = [_source(store, module), _source(task, module), element['source']]
         out.append(_match(ctx, BACKUP, element, coords, gate=coords[:2]))
     return out
 
@@ -267,20 +278,22 @@ def public_storage(ctx):
 def root_container(ctx):
     out = []
     # Only assess a Dockerfile selected by the deployment build and mounted store.
-    for store, task, element in _efs_stores(ctx):
+    for store, task, element, module in _efs_stores(ctx):
         for build in _records(ctx, 'null_resource'):
-            build_text = _text(ctx, _source(build))
+            if not any(_module(s) == module for s in build['sources']):
+                continue
+            build_text = _text(ctx, _source(build, module))
             for docker in ctx.inventory.get('docker', []):
                 user = (docker.get('final_user') or '').split(':', 1)[0]
                 if user not in ('', 'root', '0') or not docker.get('stages'):
                     continue
-                module = PurePosixPath(_source(build)['file']).parent
+                directory = PurePosixPath(module)
                 referenced = re.findall(r'\$\{path\.module\}/([^\"\'\s]+)', build_text)
                 import posixpath
-                if not any(posixpath.normpath(str(module / path)) == docker['file'] for path in referenced):
+                if not any(posixpath.normpath(str(directory / path)) == docker['file'] for path in referenced):
                     continue
                 out.append(_match(ctx, ROOT, element,
                                   [docker['final_user_source'] or docker['stages'][-1]['source'],
-                                   _source(build), _source(task), _source(store), element['source']],
+                                   _source(build, module), _source(task, module), _source(store, module), element['source']],
                                   nexus=(element['id'],)))
     return out

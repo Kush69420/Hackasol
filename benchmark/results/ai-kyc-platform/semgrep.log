@@ -1,0 +1,31 @@
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 84 files with 1145 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  <multilang>      51      84          Community    1145                                                                
+  python          273      43                                                                                           
+  ts              164      11                                                                                           
+  json              4       5                                                                                           
+  js              154       3                                                                                           
+  yaml             39       3                                                                                           
+  dockerfile        6       3                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 13 (13 blocking)
+ • Rules run: 533
+ • Targets scanned: 84
+ • Parsed lines: ~99.9%
+ • Scan skipped: 
+   ◦ Matching --exclude patterns: 42
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 533 rules on 84 files: 13 findings.

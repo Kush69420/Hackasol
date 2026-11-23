@@ -40,6 +40,19 @@ The dashboard's Fix Patch review (live Reports only) shows the destination fork,
 
 Disappearing Findings do not establish compliance; the Target test failures are recorded, not hidden.
 
+## LLM-generated Fix Patch (prompt `fix-patch-v2`)
+
+`generate_review` sends the masked Finding plus exact numbered file content around each Evidence span (`CONTEXT_RADIUS` 30 lines, at most 3 files), requires a unified diff copied verbatim from those lines, checks it with `git apply --check`, and retries at most twice, feeding back the masked apply error. The diff is stored and published unedited; provenance is `generated` with provider, model, prompt version, cache key and attempt count.
+
+| Item | Result |
+|---|---|
+| Review PR | https://github.com/TanKaizokuO/juice-shop/pull/2 (SEC-11 `res.cookie('token', ...)` in `routes/updateUserProfile.ts`, `SEC-11-5a71594e3942`) |
+| Generator | provider omp, model `anthropic/claude-haiku-5-5`, 1 apply attempt (a first CORS draft for SEC-11-ad5b2106f4e8 was discarded: it removes the wildcard that `test/api/http.test.ts` asserts) |
+| Re-scan (same session, rules state) | selected Finding absent, none new; Findings before 56, after 55 on the fork clone |
+| Target tests | `tsc --noEmit` ok; server unit 157/157; API `user-profile` + `login` 31/31 (run with empty placeholder `build/` and `frontend/dist/` files in the scratch copy so the startup precondition check passes; the frontend was not built) |
+
+The fix sets `httpOnly`, `secure` and `sameSite: 'strict'` on the cookie. The frontend also writes and removes `token` through `cookieService`; an `httpOnly` cookie cannot be removed by that code, so browser behaviour was not exercised and needs review. A re-scan is not a certification of compliance.
+
 ## SEC-09
 
 The pinned Juice Shop Report identifies password-change logging as `SEC-01-d85a743d0415` at `frontend/src/app/Services/user.service.ts:54–55` and `server.ts:370`. It emits no SEC-09 Finding; a password-change group can therefore verify SEC-01 removal only, not SEC-09 removal.

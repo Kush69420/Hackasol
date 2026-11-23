@@ -233,7 +233,10 @@ def run(report: dict, target: str, allowed_origins: tuple[str, ...] = ()) -> lis
         from auditor.probes.trackmyrupee import PIN as CONSENT_PIN, run_browser
         if identity.get("commit") != CONSENT_PIN:
             raise ValueError("TrackMyRupee Report does not match the supported source revision")
-        return run_browser(authorize(target, allowed_origins))
+        from auditor.consent.criteria import attach_live_probes
+        outcomes = run_browser(authorize(target, allowed_origins))
+        attach_live_probes(report, outcomes)
+        return outcomes
     if identity.get("name") != "juice-shop" or identity.get("commit") != PIN:
         raise ValueError("no registered Live Probe suite for this Target Application revision")
     metadata = image_metadata()

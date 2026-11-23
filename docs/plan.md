@@ -49,7 +49,7 @@ Each Finding is labelled as one of three kinds: DPDP obligation, security check 
   - CVSS 4.0 vector + score or N/A, Risk Matrix cell, Severity + justification;
   - recommended fix, status (open / Needs Legal Review / conditional), LLM triage verdict + reason + cache key;
   - reserved for P2: Live Probe outcome, Fix Patch.
-- **Provision registry**: every Act section and sub-section and every Rule, with a text excerpt, parent section, Penalty Ceiling and Enforceable From (14 Nov 2026 for Rule 4; 14 May 2027 for Rules 3, 5–16, 22–23). Each entry is checked against the official Act, Rules (G.S.R. 846(E)) and commencement notice (G.S.R. 843(E)). Allied law and CWE/OWASP entries sit alongside.
+- **Provision registry**: every Act section and sub-section and every Rule, with a text excerpt, parent section, Penalty Ceiling and Enforceable From (13 Nov 2026 for Rule 4; 13 May 2027 for Rules 3, 5–16, 22–23). Each entry is checked against the official Act, Rules (G.S.R. 846(E)) and commencement notice (G.S.R. 843(E)). Allied law and CWE/OWASP entries sit alongside.
 - **Remediation catalogue**: written fix guidance per Issue Type, tailored to the Evidence by the LLM.
 - **LLM layer** (ADR 0003): Anthropic, OpenAI, Gemini, Ollama and headless `omp` behind one interface. Outbound snippets are masked; verdicts are cached by snippet hash, prompt version and model.
 - **Masking**: one function shared by LLM egress and Report Evidence (Authentication Secrets, keys, tokens, Government Identifiers).
@@ -159,7 +159,7 @@ Acceptance: every Juice Shop Finding has a Primary Provision, Penalty Ceiling, E
 - JSON is the source of truth; Markdown and HTML are rendered from it; PDF is printed from the HTML.
 - Report sections:
   1. Applicability Assumptions;
-  2. executive summary: counts by Severity and kind, top penalty exposure, what to fix before 14 May 2027;
+  2. executive summary: counts by Severity and kind, top penalty exposure, what to fix before 13 May 2027;
   3. Personal Data Map;
   4. Findings: file, line, Evidence, Data Flow, Provisions, Severity + justification, recommended fix;
   5. Coverage Matrix: every Act section and Rule marked static / live-testable / not code-checkable / not determinable, with covering Rules; Child Data marked "covered, not exercised on a real Target";
@@ -252,6 +252,68 @@ Acceptance: SEC-07/08 (`/rest/memories`), RET-02 and SEC-11 Confirmed live on lo
 
 ---
 
+# P3: Retrieval grounding and a fine-tuned local model
+
+Decision: [ADR 0004](adr/0004-retrieval-grounding-and-fine-tuned-local-model.md). ADR 0003 still holds: the LLM never creates or drops a Finding.
+
+## P3.1 Retrieval-grounded prompts
+
+- **Index.** `dpdp-audit rag build` (proposed) builds a committed index from:
+  - registry entries;
+  - the official Act and Rules text, segmented and joined to registry ids;
+  - catalogue guidance;
+  - Labelled Corpus fixtures.
+  Statute segments without a registry id are dropped and listed.
+- **Retrieval.** Start from the Issue Type's Provisions and their parents, then expand with BM25 over statute segments and add the nearest fixtures with BM25. Retrieval is deterministic and offline.
+- **Prompts v2.** Triage and consent return `citations`. A citation outside the retrieved set makes the verdict invalid, so it is "not assessed". Consent v2 also returns a verdict per criterion. Classification and fix get v2 prompts with worked examples, but no statute.
+- Regenerate `accuracy/cache` and its manifest, and record why.
+
+Acceptance:
+- Retrieval recall@8 of each Issue Type's catalogue Provisions is 100%.
+- Every cited id in the Juice Shop Report resolves in the registry.
+- `dpdp-audit accuracy --cache-only` reproduces the published figures.
+
+## P3.2 Per-role routing and the held-out evaluation
+
+- **Routing.** A provider and model per role, set by `--role-model ROLE=PROVIDER:MODEL` or `DPDP_LLM_ROLES`. The report schema's `llm` block, the accuracy manifest and the dashboard record each role separately.
+- **Held-out set.** Built only from the Report Targets:
+  - classification: hand-checked Data Categories for unresolved Elements;
+  - triage: verdicts derived from `accuracy/juice-shop.json` matches;
+  - consent: per-criterion labels for TrackMyRupee and the consent fixtures.
+- **Evaluation command.** `dpdp-audit llm-eval` (proposed) reports the following per role and model:
+  - the primary metric (classification macro-F1, triage accuracy, consent per-criterion agreement);
+  - JSON validity;
+  - citation validity;
+  - latency.
+- **Baselines.** Measure the hosted default and the zero-shot base-model candidates. Candidates run on Ollama on the A4000.
+
+Acceptance: one evaluation table covers the hosted default and every base candidate, and names the chosen base model.
+
+## P3.3 Distilled training set
+
+- **Sources.** Pinned public repositories that are not Report Targets, listed in `training/sources.yaml` (proposed) and cloned under the git-ignored `targets/`. Add synthetic consent graphs made by perturbing facts programmatically.
+- **Inputs.** Build them with the Auditor's own pipeline and masking, so the training text matches the v2 prompts exactly.
+- **Labels.** Two teacher models label each item. Keep an item only when the teachers agree, or when a teacher agrees with a deterministic label.
+- **Split.** Split by repository; Report Targets never appear in training.
+- **Records.** Write a dataset card with counts, agreement rate, token-length percentiles and a digest. The data itself stays git-ignored.
+
+Acceptance:
+- A filtered training set exists with recorded counts per role.
+- A leakage check proves no Report Target file or snippet hash appears in it.
+
+## P3.4 Fine-tune, serve and adopt
+
+- **Training.** QLoRA on the A4000 with the chosen base model and one multi-task adapter. The sequence length comes from the dataset card's p95. Peak VRAM is measured in a smoke run before the full run.
+- **Serving.** Merge the adapter, export GGUF, and `ollama create dpdp-auditor:<run-id>`.
+- **Adoption.** Evaluate with `dpdp-audit llm-eval`. A role adopts the model only if it meets ADR 0004's bar: beats its base, comes within 5 points of the hosted default, and has 100% JSON and citation validity. Otherwise the role stays on the hosted default.
+- **After adoption.** Re-record the cache, the accuracy manifest and the Replay Mode recordings. The Report's method section names the model for each role.
+
+Acceptance:
+- The `llm-eval` table shows base, fine-tuned and hosted results for each role, with the adoption decision.
+- The Juice Shop scan runs live with adopted roles on the fine-tuned model and replays offline in cache-only mode.
+
+---
+
 # After P2
 
 - Framework coverage through the same analyser split: Django (P2.1), plus Prisma and Mongoose (schema and ORM Processing Operations), React form-to-route-to-Element joins, Kubernetes and nginx configuration. Cross-file joins live in `auditor/analysers/framework_flows.py`; new Rules in `auditor/rules/framework_config.py`.
@@ -264,11 +326,11 @@ Acceptance: SEC-07/08 (`/rest/memories`), RET-02 and SEC-11 Confirmed live on lo
 
 - Replay recordings for every scanned Target.
 - Demo script:
-  1. scan Juice Shop;
-  2. Personal Data Map;
-  3. `/rest/memories` Critical Finding detail with its Data Flow;
-  4. Coverage Matrix;
-  5. Consent Assessment (TrackMyRupee);
+  1. Indian Targets: Consent Assessment (TrackMyRupee), ai-kyc-platform Government Identifier Findings, and singharya E-KYC (no Findings, stated as the Rules' result);
+  2. scan Juice Shop;
+  3. Personal Data Map;
+  4. `/rest/memories` Critical Finding detail with its Data Flow;
+  5. Coverage Matrix;
   6. Live Probe Confirm;
   7. Open PR;
   8. re-scan.

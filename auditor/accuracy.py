@@ -143,9 +143,24 @@ def evaluate_corpus(corpus_dir: Path | None = None, rules: dict | None = None) -
         ctx = build_context(corpus_dir / rule_id / label, "corpus")
         return any(m.rule_id == rule_id for m in detect(ctx))
 
+    from auditor.exclusions import iter_target_files
+    from auditor.rules.context import SEMGREP_DIR
+    from auditor.semgrep import prewarm_semgrep
+    from concurrent.futures import ThreadPoolExecutor
+    import os
+
+    # One batched Semgrep run for every fixture; each fixture is still cached and evaluated on its own files.
+    prewarm_semgrep([(root, [p.relative_to(root) for p in iter_target_files(root, "corpus")[0]])
+                     for root in (corpus_dir / r / label for r in sorted(rules) for label in ("positive", "negative"))],
+                    [SEMGREP_DIR])
+
+    ids = sorted(rules)
+    jobs = [(rule_id, label) for rule_id in ids for label in ("positive", "negative")]
+    with ThreadPoolExecutor(max_workers=min(len(jobs), os.cpu_count() or 4)) as pool:  # Semgrep subprocess bound
+        emitted = dict(zip(jobs, pool.map(lambda job: emits(*job), jobs)))
     rows = []
-    for rule_id in sorted(rules):
-        pos, neg = emits(rule_id, "positive"), emits(rule_id, "negative")
+    for rule_id in ids:
+        pos, neg = emitted[(rule_id, "positive")], emitted[(rule_id, "negative")]
         tp, fn, fp, tn = int(pos), int(not pos), int(neg), int(not neg)
         rows.append({"rule_id": rule_id, "tp": tp, "fp": fp, "fn": fn, "tn": tn, **_metrics(tp, fp, fn)})
     totals = {key: sum(r[key] for r in rows) for key in ("tp", "fp", "fn", "tn")}
@@ -284,3 +299,126 @@ def summary_lines(accuracy: dict) -> list[str]:
                      f"reproduces published run: {'yes' if llm['reproduces_published_run'] else 'no'}")
         lines += [f"  - {p}" for p in llm["replay_problems"]]
     return lines
+
+
+# --- accuracy/results.md ---------------------------------------------------------------------
+
+RESULTS_PATH = Path("accuracy/results.md")
+
+
+def _f1(tp: int, fp: int, fn: int) -> float | None:
+    """F1 = 2TP / (2TP + FP + FN); None when there is nothing to score."""
+    return ratio(2 * tp, 2 * tp + fp + fn)
+
+
+def per_issue_type(primary: dict, reference: dict) -> dict[str, dict]:
+    """Static TP/FP/FN, precision, recall and F1 for every Issue Type that appears in the scoring."""
+    kind = {e["id"]: e["issue_type"] for e in reference["entries"]}
+    rows: dict[str, dict] = {}
+
+    def row(issue_type: str) -> dict:
+        return rows.setdefault(issue_type, {"tp": 0, "fp": 0, "fn": 0})
+
+    for match in primary["matches"]:
+        row(kind[match["reference_id"]])["tp"] += 1
+    for pred in primary["unmatched_predictions"]:
+        row(pred["issue_type"])["fp"] += 1
+    for ref_id in primary["unmatched_references"]:
+        row(kind[ref_id])["fn"] += 1
+    for issue_type, r in rows.items():
+        r.update(_metrics(r["tp"], r["fp"], r["fn"]))
+        r["f1"] = _f1(r["tp"], r["fp"], r["fn"])
+    return dict(sorted(rows.items()))
+
+
+def _live_probe_counts(findings: list[dict]) -> dict[str, dict]:
+    counts: dict[str, dict] = {}
+    for finding in findings:
+        probe = finding.get("live_probe")
+        if probe:
+            bucket = counts.setdefault(finding["issue_type"], {"Confirmed": 0, "Refuted": 0, "inconclusive": 0})
+            bucket[probe["result"]] += 1
+    return counts
+
+
+def _fmt(value: float | None) -> str:
+    return "N/A" if value is None else f"{value:.4f}"
+
+
+def render_results_markdown(report: dict, reference: dict, *, command: str, digest: str) -> str:
+    """Deterministic `accuracy/results.md` from a scored Report; Live Probe outcomes stay out of static figures."""
+    accuracy = report["accuracy"]
+    primary, corpus, llm = accuracy["primary_target"], accuracy["labelled_corpus"], accuracy["llm"]
+    target = report["target"]
+    confirmed = [e for e in reference["entries"] if e["status"] == "confirmed"]
+    undeterminable = [e for e in reference["entries"] if e["status"] != "confirmed"]
+    by_type = per_issue_type(primary, reference)
+    probes = _live_probe_counts(report.get("findings", []))
+    probe_run = any(f.get("live_probe") for f in report.get("findings", []))
+    f1 = _f1(primary["tp"], primary["fp"], primary["fn"])
+
+    def ids(values: list[str]) -> str:
+        return ", ".join(values) if values else "none"
+
+    lines = ["# Measured accuracy", "",
+             f"- Target: {target['name']} pinned at `{target['commit']}`",
+             f"- Reference: `{primary['reference']}` ({len(confirmed)} confirmed, "
+             f"{len(undeterminable)} not-determinable and excluded from scoring)",
+             f"- Command: `{command}`",
+             f"- Rules digest: `{digest}`", "",
+             "## Static scoring (Primary Target)", "",
+             "Static figures count only deterministic Findings. Live Probe outcomes are never added to them.", "",
+             "| Issue Type | TP | FP | FN | Precision | Recall | F1 | Live Probe confirmations |",
+             "|---|---|---|---|---|---|---|---|"]
+
+    def probe_cell(issue_type: str) -> str:
+        if not probe_run:
+            return "not run"
+        c = probes.get(issue_type)
+        return "none" if not c else f"{c['Confirmed']} confirmed, {c['Refuted']} refuted, {c['inconclusive']} inconclusive"
+
+    for issue_type, r in by_type.items():
+        lines.append(f"| {issue_type} | {r['tp']} | {r['fp']} | {r['fn']} | {_fmt(r['precision'])} | "
+                     f"{_fmt(r['recall'])} | {_fmt(r['f1'])} | {probe_cell(issue_type)} |")
+    lines.append(f"| **Overall** | {primary['tp']} | {primary['fp']} | {primary['fn']} | {_fmt(primary['precision'])} | "
+                 f"{_fmt(primary['recall'])} | {_fmt(f1)} | "
+                 + ("not run" if not probe_run else
+                    f"{sum(c['Confirmed'] for c in probes.values())} confirmed (not in static figures)") + " |")
+    lines += ["", "## Reference entries", "",
+              f"- Matched ({len(primary['matches'])}): " + ids([m["reference_id"] for m in primary["matches"]]),
+              f"- Missed ({len(primary['unmatched_references'])}): " + ids(primary["unmatched_references"]),
+              f"- Not-determinable, excluded ({len(undeterminable)}): " + ids(sorted(e["id"] for e in undeterminable)),
+              f"- Unmatched predictions ({len(primary['unmatched_predictions'])}): "
+              + ids([f"{p['finding_id']} ({p['reason']})" for p in primary["unmatched_predictions"]]),
+              f"- Excluded predictions ({len(primary['excluded_predictions'])}): "
+              + ids([p["finding_id"] for p in primary["excluded_predictions"]]),
+              "", "## Live Probe confirmations", ""]
+    if not probe_run:
+        lines.append("not run: no Finding in this Report carries a Live Probe outcome.")
+    else:
+        lines += ["| Issue Type | Confirmed | Refuted | inconclusive |", "|---|---|---|---|"]
+        lines += [f"| {t} | {c['Confirmed']} | {c['Refuted']} | {c['inconclusive']} |" for t, c in sorted(probes.items())]
+    totals = corpus["totals"]
+    lines += ["", "## Labelled Corpus", "",
+              f"{len(corpus['rules'])} Rules, one positive and one near-miss negative each (Rule emissions on fixtures).", "",
+              "| | TP | FP | FN | TN | Precision | Recall |", "|---|---|---|---|---|---|---|",
+              f"| **Total** | {totals['tp']} | {totals['fp']} | {totals['fn']} | {totals['tn']} | "
+              f"{_fmt(totals['precision'])} | {_fmt(totals['recall'])} |"]
+    failing = [r["rule_id"] for r in corpus["rules"] if r["fp"] or r["fn"]]
+    lines += ["", "Rules with a corpus FP or FN: " + ids(failing),
+              "", "## LLM replay", "",
+              f"- Mode: {llm['mode']} ({llm['provider']}/{llm['model']}); prompts: {llm['prompt_version']}",
+              f"- Cache: {llm['cache_hits']} hit(s), {llm['cache_misses']} miss(es), {llm['not_assessed']} not assessed",
+              f"- Reproduces published run: {'yes' if llm['reproduces_published_run'] else 'no'}"]
+    lines += [f"  - {p}" for p in llm["replay_problems"]]
+    lines += ["", "## Method", "", accuracy["method"], "", "## Limitations", ""]
+    lines += [f"- {item}" for item in accuracy["limitations"]]
+    return "\n".join(lines) + "\n"
+
+
+def write_results(report: dict, reference: dict, *, command: str, path: Path = RESULTS_PATH) -> Path:
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(render_results_markdown(report, reference, command=command, digest=rules_digest()),
+                    encoding="utf-8")
+    return path

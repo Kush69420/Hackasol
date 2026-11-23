@@ -23,13 +23,19 @@ KYC = ROOT / 'targets/ai-kyc-platform'
 
 # Cache-only scan of the pinned Primary Target before introducing Python analysers.
 JUICE_SHOP_FINDING_IDS = [
-    'MON-01-8c5728dfea11', 'RET-02-4696497b9137', 'RET-03-41bffe4101f9',
-    'RIG-01-a9383e4db278', 'RIG-02-f7117cbcde8b', 'SEC-01-d85a743d0415',
-    'SEC-02-03b1356ecc57', 'SEC-02-0f4631e6a05d', 'SEC-02-b6efa0cd2309',
-    'SEC-02-e0994a7481e3', 'SEC-04-bebc3e7f55ae', 'SEC-05-c695dda06010',
-    'SEC-07-2d4f025671b7', 'SEC-08-177006878772', 'SEC-08-a535cd15b04b',
-    'SEC-10-d0971bb44714', 'SEC-10-d70f56f17198', 'SEC-11-ad5b2106f4e8',
-    'SEC-13-394d3dbca514', 'SEC-14-c5e9ac6a126d', 'TRF-02-56fc1119eb9b',
+    'MON-01-8c5728dfea11', 'RET-01-e43b9adccd2d', 'RET-02-4696497b9137', 'RET-03-41bffe4101f9',
+    'RIG-01-a9383e4db278', 'RIG-02-f7117cbcde8b', 'SEC-01-d85a743d0415', 'SEC-02-03b1356ecc57',
+    'SEC-02-0f4631e6a05d', 'SEC-02-b6efa0cd2309', 'SEC-02-e0994a7481e3', 'SEC-04-4da51857d7fb',
+    'SEC-04-bebc3e7f55ae', 'SEC-04-f14b443a57f1', 'SEC-05-9922f06ca9e3', 'SEC-05-c695dda06010',
+    'SEC-07-10d210fbc583', 'SEC-07-19eb83125bf7', 'SEC-07-2301fc553793', 'SEC-07-2bc6d0295d98',
+    'SEC-07-2d4f025671b7', 'SEC-07-46e1db7b8927', 'SEC-07-4edf88d6607a', 'SEC-07-6462097d19a8',
+    'SEC-07-84fd091ad6cb', 'SEC-07-f9f89e15bbe6', 'SEC-08-445c2a32bf62', 'SEC-08-5b7f92b613ca',
+    'SEC-08-6260b655a69b', 'SEC-08-a535cd15b04b', 'SEC-08-ca532d12729b', 'SEC-08-cefb92be21c6',
+    'SEC-08-d0cbdc68911f', 'SEC-08-d23c91065882', 'SEC-09-8d1d55111ce2', 'SEC-09-e51d3cb1437b',
+    'SEC-10-19fa227ef322', 'SEC-10-20b8955c0a3e', 'SEC-10-49d347fcf67d', 'SEC-10-d0971bb44714',
+    'SEC-10-d70f56f17198', 'SEC-11-5a71594e3942', 'SEC-11-5ab639d2a92e', 'SEC-11-7958164b1c64',
+    'SEC-11-84cd32175eeb', 'SEC-11-ad5b2106f4e8', 'SEC-11-d7922190cbda', 'SEC-13-394d3dbca514',
+    'SEC-14-14740ebe6dcc', 'SEC-14-c5e9ac6a126d', 'TRF-02-0ff246d3b291', 'TRF-02-56fc1119eb9b'
 ]
 
 
@@ -101,7 +107,7 @@ def test_rules(rule_id):
         assert f['primary_provision'] == 'DPDP-Rule-6(1)(a)'
         assert set(f['other_provisions']) >= {'Aadhaar-Act-29', 'Aadhaar-SIR-2016'}
         assert f['penalty_ceiling']['amount_inr_crore'] == 250
-        assert f['enforceable_from'] == '2027-05-14'
+        assert f['enforceable_from'] == '2027-05-13'
 
 
 def test_masking(tmp_path):

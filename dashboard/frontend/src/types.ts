@@ -1,4 +1,4 @@
-// Field names follow auditor/schema/report.schema.json (schema_version 1.1.0).
+// Field names follow auditor/schema/report.schema.json (schema_version 1.2.0).
 export type Band = "critical" | "high" | "medium" | "low";
 export const BANDS: Band[] = ["critical", "high", "medium", "low"];
 
@@ -50,11 +50,62 @@ export interface MapEntry {
   element: Element;
   operations: FlowStep[];
 }
+export interface ConsentProbe {
+  status: "Confirmed" | "Not Confirmed" | "Inconclusive";
+  meaning: string;
+  assertion: string;
+  reason: string;
+}
+export interface ConsentCriterion {
+  criterion: string;
+  applicability: "applicable" | "not applicable" | "not determinable";
+  reason: string;
+  assessment: string;
+  linked_identifiers: string[];
+  issue_types: string[];
+  evidence: Evidence[];
+  step_counts: { grant: (number | null)[]; withdrawal: (number | null)[] } | null;
+  live_probes?: ConsentProbe[];
+}
+export interface ConsentAssessmentData {
+  criteria: ConsentCriterion[];
+  live_probe_run?: { target: string; commit: string | null; observed_at: string };
+}
+export interface CeilingRow {
+  provision: string;
+  citation: string;
+  schedule_entry: string | null;
+  statutory_maximum_inr_crore: number | null;
+  statutory_maximum_text: string | null;
+  finding_ids: string[];
+  finding_ids_by_applicability: {
+    applicable_primary: string[];
+    related: string[];
+    conditional: string[];
+    needs_legal_review: string[];
+  };
+  severity_mix: Record<string, number>;
+}
+export interface LegalViewData {
+  as_of: string;
+  note: string;
+  ceilings: CeilingRow[];
+  highest_applicable_ceiling: { amount_inr_crore: number; provisions: string[]; finding_ids: string[] } | null;
+  timeline: {
+    enforceable_from: string;
+    finding_ids: string[];
+    basis: string | null;
+    days_until: number;
+    already_enforceable: boolean;
+  }[];
+}
+
 export interface Report {
   target: { name: string; source: string; commit?: string };
   llm: { mode: string };
   personal_data_map: MapEntry[];
   findings: Finding[];
+  consent_assessment: ConsentAssessmentData | null;
 }
 export interface ScanEvent {
   run_id: string;

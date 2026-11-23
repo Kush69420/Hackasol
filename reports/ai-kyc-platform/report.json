@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "tool": {
     "name": "dpdp-audit",
     "version": "0.1.0"
@@ -11,8 +11,8 @@
     "commit": "70a821487c193be445810d836dd9b9b9ae22eb18"
   },
   "scan": {
-    "started_at": "2026-11-23T01:43:16.425198+00:00",
-    "finished_at": "2026-11-23T01:43:18.781958+00:00",
+    "started_at": "2026-11-23T11:59:40.454147+00:00",
+    "finished_at": "2026-11-23T11:59:42.002406+00:00",
     "exclusions": [
       "**/.git/**",
       "**/node_modules/**",
@@ -22,7 +22,7 @@
     ],
     "files_scanned": 85,
     "files_excluded": 9598,
-    "rule_count": 51
+    "rule_count": 65
   },
   "llm": {
     "mode": "cache-only",
@@ -35,8 +35,8 @@
       "fix": "fix-v1"
     },
     "cache_hits": 0,
-    "cache_misses": 28,
-    "not_assessed": 28,
+    "cache_misses": 27,
+    "not_assessed": 27,
     "reason": "ollama is unreachable or authentication failed"
   },
   "applicability_assumptions": [
@@ -636,7 +636,7 @@
         "parent_section": "DPDP-Act-8(5)",
         "amount_inr_crore": 250
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "scored",
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:H",
@@ -733,7 +733,7 @@
         "parent_section": "DPDP-Act-8(5)",
         "amount_inr_crore": 250
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "scored",
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:H",
@@ -860,7 +860,7 @@
         "parent_section": "DPDP-Act-8(5)",
         "amount_inr_crore": 250
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "scored",
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:H",
@@ -993,7 +993,7 @@
         "parent_section": "DPDP-Act-8(5)",
         "amount_inr_crore": 250
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "scored",
         "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/CR:H",
@@ -1117,7 +1117,7 @@
         "parent_section": "DPDP-Act-8(5)",
         "amount_inr_crore": 250
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "n/a",
         "reason": "Compliance Gap: no CVSS score, so the band is the Risk Matrix cell"
@@ -1193,7 +1193,7 @@
         "parent_section": "DPDP-Act-8(5)",
         "amount_inr_crore": 250
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "n/a",
         "reason": "Compliance Gap: no CVSS score, so the band is the Risk Matrix cell"
@@ -1274,7 +1274,7 @@
         "parent_section": "DPDP-Act-Schedule-7",
         "amount_inr_crore": 50
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "n/a",
         "reason": "Compliance Gap: no CVSS score, so the band is the Risk Matrix cell"
@@ -1484,7 +1484,8 @@
         "CON-08-angular-excess-elements",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
-        "SEC-08-ts-review-author"
+        "SEC-08-ts-review-author",
+        "SEC-08-ts-whole-model-serialisation"
       ],
       "not_determinable_rules": [
         "CON-01-express-enforcement",
@@ -1514,7 +1515,8 @@
         "CON-08-angular-excess-elements",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
-        "SEC-08-ts-review-author"
+        "SEC-08-ts-review-author",
+        "SEC-08-ts-whole-model-serialisation"
       ],
       "not_determinable_rules": [
         "CON-01-express-enforcement",
@@ -1633,6 +1635,7 @@
       "rules": [
         "CON-05-express-processor-withdrawal",
         "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete",
         "RET-02-express-erasure-request",
         "RIG-03-express-grievance",
         "TRF-01-undisclosed-processor-transfer"
@@ -1640,6 +1643,7 @@
       "not_determinable_rules": [
         "CON-05-express-processor-withdrawal",
         "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete",
         "RET-02-express-erasure-request",
         "TRF-01-undisclosed-processor-transfer"
       ]
@@ -1713,11 +1717,13 @@
       "rules": [
         "CON-05-express-processor-withdrawal",
         "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete",
         "RET-02-express-erasure-request"
       ],
       "not_determinable_rules": [
         "CON-05-express-processor-withdrawal",
         "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete",
         "RET-02-express-erasure-request"
       ]
     },
@@ -1727,10 +1733,12 @@
       "title": "Erasure on withdrawal or lapse of purpose",
       "classification": "not determinable",
       "rules": [
-        "RET-01-express-purpose-end"
+        "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete"
       ],
       "not_determinable_rules": [
-        "RET-01-express-purpose-end"
+        "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete"
       ]
     },
     {
@@ -2987,16 +2995,29 @@
         "SEC-03-django-aadhaar-storage",
         "SEC-03-fastapi-aadhaar-response",
         "SEC-03-sequelize-aadhaar-storage",
+        "SEC-04-ts-constant-key-verifier",
+        "SEC-04-ts-md5-credential-compare",
         "SEC-04-ts-md5-password-hash",
+        "SEC-05-ts-hardcoded-hmac-key",
         "SEC-05-ts-hardcoded-jwt-key",
         "SEC-06-express-error-disclosure",
+        "SEC-07-ts-lossy-owner-key",
+        "SEC-07-ts-public-personal-data-directory",
+        "SEC-07-ts-unauthenticated-record-read",
         "SEC-07-ts-unchecked-nested-records",
+        "SEC-07-ts-unscoped-authenticated-read",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
         "SEC-08-ts-review-author",
+        "SEC-08-ts-whole-model-serialisation",
         "SEC-09-ts-query-authentication-secret",
+        "SEC-09-ts-query-personal-data",
         "SEC-10-ts-storage-header",
+        "SEC-10-ts-token-storage-site",
         "SEC-11-fastapi-wildcard-cors",
+        "SEC-11-terraform-plaintext-listener",
+        "SEC-11-ts-jsonp-response",
+        "SEC-11-ts-session-cookie-flags",
         "SEC-11-ts-wildcard-cors",
         "SEC-12-express-access-logging",
         "SEC-13-ts-access-log-retention",
@@ -3028,16 +3049,29 @@
         "SEC-03-django-aadhaar-storage",
         "SEC-03-fastapi-aadhaar-response",
         "SEC-03-sequelize-aadhaar-storage",
+        "SEC-04-ts-constant-key-verifier",
+        "SEC-04-ts-md5-credential-compare",
         "SEC-04-ts-md5-password-hash",
+        "SEC-05-ts-hardcoded-hmac-key",
         "SEC-05-ts-hardcoded-jwt-key",
         "SEC-06-express-error-disclosure",
+        "SEC-07-ts-lossy-owner-key",
+        "SEC-07-ts-public-personal-data-directory",
+        "SEC-07-ts-unauthenticated-record-read",
         "SEC-07-ts-unchecked-nested-records",
+        "SEC-07-ts-unscoped-authenticated-read",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
         "SEC-08-ts-review-author",
+        "SEC-08-ts-whole-model-serialisation",
         "SEC-09-ts-query-authentication-secret",
+        "SEC-09-ts-query-personal-data",
         "SEC-10-ts-storage-header",
+        "SEC-10-ts-token-storage-site",
         "SEC-11-fastapi-wildcard-cors",
+        "SEC-11-terraform-plaintext-listener",
+        "SEC-11-ts-jsonp-response",
+        "SEC-11-ts-session-cookie-flags",
         "SEC-11-ts-wildcard-cors",
         "SEC-12-express-access-logging",
         "SEC-13-ts-access-log-retention",
@@ -3068,10 +3102,17 @@
         "SEC-03-django-aadhaar-storage",
         "SEC-03-fastapi-aadhaar-response",
         "SEC-03-sequelize-aadhaar-storage",
+        "SEC-04-ts-constant-key-verifier",
+        "SEC-04-ts-md5-credential-compare",
         "SEC-04-ts-md5-password-hash",
         "SEC-09-ts-query-authentication-secret",
+        "SEC-09-ts-query-personal-data",
         "SEC-10-ts-storage-header",
+        "SEC-10-ts-token-storage-site",
         "SEC-11-fastapi-wildcard-cors",
+        "SEC-11-terraform-plaintext-listener",
+        "SEC-11-ts-jsonp-response",
+        "SEC-11-ts-session-cookie-flags",
         "SEC-11-ts-wildcard-cors",
         "SEC-15-committed-personal-data"
       ],
@@ -3085,12 +3126,18 @@
       "title": "Reasonable security safeguards",
       "classification": "static",
       "rules": [
+        "SEC-05-ts-hardcoded-hmac-key",
         "SEC-05-ts-hardcoded-jwt-key",
         "SEC-06-express-error-disclosure",
+        "SEC-07-ts-lossy-owner-key",
+        "SEC-07-ts-public-personal-data-directory",
+        "SEC-07-ts-unauthenticated-record-read",
         "SEC-07-ts-unchecked-nested-records",
+        "SEC-07-ts-unscoped-authenticated-read",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
         "SEC-08-ts-review-author",
+        "SEC-08-ts-whole-model-serialisation",
         "SEC-16-docker-root-container",
         "SEC-16-kubernetes-privileged-store",
         "SEC-16-kubernetes-public-store",
@@ -3569,7 +3616,7 @@
     },
     "llm_reasoning": {
       "status": "not assessed",
-      "cache_key": "c1ac7ead7623ac93e03330544c8d9194c1bbc5172262f4824b3c6be1cea53009"
+      "cache_key": "91c971c7279695ec2edb6ecc9a6aaa05902e332fb7c56cedff4682e0eaefe99e"
     }
   },
   "executive_summary": {
@@ -3585,7 +3632,7 @@
       "Safeguard": 1
     },
     "highest_penalty_ceiling_inr_crore": 250,
-    "fix_before_14_may_2027": [
+    "fix_before_13_may_2027": [
       "SEC-11-f02c64b4ece0",
       "SEC-03-9a0640bc6639",
       "SEC-03-efb9664725b2",

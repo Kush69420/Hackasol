@@ -11,13 +11,15 @@ import json
 import re
 from pathlib import Path
 
+from auditor import legal_view
 from auditor.accuracy import ratio_text
 from auditor.registry import load_registry
 from auditor.remediation import load_catalogue
 
 
 SECTIONS = ("Applicability Assumptions", "Executive summary", "Personal Data Map",
-            "Findings", "Consent Assessment", "Coverage Matrix", "Method, accuracy and limitations")
+            "Findings", "Consent Assessment", "Coverage Matrix", legal_view.SECTION_TITLE,
+            "Method, accuracy and limitations")
 _NON_CODE = {"DPDP-Act-8(2)", "DPDP-Act-8(3)", "DPDP-Act-8(6)", "DPDP-Rule-7"}
 
 
@@ -35,7 +37,7 @@ def executive_summary(report: dict) -> dict:
             "Safeguard": kinds["safeguard"],
         },
         "highest_penalty_ceiling_inr_crore": max(ceilings) if ceilings else None,
-        "fix_before_14_may_2027": [f["id"] for f in findings if f["enforceable_from"] == "2027-05-14"],
+        "fix_before_13_may_2027": [f["id"] for f in findings if f["enforceable_from"] == "2027-05-13"],
         "penalty_note": "Penalty Ceilings are statutory maximums, not amounts imposed; the Data Protection Board determines the actual amount under section 33.",
     }
 
@@ -136,7 +138,8 @@ def _sections(report):
     registry = load_registry()
     catalogue = load_catalogue()
     sections = [[] for _ in SECTIONS]
-    assumptions, summary, data_map, details, consent, matrix, method = sections
+    assumptions, summary, data_map, details, consent, matrix, legal, method = sections
+    legal.extend(legal_view.report_blocks(report, registry))
     for item in report["applicability_assumptions"]:
         dependent = [f["id"] for f in findings if _dependent(item["id"], f)]
         assumptions.append(("list", [f"{item['id']}: {item['text']} Provisions: "
@@ -150,9 +153,9 @@ def _sections(report):
     ceilings = sorted({f["penalty_ceiling"]["amount_inr_crore"] for f in findings}, reverse=True)
     summary.append(("p", "Penalty Ceilings: " + (", ".join(f"₹{v} crore" for v in ceilings) or "none")
                     + "; statutory maximum under the Schedule; the Board sets any amount."))
-    summary.append(("h", "Fix before 14 May 2027"))
+    summary.append(("h", "Fix before 13 May 2027"))
     summary.append(("list", [f"{f['id']} — Enforceable From {f['enforceable_from']}" for f in findings
-                             if f["enforceable_from"] == "2027-05-14"] or ["None identified."]))
+                             if f["enforceable_from"] == "2027-05-13"] or ["None identified."]))
     rows = []
     for entry in report["personal_data_map"]:
         element = entry["element"]
@@ -218,6 +221,11 @@ def _sections(report):
             consent.append(("p", "Linked identifiers: " + (", ".join(row["linked_identifiers"]) or "none")))
             if row["step_counts"] is not None:
                 consent.append(("p", "Static step counts: " + _json(row["step_counts"])))
+            for probe in row.get("live_probes", []):
+                run = assessment.get("live_probe_run") or {}
+                consent.append(("p", f"Live Probe ({run.get('target')} @ {(run.get('commit') or 'unknown')[:12]}, "
+                                     f"{run.get('observed_at')}): {probe['status']} ({probe['meaning']}) — "
+                                     f"{probe['assertion']}: {probe['reason']} Static verdict above is unchanged."))
             for ev in row["evidence"]:
                 consent.extend((("p", _location(ev)), ("code", ev["excerpt"])))
         for banner in assessment["graph"].get("banners", []):
@@ -337,7 +345,7 @@ def render_html(report: dict) -> str:
     return ("<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">"
             "<title>Report</title><style>body{font-family:sans-serif;margin:2em;line-height:1.4}"
             "table{border-collapse:collapse;width:100%;font-size:9pt}th,td{border:1px solid #aaa;padding:.35em;text-align:left;overflow-wrap:break-word;min-width:5.5em}"
-            "pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:9pt}h2,h3{break-after:avoid}"
+            "pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:9pt}h2,h3{break-after:avoid}h2{font-size:1.2em}"
             "@media print{section:not(:first-of-type){break-before:page}tr,pre{break-inside:avoid}}</style></head>"
             "<body><h1>Report</h1>" + "\n".join(sections) + "</body></html>")
 

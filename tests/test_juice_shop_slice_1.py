@@ -23,7 +23,7 @@ CASES = [
     ("SEC-07", {"SEC-07-ts-unchecked-nested-records", "SEC-08-ts-nested-records"}, "routes/memory.ts"),
     ("SEC-01", {"SEC-01-ts-morgan-query-secrets", "SEC-09-ts-query-authentication-secret"}, "frontend/src/app/Services/user.service.ts"),
     ("SEC-13", {"SEC-13-ts-access-log-retention"}, "server.ts"),
-    ("SEC-08", {"SEC-08-ts-account-list"}, "routes/authenticatedUsers.ts"),
+    ("SEC-07", {"SEC-07-ts-unscoped-authenticated-read", "SEC-08-ts-account-list"}, "routes/authenticatedUsers.ts"),
     ("SEC-08", {"SEC-08-ts-review-author"}, "routes/showProductReviews.ts"),
     ("SEC-02", {"SEC-02-sequelize-plain-fields"}, "models/user.ts"),
     ("SEC-02", {"SEC-02-sequelize-plain-fields"}, "models/card.ts"),
@@ -88,7 +88,7 @@ def test_trf02_is_disclosure_capped_and_needs_legal_review(report):
 
 
 def test_account_list_is_public_through_open_registration(report):
-    f = _finding(report, "SEC-08", {"SEC-08-ts-account-list"}, "routes/authenticatedUsers.ts")
+    f = _finding(report, "SEC-07", {"SEC-07-ts-unscoped-authenticated-read", "SEC-08-ts-account-list"}, "routes/authenticatedUsers.ts")
     assert f["exposure"]["level"] == "Public"
     assert any("/api/Users" in e["excerpt"] for e in f["exposure"]["derived_from"])
 

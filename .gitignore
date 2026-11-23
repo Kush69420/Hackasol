@@ -22,3 +22,6 @@ Thumbs.db
 # Dashboard run output and the machine-local inventory are not deliverables
 reports/dashboard/
 reports/*/inventory.json
+
+# Presentation working folder (deck, rendered slides, zips); not a deliverable
+/hack_a_sol_5-presentation/

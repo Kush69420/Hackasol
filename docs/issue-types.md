@@ -8,7 +8,7 @@ The approved catalogue of Issue Types (see CONTEXT.md). Each Issue Type owns the
 
 Penalty Ceilings (Act, Schedule; maximums the Board scales under §33): §8(5) ₹250 cr · §8(6) ₹200 cr · §9 ₹200 cr · §10 ₹150 cr · any other provision ₹50 cr.
 
-Enforceable From: the Rules were published in the Gazette on 14 Nov 2025 (G.S.R. 846(E), dated 13 Nov 2025). Rule 4 commences 14 Nov 2026; Rules 3, 5–16, 22 and 23, and the Act obligations they operationalise, commence 14 May 2027. Many secondary sources say 13 May; the Report states its basis.
+Enforceable From: the Rules and the Act commencement notice were published in the Gazette on 13 Nov 2025 (G.S.R. 846(E) and G.S.R. 843(E), same issue; header "NEW DELHI, THURSDAY, NOVEMBER 13, 2025"). The e-Gazette upload id carries 14112025, which is the upload date, not the publication date. Rule 4 commences 13 Nov 2026; Rules 3, 5–16, 22 and 23, and the Act obligations they operationalise, commence 13 May 2027. The Report states this basis.
 
 ## Applicability Assumptions
 
@@ -29,7 +29,7 @@ Every Report states these, and Findings depend on them:
 | ID | Issue Type | Primary | Related | Ceiling | Gate | Verify |
 |---|---|---|---|---|---|---|
 | SEC-01 | Personal Data written to logs | Rule 6(1)(a) | CWE-532 | §8(5) | — | static |
-| SEC-02 | Tier A/B Personal Data Elements without field-level protection at rest; disk- or volume-level encryption lowers severity, it does not clear the Finding | Rule 6(1)(a) | IT Act §43A (until 14 May 2027, when DPDP §44(2) omits it), CWE-311 | §8(5) | — | static |
+| SEC-02 | Tier A/B Personal Data Elements without field-level protection at rest; disk- or volume-level encryption lowers severity, it does not clear the Finding | Rule 6(1)(a) | IT Act §43A (until 13 May 2027, when DPDP §44(2) omits it), CWE-311 | §8(5) | — | static |
 | SEC-03 | Aadhaar number stored outside a vault or displayed unmasked | Rule 6(1)(a) | Aadhaar Act 2016 §29, Aadhaar (Sharing of Information) Regulations 2016 | §8(5) | — | static, live |
 | SEC-04 | Weak or missing password hashing | Rule 6(1)(a) | CWE-916 | §8(5) | — | static |
 | SEC-05 | Hard-coded secret or committed .env protecting Personal Data | Rule 6(1)(b) | CWE-798 | §8(5) | nexus | static |

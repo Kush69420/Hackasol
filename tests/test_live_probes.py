@@ -219,3 +219,124 @@ def test_assertions_unmatched_observation_respects_gate(fixture_server):
     assert observation['result'] == 'Confirmed'
     assert observation['finding_id'] is None
     assert not any(f['issue_type'] == 'SEC-08' for f in report['findings'])
+
+
+@pytest.fixture
+def tmr_consent(tmp_path, monkeypatch):
+    spec = importlib.util.spec_from_file_location('tmr_consent_fixture', Path(__file__).parent / 'fixtures/probes/tmr_consent_server.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    monkeypatch.setattr('auditor.probes.trackmyrupee.SETTLE', 0.3)
+    started = []
+
+    def start(mode, *, sink_response='scoped', **kwargs):
+        sink = module.Sink(sink_response)
+        server = module.Server(mode, sink, str(tmp_path / f'{mode}.sqlite3'), **kwargs)
+        for item in (sink, server):
+            thread = Thread(target=item.serve_forever, daemon=True)
+            thread.start()
+            started.append((item, thread))
+        return server, f'http://127.0.0.1:{server.server_port}', f'http://127.0.0.1:{sink.server_port}'
+    yield start
+    for item, thread in started:
+        item.shutdown()
+        thread.join()
+        item.server_close()
+
+
+def _consent_results(server, origin, sink):
+    from auditor.probes.trackmyrupee import run_consent
+    return {item['assertion']: item for item in run_consent(origin, sink, server.db_path)}
+
+
+def test_tmr_consent_not_confirmed_when_enforced(tmr_consent):
+    server, origin, sink = tmr_consent('enforced')
+    results = _consent_results(server, origin, sink)
+    assert server.withdrawal_posts == 1
+    assert {name: item['result'] for name, item in results.items()} == {
+        'consent-declined:consent_email': 'Refuted', 'consent-declined:consent_transactions': 'Refuted',
+        'consent-declined:consent_device': 'Refuted', 'analytics-declined': 'Refuted',
+        'analytics-withdrawn': 'Refuted', 'withdrawal-data-removal': 'Refuted'}
+    assert 'granted control produced 1' in results['analytics-withdrawn']['reason']
+    assert all(item['finding_id'] is None and item['criterion'] == 'enforced server-side' for item in results.values())
+
+
+def test_tmr_consent_confirmed_violation_and_masking(tmr_consent, caplog):
+    caplog.set_level('DEBUG')
+    server, origin, sink = tmr_consent('violating')
+    results = _consent_results(server, origin, sink)
+    assert {name: item['result'] for name, item in results.items()} == {
+        'consent-declined:consent_email': 'Confirmed', 'consent-declined:consent_transactions': 'Confirmed',
+        'consent-declined:consent_device': 'Confirmed', 'analytics-declined': 'Confirmed',
+        'analytics-withdrawn': 'Confirmed', 'withdrawal-data-removal': 'Confirmed'}
+    assert 'remained after withdrawal' in results['withdrawal-data-removal']['reason'] or 'still authenticated' in results['withdrawal-data-removal']['reason']
+    import sqlite3
+    with sqlite3.connect(server.db_path) as conn:
+        names = [row[0] for row in conn.execute('SELECT username FROM auth_user')]
+        passwords = [row[0] for row in conn.execute('SELECT password FROM auth_user')]
+    serialized = json.dumps(results) + caplog.text
+    assert names and all(value not in serialized for value in names + passwords)
+    assert all(scope not in serialized for scope, _ in server.sink.events)
+
+
+def test_tmr_consent_inconclusive_without_observation_points(tmr_consent):
+    from auditor.probes.trackmyrupee import run_consent
+    _, origin, _ = tmr_consent('enforced')
+    results = {item['assertion']: item for item in run_consent(origin, None, None)}
+    assert results['analytics-declined']['result'] == 'inconclusive'
+    assert 'unavailable' in results['analytics-declined']['reason']
+    assert results['withdrawal-data-removal']['result'] == 'inconclusive'
+    assert 'read-only row count' in results['withdrawal-data-removal']['reason']
+    assert results['consent-declined:consent_email']['result'] == 'Refuted'
+
+
+def test_tmr_consent_inconclusive_when_control_signup_fails(tmr_consent):
+    results = _consent_results(*tmr_consent('limited'))
+    assert all(item['result'] == 'inconclusive' for item in results.values())
+    assert 'control signup' in results['consent-declined:consent_device']['reason']
+
+
+def test_tmr_withdrawal_skips_session_with_mismatched_profile(tmr_consent):
+    server, origin, sink = tmr_consent('profile-mismatch')
+    results = _consent_results(server, origin, sink)
+    assert server.withdrawal_form_read
+    assert server.withdrawal_posts == 0
+    assert results['withdrawal-data-removal']['result'] == 'inconclusive'
+    assert 'profile' in results['withdrawal-data-removal']['reason']
+
+
+@pytest.mark.parametrize('sink_response', ['malformed', 'unscoped', 'invalid-count'])
+def test_tmr_analytics_needs_well_formed_scoped_counts(tmr_consent, sink_response):
+    results = _consent_results(*tmr_consent('enforced', sink_response=sink_response))
+    assert results['analytics-declined']['result'] == 'inconclusive'
+    assert results['analytics-withdrawn']['result'] == 'inconclusive'
+    assert results['withdrawal-data-removal']['result'] == 'Refuted'
+
+
+@pytest.mark.parametrize(('mode', 'failed_choice'), [
+    ('enforced', 'declined'), ('violating', 'declined'), ('violating', 'accepted'),
+])
+def test_tmr_analytics_needs_both_login_actions(tmr_consent, mode, failed_choice):
+    server, origin, sink = tmr_consent(mode, fail_login=failed_choice)
+    results = _consent_results(server, origin, sink)
+    assert results['analytics-declined']['result'] == 'inconclusive'
+    assert results['analytics-withdrawn']['result'] == 'inconclusive'
+    assert server.withdrawal_posts == 1
+
+
+def test_tmr_analytics_ignores_other_accounts_and_late_events_from_another_action(tmr_consent):
+    server, origin, sink = tmr_consent('enforced', noise=True, delayed_control=True)
+    results = _consent_results(server, origin, sink)
+    assert any(scope == 'another-account' for scope, _ in server.sink.events)
+    assert server.pending_control is None  # granted retry arrived during the withdrawn login
+    assert results['analytics-declined']['result'] == 'Refuted'
+    assert results['analytics-withdrawn']['result'] == 'Refuted'
+
+
+@pytest.mark.parametrize(('control', 'observed', 'expected'), [
+    (1, 0, 'Refuted'), (0, 0, 'inconclusive'), (None, 0, 'inconclusive'), (1, None, 'inconclusive'),
+    (0, 2, 'Confirmed'), (None, 2, 'inconclusive'),
+])
+def test_tmr_declined_processing_branches(control, observed, expected):
+    from auditor.probes.assessments import declined_processing
+    assert declined_processing(control, observed)[0] == expected

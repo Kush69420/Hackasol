@@ -1,9 +1,9 @@
 # DPDP Act 2023 (Digital Personal Data Protection Act, 2023; 22 of 2023): one entry per section, sub-section and cited clause, plus the penalty Schedule.
 # Excerpts: copied from the official text at indiacode.gov.in (fetched); elisions marked " … "; each kept at 500 characters or fewer.
-# Commencement: G.S.R. 843(E), Gazette notice dated 13 Nov 2025 (Gazette header). Basis used: publication 14 Nov 2025 (repo basis, docs/issue-types.md).
-#   cl.(a) publication (14 Nov 2025): s.1(2), s.2, ss.18-26, s.35, ss.38-43, s.44(1) and (3).
-#   cl.(b) one year (14 Nov 2026): s.6(9), s.27(1)(d).
-#   cl.(c) eighteen months (14 May 2027): ss.3-5, s.6(1)-(8) and (10), ss.7-10, ss.11-17, s.27 except (1)(d), ss.28-34, ss.36-37, s.44(2).
+# Commencement: G.S.R. 843(E), Gazette dated 13 Nov 2025 (header "NEW DELHI, THURSDAY, NOVEMBER 13, 2025"; https://egazette.gov.in/WriteReadData/2025/267647.pdf). Basis: publication 13 Nov 2025; the e-Gazette upload id CG-DL-E-14112025 carries the upload date, not the publication date.
+#   cl.(a) publication (13 Nov 2025): s.1(2), s.2, ss.18-26, s.35, ss.38-43, s.44(1) and (3).
+#   cl.(b) one year (13 Nov 2026): s.6(9), s.27(1)(d).
+#   cl.(c) eighteen months (13 May 2027): ss.3-5, s.6(1)-(8) and (10), ss.7-10, ss.11-17, s.27 except (1)(d), ss.28-34, ss.36-37, s.44(2).
 #   s.1(1) is not named in the notice; it takes effect with s.1(2) (inference).
 #   The Act's own footnote lists "Ss. 35 to 43" at publication; the notice places ss.36-37 at eighteen months and is followed.
 # Penalty ceilings (INR crore): s.8(5) 250; s.8(6) 200; s.9 and sub-units 200; s.10 and sub-units 150; s.15 null (Schedule item 5: ten thousand rupees); every other provision 50 via DPDP-Act-Schedule-7. Schedule item 6 has no fixed figure (null).
@@ -17,8 +17,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -31,8 +31,8 @@
   parent: DPDP-Act-1
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "Not named in G.S.R. 843(E); takes effect with s.1(2) on publication, 14 Nov 2025 [INFERENCE]"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "Not named in G.S.R. 843(E); takes effect with s.1(2) on publication, 13 Nov 2025 [INFERENCE]"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -45,8 +45,8 @@
   parent: DPDP-Act-1
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -59,8 +59,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -73,8 +73,8 @@
   parent: DPDP-Act-2
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -87,8 +87,8 @@
   parent: DPDP-Act-2
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -101,8 +101,8 @@
   parent: DPDP-Act-2
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -115,8 +115,8 @@
   parent: DPDP-Act-2
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -129,8 +129,8 @@
   parent: DPDP-Act-2
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -143,8 +143,8 @@
   parent: DPDP-Act-2
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -157,8 +157,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -171,8 +171,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -185,8 +185,8 @@
   parent: DPDP-Act-4
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -199,8 +199,8 @@
   parent: DPDP-Act-4
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -213,8 +213,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -227,8 +227,8 @@
   parent: DPDP-Act-5
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -241,8 +241,8 @@
   parent: DPDP-Act-5
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -255,8 +255,8 @@
   parent: DPDP-Act-5
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -269,8 +269,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; s.6(9) at one year, cl.(b)"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; s.6(9) at one year, cl.(b)"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -283,8 +283,8 @@
   parent: DPDP-Act-6
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -297,8 +297,8 @@
   parent: DPDP-Act-6
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -311,8 +311,8 @@
   parent: DPDP-Act-6
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -325,8 +325,8 @@
   parent: DPDP-Act-6
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -339,8 +339,8 @@
   parent: DPDP-Act-6
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -353,8 +353,8 @@
   parent: DPDP-Act-6
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -367,8 +367,8 @@
   parent: DPDP-Act-6
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -381,8 +381,8 @@
   parent: DPDP-Act-6
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -395,8 +395,8 @@
   parent: DPDP-Act-6
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2026-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(b): one year after publication, 14 Nov 2026"
+  enforceable_from: 2026-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(b): one year after publication, 13 Nov 2026"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -409,8 +409,8 @@
   parent: DPDP-Act-6
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -423,8 +423,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -437,8 +437,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -451,8 +451,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -465,8 +465,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -479,8 +479,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -493,8 +493,8 @@
   parent: DPDP-Act-8(3)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -507,8 +507,8 @@
   parent: DPDP-Act-8(3)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -521,8 +521,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -535,8 +535,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-8(5)
   penalty_ceiling_inr_crore: 250
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -549,8 +549,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-8(6)
   penalty_ceiling_inr_crore: 200
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -563,8 +563,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -577,8 +577,8 @@
   parent: DPDP-Act-8(7)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -591,8 +591,8 @@
   parent: DPDP-Act-8(7)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -605,8 +605,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -619,8 +619,8 @@
   parent: DPDP-Act-8(8)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -633,8 +633,8 @@
   parent: DPDP-Act-8(8)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -647,8 +647,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -661,8 +661,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -675,8 +675,8 @@
   parent: DPDP-Act-8
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -689,8 +689,8 @@
   parent: null
   penalty_parent: DPDP-Act-9
   penalty_ceiling_inr_crore: 200
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -703,8 +703,8 @@
   parent: DPDP-Act-9
   penalty_parent: DPDP-Act-9
   penalty_ceiling_inr_crore: 200
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -717,8 +717,8 @@
   parent: DPDP-Act-9
   penalty_parent: DPDP-Act-9
   penalty_ceiling_inr_crore: 200
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -731,8 +731,8 @@
   parent: DPDP-Act-9
   penalty_parent: DPDP-Act-9
   penalty_ceiling_inr_crore: 200
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -745,8 +745,8 @@
   parent: DPDP-Act-9
   penalty_parent: DPDP-Act-9
   penalty_ceiling_inr_crore: 200
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -759,8 +759,8 @@
   parent: DPDP-Act-9
   penalty_parent: DPDP-Act-9
   penalty_ceiling_inr_crore: 200
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -773,8 +773,8 @@
   parent: null
   penalty_parent: DPDP-Act-10
   penalty_ceiling_inr_crore: 150
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -787,8 +787,8 @@
   parent: DPDP-Act-10
   penalty_parent: DPDP-Act-10
   penalty_ceiling_inr_crore: 150
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -801,8 +801,8 @@
   parent: DPDP-Act-10
   penalty_parent: DPDP-Act-10
   penalty_ceiling_inr_crore: 150
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -815,8 +815,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -829,8 +829,8 @@
   parent: DPDP-Act-11
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -843,8 +843,8 @@
   parent: DPDP-Act-11(1)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -857,8 +857,8 @@
   parent: DPDP-Act-11(1)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -871,8 +871,8 @@
   parent: DPDP-Act-11(1)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -885,8 +885,8 @@
   parent: DPDP-Act-11
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -899,8 +899,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -913,8 +913,8 @@
   parent: DPDP-Act-12
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -927,8 +927,8 @@
   parent: DPDP-Act-12
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -941,8 +941,8 @@
   parent: DPDP-Act-12(2)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -955,8 +955,8 @@
   parent: DPDP-Act-12(2)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -969,8 +969,8 @@
   parent: DPDP-Act-12(2)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -983,8 +983,8 @@
   parent: DPDP-Act-12
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -997,8 +997,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1011,8 +1011,8 @@
   parent: DPDP-Act-13
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1025,8 +1025,8 @@
   parent: DPDP-Act-13
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1039,8 +1039,8 @@
   parent: DPDP-Act-13
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1053,8 +1053,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1067,8 +1067,8 @@
   parent: DPDP-Act-14
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1081,8 +1081,8 @@
   parent: DPDP-Act-14
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1095,8 +1095,8 @@
   parent: null
   penalty_parent: DPDP-Act-15
   penalty_ceiling_inr_crore: null
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1109,8 +1109,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1123,8 +1123,8 @@
   parent: DPDP-Act-16
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1137,8 +1137,8 @@
   parent: DPDP-Act-16
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1151,8 +1151,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1165,8 +1165,8 @@
   parent: DPDP-Act-17
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1179,8 +1179,8 @@
   parent: DPDP-Act-17
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1193,8 +1193,8 @@
   parent: DPDP-Act-17
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1207,8 +1207,8 @@
   parent: DPDP-Act-17
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1221,8 +1221,8 @@
   parent: DPDP-Act-17
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1235,8 +1235,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1249,8 +1249,8 @@
   parent: DPDP-Act-18
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1263,8 +1263,8 @@
   parent: DPDP-Act-18
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1277,8 +1277,8 @@
   parent: DPDP-Act-18
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1291,8 +1291,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1305,8 +1305,8 @@
   parent: DPDP-Act-19
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1319,8 +1319,8 @@
   parent: DPDP-Act-19
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1333,8 +1333,8 @@
   parent: DPDP-Act-19
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1347,8 +1347,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1361,8 +1361,8 @@
   parent: DPDP-Act-20
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1375,8 +1375,8 @@
   parent: DPDP-Act-20
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1389,8 +1389,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1403,8 +1403,8 @@
   parent: DPDP-Act-21
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1417,8 +1417,8 @@
   parent: DPDP-Act-21
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1431,8 +1431,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1445,8 +1445,8 @@
   parent: DPDP-Act-22
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1459,8 +1459,8 @@
   parent: DPDP-Act-22
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1473,8 +1473,8 @@
   parent: DPDP-Act-22
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1487,8 +1487,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1501,8 +1501,8 @@
   parent: DPDP-Act-23
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1515,8 +1515,8 @@
   parent: DPDP-Act-23
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1529,8 +1529,8 @@
   parent: DPDP-Act-23
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1543,8 +1543,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1557,8 +1557,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1571,8 +1571,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1585,8 +1585,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; s.27(1)(d) at one year, cl.(b)"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; s.27(1)(d) at one year, cl.(b)"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1599,8 +1599,8 @@
   parent: DPDP-Act-27
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1613,8 +1613,8 @@
   parent: DPDP-Act-27(1)
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2026-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(b): one year after publication, 14 Nov 2026"
+  enforceable_from: 2026-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(b): one year after publication, 13 Nov 2026"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1627,8 +1627,8 @@
   parent: DPDP-Act-27
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1641,8 +1641,8 @@
   parent: DPDP-Act-27
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1655,8 +1655,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1669,8 +1669,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1683,8 +1683,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1697,8 +1697,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1711,8 +1711,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1725,8 +1725,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1739,8 +1739,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1753,8 +1753,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1767,8 +1767,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1781,8 +1781,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1795,8 +1795,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1809,8 +1809,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1823,8 +1823,8 @@
   parent: DPDP-Act-28
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1837,8 +1837,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1851,8 +1851,8 @@
   parent: DPDP-Act-29
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1865,8 +1865,8 @@
   parent: DPDP-Act-29
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1879,8 +1879,8 @@
   parent: DPDP-Act-29
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1893,8 +1893,8 @@
   parent: DPDP-Act-29
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1907,8 +1907,8 @@
   parent: DPDP-Act-29
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1921,8 +1921,8 @@
   parent: DPDP-Act-29
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1935,8 +1935,8 @@
   parent: DPDP-Act-29
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1949,8 +1949,8 @@
   parent: DPDP-Act-29
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1963,8 +1963,8 @@
   parent: DPDP-Act-29
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1977,8 +1977,8 @@
   parent: DPDP-Act-29
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -1991,8 +1991,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2005,8 +2005,8 @@
   parent: DPDP-Act-30
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2019,8 +2019,8 @@
   parent: DPDP-Act-30
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2033,8 +2033,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2047,8 +2047,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2061,8 +2061,8 @@
   parent: DPDP-Act-32
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2075,8 +2075,8 @@
   parent: DPDP-Act-32
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2089,8 +2089,8 @@
   parent: DPDP-Act-32
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2103,8 +2103,8 @@
   parent: DPDP-Act-32
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2117,8 +2117,8 @@
   parent: DPDP-Act-32
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2131,8 +2131,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2145,8 +2145,8 @@
   parent: DPDP-Act-33
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2159,8 +2159,8 @@
   parent: DPDP-Act-33
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2173,8 +2173,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2187,8 +2187,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2201,8 +2201,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; Act footnote gives publication, notice followed"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; Act footnote gives publication, notice followed"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2215,8 +2215,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; Act footnote gives publication, notice followed"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; Act footnote gives publication, notice followed"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2229,8 +2229,8 @@
   parent: DPDP-Act-37
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; Act footnote gives publication, notice followed"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; Act footnote gives publication, notice followed"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2243,8 +2243,8 @@
   parent: DPDP-Act-37
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; Act footnote gives publication, notice followed"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; Act footnote gives publication, notice followed"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2257,8 +2257,8 @@
   parent: DPDP-Act-37
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; Act footnote gives publication, notice followed"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; Act footnote gives publication, notice followed"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2271,8 +2271,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2285,8 +2285,8 @@
   parent: DPDP-Act-38
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2299,8 +2299,8 @@
   parent: DPDP-Act-38
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2313,8 +2313,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2327,8 +2327,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2341,8 +2341,8 @@
   parent: DPDP-Act-40
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2355,8 +2355,8 @@
   parent: DPDP-Act-40
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2369,8 +2369,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2383,8 +2383,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2397,8 +2397,8 @@
   parent: DPDP-Act-42
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2411,8 +2411,8 @@
   parent: DPDP-Act-42
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2425,8 +2425,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2439,8 +2439,8 @@
   parent: DPDP-Act-43
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2453,8 +2453,8 @@
   parent: DPDP-Act-43
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2467,8 +2467,8 @@
   parent: DPDP-Act-43
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2481,8 +2481,8 @@
   parent: null
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025; s.44(2) at eighteen months, cl.(c)"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025; s.44(2) at eighteen months, cl.(c)"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2495,8 +2495,8 @@
   parent: DPDP-Act-44
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2509,8 +2509,8 @@
   parent: DPDP-Act-44
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2523,8 +2523,8 @@
   parent: DPDP-Act-44
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2025-11-14
-  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 14 Nov 2025"
+  enforceable_from: 2025-11-13
+  enforceable_basis: "G.S.R. 843(E) cl.(a): in force on publication, 13 Nov 2025"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2537,8 +2537,8 @@
   parent: null
   penalty_parent: null
   penalty_ceiling_inr_crore: null
-  enforceable_from: 2027-05-14
-  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; the Schedule operates through s.33"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; the Schedule operates through s.33"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2551,8 +2551,8 @@
   parent: DPDP-Act-Schedule
   penalty_parent: DPDP-Act-8(5)
   penalty_ceiling_inr_crore: 250
-  enforceable_from: 2027-05-14
-  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; takes effect with s.33"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; takes effect with s.33"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2565,8 +2565,8 @@
   parent: DPDP-Act-Schedule
   penalty_parent: DPDP-Act-8(6)
   penalty_ceiling_inr_crore: 200
-  enforceable_from: 2027-05-14
-  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; takes effect with s.33"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; takes effect with s.33"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2579,8 +2579,8 @@
   parent: DPDP-Act-Schedule
   penalty_parent: DPDP-Act-9
   penalty_ceiling_inr_crore: 200
-  enforceable_from: 2027-05-14
-  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; takes effect with s.33"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; takes effect with s.33"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2593,8 +2593,8 @@
   parent: DPDP-Act-Schedule
   penalty_parent: DPDP-Act-10
   penalty_ceiling_inr_crore: 150
-  enforceable_from: 2027-05-14
-  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; takes effect with s.33"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; takes effect with s.33"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2607,8 +2607,8 @@
   parent: DPDP-Act-Schedule
   penalty_parent: DPDP-Act-15
   penalty_ceiling_inr_crore: null
-  enforceable_from: 2027-05-14
-  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; takes effect with s.33"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; takes effect with s.33"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2621,8 +2621,8 @@
   parent: DPDP-Act-Schedule
   penalty_parent: null
   penalty_ceiling_inr_crore: null
-  enforceable_from: 2027-05-14
-  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; takes effect with s.33"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; takes effect with s.33"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true
 
@@ -2635,7 +2635,7 @@
   parent: DPDP-Act-Schedule
   penalty_parent: DPDP-Act-Schedule-7
   penalty_ceiling_inr_crore: 50
-  enforceable_from: 2027-05-14
-  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 14 May 2027; takes effect with s.33"
+  enforceable_from: 2027-05-13
+  enforceable_basis: "[INFERENCE] G.S.R. 843(E) cl.(c): eighteen months after publication, 13 May 2027; takes effect with s.33"
   source: {document: "Digital Personal Data Protection Act, 2023 (22 of 2023)", url: "https://indiacode.gov.in/server/api/core/bitstreams/52f9ecbb-b927-4ba6-ae6f-ca2fac50d4df/content"}
   verified: true

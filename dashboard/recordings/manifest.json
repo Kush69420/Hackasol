@@ -11,31 +11,29 @@
         "md": "reports/juice-shop/report.md",
         "html": "reports/juice-shop/report.html",
         "pdf": "reports/juice-shop/report.pdf",
-        "content_sha256": "c21d5c530fa19f03317230f8c40906e4e240e8f01f569326db1392cb9ea0f3f9",
+        "content_sha256": "04532cacfe1ca827425d4b391150cf76fb90e947adb74574b92087c85def8199",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/juice-shop",
         "events": 5,
-        "recording_sha256": "5d9f3162a4c3c437f825e60f68d7b00d2dba0c55529f90ae0d3e477feebf3454",
-        "report_sha256": "3f73756ffb552e6eb11fda57eb9953ceb15b7ebfa740edd89c6a3e268264c42a",
+        "recording_sha256": "b03e3aed521187513b38bd3739fb51f029977f01a1e30f9b2832fed90cd9411f",
+        "report_sha256": "8e9ce524e3d595b2be9b206910bf4b6d920685e486228cf58eba945c522f19d7",
         "live_probe_overlay": {
           "note": "The recorded Report is the static scan plus Live Probe outcomes written by `dpdp-audit probe` against the pinned image on a disposable local instance; the deliverable Report is the static scan alone. Playback shows the probe outcomes as past results.",
           "image": "dpdp/juice-shop:c9f99228",
           "image_revision": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
-          "added_finding_ids": [
-            "SEC-08-a0e14c48e6ad"
-          ],
+          "added_finding_ids": [],
           "confirmed_finding_ids": [
             "SEC-07-2d4f025671b7",
+            "SEC-08-cefb92be21c6",
             "SEC-11-ad5b2106f4e8",
-            "RET-02-4696497b9137",
-            "SEC-08-a0e14c48e6ad"
+            "RET-02-4696497b9137"
           ]
         }
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T01:43:00.059519+00:00",
+        "scan_started_at": "2026-11-23T12:00:17.438561+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -47,8 +45,8 @@
         },
         "cached_verdicts_used": false,
         "cache_hits": 0,
-        "cache_misses": 144,
-        "not_assessed": 144,
+        "cache_misses": 206,
+        "not_assessed": 206,
         "command": "DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/juice-shop"
       },
       "clone_url": "https://github.com/juice-shop/juice-shop"
@@ -63,17 +61,17 @@
         "md": "reports/ai-kyc-platform/report.md",
         "html": "reports/ai-kyc-platform/report.html",
         "pdf": "reports/ai-kyc-platform/report.pdf",
-        "content_sha256": "d7d68afde3b434d578ce0fe74db8b696989c5cc0d8a779bdd81efea3f4f872e7",
+        "content_sha256": "37c869f2432b70a859a17d6eeb46bcde8d7448ddd6ab1b6a6d77892dea8ebbee",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/ai-kyc-platform",
         "events": 5,
-        "recording_sha256": "c77f79b7b5f45cf7a0fe69d227bd4cdb27988caf1ff61afe8d30023f30821b4b",
-        "report_sha256": "4ccf9d7347b5e7373348d45b38ed247f97e4537bdbafc096de8c7c899743be34"
+        "recording_sha256": "79ea59ea1b05f6c3ff4bef61727d14c96d921552e82a6b4fbfd89cd062de6080",
+        "report_sha256": "580a2335fc9fc0caa6b3318929d85de1248304a94f09628579ea89bde943679b"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T01:43:16.425198+00:00",
+        "scan_started_at": "2026-11-23T12:00:25.882550+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -85,8 +83,8 @@
         },
         "cached_verdicts_used": false,
         "cache_hits": 0,
-        "cache_misses": 28,
-        "not_assessed": 28,
+        "cache_misses": 27,
+        "not_assessed": 27,
         "command": "DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/ai-kyc-platform"
       },
       "clone_url": "https://github.com/JhashankKumar/ai-kyc-platform",
@@ -102,17 +100,66 @@
         "md": "reports/trackmyrupee/report.md",
         "html": "reports/trackmyrupee/report.html",
         "pdf": "reports/trackmyrupee/report.pdf",
-        "content_sha256": "d068efef881ba385a6fdfc0a4fe1397a8ee0abc308f9e74eccf8604b954d496a",
+        "content_sha256": "e1cc033af6c3b6f2cb6c74d38d1257ef7f8c1c7ccae88a4a82a4fe38a54f6a88",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/trackmyrupee",
         "events": 5,
-        "recording_sha256": "70b5d4c3443932e7a127a3fb52d218ac8e6b73fddc106b6484b4301fe44dbc6c",
-        "report_sha256": "c2e87629443045b6a090189dc72a2a839920bf730ee29446ef7add138adfb224"
+        "recording_sha256": "1a2a0836c62100627c6b5509993f081f058cbe670d691e1d34cf0d6618a70329",
+        "report_sha256": "ca00be54b58f64e0cdebffbc59d0801eb86f231f7a7ec1818e682e7f53d511f0",
+        "live_probe_overlay": {
+          "note": "The recorded Report is the static scan plus Live Probe outcomes written by `dpdp-audit probe` against a local server at the pinned revision (temp SQLite, console email backend, loopback analytics sink); the deliverable Report is the static scan alone. The outcomes sit on the Consent Assessment criteria (`live_probes`, `live_probe_run`) and create no Finding. Playback shows them as past results.",
+          "observed_at": "2026-11-23T12:02:07+00:00",
+          "target_commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
+          "criteria": [
+            {
+              "criterion": "enforced server-side",
+              "outcomes": [
+                {
+                  "assertion": "consent-after-withdrawal",
+                  "status": "Inconclusive"
+                },
+                {
+                  "assertion": "consent-declined:consent_email",
+                  "status": "Not Confirmed"
+                },
+                {
+                  "assertion": "consent-declined:consent_transactions",
+                  "status": "Not Confirmed"
+                },
+                {
+                  "assertion": "consent-declined:consent_device",
+                  "status": "Not Confirmed"
+                },
+                {
+                  "assertion": "analytics-declined",
+                  "status": "Not Confirmed"
+                },
+                {
+                  "assertion": "analytics-withdrawn",
+                  "status": "Not Confirmed"
+                },
+                {
+                  "assertion": "withdrawal-data-removal",
+                  "status": "Not Confirmed"
+                }
+              ]
+            },
+            {
+              "criterion": "withdrawable with comparable ease",
+              "outcomes": [
+                {
+                  "assertion": "comparable-ease",
+                  "status": "Inconclusive"
+                }
+              ]
+            }
+          ]
+        }
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T01:43:20.006719+00:00",
+        "scan_started_at": "2026-11-23T12:00:29.285378+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -141,17 +188,17 @@
         "md": "reports/singharya-e-kyc/report.md",
         "html": "reports/singharya-e-kyc/report.html",
         "pdf": "reports/singharya-e-kyc/report.pdf",
-        "content_sha256": "d2de676b2ae6319f0c4b6370b58966659afddc5a1ee32c3f104c8085f96a1347",
+        "content_sha256": "fa8e51aca957e54663149a639ba22b54fe01a657dbbf52cc0ec306945b9ea7a4",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/singharya-e-kyc",
         "events": 5,
-        "recording_sha256": "0f8db8660e906f6fccd15a3d1c20cf212e31c9d10ddbefbdd6101deaa449ceea",
-        "report_sha256": "8ac8c73d1ad4d95bbca72aafa1bea9036664b3c03c7d2a46aebb04021fb61b17"
+        "recording_sha256": "bebbe253a515260c05dc18d33b6ab121fdcea98aba5a305c32171edcf05b9c1e",
+        "report_sha256": "71e605a2907a8079f63acd54d195f1a64439d6cfeca3286234dbb9ca2ff2bc9d"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T01:43:59.659126+00:00",
+        "scan_started_at": "2026-11-23T12:00:37.552929+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -163,8 +210,8 @@
         },
         "cached_verdicts_used": false,
         "cache_hits": 0,
-        "cache_misses": 4,
-        "not_assessed": 4,
+        "cache_misses": 3,
+        "not_assessed": 3,
         "command": "DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/singharya-e-kyc"
       },
       "clone_url": "https://github.com/singharya-btech/ML-Based-E-KYC-Fraud-Detection-System",
@@ -180,17 +227,17 @@
         "md": "reports/juice-shop-fork/report.md",
         "html": "reports/juice-shop-fork/report.html",
         "pdf": "reports/juice-shop-fork/report.pdf",
-        "content_sha256": "2fac1a39ae6dad257d5ec2c993b3eee1d1884b63ce3fb93bd283300c5174b124",
+        "content_sha256": "95089c5d7a73e25066b75df85be0459594e96f0e31b005c18804e394b048c95e",
         "content_sha256_note": "sha256 of the Report JSON without scan.started_at and scan.finished_at, so a re-run of the documented scan command still matches"
       },
       "recording": {
         "dir": "dashboard/recordings/juice-shop-fork",
         "events": 5,
-        "recording_sha256": "56c63d90fcaeee7db7ede95f6f3f414f72baf9563652fce172e714a7d29625d2",
-        "report_sha256": "03047338821806174f7570fd1141bfbf6e9ef4b48880665faccb387565ac71e3"
+        "recording_sha256": "ffc73f22d189fb806340a7c4a8e64023d5701ee6075cc94489bea2b633247728",
+        "report_sha256": "14eca7a5823021c02d6a87ba754962f6ce2ddbe39110343de2475cc830f4dec6"
       },
       "provenance": {
-        "scan_started_at": "2026-11-23T01:44:02.347315+00:00",
+        "scan_started_at": "2026-11-23T12:14:41.898661+00:00",
         "llm_mode": "cache-only",
         "llm_provider": "ollama",
         "llm_model": "llama3.1",
@@ -202,8 +249,8 @@
         },
         "cached_verdicts_used": false,
         "cache_hits": 0,
-        "cache_misses": 138,
-        "not_assessed": 138,
+        "cache_misses": 196,
+        "not_assessed": 196,
         "command": "DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1 .venv/bin/python -m dashboard.backend.replay record targets/juice-shop-fork"
       },
       "clone_url": "https://github.com/TanKaizokuO/juice-shop",
@@ -212,7 +259,18 @@
         "pull_request": "https://github.com/TanKaizokuO/juice-shop/pull/1",
         "head_revision": "2a66c603ea543aea6ab642c472431a27846b9e63",
         "base_revision": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
-        "compare": ".venv/bin/python demo/compare_reports.py reports/juice-shop/report.json reports/juice-shop-fork/report.json"
+        "compare": ".venv/bin/python demo/compare_reports.py reports/juice-shop/report.json reports/juice-shop-fork/report.json",
+        "gone": [
+          "RET-01-e43b9adccd2d",
+          "RET-02-4696497b9137",
+          "SEC-01-d85a743d0415",
+          "SEC-07-4edf88d6607a",
+          "SEC-09-8d1d55111ce2",
+          "SEC-13-394d3dbca514"
+        ],
+        "new": [
+          "SEC-07-4edf88d6607a"
+        ]
       }
     }
   ]

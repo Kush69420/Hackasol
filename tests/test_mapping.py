@@ -54,7 +54,7 @@ def catalogue(monkeypatch):
         if pid not in known:
             raise ValueError(pid)
         security = pid.startswith('DPDP-Rule-6')
-        return SimpleNamespace(citation=pid, penalty_parent='DPDP-Act-8(5)' if security else 'DPDP-Act-12(3)', penalty_ceiling_inr_crore=250 if security else 50, enforceable_from='2027-05-14')
+        return SimpleNamespace(citation=pid, penalty_parent='DPDP-Act-8(5)' if security else 'DPDP-Act-12(3)', penalty_ceiling_inr_crore=250 if security else 50, enforceable_from='2027-05-13')
     monkeypatch.setattr(mapping, 'load_catalogue', lambda: entries)
     monkeypatch.setattr(mapping, 'guidance_for', lambda issue_type: 'Protect Personal Data.')
     monkeypatch.setattr(mapping.registry, 'get', provision, raising=False)
@@ -101,7 +101,7 @@ def test_primary_provisions_and_override():
     f = one(match(issue_type='SEC-13', gate_evidence=[ev(3)]))
     assert f['primary_provision'] == 'DPDP-Rule-6(1)(e)'
     assert f['penalty_ceiling'] == {'parent_section': 'DPDP-Act-8(5)', 'amount_inr_crore': 250}
-    assert f['enforceable_from'] == '2027-05-14'
+    assert f['enforceable_from'] == '2027-05-13'
     f = one(match(issue_type='RET-02', primary_override='DPDP-Act-12(3)', gate_evidence=[ev(3)]))
     assert f['primary_provision'] == 'DPDP-Act-12(3)'
     with pytest.raises(ValueError):
@@ -149,4 +149,4 @@ def test_real_catalogue_and_registry_when_available(monkeypatch):
     finding = one(match(issue_type='SEC-13', gate_evidence=[ev(3)]))
     assert finding['primary_provision'] == 'DPDP-Rule-6(1)(e)'
     assert finding['penalty_ceiling'] == {'parent_section': 'DPDP-Act-8(5)', 'amount_inr_crore': 250}
-    assert finding['enforceable_from'] == '2027-05-14'
+    assert finding['enforceable_from'] == '2027-05-13'

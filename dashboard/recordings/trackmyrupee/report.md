@@ -21,13 +21,13 @@
 
 Penalty Ceilings: ₹50 crore; statutory maximum under the Schedule; the Board sets any amount.
 
-### Fix before 14 May 2027
+### Fix before 13 May 2027
 
-- CON-03-5948c3734746 — Enforceable From 2027-05-14
-- CON-03-94c021251539 — Enforceable From 2027-05-14
-- CON-03-c8163452354e — Enforceable From 2027-05-14
-- CON-03-e9015c2df7d8 — Enforceable From 2027-05-14
-- RIG-04-91983d63d6a4 — Enforceable From 2027-05-14
+- CON-03-5948c3734746 — Enforceable From 2027-05-13
+- CON-03-94c021251539 — Enforceable From 2027-05-13
+- CON-03-c8163452354e — Enforceable From 2027-05-13
+- CON-03-e9015c2df7d8 — Enforceable From 2027-05-13
+- RIG-04-91983d63d6a4 — Enforceable From 2027-05-13
 
 ## Personal Data Map
 
@@ -46,7 +46,7 @@ Primary Provision: DPDP-Act-6(1) — Section 6(1)
 
 Other Provisions: none
 
-Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -76,7 +76,7 @@ Primary Provision: DPDP-Act-6(1) — Section 6(1)
 
 Other Provisions: none
 
-Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -106,7 +106,7 @@ Primary Provision: DPDP-Act-6(1) — Section 6(1)
 
 Other Provisions: none
 
-Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -136,7 +136,7 @@ Primary Provision: DPDP-Act-6(1) — Section 6(1)
 
 Other Provisions: none
 
-Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -166,7 +166,7 @@ Primary Provision: DPDP-Act-14 — Section 14
 
 Other Provisions: DPDP-Rule-14(4) — Rule 14(4)
 
-Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-14.
+Penalty Ceiling: ₹50 crore (DPDP-Act-Schedule-7); Enforceable From: 2027-05-13.
 
 Status: open.
 
@@ -436,6 +436,20 @@ Applicability: applicable — Inventory contains purposes. Assessment: Not asses
 Issue Types: CON-01
 
 Linked identifiers: purpose:templates/account/signup.html:124:130, purpose:templates/account/signup.html:140:143, purpose:templates/account/signup.html:153:156, purpose:templates/expenses/dpdp_consent.html:34:40, purpose:templates/expenses/dpdp_consent.html:50:53, purpose:templates/expenses/dpdp_consent.html:63:66, operation:expenses/posthog_utils.py:115, operation:expenses/posthog_utils.py:135, enforcement:expenses/middleware.py:147, enforcement:expenses/posthog_utils.py:108, enforcement:expenses/posthog_utils.py:125
+
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:02:07+00:00): Inconclusive (not run or inconclusive; no effect on the static verdict) — consent-after-withdrawal: Grant, withdrawal or pre-withdrawal operation was not established Static verdict above is unchanged.
+
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:02:07+00:00): Not Confirmed (enforcement observed) — consent-declined:consent_email: Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional) Static verdict above is unchanged.
+
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:02:07+00:00): Not Confirmed (enforcement observed) — consent-declined:consent_transactions: Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional) Static verdict above is unchanged.
+
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:02:07+00:00): Not Confirmed (enforcement observed) — consent-declined:consent_device: Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional) Static verdict above is unchanged.
+
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:02:07+00:00): Not Confirmed (enforcement observed) — analytics-declined: No outbound request was observed after the decline or withdrawal while the granted control produced 1 Static verdict above is unchanged.
+
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:02:07+00:00): Not Confirmed (enforcement observed) — analytics-withdrawn: No outbound request was observed after the decline or withdrawal while the granted control produced 1 Static verdict above is unchanged.
+
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:02:07+00:00): Not Confirmed (enforcement observed) — withdrawal-data-removal: The account no longer authenticated and no account-linked rows remained Static verdict above is unchanged.
 
 templates/account/signup.html:124–124
 
@@ -1069,6 +1083,8 @@ Issue Types: CON-04
 Linked identifiers: grant_paths:templates/account/signup.html:171, grant_paths:templates/expenses/dpdp_consent.html:80, withdrawal_paths:templates/expenses/withdraw_consent_confirm.html:37
 
 Static step counts: {   "grant": [     null,     null   ],   "withdrawal": [     null   ] }
+
+Live Probe (trackmyrupee @ 47990e4f19d7, 2026-11-23T12:02:07+00:00): Inconclusive (not run or inconclusive; no effect on the static verdict) — comparable-ease: Comparable grant and withdrawal interactions were not both recorded Static verdict above is unchanged.
 
 templates/account/signup.html:171–171
 
@@ -2182,8 +2198,8 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 | DPDP-Act-5(1) | Section 5(1) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
 | DPDP-Act-5(2) | Section 5(2) | not code-checkable | none |
 | DPDP-Act-5(3) | Section 5(3) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
-| DPDP-Act-6 | Section 6 | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-03-django-default-selected, CON-04-django-comparable-paths, CON-04-express-withdrawal-path, CON-05-express-processor-withdrawal, CON-06-django-incomplete-record, CON-06-sequelize-consent-record, CON-07-angular-consent-notice, CON-07-django-unitemised-notice, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author |
-| DPDP-Act-6(1) | Section 6(1) | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-03-django-default-selected, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author |
+| DPDP-Act-6 | Section 6 | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-03-django-default-selected, CON-04-django-comparable-paths, CON-04-express-withdrawal-path, CON-05-express-processor-withdrawal, CON-06-django-incomplete-record, CON-06-sequelize-consent-record, CON-07-angular-consent-notice, CON-07-django-unitemised-notice, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-08-ts-whole-model-serialisation |
+| DPDP-Act-6(1) | Section 6(1) | not determinable | CON-01-express-enforcement, CON-02-angular-bundled-purposes, CON-03-angular-default-true, CON-03-django-default-selected, CON-08-angular-excess-elements, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-08-ts-whole-model-serialisation |
 | DPDP-Act-6(2) | Section 6(2) | not code-checkable | none |
 | DPDP-Act-6(3) | Section 6(3) | not determinable | CON-07-angular-consent-notice, CON-07-django-unitemised-notice |
 | DPDP-Act-6(4) | Section 6(4) | not determinable | CON-04-django-comparable-paths, CON-04-express-withdrawal-path |
@@ -2194,7 +2210,7 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 | DPDP-Act-6(9) | Section 6(9) | not code-checkable | none |
 | DPDP-Act-6(10) | Section 6(10) | not determinable | CON-06-django-incomplete-record, CON-06-sequelize-consent-record |
 | DPDP-Act-7 | Section 7 | not determinable | CON-01-express-enforcement |
-| DPDP-Act-8 | Section 8 | not determinable | CON-05-express-processor-withdrawal, RET-01-express-purpose-end, RET-02-express-erasure-request, RIG-03-express-grievance, TRF-01-undisclosed-processor-transfer |
+| DPDP-Act-8 | Section 8 | not determinable | CON-05-express-processor-withdrawal, RET-01-express-purpose-end, RET-01-sequelize-soft-delete, RET-02-express-erasure-request, RIG-03-express-grievance, TRF-01-undisclosed-processor-transfer |
 | DPDP-Act-8(1) | Section 8(1) | not code-checkable | none |
 | DPDP-Act-8(2) | Section 8(2) | not code-checkable | TRF-01-undisclosed-processor-transfer |
 | DPDP-Act-8(3) | Section 8(3) | not code-checkable | none |
@@ -2203,8 +2219,8 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 | DPDP-Act-8(4) | Section 8(4) | not code-checkable | none |
 | DPDP-Act-8(5) | Section 8(5) | not code-checkable | none |
 | DPDP-Act-8(6) | Section 8(6) | not code-checkable | none |
-| DPDP-Act-8(7) | Section 8(7) | not determinable | CON-05-express-processor-withdrawal, RET-01-express-purpose-end, RET-02-express-erasure-request |
-| DPDP-Act-8(7)(a) | Section 8(7)(a) | not determinable | RET-01-express-purpose-end |
+| DPDP-Act-8(7) | Section 8(7) | not determinable | CON-05-express-processor-withdrawal, RET-01-express-purpose-end, RET-01-sequelize-soft-delete, RET-02-express-erasure-request |
+| DPDP-Act-8(7)(a) | Section 8(7)(a) | not determinable | RET-01-express-purpose-end, RET-01-sequelize-soft-delete |
 | DPDP-Act-8(7)(b) | Section 8(7)(b) | not determinable | CON-05-express-processor-withdrawal, RET-02-express-erasure-request |
 | DPDP-Act-8(8) | Section 8(8) | not code-checkable | none |
 | DPDP-Act-8(8)(a) | Section 8(8)(a) | not code-checkable | none |
@@ -2364,10 +2380,10 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 | DPDP-Rule-3(c)(i) | Rule 3(c)(i) | not determinable | CON-04-django-comparable-paths, CON-04-express-withdrawal-path |
 | DPDP-Rule-4 | Rule 4 | not code-checkable | none |
 | DPDP-Rule-5 | Rule 5 | not code-checkable | none |
-| DPDP-Rule-6 | Rule 6 | not determinable | MON-01-monitoring-coverage, SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-fastapi-wildcard-cors, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
-| DPDP-Rule-6(1) | Rule 6(1) | not determinable | MON-01-monitoring-coverage, SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-fastapi-wildcard-cors, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
-| DPDP-Rule-6(1)(a) | Rule 6(1)(a) | not determinable | SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-md5-password-hash, SEC-09-ts-query-authentication-secret, SEC-10-ts-storage-header, SEC-11-fastapi-wildcard-cors, SEC-11-ts-wildcard-cors, SEC-15-committed-personal-data |
-| DPDP-Rule-6(1)(b) | Rule 6(1)(b) | static | SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-unchecked-nested-records, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
+| DPDP-Rule-6 | Rule 6 | not determinable | MON-01-monitoring-coverage, SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-constant-key-verifier, SEC-04-ts-md5-credential-compare, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-hmac-key, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-lossy-owner-key, SEC-07-ts-public-personal-data-directory, SEC-07-ts-unauthenticated-record-read, SEC-07-ts-unchecked-nested-records, SEC-07-ts-unscoped-authenticated-read, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-08-ts-whole-model-serialisation, SEC-09-ts-query-authentication-secret, SEC-09-ts-query-personal-data, SEC-10-ts-storage-header, SEC-10-ts-token-storage-site, SEC-11-fastapi-wildcard-cors, SEC-11-terraform-plaintext-listener, SEC-11-ts-jsonp-response, SEC-11-ts-session-cookie-flags, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
+| DPDP-Rule-6(1) | Rule 6(1) | not determinable | MON-01-monitoring-coverage, SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-constant-key-verifier, SEC-04-ts-md5-credential-compare, SEC-04-ts-md5-password-hash, SEC-05-ts-hardcoded-hmac-key, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-lossy-owner-key, SEC-07-ts-public-personal-data-directory, SEC-07-ts-unauthenticated-record-read, SEC-07-ts-unchecked-nested-records, SEC-07-ts-unscoped-authenticated-read, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-08-ts-whole-model-serialisation, SEC-09-ts-query-authentication-secret, SEC-09-ts-query-personal-data, SEC-10-ts-storage-header, SEC-10-ts-token-storage-site, SEC-11-fastapi-wildcard-cors, SEC-11-terraform-plaintext-listener, SEC-11-ts-jsonp-response, SEC-11-ts-session-cookie-flags, SEC-11-ts-wildcard-cors, SEC-12-express-access-logging, SEC-13-ts-access-log-retention, SEC-14-terraform-store-backup, SEC-15-committed-personal-data, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
+| DPDP-Rule-6(1)(a) | Rule 6(1)(a) | not determinable | SEC-01-nginx-query-logging, SEC-01-ts-morgan-query-secrets, SEC-02-django-plain-fields, SEC-02-sequelize-plain-fields, SEC-03-django-aadhaar-storage, SEC-03-fastapi-aadhaar-response, SEC-03-sequelize-aadhaar-storage, SEC-04-ts-constant-key-verifier, SEC-04-ts-md5-credential-compare, SEC-04-ts-md5-password-hash, SEC-09-ts-query-authentication-secret, SEC-09-ts-query-personal-data, SEC-10-ts-storage-header, SEC-10-ts-token-storage-site, SEC-11-fastapi-wildcard-cors, SEC-11-terraform-plaintext-listener, SEC-11-ts-jsonp-response, SEC-11-ts-session-cookie-flags, SEC-11-ts-wildcard-cors, SEC-15-committed-personal-data |
+| DPDP-Rule-6(1)(b) | Rule 6(1)(b) | static | SEC-05-ts-hardcoded-hmac-key, SEC-05-ts-hardcoded-jwt-key, SEC-06-express-error-disclosure, SEC-07-ts-lossy-owner-key, SEC-07-ts-public-personal-data-directory, SEC-07-ts-unauthenticated-record-read, SEC-07-ts-unchecked-nested-records, SEC-07-ts-unscoped-authenticated-read, SEC-08-ts-account-list, SEC-08-ts-nested-records, SEC-08-ts-review-author, SEC-08-ts-whole-model-serialisation, SEC-16-docker-root-container, SEC-16-kubernetes-privileged-store, SEC-16-kubernetes-public-store, SEC-16-terraform-public-storage, SEC-16-terraform-public-store |
 | DPDP-Rule-6(1)(c) | Rule 6(1)(c) | not determinable | MON-01-monitoring-coverage, SEC-12-express-access-logging |
 | DPDP-Rule-6(1)(d) | Rule 6(1)(d) | not determinable | SEC-14-terraform-store-backup |
 | DPDP-Rule-6(1)(e) | Rule 6(1)(e) | not determinable | SEC-13-ts-access-log-retention |
@@ -2407,6 +2423,24 @@ Limitation: A dispatched deletion, browser choice, or Data Processor call does n
 | DPDP-Rules-Schedule-Sixth | Sixth Schedule | not code-checkable | none |
 | DPDP-Rules-Schedule-Seventh | Seventh Schedule | not code-checkable | none |
 
+## Statutory Penalty Ceilings and Enforcement Timeline
+
+Statutory maximum per Schedule; not a predicted or estimated fine. The actual penalty is determined by the Data Protection Board under section 33(2) factors. Ceilings apply per breach instance and are never added together.
+
+Highest applicable ceiling: ₹50 crore (DPDP-Act-14, DPDP-Act-6(1), DPDP-Rule-14(4)). Ceilings are not summed into a total exposure figure.
+
+| Provision | Schedule entry | Statutory maximum | Findings | Severity mix |
+| --- | --- | --- | --- | --- |
+| DPDP-Act-14 | Schedule, item 7 | ₹50 crore | RIG-04-91983d63d6a4 | low: 1 |
+| DPDP-Act-6(1) | Schedule, item 7 | ₹50 crore | CON-03-5948c3734746, CON-03-94c021251539, CON-03-c8163452354e, CON-03-e9015c2df7d8 | low: 4 |
+| DPDP-Rule-14(4) | Schedule, item 7 | ₹50 crore | RIG-04-91983d63d6a4 | low: 1 |
+
+### Enforcement timeline (days relative to scan date 2026-11-23)
+
+| Enforceable From | Status | Findings |
+| --- | --- | --- |
+| 2027-05-13 | enforceable in 171 days | CON-03-5948c3734746, CON-03-94c021251539, CON-03-c8163452354e, CON-03-e9015c2df7d8, RIG-04-91983d63d6a4 |
+
 ## Method, accuracy and limitations
 
 Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only mode replays matching cached LLM fields; uncached fields are not assessed. Live Probe outcomes, when available, appear with their Findings.
@@ -2419,7 +2453,7 @@ Static Rules use Semgrep, TypeScript AST and configuration analysers. Cache-only
 | Exclusions | **/.git/**, **/node_modules/**, expenses/tests/**, **/__pycache__/**, **/*.pyc |
 | Files scanned | 1676 |
 | Files excluded | 290 |
-| Rule count | 51 |
+| Rule count | 65 |
 | LLM provider | ollama |
 | LLM model | llama3.1 |
 | Prompt versions | classification: classification-v1, triage: triage-v1, consent: consent-v1, fix: fix-v1 |

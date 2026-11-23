@@ -132,12 +132,16 @@ Pinned run: Juice Shop `c9f99228`, LLM verdicts from `omp` / `anthropic/claude-h
 
 | Population | TP | FP | FN | Precision | Recall |
 |---|---:|---:|---:|---|---|
-| Primary Target, canonical Findings vs 47 confirmed entries (5 not determinable excluded) | 16 | 6 | 31 | 0.7273 (16/22) | 0.3404 (16/47) |
-| Labelled Corpus, Rule emissions on designed fixtures (one pair per Rule) | 40 | 0 | 0 | 1.0000 (40/40) | 1.0000 (40/40) |
+| Primary Target, canonical Findings vs 47 confirmed entries (5 not determinable excluded) | 45 | 8 | 2 | 0.8491 (45/53) | 0.9574 (45/47) |
+| Labelled Corpus, Rule emissions on designed fixtures (one pair per Rule) | 65 | 0 | 0 | 1.0000 (65/65) | 1.0000 (65/65) |
 
 The two populations are not comparable: corpus pairs are designed cases, one per Rule, and show only that each Rule fires on its true positive and stays quiet on its near-miss.
 
-Every mismatch is adjudicated against the pinned code in `adjudication.md`: 29 Auditor misses, 4 Auditor false positives, 4 anchor disagreements, 0 label changes. Most misses are per-site counting: the reference lists each code site separately, while the Auditor reports one Finding per Element. The others are the second Terraform tree under `infrastructure/terraform/` and authorisation gaps (SEC-07) that have no Rule yet.
+Previous published run (commit `7fb1236`, before the recall Rules): 16 TP, 6 FP, 31 FN; precision 0.7273, recall 0.3404. Its mismatches are adjudicated against the pinned code in `adjudication.md`: 29 Auditor misses, 4 Auditor false positives, 4 anchor disagreements, 0 label changes.
+
+**Not a held-out figure.** The recall Rules added after that run (SEC-07 route authorisation, SEC-08 whole-model serialisation, SEC-09 query parameters, SEC-04/05/10/11 sites, the second Terraform tree, RET-01) were written from the gaps in `adjudication.md` on this same Target and revision. The Juice Shop figure therefore measures fit to this reference, not generalisation. The other three Targets (ai-kyc-platform, TrackMyRupee, singharya-e-kyc) gained no Findings from these Rules.
+
+The 8 unmatched predictions: the 4 false positives and 1 anchor disagreement already adjudicated (MON-01-8c5728dfea11, RET-03-41bffe4101f9, SEC-02-0a13729d5971, SEC-02-0f4631e6a05d, SEC-02-e0994a7481e3), and 3 new sites the reference does not list: `routes/changePassword.ts:56` and `routes/resetPassword.ts:46` return the whole updated User row (the REF-026 pattern), and `routes/updateUserProfile.ts:42` sets the session cookie with no flags (the REF-036 pattern). They count as false positives because the reference is not edited after scoring. Still missed: REF-021 (anchor disagreement at `routes/authenticatedUsers.ts`) and REF-044 (MON-01, anchor disagreement).
 
 Reproduce:
 
@@ -145,4 +149,8 @@ Reproduce:
 dpdp-audit accuracy targets/juice-shop --cache-only --cache-dir accuracy/cache
 ```
 
-The run prints `reproduces published run: yes` only when the target commit, Rules digest, provider, model, prompt versions and the miss counts all match `cache/manifest.json`. The published run itself left one field unassessed. After a Rule or prompt change, refill the cache with a live run (`dpdp-audit scan targets/juice-shop --provider omp --cache-dir accuracy/cache`) and regenerate the manifest with `--write-manifest`.
+The run prints `reproduces published run: yes` only when the target commit, Rules digest, provider, model, prompt versions and the miss counts all match `cache/manifest.json`. The published run has no unassessed field (208 cached verdicts). After a Rule or prompt change, refill the cache with a live run (`dpdp-audit scan targets/juice-shop --provider omp --model anthropic/claude-haiku-5-5 --cache-dir accuracy/cache`) and regenerate the manifest with `--write-manifest`.
+
+Each run also writes a reproducible results summary (metrics, the command, the Rules digest) to `accuracy/results.md`. Use `--results PATH` to write it elsewhere, for example `--results /tmp/results.md` to leave the committed file untouched.
+
+Speed: the Labelled Corpus fixtures are scanned in one batched Semgrep run and the Target scan in parallel chunks. Semgrep results are cached in `.dpdp-cache/semgrep/` (git-ignored), keyed on the Semgrep version, the exact Rule YAML bytes and every scanned file's bytes, so any Rule or Target change is a miss. Delete that directory (or set `DPDP_SEMGREP_CACHE`) for a cold run.

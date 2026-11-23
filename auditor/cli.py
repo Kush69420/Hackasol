@@ -3,11 +3,13 @@
 import argparse
 import json
 from pathlib import Path
+import shlex
 import subprocess
 import sys
 
-from auditor.accuracy import (CACHE_DIR, CorpusError, REFERENCE_PATH, evaluate_corpus, run_accuracy,
-                              summary_lines)
+from auditor.accuracy import (CACHE_DIR, CorpusError, REFERENCE_PATH, RESULTS_PATH, evaluate_corpus, load_reference,
+                              run_accuracy, summary_lines, write_results)
+from auditor.masking import public_source
 from auditor.report import write_reports
 from auditor.rules_list import generate_rules_list
 from auditor.scan import run_inventory, run_scan
@@ -41,6 +43,8 @@ def main(argv: list[str] | None = None) -> int:
     accuracy.add_argument("--cache-dir", type=Path, default=CACHE_DIR)
     accuracy.add_argument("--write-manifest", action="store_true",
                           help="record the replay manifest in the cache dir (regeneration after a Rule or prompt change)")
+    accuracy.add_argument("--results", type=Path, default=RESULTS_PATH,
+                          help="write the reproducible results summary here (default accuracy/results.md)")
     probe = commands.add_parser("probe", help="run bounded Live Probes on a dedicated instance")
     probe.add_argument("--target", required=True, help="authorized instance origin")
     probe.add_argument("--report", required=True, type=Path, help="existing Report JSON")
@@ -173,6 +177,14 @@ def _accuracy(args, parser) -> int:
                               write_manifest_file=args.write_manifest)
         destination = args.out or Path("reports") / report["target"]["name"] / "report.json"
         write_reports(report, destination)
+        if args.results:
+            parts = [public_source(args.target), "--cache-only", "--cache-dir", args.cache_dir.as_posix(),
+                     "--reference", Path(args.reference).as_posix(), "--results", args.results.as_posix()]
+            if report["target"].get("kind") == "git" and report["target"].get("commit"):
+                parts += ["--commit", report["target"]["commit"]]
+            parts += ["--provider", report["llm"]["provider"], "--model", report["llm"]["model"]]
+            command = "dpdp-audit accuracy " + " ".join(shlex.quote(p) for p in parts)
+            write_results(report, load_reference(args.reference), command=command, path=args.results)
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError, ReportValidationError, CorpusError) as exc:
         detail = exc.stderr if isinstance(exc, subprocess.CalledProcessError) else str(exc)
         print(f"dpdp-audit: {detail.strip()}", file=sys.stderr)

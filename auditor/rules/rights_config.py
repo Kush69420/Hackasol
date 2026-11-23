@@ -251,17 +251,27 @@ def outside_storage(ctx):
             continue
         def canonical(sources):
             return min(sources, key=lambda s: (len(s['file'].split('/')), s['file']))
-        coords = [canonical(region['resolved_from'])]
-        # Keep the variable default as an anchor, and one source per logical resource.
-        defaults = [s for record in ctx.inventory.get('terraform', []) if record.get('type') == 'variable'
-                    for s in record.get('sources', []) if s in region['resolved_from']]
-        if defaults:
-            coords.insert(0, canonical(defaults))
-        coords += [canonical(item['sources']) for item in region['storage'] if item['sources']]
-        evidence = [_ev(ctx, c) for c in coords]
-        legal = {'readings': [
-            {'provision': 'DPDP-Act-16(1)', 'reading': 'Transfer is lawful unless the destination is restricted by notification; this region is a deployment default, not evidence of deployed geography.'},
-            {'provision': 'DPDP-Act-11(1)(b)', 'reading': 'The Data Principal may be owed a summary of evidenced sharing; configured storage alone does not establish sharing.'},
-        ]}
-        out.append(_match(ctx, REGION, element, evidence, exposure=decide_exposure(authenticated=None, outside_india=evidence), legal=legal))
+
+        def module(source):
+            return source['file'].rsplit('/', 1)[0] if '/' in source['file'] else ''
+        # The same default recurs once per deployment tree (Terraform directory), and each tree is
+        # deployed on its own; identical declarations inside one tree stay merged.
+        for directory in sorted({module(s) for s in region['resolved_from']}):
+            storage = [item for item in region['storage'] if any(module(s) == directory for s in item['sources'])]
+            if not storage:
+                continue
+            coords = [canonical([s for s in region['resolved_from'] if module(s) == directory])]
+            # Keep the variable default as an anchor, and one source per logical resource.
+            defaults = [s for record in ctx.inventory.get('terraform', []) if record.get('type') == 'variable'
+                        for s in record.get('sources', []) if s in region['resolved_from'] and module(s) == directory]
+            if defaults:
+                coords.insert(0, canonical(defaults))
+            coords += [canonical([s for s in item['sources'] if module(s) == directory])
+                       for item in storage]
+            evidence = [_ev(ctx, c) for c in coords]
+            legal = {'readings': [
+                {'provision': 'DPDP-Act-16(1)', 'reading': 'Transfer is lawful unless the destination is restricted by notification; this region is a deployment default, not evidence of deployed geography.'},
+                {'provision': 'DPDP-Act-11(1)(b)', 'reading': 'The Data Principal may be owed a summary of evidenced sharing; configured storage alone does not establish sharing.'},
+            ]}
+            out.append(_match(ctx, REGION, element, evidence, exposure=decide_exposure(authenticated=None, outside_india=evidence), legal=legal))
     return out

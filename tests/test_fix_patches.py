@@ -133,3 +133,40 @@ def test_rescan_generate_retries_failed_application(monkeypatch, target, tmp_pat
     patch = generate_review(finding(), root, provider='fake', model='fake', cache_dir=tmp_path / 'cache')
     assert patch['status'] == 'generated'
     assert len(calls) == 2 and 'apply_error' in calls[1]
+
+
+def test_generate_review_sends_numbered_context_and_retries_at_most_twice(monkeypatch, target, tmp_path):
+    from auditor.fixpatch import generate_review
+    calls = []
+    class Fake:
+        def __init__(self, model):
+            self.model = model
+        def complete(self, system, payload):
+            calls.append(json.loads(payload))
+            return json.dumps({'diff': DIFF.replace('-bad', '-missing')})
+    monkeypatch.setitem(__import__('auditor.fixpatch', fromlist=['PROVIDERS']).PROVIDERS, 'fake', Fake)
+    root, _ = target
+    patch = generate_review(finding(), root, provider='fake', model='fake', cache_dir=tmp_path / 'cache')
+    assert patch['status'] == 'rejected' and patch['provenance'] == 'generated'
+    assert len(calls) == 3 and patch['attempts'] == 3
+    assert calls[0]['files'] == [{'path': 'app.txt', 'total_lines': 1, 'first_line': 1, 'content': '1: bad'}]
+    assert 'apply_error' not in calls[0]
+    assert all('apply_error' in c and c['files'] == calls[0]['files'] for c in calls[1:])
+    assert patch['provider'] == 'fake' and patch['cache_key']
+
+
+def test_generate_review_caches_only_the_diff_that_applies(monkeypatch, target, tmp_path):
+    from auditor.fixpatch import generate_review
+    calls = []
+    class Fake:
+        def __init__(self, model):
+            self.model = model
+        def complete(self, system, payload):
+            calls.append(1)
+            return json.dumps({'diff': DIFF.replace('-bad', '-missing') if len(calls) == 1 else DIFF})
+    monkeypatch.setitem(__import__('auditor.fixpatch', fromlist=['PROVIDERS']).PROVIDERS, 'fake', Fake)
+    root, _ = target
+    first = generate_review(finding(), root, provider='fake', model='fake', cache_dir=tmp_path / 'cache')
+    second = generate_review(finding(), root, provider='fake', model='fake', cache_dir=tmp_path / 'cache')
+    assert first['status'] == second['status'] == 'generated' and first['attempts'] == 2
+    assert second['attempts'] == 0 and len(calls) == 2 and second['diff'] == DIFF

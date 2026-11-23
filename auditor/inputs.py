@@ -5,6 +5,8 @@ from pathlib import Path
 import subprocess
 from urllib.parse import urlsplit, unquote
 
+from auditor.masking import public_source
+
 
 @dataclass(frozen=True)
 class Target:
@@ -16,7 +18,14 @@ class Target:
 
 
 def _git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(["git", *args], text=True, capture_output=True, check=check)
+    try:
+        return subprocess.run(["git", *args], text=True, capture_output=True, check=check)
+    except subprocess.CalledProcessError as exc:
+        raise subprocess.CalledProcessError(
+            exc.returncode, [public_source(str(arg)) for arg in exc.cmd],
+            output=public_source(exc.output) if exc.output else exc.output,
+            stderr=public_source(exc.stderr) if exc.stderr else exc.stderr,
+        ) from None
 
 
 def _is_git_url(source: str) -> bool:
@@ -46,13 +55,17 @@ def resolve_target(source: str, commit: str | None = None, targets_dir: Path = P
 
     name = _repo_name(source)
     root = (targets_dir / name).resolve()
+    public = public_source(source)
     if not root.exists():
         root.parent.mkdir(parents=True, exist_ok=True)
         _git("clone", "--", source, str(root))
+        _git("-C", str(root), "remote", "set-url", "origin", public)
     else:
         origin = _git("-C", str(root), "remote", "get-url", "origin").stdout.strip()
-        if origin != source:
-            raise ValueError(f"Existing Target clone {root} has a different origin: {origin}")
+        if public_source(origin) != public:
+            raise ValueError(f"Existing Target clone {root} has a different origin: {public_source(origin)}")
+        if origin != public:
+            _git("-C", str(root), "remote", "set-url", "origin", public)
     if commit is not None:
         if _git("-C", str(root), "rev-parse", "--verify", f"{commit}^{{commit}}", check=False).returncode:
             _git("-C", str(root), "fetch", "origin")

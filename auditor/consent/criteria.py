@@ -1,6 +1,9 @@
 """Evidence-grounded Consent Assessment, independent of LLM verdicts."""
 import json
+from datetime import datetime, timezone
 from hashlib import sha256
+
+from auditor.probes.assessments import TRI_STATE_MEANING, tri_state
 
 
 _CRITERIA = (
@@ -165,3 +168,41 @@ def assess_consent(graph, findings, llm):
         reasoning = llm.ask('consent', serialized,
                             {'instruction': 'Reason across the source-anchored graph; do not infer missing links or change Findings.'})
     return {'criteria': rows, 'graph': graph, 'llm_reasoning': reasoning}
+
+
+_PROBE_FIELDS = ('assertion', 'method', 'route', 'purpose', 'reason', 'request', 'response')
+
+
+def attach_live_probes(report, outcomes, observed_at=None):
+    """Show Live Probe outcomes beside the static Consent Assessment criteria.
+
+    Only an outcome naming one of the seven criteria is attached, as dynamic evidence in an
+    optional `live_probes` list on that row. The static applicability, assessment, linked
+    identifiers and Evidence are never rewritten, no Finding is created, and the tri-state
+    stays explicit: Confirmed (violation observed), Not Confirmed (enforcement observed),
+    Inconclusive (not run; no effect). A previous run's attachment is replaced, and with no
+    attachable outcome the assessment is left exactly as the static scan wrote it.
+    Returns the number of outcomes attached."""
+    assessment = report.get('consent_assessment')
+    if not assessment:
+        return 0
+    assessment.pop('live_probe_run', None)
+    rows = {row['criterion']: row for row in assessment['criteria']}
+    for row in rows.values():
+        row.pop('live_probes', None)
+    attached = 0
+    for outcome in outcomes:
+        row = rows.get(outcome.get('criterion'))
+        if row is None:
+            continue
+        status = tri_state(outcome['result'])
+        row.setdefault('live_probes', []).append(
+            {'status': status, 'meaning': TRI_STATE_MEANING[status],
+             **{key: outcome[key] for key in _PROBE_FIELDS if outcome.get(key)}})
+        attached += 1
+    if attached:
+        target = report.get('target', {})
+        assessment['live_probe_run'] = {
+            'target': target.get('name'), 'commit': target.get('commit'),
+            'observed_at': observed_at or datetime.now(timezone.utc).isoformat(timespec='seconds')}
+    return attached

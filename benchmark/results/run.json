@@ -1,0 +1,116 @@
+{
+  "semgrep_version": "1.186.0",
+  "configs": [
+    "p/default",
+    "p/secrets",
+    "p/owasp-top-ten"
+  ],
+  "metrics": "off",
+  "flags": [
+    "--json",
+    "--no-git-ignore",
+    "--disable-version-check"
+  ],
+  "masking": "auditor.masking.mask_for_report on string values under results[] and errors[]; keys path, check_id and fingerprint are unchanged",
+  "targets": {
+    "juice-shop": {
+      "fetched_at_utc": "2026-11-23T10:15:47Z",
+      "commit": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
+      "dirty_checkout": false,
+      "exclude": [
+        "**/.git/**",
+        "**/node_modules/**",
+        "data/static/codefixes/**",
+        "test/**",
+        "frontend/**/*.spec.ts"
+      ],
+      "rules_run": 431,
+      "files_scanned": 923,
+      "findings": 53,
+      "skipped": {
+        "Matching --exclude patterns": 295,
+        "Files larger than files 1.0 MB": 2,
+        "Files matching .semgrepignore patterns": 7
+      },
+      "errors": {
+        "total": 53,
+        "by_level_code": {
+          "warn/2": 3,
+          "warn/3": 50
+        }
+      }
+    },
+    "ai-kyc-platform": {
+      "fetched_at_utc": "2026-11-23T10:16:04Z",
+      "commit": "70a821487c193be445810d836dd9b9b9ae22eb18",
+      "dirty_checkout": false,
+      "exclude": [
+        "**/.git/**",
+        "**/node_modules/**",
+        "backend/venv/**",
+        "**/__pycache__/**",
+        "**/*.pyc"
+      ],
+      "rules_run": 533,
+      "files_scanned": 84,
+      "findings": 13,
+      "skipped": {
+        "Matching --exclude patterns": 42
+      },
+      "errors": {
+        "total": 1,
+        "by_level_code": {
+          "warn/3": 1
+        }
+      }
+    },
+    "trackmyrupee": {
+      "fetched_at_utc": "2026-11-23T10:16:08Z",
+      "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
+      "dirty_checkout": false,
+      "exclude": [
+        "**/.git/**",
+        "**/node_modules/**",
+        "expenses/tests/**",
+        "**/__pycache__/**",
+        "**/*.pyc"
+      ],
+      "rules_run": 674,
+      "files_scanned": 1063,
+      "findings": 478,
+      "skipped": {
+        "Files larger than files 1.0 MB": 7,
+        "Files matching .semgrepignore patterns": 249
+      },
+      "errors": {
+        "total": 166,
+        "by_level_code": {
+          "warn/3": 166
+        }
+      }
+    },
+    "singharya-e-kyc": {
+      "fetched_at_utc": "2026-11-23T10:16:32Z",
+      "commit": "e6e78d53edd30fd5be88dcd82d5afc1a2010d025",
+      "dirty_checkout": false,
+      "exclude": [
+        "**/.git/**",
+        "**/node_modules/**",
+        "tests/**",
+        "**/__pycache__/**",
+        "**/*.pyc"
+      ],
+      "rules_run": 362,
+      "files_scanned": 33,
+      "findings": 0,
+      "skipped": {
+        "Matching --exclude patterns": 14,
+        "Files matching .semgrepignore patterns": 2
+      },
+      "errors": {
+        "total": 0,
+        "by_level_code": {}
+      }
+    }
+  }
+}

@@ -144,6 +144,7 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
         return run
     from dashboard.backend.probes import router as probe_router; app.include_router(probe_router(get_run))
     from dashboard.backend.fixpatch import router as fixpatch_router; app.include_router(fixpatch_router(get_run))
+    from dashboard.backend.legal import router as legal_router; app.include_router(legal_router(get_run))
 
     @app.post("/api/scans", status_code=202)
     def start_scan(body: ScanRequest):

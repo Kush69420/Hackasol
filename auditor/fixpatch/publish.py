@@ -10,6 +10,13 @@ from auditor.masking import mask_for_egress
 DESTINATION = 'TanKaizokuO/juice-shop'
 
 
+def _provenance(patches):
+    lines = [f"- {p.get('finding_id', p.get('finding_ids'))}: provenance {p.get('provenance', 'authored')}"
+             + (f", provider {p['provider']}, model {p['model']}, prompt {p.get('prompt_version')}, cache key {p['cache_key']}"
+                if p.get('cache_key') else '') for p in patches]
+    return 'Provenance:\n' + '\n'.join(lines) + '\n\n'
+
+
 def publish(target, baseline, patches, *, destination, base, branch, authorized=False,
             scan_options=None, test_commands=()):
     if not authorized:
@@ -36,8 +43,13 @@ def publish(target, baseline, patches, *, destination, base, branch, authorized=
     body = ('Fix Patches, reviewed by Issue Type: ' + ', '.join(issues) + '\n\n'
             + 'Combined re-scan: selected Findings absent, no new Finding. '
             + 'A re-scan is not a certification of compliance.\n\n'
-            + 'Target tests: ' + (str(result['target_tests']) if result['target_tests'] else 'not run')
-            + '\n\nThe pinned Report has no SEC-09 Finding; the password-change group verifies SEC-01 only.')
+            + _provenance(patches)
+            + 'Re-scan delta: ' + str(result['before_findings']) + ' Findings before, '
+            + str(result['after_findings']) + ' after; remaining selected: ' + str(result['remaining'])
+            + '; new: ' + str(result['new']) + '.\n\n'
+            + 'Target tests:\n' + (''.join(f"- `{' '.join(t['command'])}`: exit {t['exit_status']}\n```\n"
+                                          f"{t['summary'].strip()[-1200:]}\n```\n" for t in result['target_tests'])
+                                  or 'not run\n'))
     with tempfile.TemporaryDirectory(prefix='dpdp-publish-') as tmp:
         repo = Path(tmp) / 'checkout'
         subprocess.run(['git', 'clone', '--no-hardlinks', '--', str(Path(target).resolve()), str(repo)],

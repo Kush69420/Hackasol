@@ -162,6 +162,42 @@ Person.init({ aadhaar: { type: DataTypes.STRING } }, { sequelize })
 
 ## SEC-04 — Weak or missing password hashing
 
+### SEC-04-ts-constant-key-verifier — Authentication Secret stored as a keyed hash under a constant key
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: CWE-916
+- CWE: CWE-916
+
+Labelled Corpus example: `corpus/SEC-04-ts-constant-key-verifier/positive/models/answer.ts`
+
+```
+SecurityAnswer.init({ answer: { type: DataTypes.STRING, set (answer: string) { this.setDataValue('answer', digest(answer)) } } }, { sequelize })
+const digest = (value: string) => crypto.createHmac('sha256', 'fixed-key-in-source').update(value).digest('hex')
+```
+
+### SEC-04-ts-md5-credential-compare — Submitted password hashed with MD5 for comparison
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: CWE-916
+- CWE: CWE-916
+
+Labelled Corpus example: `corpus/SEC-04-ts-md5-credential-compare/positive/lib/security.ts`
+
+```
+import crypto from 'node:crypto'
+export const hash = (value: string) => crypto.createHash('md5').update(value).digest('hex')
+```
+
 ### SEC-04-ts-md5-password-hash — MD5 password hashing
 
 - Engine: semgrep
@@ -181,6 +217,24 @@ const hash = (value: string) => crypto.createHash('md5').update(value).digest('h
 ```
 
 ## SEC-05 — Hard-coded secret or committed .env protecting Personal Data
+
+### SEC-05-ts-hardcoded-hmac-key — Hard-coded HMAC key protecting an Authentication Secret verifier
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-798
+- CWE: CWE-798
+
+Labelled Corpus example: `corpus/SEC-05-ts-hardcoded-hmac-key/positive/models/answer.ts`
+
+```
+SecurityAnswer.init({ answer: { type: DataTypes.STRING, set (answer: string) { this.setDataValue('answer', digest(answer)) } } }, { sequelize })
+const digest = (value: string) => crypto.createHmac('sha256', 'fixed-key-in-source').update(value).digest('hex')
+```
 
 ### SEC-05-ts-hardcoded-jwt-key — Hard-coded JWT signing material
 
@@ -226,6 +280,71 @@ app.get('/account', (req, res) => {
 
 ## SEC-07 — Missing authentication or ownership check on a route returning Personal Data
 
+### SEC-07-ts-lossy-owner-key — Ownership filter keyed on a lossy-masked identifier
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-639; API1:2023
+- CWE: CWE-639
+
+Labelled Corpus example: `corpus/SEC-07-ts-lossy-owner-key/positive/server.ts`
+
+```
+import express from 'express'
+import * as security from './lib/insecurity'
+import { history } from './routes/history'
+const app = express()
+app.get('/history', security.isAuthorized(), history())
+```
+
+### SEC-07-ts-public-personal-data-directory — Personal Data stored in or logged to a publicly served directory
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-639; API1:2023
+- CWE: CWE-639
+
+Labelled Corpus example: `corpus/SEC-07-ts-public-personal-data-directory/positive/server.ts`
+
+```
+import express from 'express'
+import * as security from './lib/insecurity'
+import serveIndex from 'serve-index'
+import { placeOrder } from './routes/order'
+const app = express()
+app.use('/files', serveIndex('files', { icons: true }))
+app.post('/order', placeOrder())
+```
+
+### SEC-07-ts-unauthenticated-record-read — Unauthenticated read of Personal Data records by request-supplied key
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-639; API1:2023
+- CWE: CWE-639
+
+Labelled Corpus example: `corpus/SEC-07-ts-unauthenticated-record-read/positive/server.ts`
+
+```
+import express from 'express'
+import * as security from './lib/insecurity'
+import { getRecord } from './routes/record'
+const app = express()
+app.get('/records/:id', getRecord())
+```
+
 ### SEC-07-ts-unchecked-nested-records — Unauthenticated nested Personal Data records
 
 - Engine: semgrep
@@ -246,6 +365,27 @@ import { listMemories } from './routes/list'
 const app = express()
 app.use(cors())
 app.get('/records', listMemories())
+```
+
+### SEC-07-ts-unscoped-authenticated-read — Authenticated read returns every Data Principal record
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: CWE-639; API1:2023
+- CWE: CWE-639
+
+Labelled Corpus example: `corpus/SEC-07-ts-unscoped-authenticated-read/positive/server.ts`
+
+```
+import express from 'express'
+import * as security from './lib/insecurity'
+import { listAccounts } from './routes/list'
+const app = express()
+app.get('/records', security.isAuthorized(), listAccounts())
 ```
 
 ## SEC-08 — Over-exposed responses (whole model or nested records serialised)
@@ -317,6 +457,27 @@ app.get('/reviews', readReviews())
 app.put('/reviews', writeReview())
 ```
 
+### SEC-08-ts-whole-model-serialisation — Whole model rows serialised into responses or tokens
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(b) (`DPDP-Rule-6(1)(b)`)
+- Related Provisions: Section 6(1); CWE-213; API3:2023
+- CWE: CWE-213
+
+Labelled Corpus example: `corpus/SEC-08-ts-whole-model-serialisation/positive/server.ts`
+
+```
+import express from 'express'
+import * as security from './lib/insecurity'
+import { profile } from './routes/profile'
+const app = express()
+app.get('/profile/:id', security.isAuthorized(), profile())
+```
+
 ## SEC-09 — Personal Data or Authentication Secrets in URLs or query strings
 
 ### SEC-09-ts-query-authentication-secret — Authentication Secrets in query strings
@@ -340,6 +501,27 @@ app.use(morgan('combined', { stream: accessLogStream }))
 app.get('/password', change())
 ```
 
+### SEC-09-ts-query-personal-data — Personal Data in GET query strings
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: CWE-598
+- CWE: CWE-598
+
+Labelled Corpus example: `corpus/SEC-09-ts-query-personal-data/positive/server.ts`
+
+```
+import express from 'express'
+import * as security from './lib/insecurity'
+import { lookup } from './routes/lookup'
+const app = express()
+app.get('/lookup', lookup())
+```
+
 ## SEC-10 — Personal Data in localStorage, sessionStorage, cookies or outbound headers
 
 ### SEC-10-ts-storage-header — Personal Data stored and attached to intercepted requests
@@ -360,6 +542,28 @@ class Login { login(account: any) { localStorage.setItem('email', account.email)
 class RequestInterceptor implements HttpInterceptor {
  intercept(req: HttpRequest<any>, next: HttpHandler) {
   req = req.clone({ setHeaders: { 'X-User-Email': String(localStorage.getItem('email')) } })
+  return next.handle(req)
+ }
+}
+```
+
+### SEC-10-ts-token-storage-site — Session token written to localStorage
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: CWE-922
+- CWE: CWE-922
+
+Labelled Corpus example: `corpus/SEC-10-ts-token-storage-site/positive/frontend/src/app/Services/request.interceptor.ts`
+
+```
+class RequestInterceptor implements HttpInterceptor {
+ intercept(req: HttpRequest<any>, next: HttpHandler) {
+  req = req.clone({ setHeaders: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
   return next.handle(req)
  }
 }
@@ -389,6 +593,68 @@ app.add_middleware(CORSMiddleware, allow_origins=['*'])
 async def match(selfie_image: UploadFile = File(...)):
     content = await selfie_image.read()
     return face_service.match_faces(content)
+```
+
+### SEC-11-terraform-plaintext-listener — Plaintext HTTP listener forwarding without HTTPS redirect
+
+- Engine: config
+- Languages / file kind: terraform
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: CWE-319; CWE-614; CWE-942
+- CWE: CWE-319, CWE-614, CWE-942
+
+Labelled Corpus example: `corpus/SEC-11-terraform-plaintext-listener/positive/main.tf`
+
+```
+resource "aws_lb_target_group" "app" {
+  port = 3000
+}
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.app.arn
+  port              = 80
+  protocol          = "HTTP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.app.arn
+  }
+}
+```
+
+### SEC-11-ts-jsonp-response — JSONP response readable cross-origin carrying Personal Data
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: CWE-319; CWE-614; CWE-942
+- CWE: CWE-319, CWE-614, CWE-942
+
+Labelled Corpus example: `corpus/SEC-11-ts-jsonp-response/positive/models/account.ts`
+
+```
+User.init({ email: { type: DataTypes.STRING } }, { sequelize })
+```
+
+### SEC-11-ts-session-cookie-flags — Session cookie set without HttpOnly, Secure or SameSite
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: CWE-319; CWE-614; CWE-942
+- CWE: CWE-319, CWE-614, CWE-942
+
+Labelled Corpus example: `corpus/SEC-11-ts-session-cookie-flags/positive/lib/session.ts`
+
+```
+export const remember = (res, «SECRET») => { res.cookie('token', token) }
 ```
 
 ### SEC-11-ts-wildcard-cors — Wildcard CORS on Personal Data response routes
@@ -904,6 +1170,24 @@ Labelled Corpus example: `corpus/RET-01-express-purpose-end/positive/server.ts`
 import express from 'express'
 const app = express()
 app.post('/account/close', async (req, res) => { await User.update({ closed: true }); res.send('closed') })
+```
+
+### RET-01-sequelize-soft-delete — Soft-deleted account rows are never erased
+
+- Engine: ts-ast
+- Languages / file kind: typescript, javascript
+- Classification: compliance-gap
+- Gate: an account-closure or end-of-purpose event exists
+- Primary Provision: Section 8(7)(a) (`DPDP-Act-8(7)(a)`)
+- Related Provisions: None
+- CWE: None
+
+Labelled Corpus example: `corpus/RET-01-sequelize-soft-delete/positive/server.ts`
+
+```
+import express from 'express'
+const app = express()
+app.post('/account/erase', async (req, res) => { await User.destroy({ where: { id: req.body.id } }); res.send('ok') })
 ```
 
 ## RET-02 — Erasure request that does not erase (flag only, soft delete, Elements or Data Processors skipped)

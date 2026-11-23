@@ -1,4 +1,5 @@
 from pathlib import Path
+import shutil
 
 import pytest
 
@@ -44,9 +45,20 @@ def test_correction(ctx):
 
 
 def test_region(ctx):
+    # One Finding per Terraform deployment tree; identical declarations inside a tree stay merged.
     matches = outside_storage(ctx)
+    assert len(matches) == 2
+    for tree, match in zip(('infrastructure/terraform', 'terraform'), sorted(matches, key=lambda m: m.evidence[0]['file'])):
+        assert any(e['file'] == tree + '/variables.tf' for e in match.evidence)
+        assert all(e['file'].startswith(tree + '/') for e in match.evidence)
+        assert match.exposure.level == 'Cross-Border'
+        assert match.status_hint == 'needs-legal-review'
+
+
+def test_region_requires_storage_in_each_foreign_module(tmp_path):
+    corpus = Path('corpus/TRF-02-terraform-storage-region')
+    shutil.copytree(corpus / 'positive', tmp_path, dirs_exist_ok=True)
+    shutil.copytree(corpus / 'negative' / 'unrelated', tmp_path / 'unrelated')
+    matches = outside_storage(build_context(tmp_path, 'corpus'))
     assert len(matches) == 1
-    assert any(e['file'] == 'terraform/variables.tf' for e in matches[0].evidence)
-    assert not any(e['file'].startswith('infrastructure/terraform/') for e in matches[0].evidence)
-    assert matches[0].exposure.level == 'Cross-Border'
-    assert matches[0].status_hint == 'needs-legal-review'
+    assert all(not e['file'].startswith('unrelated/') for e in matches[0].evidence)

@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "tool": {
     "name": "dpdp-audit",
     "version": "0.1.0"
@@ -11,8 +11,8 @@
     "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546"
   },
   "scan": {
-    "started_at": "2026-11-23T01:43:20.006719+00:00",
-    "finished_at": "2026-11-23T01:43:58.080571+00:00",
+    "started_at": "2026-11-23T12:00:29.285378+00:00",
+    "finished_at": "2026-11-23T12:00:35.214093+00:00",
     "exclusions": [
       "**/.git/**",
       "**/node_modules/**",
@@ -22,7 +22,7 @@
     ],
     "files_scanned": 1676,
     "files_excluded": 290,
-    "rule_count": 51
+    "rule_count": 65
   },
   "llm": {
     "mode": "cache-only",
@@ -109,7 +109,7 @@
         "parent_section": "DPDP-Act-Schedule-7",
         "amount_inr_crore": 50
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "n/a",
         "reason": "Compliance Gap: no CVSS score, so the band is the Risk Matrix cell"
@@ -176,7 +176,7 @@
         "parent_section": "DPDP-Act-Schedule-7",
         "amount_inr_crore": 50
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "n/a",
         "reason": "Compliance Gap: no CVSS score, so the band is the Risk Matrix cell"
@@ -243,7 +243,7 @@
         "parent_section": "DPDP-Act-Schedule-7",
         "amount_inr_crore": 50
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "n/a",
         "reason": "Compliance Gap: no CVSS score, so the band is the Risk Matrix cell"
@@ -310,7 +310,7 @@
         "parent_section": "DPDP-Act-Schedule-7",
         "amount_inr_crore": 50
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "n/a",
         "reason": "Compliance Gap: no CVSS score, so the band is the Risk Matrix cell"
@@ -379,7 +379,7 @@
         "parent_section": "DPDP-Act-Schedule-7",
         "amount_inr_crore": 50
       },
-      "enforceable_from": "2027-05-14",
+      "enforceable_from": "2027-05-13",
       "cvss": {
         "status": "n/a",
         "reason": "Compliance Gap: no CVSS score, so the band is the Risk Matrix cell"
@@ -589,7 +589,8 @@
         "CON-08-angular-excess-elements",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
-        "SEC-08-ts-review-author"
+        "SEC-08-ts-review-author",
+        "SEC-08-ts-whole-model-serialisation"
       ],
       "not_determinable_rules": [
         "CON-01-express-enforcement",
@@ -618,7 +619,8 @@
         "CON-08-angular-excess-elements",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
-        "SEC-08-ts-review-author"
+        "SEC-08-ts-review-author",
+        "SEC-08-ts-whole-model-serialisation"
       ],
       "not_determinable_rules": [
         "CON-01-express-enforcement",
@@ -736,6 +738,7 @@
       "rules": [
         "CON-05-express-processor-withdrawal",
         "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete",
         "RET-02-express-erasure-request",
         "RIG-03-express-grievance",
         "TRF-01-undisclosed-processor-transfer"
@@ -743,6 +746,7 @@
       "not_determinable_rules": [
         "CON-05-express-processor-withdrawal",
         "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete",
         "RET-02-express-erasure-request",
         "RIG-03-express-grievance",
         "TRF-01-undisclosed-processor-transfer"
@@ -817,11 +821,13 @@
       "rules": [
         "CON-05-express-processor-withdrawal",
         "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete",
         "RET-02-express-erasure-request"
       ],
       "not_determinable_rules": [
         "CON-05-express-processor-withdrawal",
         "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete",
         "RET-02-express-erasure-request"
       ]
     },
@@ -831,10 +837,12 @@
       "title": "Erasure on withdrawal or lapse of purpose",
       "classification": "not determinable",
       "rules": [
-        "RET-01-express-purpose-end"
+        "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete"
       ],
       "not_determinable_rules": [
-        "RET-01-express-purpose-end"
+        "RET-01-express-purpose-end",
+        "RET-01-sequelize-soft-delete"
       ]
     },
     {
@@ -2097,16 +2105,29 @@
         "SEC-03-django-aadhaar-storage",
         "SEC-03-fastapi-aadhaar-response",
         "SEC-03-sequelize-aadhaar-storage",
+        "SEC-04-ts-constant-key-verifier",
+        "SEC-04-ts-md5-credential-compare",
         "SEC-04-ts-md5-password-hash",
+        "SEC-05-ts-hardcoded-hmac-key",
         "SEC-05-ts-hardcoded-jwt-key",
         "SEC-06-express-error-disclosure",
+        "SEC-07-ts-lossy-owner-key",
+        "SEC-07-ts-public-personal-data-directory",
+        "SEC-07-ts-unauthenticated-record-read",
         "SEC-07-ts-unchecked-nested-records",
+        "SEC-07-ts-unscoped-authenticated-read",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
         "SEC-08-ts-review-author",
+        "SEC-08-ts-whole-model-serialisation",
         "SEC-09-ts-query-authentication-secret",
+        "SEC-09-ts-query-personal-data",
         "SEC-10-ts-storage-header",
+        "SEC-10-ts-token-storage-site",
         "SEC-11-fastapi-wildcard-cors",
+        "SEC-11-terraform-plaintext-listener",
+        "SEC-11-ts-jsonp-response",
+        "SEC-11-ts-session-cookie-flags",
         "SEC-11-ts-wildcard-cors",
         "SEC-12-express-access-logging",
         "SEC-13-ts-access-log-retention",
@@ -2140,16 +2161,29 @@
         "SEC-03-django-aadhaar-storage",
         "SEC-03-fastapi-aadhaar-response",
         "SEC-03-sequelize-aadhaar-storage",
+        "SEC-04-ts-constant-key-verifier",
+        "SEC-04-ts-md5-credential-compare",
         "SEC-04-ts-md5-password-hash",
+        "SEC-05-ts-hardcoded-hmac-key",
         "SEC-05-ts-hardcoded-jwt-key",
         "SEC-06-express-error-disclosure",
+        "SEC-07-ts-lossy-owner-key",
+        "SEC-07-ts-public-personal-data-directory",
+        "SEC-07-ts-unauthenticated-record-read",
         "SEC-07-ts-unchecked-nested-records",
+        "SEC-07-ts-unscoped-authenticated-read",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
         "SEC-08-ts-review-author",
+        "SEC-08-ts-whole-model-serialisation",
         "SEC-09-ts-query-authentication-secret",
+        "SEC-09-ts-query-personal-data",
         "SEC-10-ts-storage-header",
+        "SEC-10-ts-token-storage-site",
         "SEC-11-fastapi-wildcard-cors",
+        "SEC-11-terraform-plaintext-listener",
+        "SEC-11-ts-jsonp-response",
+        "SEC-11-ts-session-cookie-flags",
         "SEC-11-ts-wildcard-cors",
         "SEC-12-express-access-logging",
         "SEC-13-ts-access-log-retention",
@@ -2182,10 +2216,17 @@
         "SEC-03-django-aadhaar-storage",
         "SEC-03-fastapi-aadhaar-response",
         "SEC-03-sequelize-aadhaar-storage",
+        "SEC-04-ts-constant-key-verifier",
+        "SEC-04-ts-md5-credential-compare",
         "SEC-04-ts-md5-password-hash",
         "SEC-09-ts-query-authentication-secret",
+        "SEC-09-ts-query-personal-data",
         "SEC-10-ts-storage-header",
+        "SEC-10-ts-token-storage-site",
         "SEC-11-fastapi-wildcard-cors",
+        "SEC-11-terraform-plaintext-listener",
+        "SEC-11-ts-jsonp-response",
+        "SEC-11-ts-session-cookie-flags",
         "SEC-11-ts-wildcard-cors",
         "SEC-15-committed-personal-data"
       ],
@@ -2199,12 +2240,18 @@
       "title": "Reasonable security safeguards",
       "classification": "static",
       "rules": [
+        "SEC-05-ts-hardcoded-hmac-key",
         "SEC-05-ts-hardcoded-jwt-key",
         "SEC-06-express-error-disclosure",
+        "SEC-07-ts-lossy-owner-key",
+        "SEC-07-ts-public-personal-data-directory",
+        "SEC-07-ts-unauthenticated-record-read",
         "SEC-07-ts-unchecked-nested-records",
+        "SEC-07-ts-unscoped-authenticated-read",
         "SEC-08-ts-account-list",
         "SEC-08-ts-nested-records",
         "SEC-08-ts-review-author",
+        "SEC-08-ts-whole-model-serialisation",
         "SEC-16-docker-root-container",
         "SEC-16-kubernetes-privileged-store",
         "SEC-16-kubernetes-public-store",
@@ -3422,7 +3469,85 @@
             "excerpt": "    if not analytics_consent_given():"
           }
         ],
-        "step_counts": null
+        "step_counts": null,
+        "live_probes": [
+          {
+            "status": "Inconclusive",
+            "meaning": "not run or inconclusive; no effect on the static verdict",
+            "assertion": "consent-after-withdrawal",
+            "method": "POST",
+            "route": "/settings/consent/withdraw/",
+            "reason": "Grant, withdrawal or pre-withdrawal operation was not established",
+            "request": "Auditor-created account; values: [masked]",
+            "response": "Account profile availability compared before and after withdrawal; values: [masked]"
+          },
+          {
+            "status": "Not Confirmed",
+            "meaning": "enforcement observed",
+            "assertion": "consent-declined:consent_email",
+            "method": "POST",
+            "route": "/accounts/signup/",
+            "purpose": "Email Address",
+            "reason": "Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional)",
+            "request": "Auditor-created signup omitting the \"Email Address\" consent; values: [masked]",
+            "response": "Signup response status and session issuance only; values: [masked]"
+          },
+          {
+            "status": "Not Confirmed",
+            "meaning": "enforcement observed",
+            "assertion": "consent-declined:consent_transactions",
+            "method": "POST",
+            "route": "/accounts/signup/",
+            "purpose": "Financial Transactions",
+            "reason": "Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional)",
+            "request": "Auditor-created signup omitting the \"Financial Transactions\" consent; values: [masked]",
+            "response": "Signup response status and session issuance only; values: [masked]"
+          },
+          {
+            "status": "Not Confirmed",
+            "meaning": "enforcement observed",
+            "assertion": "consent-declined:consent_device",
+            "method": "POST",
+            "route": "/accounts/signup/",
+            "purpose": "Device and Browser Information",
+            "reason": "Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional)",
+            "request": "Auditor-created signup omitting the \"Device and Browser Information\" consent; values: [masked]",
+            "response": "Signup response status and session issuance only; values: [masked]"
+          },
+          {
+            "status": "Not Confirmed",
+            "meaning": "enforcement observed",
+            "assertion": "analytics-declined",
+            "method": "POST",
+            "route": "/accounts/signup/ → /accounts/login/",
+            "purpose": "Analytics",
+            "reason": "No outbound request was observed after the decline or withdrawal while the granted control produced 1",
+            "request": "Signup and login with the tmr_consent=declined cookie; values: [masked]",
+            "response": "Local analytics sink request count after each request; no payloads retained"
+          },
+          {
+            "status": "Not Confirmed",
+            "meaning": "enforcement observed",
+            "assertion": "analytics-withdrawn",
+            "method": "POST",
+            "route": "/api/prompts/ → /accounts/login/",
+            "purpose": "Analytics",
+            "reason": "No outbound request was observed after the decline or withdrawal while the granted control produced 1",
+            "request": "Cookie choice accepted, then declined as the banner records it, then login; values: [masked]",
+            "response": "Local analytics sink request count after each request; no payloads retained"
+          },
+          {
+            "status": "Not Confirmed",
+            "meaning": "enforcement observed",
+            "assertion": "withdrawal-data-removal",
+            "method": "POST",
+            "route": "/settings/consent/withdraw/",
+            "purpose": "Account",
+            "reason": "The account no longer authenticated and no account-linked rows remained",
+            "request": "Auditor-created account withdrawal; values: [masked]",
+            "response": "Post-withdrawal authentication result and read-only count of account-linked rows; values: [masked]"
+          }
+        ]
       },
       {
         "criterion": "withdrawable with comparable ease",
@@ -3525,7 +3650,19 @@
           "withdrawal": [
             null
           ]
-        }
+        },
+        "live_probes": [
+          {
+            "status": "Inconclusive",
+            "meaning": "not run or inconclusive; no effect on the static verdict",
+            "assertion": "comparable-ease",
+            "method": "BROWSER",
+            "route": "/accounts/signup/ → /settings/consent/withdraw/",
+            "reason": "Comparable grant and withdrawal interactions were not both recorded",
+            "request": "Signup and withdrawal interactions; values: [masked]",
+            "response": "Counts include clicks and checkbox changes, excluding text entry"
+          }
+        ]
       },
       {
         "criterion": "propagated to Data Processors",
@@ -8975,6 +9112,11 @@
     "llm_reasoning": {
       "status": "not assessed",
       "cache_key": "322c4dfa554cc614037dcbdfcd455b271714bfe923cccb86cc3c31fd51da55f3"
+    },
+    "live_probe_run": {
+      "target": "trackmyrupee",
+      "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
+      "observed_at": "2026-11-23T12:02:07+00:00"
     }
   },
   "executive_summary": {
@@ -8990,7 +9132,7 @@
       "Safeguard": 0
     },
     "highest_penalty_ceiling_inr_crore": 50,
-    "fix_before_14_may_2027": [
+    "fix_before_13_may_2027": [
       "CON-03-5948c3734746",
       "CON-03-94c021251539",
       "CON-03-c8163452354e",

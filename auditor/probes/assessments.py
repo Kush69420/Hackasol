@@ -51,3 +51,57 @@ def comparable_ease(grant: int | None, withdrawal: int | None) -> tuple[str, str
     if withdrawal > grant:
         return 'Confirmed', f'Withdrawal required {withdrawal} interactions; grant required {grant}'
     return 'Refuted', f'Withdrawal required {withdrawal} interactions; grant required {grant}'
+
+
+def declined_signup(control_created: bool | None, declined_created: bool | None, declined_rejected: bool | None) -> tuple[str, str]:
+    """A declined Purpose must not yield an account that processes its Personal Data.
+
+    The control (every consent supplied) must succeed, otherwise a rejection could have
+    any cause. Confirmed needs a created account; Refuted needs an observed rejection."""
+    if control_created is not True:
+        return 'inconclusive', 'The control signup with every consent supplied was not established, so a rejection cannot be attributed to the declined Purpose'
+    if declined_created is True:
+        return 'Confirmed', 'An account was created although this consent was declined'
+    if declined_rejected is True:
+        return 'Refuted', 'Signup with this consent declined was rejected, so the Purpose is enforced at signup (it is mandatory rather than optional)'
+    return 'inconclusive', 'Neither account creation nor a form rejection was observed for the declined signup'
+
+
+def declined_processing(control_hits: int | None, observed_hits: int | None) -> tuple[str, str]:
+    """Observed outbound processing after a declined or withdrawn Purpose.
+
+    Both actions must succeed and be observable before comparing counts. Silence
+    is meaningful only when granted consent produced an event on the same channel."""
+    if observed_hits is None or control_hits is None:
+        return 'inconclusive', 'A comparable login failed or the scoped outbound observation was unavailable'
+    if observed_hits > 0:
+        return 'Confirmed', f'{observed_hits} outbound event(s) were observed after the decline or withdrawal'
+    if control_hits <= 0:
+        return 'inconclusive', 'No outbound event was observed under granted consent, so silence after the decline is not evidence of enforcement'
+    return 'Refuted', f'No outbound event was observed after the decline or withdrawal while the granted control produced {control_hits}'
+
+
+def withdrawal_data(authenticates: bool | None, rows_remaining: int | None) -> tuple[str, str]:
+    """Withdrawal must stop processing: the account no longer works and its rows are gone.
+
+    Failed authentication alone is not erasure; a read-only row count is required."""
+    if authenticates is True:
+        return 'Confirmed', 'The Auditor-created account still authenticated after withdrawal'
+    if rows_remaining is not None and rows_remaining > 0:
+        return 'Confirmed', f'{rows_remaining} account-linked row(s) remained after withdrawal'
+    if authenticates is False and rows_remaining == 0:
+        return 'Refuted', 'The account no longer authenticated and no account-linked rows remained'
+    return 'inconclusive', 'Both post-withdrawal authentication and a read-only row count are required; one was not observed'
+
+
+TRI_STATE = {'Confirmed': 'Confirmed', 'Refuted': 'Not Confirmed'}
+TRI_STATE_MEANING = {
+    'Confirmed': 'violation observed',
+    'Not Confirmed': 'enforcement observed',
+    'Inconclusive': 'not run or inconclusive; no effect on the static verdict',
+}
+
+
+def tri_state(result: str) -> str:
+    """Live Probe presentation: Refuted is reported as Not Confirmed, anything unobserved as Inconclusive."""
+    return TRI_STATE.get(result, 'Inconclusive')

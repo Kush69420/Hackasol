@@ -30,12 +30,17 @@ def test_access_logging_configured(ctx):
 
 
 def test_persistent_store_backup(ctx):
+    # The same unbacked store recurs once per Terraform deployment tree: one Finding per tree.
     matches = missing_backup(ctx)
-    assert len(matches) == 1
-    assert matches[0].evidence[0]['file'] == 'terraform/networking.tf'
-    assert any(e['file'] == 'terraform/main.tf' for e in matches[0].evidence)
-    assert matches[0].gate_evidence
-    assert any(f['issue_type'] == 'SEC-14' for f in assemble(matches).findings)
+    assert len(matches) == 2
+    trees = {m.evidence[0]['file'].rsplit('/networking.tf', 1)[0] for m in matches}
+    assert trees == {'terraform', 'infrastructure/terraform'}
+    for m in matches:
+        tree = m.evidence[0]['file'].rsplit('/networking.tf', 1)[0]
+        assert m.evidence[0]['file'] == tree + '/networking.tf'
+        assert any(e['file'] == tree + '/main.tf' for e in m.evidence)
+        assert m.gate_evidence
+    assert len([f for f in assemble(matches).findings if f['issue_type'] == 'SEC-14']) == 2
 
 
 def test_no_public_personal_data_store(ctx):

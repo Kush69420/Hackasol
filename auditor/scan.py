@@ -12,6 +12,7 @@ from auditor.exclusions import exclusions_for, iter_target_files
 from auditor.inputs import resolve_target
 from auditor.inventory import build_inventory
 from auditor.llm import LLMSession
+from auditor.masking import public_source
 from auditor.mapping import assemble
 from auditor.registry import load_registry
 from auditor.report import coverage_matrix, executive_summary
@@ -37,7 +38,7 @@ def run_inventory(source: str, *, commit: str | None = None,
     """Inventory diagnostic: source-anchored facts only, no Findings and no LLM."""
     target = resolve_target(source, commit=commit, targets_dir=targets_dir)
     files, _ = iter_target_files(target.root, target.name)
-    return {"target": {"name": target.name, "source": target.source, "kind": target.kind,
+    return {"target": {"name": target.name, "source": public_source(target.source), "kind": target.kind,
                        "commit": target.commit},
             "exclusions": exclusions_for(target.name),
             "inventory": build_inventory(target.root, files, target.commit)}
@@ -68,7 +69,7 @@ def run_scan(source: str, *, commit: str | None = None, provider: str | None = N
     report = {
         "schema_version": SCHEMA_VERSION,
         "tool": {"name": "dpdp-audit", "version": __version__},
-        "target": {"name": target.name, "source": target.source, "kind": target.kind, "commit": target.commit},
+        "target": {"name": target.name, "source": public_source(target.source), "kind": target.kind, "commit": target.commit},
         "scan": {"started_at": started, "finished_at": _now(),
                  "exclusions": exclusions_for(target.name), "files_scanned": len(files),
                  "files_excluded": excluded, "rule_count": len(rules)},

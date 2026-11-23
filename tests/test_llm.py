@@ -113,6 +113,35 @@ def test_biometric_masking_payloads_and_keyed_arrays(tmp_path):
     assert sent and payload not in sent[0] and 'synthetic-face' not in sent[0]
     assert '0.123456' not in sent[0] and '«BIOMETRIC»' in sent[0]
 
+def test_url_credentials_are_masked_before_llm_egress(tmp_path):
+    password = 'pw' + 'Synthetic9x'
+    token = 'tok' + '_' + 'A1b2C3d4E5f6G7h8'
+    urls = [f'postgres://admin:{password}@db.internal:5432/app',
+            f'DATABASE_URL="mysql://root:{password}@localhost/app"',
+            f'redis://:{password}@cache:6379/0',
+            f'https://{token}@github.com/org/repo.git',
+            'ssh://dep%2Floy@127.0.0.1/repo', 'ssh://x@host/repo']
+    for mask in (mask_for_report, mask_for_egress):
+        for url in urls:
+            masked = mask(url)
+            assert password not in masked and token not in masked and 'admin' not in masked, masked
+            assert '«URL_CREDENTIALS»@' in masked
+            assert 'dep%2Floy' not in masked and '://x@' not in masked
+    # URLs without credentials are untouched.
+    assert mask_for_egress('https://example.com:8443/path?q=1') == 'https://example.com:8443/path?q=1'
+    sent = []
+    class Provider:
+        name = 'ollama'
+        model = 'synthetic'
+        def available(self): return True, None
+        def complete(self, system, user):
+            sent.append(user)
+            return json.dumps(VALUE)
+    session = LLMSession(tmp_path, Provider())
+    session.probe()
+    session.ask('triage', '\n'.join(urls), {'db': urls[1]})
+    assert sent and password not in sent[0] and token not in sent[0] and 'dep%2Floy' not in sent[0]
+
 
 def test_invalid_provider_response_is_not_assessed(tmp_path):
     class Invalid:

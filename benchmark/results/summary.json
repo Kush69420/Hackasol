@@ -1,0 +1,423 @@
+{
+  "format_version": 1,
+  "semgrep_version": "1.186.0",
+  "configs": [
+    "p/default",
+    "p/secrets",
+    "p/owasp-top-ten"
+  ],
+  "targets": {
+    "juice-shop": {
+      "commit": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
+      "commit_matches_head_report": true,
+      "semgrep": {
+        "rules_run": 431,
+        "files_scanned": 923,
+        "results": 53,
+        "groups": 52,
+        "groups_with_cwe_link": 4,
+        "severity": {
+          "WARNING": 37,
+          "ERROR": 13,
+          "MEDIUM": 2,
+          "INFO": 1
+        },
+        "engine_kind": {
+          "OSS": 53
+        },
+        "skipped": {
+          "Matching --exclude patterns": 295,
+          "Files larger than files 1.0 MB": 2,
+          "Files matching .semgrepignore patterns": 7
+        },
+        "errors": {
+          "total": 53,
+          "by_level_code": {
+            "warn/2": 3,
+            "warn/3": 50
+          }
+        },
+        "cross_file_results": 0,
+        "cwe_route_predictions": 4,
+        "primary_provisions": {
+          "DPDP-Rule-6(1)(b)": 4
+        },
+        "consent_or_erasure": 0
+      },
+      "auditor": {
+        "findings": 21,
+        "observations": 0,
+        "evidence_items": 103,
+        "multi_file_findings": 16,
+        "bands": {
+          "high": 8,
+          "medium": 7,
+          "low": 6
+        },
+        "justified": 21,
+        "primary_provisions": {
+          "DPDP-Rule-6(1)(b)": 4,
+          "DPDP-Rule-6(1)(a)": 9,
+          "DPDP-Act-16(1)": 1,
+          "DPDP-Rule-6(1)(e)": 1,
+          "DPDP-Rule-6(1)(c)": 1,
+          "DPDP-Rule-6(1)(d)": 1,
+          "DPDP-Act-12(3)": 1,
+          "DPDP-Rule-8(2)": 1,
+          "DPDP-Act-11(1)(a)": 1,
+          "DPDP-Act-12(2)": 1
+        },
+        "consent_or_erasure": 2
+      },
+      "overlap": {
+        "semgrep_groups": 52,
+        "semgrep_groups_on_auditor_evidence": 1,
+        "auditor_findings": 21,
+        "auditor_findings_on_semgrep_groups": 1
+      },
+      "severity_crosstab": {
+        "high": {
+          "WARNING": 1
+        }
+      },
+      "file_sets": {
+        "auditor_walker": 1042,
+        "auditor_excluded": 484,
+        "auditor_head_report": 1042,
+        "semgrep_scanned": 923,
+        "both": 923,
+        "auditor_only": 119,
+        "semgrep_only": 0
+      }
+    },
+    "ai-kyc-platform": {
+      "commit": "70a821487c193be445810d836dd9b9b9ae22eb18",
+      "commit_matches_head_report": true,
+      "semgrep": {
+        "rules_run": 533,
+        "files_scanned": 84,
+        "results": 13,
+        "groups": 9,
+        "groups_with_cwe_link": 4,
+        "severity": {
+          "ERROR": 3,
+          "WARNING": 10
+        },
+        "engine_kind": {
+          "OSS": 13
+        },
+        "skipped": {
+          "Matching --exclude patterns": 42
+        },
+        "errors": {
+          "total": 1,
+          "by_level_code": {
+            "warn/3": 1
+          }
+        },
+        "cross_file_results": 0,
+        "cwe_route_predictions": 4,
+        "primary_provisions": {
+          "DPDP-Rule-6(1)(b)": 3,
+          "DPDP-Rule-6(1)(a)": 1
+        },
+        "consent_or_erasure": 0
+      },
+      "auditor": {
+        "findings": 7,
+        "observations": 0,
+        "evidence_items": 17,
+        "multi_file_findings": 2,
+        "bands": {
+          "high": 3,
+          "medium": 2,
+          "low": 2
+        },
+        "justified": 7,
+        "primary_provisions": {
+          "DPDP-Rule-6(1)(a)": 4,
+          "DPDP-Rule-6(1)(c)": 2,
+          "DPDP-Act-8(10)": 1
+        },
+        "consent_or_erasure": 0
+      },
+      "overlap": {
+        "semgrep_groups": 9,
+        "semgrep_groups_on_auditor_evidence": 1,
+        "auditor_findings": 7,
+        "auditor_findings_on_semgrep_groups": 1
+      },
+      "severity_crosstab": {
+        "high": {
+          "WARNING": 1
+        }
+      },
+      "file_sets": {
+        "auditor_walker": 85,
+        "auditor_excluded": 9598,
+        "auditor_head_report": 85,
+        "semgrep_scanned": 84,
+        "both": 84,
+        "auditor_only": 1,
+        "semgrep_only": 0
+      }
+    },
+    "trackmyrupee": {
+      "commit": "47990e4f19d7debea70c5d56bab77e3c3f051546",
+      "commit_matches_head_report": true,
+      "semgrep": {
+        "rules_run": 674,
+        "files_scanned": 1063,
+        "results": 478,
+        "groups": 452,
+        "groups_with_cwe_link": 1,
+        "severity": {
+          "WARNING": 86,
+          "ERROR": 7,
+          "INFO": 385
+        },
+        "engine_kind": {
+          "OSS": 478
+        },
+        "skipped": {
+          "Files larger than files 1.0 MB": 7,
+          "Files matching .semgrepignore patterns": 249
+        },
+        "errors": {
+          "total": 166,
+          "by_level_code": {
+            "warn/3": 166
+          }
+        },
+        "cross_file_results": 0,
+        "cwe_route_predictions": 1,
+        "primary_provisions": {
+          "DPDP-Rule-6(1)(b)": 1
+        },
+        "consent_or_erasure": 0
+      },
+      "auditor": {
+        "findings": 5,
+        "observations": 0,
+        "evidence_items": 5,
+        "multi_file_findings": 0,
+        "bands": {
+          "low": 5
+        },
+        "justified": 5,
+        "primary_provisions": {
+          "DPDP-Act-6(1)": 4,
+          "DPDP-Act-14": 1
+        },
+        "consent_or_erasure": 4
+      },
+      "overlap": {
+        "semgrep_groups": 452,
+        "semgrep_groups_on_auditor_evidence": 0,
+        "auditor_findings": 5,
+        "auditor_findings_on_semgrep_groups": 0
+      },
+      "severity_crosstab": {},
+      "file_sets": {
+        "auditor_walker": 1676,
+        "auditor_excluded": 290,
+        "auditor_head_report": 1676,
+        "semgrep_scanned": 1063,
+        "both": 1063,
+        "auditor_only": 613,
+        "semgrep_only": 0
+      }
+    },
+    "singharya-e-kyc": {
+      "commit": "e6e78d53edd30fd5be88dcd82d5afc1a2010d025",
+      "commit_matches_head_report": true,
+      "semgrep": {
+        "rules_run": 362,
+        "files_scanned": 33,
+        "results": 0,
+        "groups": 0,
+        "groups_with_cwe_link": 0,
+        "severity": {},
+        "engine_kind": {},
+        "skipped": {
+          "Matching --exclude patterns": 14,
+          "Files matching .semgrepignore patterns": 2
+        },
+        "errors": {
+          "total": 0,
+          "by_level_code": {}
+        },
+        "cross_file_results": 0,
+        "cwe_route_predictions": 0,
+        "primary_provisions": {},
+        "consent_or_erasure": 0
+      },
+      "auditor": {
+        "findings": 0,
+        "observations": 0,
+        "evidence_items": 0,
+        "multi_file_findings": 0,
+        "bands": {},
+        "justified": 0,
+        "primary_provisions": {},
+        "consent_or_erasure": 0
+      },
+      "overlap": {
+        "semgrep_groups": 0,
+        "semgrep_groups_on_auditor_evidence": 0,
+        "auditor_findings": 0,
+        "auditor_findings_on_semgrep_groups": 0
+      },
+      "severity_crosstab": {},
+      "file_sets": {
+        "auditor_walker": 41,
+        "auditor_excluded": 45,
+        "auditor_head_report": 41,
+        "semgrep_scanned": 33,
+        "both": 33,
+        "auditor_only": 8,
+        "semgrep_only": 0
+      }
+    }
+  },
+  "primary_reference": {
+    "reference": "accuracy/juice-shop.json",
+    "confirmed_entries": 47,
+    "excluded_entries": 5,
+    "location_only": {
+      "auditor": {
+        "tp": 17,
+        "fp": 4,
+        "fn": 30,
+        "precision": 0.8095,
+        "recall": 0.3617,
+        "excluded": 0,
+        "matched": [
+          "REF-001",
+          "REF-002",
+          "REF-003",
+          "REF-004",
+          "REF-005",
+          "REF-007",
+          "REF-010",
+          "REF-011",
+          "REF-014",
+          "REF-027",
+          "REF-030",
+          "REF-031",
+          "REF-035",
+          "REF-040",
+          "REF-041",
+          "REF-046",
+          "REF-051"
+        ]
+      },
+      "semgrep": {
+        "tp": 7,
+        "fp": 45,
+        "fn": 40,
+        "precision": 0.1346,
+        "recall": 0.1489,
+        "excluded": 0,
+        "matched": [
+          "REF-006",
+          "REF-008",
+          "REF-018",
+          "REF-019",
+          "REF-024",
+          "REF-038",
+          "REF-039"
+        ]
+      },
+      "covered_only_by_semgrep": [
+        "REF-006",
+        "REF-008",
+        "REF-018",
+        "REF-019",
+        "REF-024",
+        "REF-038",
+        "REF-039"
+      ],
+      "covered_only_by_auditor": [
+        "REF-001",
+        "REF-002",
+        "REF-003",
+        "REF-004",
+        "REF-005",
+        "REF-007",
+        "REF-010",
+        "REF-011",
+        "REF-014",
+        "REF-027",
+        "REF-030",
+        "REF-031",
+        "REF-035",
+        "REF-040",
+        "REF-041",
+        "REF-046",
+        "REF-051"
+      ]
+    },
+    "issue_type": {
+      "auditor": {
+        "tp": 16,
+        "fp": 5,
+        "fn": 31,
+        "precision": 0.7619,
+        "recall": 0.3404,
+        "excluded": 0,
+        "matched": [
+          "REF-001",
+          "REF-002",
+          "REF-003",
+          "REF-004",
+          "REF-007",
+          "REF-014",
+          "REF-027",
+          "REF-030",
+          "REF-031",
+          "REF-035",
+          "REF-040",
+          "REF-041",
+          "REF-046",
+          "REF-047",
+          "REF-048",
+          "REF-051"
+        ]
+      },
+      "semgrep": {
+        "tp": 1,
+        "fp": 3,
+        "fn": 46,
+        "precision": 0.25,
+        "recall": 0.0213,
+        "excluded": 0,
+        "matched": [
+          "REF-008"
+        ]
+      },
+      "covered_only_by_semgrep": [
+        "REF-008"
+      ],
+      "covered_only_by_auditor": [
+        "REF-001",
+        "REF-002",
+        "REF-003",
+        "REF-004",
+        "REF-007",
+        "REF-014",
+        "REF-027",
+        "REF-030",
+        "REF-031",
+        "REF-035",
+        "REF-040",
+        "REF-041",
+        "REF-046",
+        "REF-047",
+        "REF-048",
+        "REF-051"
+      ]
+    }
+  },
+  "catalogue_primary_provisions": 22
+}

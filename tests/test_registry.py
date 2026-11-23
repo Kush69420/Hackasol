@@ -10,9 +10,9 @@ import yaml
 
 from auditor.registry import Provision, build_registry, get, load_registry
 
-EARLY = dt.date(2025, 11, 14)
-ONE_YEAR = dt.date(2026, 11, 14)
-EIGHTEEN_MONTHS = dt.date(2027, 5, 14)
+EARLY = dt.date(2025, 11, 13)
+ONE_YEAR = dt.date(2026, 11, 13)
+EIGHTEEN_MONTHS = dt.date(2027, 5, 13)
 
 RULE_PENALTY = [
     ("DPDP-Rule-1", "DPDP-Act-Schedule-7", 50),

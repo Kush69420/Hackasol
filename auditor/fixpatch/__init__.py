@@ -14,23 +14,74 @@ from auditor.masking import contains_unmasked_material, mask_for_egress, mask_fo
 from auditor.scan import run_scan
 
 
-def generate(finding, provider='omp', model=None, cache_dir=Path('.dpdp-cache')):
-    """Request one unified diff; only masked Finding content leaves this machine."""
-    client = PROVIDERS[provider](model or DEFAULT_MODELS[provider])
-    payload = _mask_object({'issue_type': finding['issue_type'], 'evidence': finding['evidence'],
-                            'recommended_fix': finding['recommended_fix']})
-    prompt = 'Return a JSON object with a unified diff in the diff field. Use target-relative paths.'
-    payload_text = json.dumps(payload, ensure_ascii=False, sort_keys=True)
-    key = cache_key(payload_text, 'fix-patch-v1', client.model, {'provider': provider})
-    cache = Cache(cache_dir)
+PROMPT_VERSION = 'fix-patch-v2'
+MAX_RETRIES = 2
+CONTEXT_RADIUS = 30
+MAX_CONTEXT_FILES = 3
+SYSTEM_PROMPT = (
+    'You draft one Fix Patch for a Finding in a Target Application. Return only a JSON object whose '
+    '"diff" field is a unified diff. Rules: (1) change only files listed under "files"; (2) use '
+    'target-relative paths with "--- a/PATH" and "+++ b/PATH" headers; (3) every context and removed '
+    'line must be copied verbatim from the numbered file content provided (the line-number prefix is '
+    'not part of the line); (4) hunk headers must carry correct line numbers and counts; (5) make the '
+    'smallest local change that removes the Finding and keeps the application working; (6) do not '
+    'touch unrelated lines, and do not add files.')
+
+
+def _context(finding, target, radius=CONTEXT_RADIUS):
+    """Exact masked file content with line numbers around the Evidence of the Finding."""
+    if target is None:
+        return []
+    root = Path(target).resolve()
+    windows = {}
+    for item in finding['evidence']:
+        windows.setdefault(item['file'], []).append((item['start_line'], item['end_line']))
+    files = []
+    for name, spans in list(windows.items())[:MAX_CONTEXT_FILES]:
+        path = (root / name).resolve()
+        if root not in path.parents or not path.is_file():
+            continue
+        lines = path.read_text(encoding='utf-8', errors='replace').split('\n')
+        if lines and lines[-1] == '':
+            lines.pop()
+        first, last = spans[0]
+        low, high = max(1, first - radius), min(len(lines), last + radius)
+        files.append({'path': name, 'total_lines': len(lines), 'first_line': low,
+                      'content': '\n'.join(f'{number}: {mask_for_egress(lines[number - 1])}'
+                                           for number in range(low, high + 1))})
+    return files
+
+
+def _payload(finding, target):
+    return _mask_object({'issue_type': finding['issue_type'], 'evidence': finding['evidence'],
+                         'recommended_fix': finding['recommended_fix'], 'files': _context(finding, target)})
+
+
+def _key(payload_text, client, provider):
+    return cache_key(payload_text, PROMPT_VERSION, client.model, {'provider': provider})
+
+
+def _cached(cache, key, provider, client):
     record = cache.get(key)
     if (isinstance(record, dict) and record.get('provider') == provider
-            and record.get('model') == client.model and record.get('prompt_version') == 'fix-patch-v1'
+            and record.get('model') == client.model and record.get('prompt_version') == PROMPT_VERSION
             and isinstance(record.get('diff'), str) and record['diff'].strip()
             and not contains_unmasked_material(record['diff'])):
         return record['diff']
-    diff = _parse_diff(client.complete(prompt, payload_text))
-    cache.put(key, {'diff': diff, 'provider': provider, 'model': client.model, 'prompt_version': 'fix-patch-v1'})
+    return None
+
+
+def generate(finding, provider='omp', model=None, cache_dir=Path('.dpdp-cache'), target=None):
+    """Request one unified diff; only masked Finding content leaves this machine."""
+    client = PROVIDERS[provider](model or DEFAULT_MODELS[provider])
+    payload_text = json.dumps(_payload(finding, target), ensure_ascii=False, sort_keys=True)
+    key = _key(payload_text, client, provider)
+    cache = Cache(cache_dir)
+    cached = _cached(cache, key, provider, client)
+    if cached is not None:
+        return cached
+    diff = _parse_diff(client.complete(SYSTEM_PROMPT, payload_text))
+    cache.put(key, {'diff': diff, 'provider': provider, 'model': client.model, 'prompt_version': PROMPT_VERSION})
     return diff
 
 
@@ -53,27 +104,43 @@ def _parse_diff(result):
 
 
 def generate_review(finding, target, provider='omp', model=None, cache_dir=Path('.dpdp-cache')):
-    """Generate, check applicability, and retry once with masked apply diagnostics."""
+    """Generate with numbered file context, `git apply --check`, and retry at most twice with the apply error."""
     client = PROVIDERS[provider](model or DEFAULT_MODELS[provider])
-    diff = generate(finding, provider, model, cache_dir)
+    payload = _payload(finding, target)
+    payload_text = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+    key = _key(payload_text, client, provider)
+    cache = Cache(cache_dir)
     def check(value):
         return subprocess.run(['git', '-C', str(target), 'apply', '--check', '-'], input=value,
                               text=True, capture_output=True, check=False)
-    result = check(diff)
-    if result.returncode:
-        payload = _mask_object({'finding': finding, 'previous_diff': diff,
-                                'apply_error': mask_for_egress(result.stderr)})
-        prompt = 'Return a JSON object with a corrected target-relative unified diff in the diff field.'
+    def record(diff, status, reason, attempts):
+        return {'finding_id': finding['id'], 'diff': diff, 'status': status, 'reason': reason,
+                'provenance': 'generated', 'provider': provider, 'model': client.model,
+                'prompt_version': PROMPT_VERSION, 'cache_key': key, 'attempts': attempts}
+    diff = _cached(cache, key, provider, client)
+    attempts = 0
+    if diff is None:
+        attempts = 1
         try:
-            diff = _parse_diff(client.complete(prompt, json.dumps(payload, ensure_ascii=False)))
-            result = check(diff)
-        except (ValueError, KeyError, TypeError):
-            return {'finding_id': finding['id'], 'diff': diff, 'status': 'rejected',
-                    'reason': 'Provider retry returned no usable diff', 'provenance': 'generated'}
-    return {'finding_id': finding['id'], 'diff': diff,
-            'status': 'generated' if result.returncode == 0 else 'rejected',
-            'reason': '' if result.returncode == 0 else mask_for_egress(result.stderr),
-            'provenance': 'generated'}
+            diff = _parse_diff(client.complete(SYSTEM_PROMPT, payload_text))
+        except ValueError:
+            return record('', 'rejected', 'Provider returned no usable diff', attempts)
+    result = check(diff)
+    while result.returncode and attempts <= MAX_RETRIES:
+        retry = dict(payload, previous_diff=mask_for_egress(diff), apply_error=mask_for_egress(result.stderr),
+                     instruction='The previous diff failed `git apply --check`. Return a corrected diff '
+                                 'copied against the exact numbered lines in "files".')
+        attempts += 1
+        try:
+            diff = _parse_diff(client.complete(SYSTEM_PROMPT, json.dumps(retry, ensure_ascii=False, sort_keys=True)))
+        except ValueError:
+            return record(diff, 'rejected', 'Provider retry returned no usable diff', attempts)
+        result = check(diff)
+    if result.returncode:
+        return record(diff, 'rejected', mask_for_egress(result.stderr), attempts)
+    if attempts:
+        cache.put(key, {'diff': diff, 'provider': provider, 'model': client.model, 'prompt_version': PROMPT_VERSION})
+    return record(diff, 'generated', '', attempts)
 
 
 def _identity(finding):
@@ -133,5 +200,6 @@ def verify(target, baseline, patches, *, scan=run_scan, scan_options=None, test_
                           'summary': mask_for_report((result.stdout + '\n' + result.stderr)[-4000:])})
         return {'status': 'accepted' if not remaining and not new else 'rejected',
                 'remaining': remaining, 'new': [list(key) for key in new.elements()],
+                'before_findings': len(baseline['findings']), 'after_findings': len(after['findings']),
                 'target_tests': tests, 'before_revision': baseline['target']['commit'],
                 'after_revision': after['target']['commit']}
