@@ -1,0 +1,16 @@
+{
+  "format_version": 1,
+  "target": {"name": "fixture-app", "commit": "0123456789abcdef0123456789abcdef01234567"},
+  "exclusions": ["test/**"],
+  "scope_issue_types": ["SEC-01", "SEC-08"],
+  "entries": [
+    {"id": "REF-001", "issue_type": "SEC-01", "file": "src/log.ts", "start_line": 10, "end_line": 12,
+     "status": "confirmed", "summary": "Email reaches the access log.", "rationale": "Synthetic.", "leads": [], "reason": null},
+    {"id": "REF-002", "issue_type": "SEC-08", "file": "src/api.ts", "start_line": 20, "end_line": 30,
+     "status": "confirmed", "summary": "Route returns a whole user row.", "rationale": "Synthetic.", "leads": [], "reason": null},
+    {"id": "REF-003", "issue_type": "SEC-08", "file": "src/api.ts", "start_line": 50, "end_line": 55,
+     "status": "confirmed", "summary": "Second route returns a whole user row.", "rationale": "Synthetic.", "leads": [], "reason": null},
+    {"id": "REF-004", "issue_type": "SEC-01", "file": "src/other.ts", "start_line": 1, "end_line": 5,
+     "status": "not-determinable", "summary": "Unclear sink.", "rationale": "Synthetic.", "leads": [], "reason": "Sink configured outside the repository."}
+  ]
+}

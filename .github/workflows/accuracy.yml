@@ -1,0 +1,33 @@
+name: accuracy
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  labelled-corpus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install the Auditor
+        run: |
+          pip install -e ".[dev]"
+          npm ci --prefix auditor/ts
+      # Same evaluator as tests/test_accuracy.py; a missing Labelled Corpus pair exits non-zero.
+      - name: Evaluate the Labelled Corpus
+        run: dpdp-audit accuracy --corpus-only | tee labelled-corpus.txt
+      - name: Accuracy tests
+        run: python -m pytest tests/test_accuracy.py -q
+      - name: Publish metrics
+        if: always()
+        run: |
+          echo '### Labelled Corpus (Rule emissions on fixtures)' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          cat labelled-corpus.txt >> "$GITHUB_STEP_SUMMARY" || true
+          echo '```' >> "$GITHUB_STEP_SUMMARY"

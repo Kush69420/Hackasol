@@ -11,6 +11,7 @@ import json
 import re
 from pathlib import Path
 
+from auditor.accuracy import ratio_text
 from auditor.registry import load_registry
 from auditor.remediation import load_catalogue
 
@@ -218,10 +219,45 @@ def _sections(report):
         ["Cache misses", str(llm["cache_misses"])], ["LLM fields not assessed", str(llm["not_assessed"])],
         ["Cache-only reason", llm["reason"] or "not applicable"],
     ]
-    if "accuracy" in report:
-        method_rows.extend([[f"Accuracy — {key}", str(value)] for key, value in report["accuracy"].items()])
     method.append(("table", (["Method", "Value"], method_rows)))
+    if "accuracy" in report:
+        method.extend(_accuracy_blocks(report["accuracy"]))
     return sections
+
+
+def _accuracy_blocks(accuracy: dict) -> list:
+    """Measured accuracy: Primary Target and Labelled Corpus stay in separate tables."""
+    primary, corpus, llm = accuracy["primary_target"], accuracy["labelled_corpus"], accuracy["llm"]
+    blocks = [("h", "Measured accuracy"), ("p", accuracy["method"])]
+    blocks.append(("p", f"Primary Target: canonical Findings for {primary['target']} at {primary['commit']} "
+                        f"against {primary['reference']}."))
+    blocks.append(("table", (["Primary Target", "TP", "FP", "FN", "Precision", "Recall"],
+                             [[primary["target"], str(primary["tp"]), str(primary["fp"]), str(primary["fn"]),
+                               ratio_text(primary["precision"], primary["tp"], primary["tp"] + primary["fp"]),
+                               ratio_text(primary["recall"], primary["tp"], primary["tp"] + primary["fn"])]])))
+    blocks.append(("list", [f"Matched: {m['finding_id']} = {m['reference_id']}" for m in primary["matches"]]
+                   + [f"Unmatched prediction: {u['finding_id']} ({u['issue_type']}): {u['reason']}"
+                      for u in primary["unmatched_predictions"]]
+                   + [f"Excluded prediction: {x['finding_id']} ({x['reference_id']}): {x['reason']}"
+                      for x in primary["excluded_predictions"]]
+                   + [f"Unmatched reference: {r}" for r in primary["unmatched_references"]]
+                   + [f"Excluded reference: {e['reference_id']}: {e['reason']}" for e in primary["excluded"]]
+                   or ["No matches, unmatched entries or exclusions."]))
+    blocks.append(("p", "Labelled Corpus: Rule emissions on designed fixtures, one true positive and one near-miss negative per Rule."))
+    rows = [[row.get("rule_id", "Total"), str(row["tp"]), str(row["fp"]), str(row["fn"]), str(row["tn"]),
+             ratio_text(row["precision"], row["tp"], row["tp"] + row["fp"]),
+             ratio_text(row["recall"], row["tp"], row["tp"] + row["fn"])]
+            for row in [*corpus["rules"], corpus["totals"]]]
+    blocks.append(("table", (["Rule", "TP", "FP", "FN", "TN", "Precision", "Recall"], rows)))
+    blocks.append(("table", (["Accuracy LLM provenance", "Value"], [
+        ["Cache mode", llm["mode"]], ["Provider", llm["provider"]], ["Model", llm["model"]],
+        ["Prompt version", llm["prompt_version"] or "none"], ["Cache hits", str(llm["cache_hits"])],
+        ["Cache misses", str(llm["cache_misses"])], ["Not assessed", str(llm["not_assessed"])],
+        ["Reproduces published run", "yes" if llm["reproduces_published_run"] else "no"],
+        ["Replay problems", "; ".join(llm["replay_problems"]) or "none"]])))
+    blocks.append(("h", "Limitations"))
+    blocks.append(("list", list(accuracy["limitations"])))
+    return blocks
 
 
 def _md_text(text):

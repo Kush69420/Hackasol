@@ -9,6 +9,7 @@ from auditor.registry import load_registry
 from auditor.report import SECTIONS, _dependent, coverage_matrix, executive_summary, render_html, write_reports
 from auditor.rules import load_rules
 from auditor.schema import validate_report
+from test_accuracy import accuracy_report
 from test_schema import finding, make_report
 
 
@@ -21,7 +22,7 @@ def pdf_text(path):
 def test_parity(tmp_path, empty):
     findings = [] if empty else [finding(status="conditional"), finding(id="SEC-01-abcdefabcdef")]
     report = make_report(findings, mode="cache-only", reason="Provider unavailable",
-                         accuracy={"precision": 0.9})
+                         accuracy=accuracy_report()["accuracy"])
     report["executive_summary"] = executive_summary(report)
     validate_report(report)
     paths = write_reports(report, tmp_path / "custom.json")
@@ -37,7 +38,7 @@ def test_parity(tmp_path, empty):
         for item in findings:
             assert item["primary_provision"] in text
         assert "not assessed" in text
-        assert "0.9" in text
+        assert "0.6667" in text
     if findings:
         assert all("conditional" in text for text in texts)
 

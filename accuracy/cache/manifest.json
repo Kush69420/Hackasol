@@ -1,0 +1,21 @@
+{
+  "format_version": 1,
+  "target": {
+    "name": "juice-shop",
+    "commit": "c9f99228d9d56afb5f5ca7925376292f7fa44b13"
+  },
+  "rules_digest": "f0713fa46290f78e270c3fea48ca43d4ae2698178b62ff16362e12ddeef5127a",
+  "provider": "omp",
+  "model": "anthropic/claude-haiku-5-5",
+  "prompt_version": "classification: classification-v1, consent: consent-v1, fix: fix-v1, triage: triage-v1",
+  "prompt_versions": {
+    "classification": "classification-v1",
+    "triage": "triage-v1",
+    "consent": "consent-v1",
+    "fix": "fix-v1"
+  },
+  "cache_identity": "sha256(masked snippet + NUL + prompt version + NUL + model [+ NUL + masked context JSON])",
+  "cache_dir": "accuracy/cache",
+  "published_cache_misses": 1,
+  "published_not_assessed": 1
+}
