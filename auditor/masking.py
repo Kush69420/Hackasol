@@ -34,6 +34,8 @@ def _sub(text, pattern, label, flags=0, predicate=None):
 
 
 def _mask(text: str, *, egress: bool) -> str:
+    text = _sub(text, r'data:image/[A-Za-z0-9.+-]+;base64,[A-Za-z0-9+/=\r\n]+', 'BIOMETRIC_PAYLOAD', re.I)
+    text = _sub(text, r'(?<![A-Za-z0-9+/=])[A-Za-z0-9+/=]{200,}(?![A-Za-z0-9+/=])', 'BINARY')
     text = _sub(text, r'-----BEGIN [^-\n]*PRIVATE KEY-----[\s\S]*?-----END [^-\n]*PRIVATE KEY-----', 'SECRET')
     text = _sub(text, r'\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b', 'SECRET')
     text = _sub(text, r'\bAKIA[0-9A-Z]{16}\b|\bBearer[ \t]+[A-Za-z0-9._~+/=-]+', 'SECRET', re.I)

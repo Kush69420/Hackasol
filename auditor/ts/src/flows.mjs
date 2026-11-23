@@ -404,6 +404,14 @@ function collectionFlows(project, inventory) {
 export function extractFlows(project, inventory) {
   const flows = collectionFlows(project, inventory), models = inventory.models ?? [], routes = inventory.routes ?? [];
   for (const form of inventory.forms ?? []) {
+    if (form.style === 'jsx') {
+      for (const input of form.inputs ?? []) {
+        if (!input.name || !input.source) continue;
+        const id = `form:${input.source.file}#${input.name}`;
+        flows.push({ element_id: id, steps: [step(id, 'Collect', 'form', input.source)] });
+      }
+      continue;
+    }
     const info = componentInfo(project, form); if (!info) continue;
     const { sf, services } = info;
     walk(sf, method => {

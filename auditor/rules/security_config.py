@@ -10,6 +10,8 @@ from auditor.rules import RuleSpec, rule
 
 VECTOR = 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N'
 AADHAAR = RuleSpec('SEC-03-sequelize-aadhaar-storage', 'SEC-03', 'Aadhaar stored outside a vault', 'ts-ast', 'technical', VECTOR, ('typescript', 'javascript'))
+DJANGO_AADHAAR = RuleSpec('SEC-03-django-aadhaar-storage', 'SEC-03', 'Django Aadhaar number stored without field protection', 'python-ast', 'technical', VECTOR, ('python',))
+FASTAPI_AADHAAR = RuleSpec('SEC-03-fastapi-aadhaar-response', 'SEC-03', 'FastAPI returns unmasked Aadhaar', 'python-ast', 'technical', VECTOR, ('python',))
 ERROR = RuleSpec('SEC-06-express-error-disclosure', 'SEC-06', 'Verbose error response exposing Personal Data', 'ts-ast', 'technical', VECTOR, ('typescript', 'javascript'))
 LOG = RuleSpec('SEC-12-express-access-logging', 'SEC-12', 'Personal Data reads without access logging', 'ts-ast', 'compliance-gap', None, ('typescript', 'javascript'))
 BACKUP = RuleSpec('SEC-14-terraform-store-backup', 'SEC-14', 'Persistent Personal Data store without configured backup', 'config', 'compliance-gap', None, ('terraform',))
@@ -68,6 +70,41 @@ def aadhaar_storage(ctx):
                 coord = {'file': handler['file'], 'start_line': line, 'end_line': line}
                 result.append(_match(ctx, AADHAAR, element, [coord, element['source']], operation='Expose'))
     return result
+
+@rule(DJANGO_AADHAAR)
+def django_aadhaar_storage(ctx):
+    out = []
+    for model in ctx.inventory.get('models', []):
+        for field in model.get('fields', []):
+            choices = [c['source'] for c in field.get('government_identifier_evidence', [])
+                       if re.search(r'aadhaar|aadhar', str(c.get('value', '')), re.I)]
+            if not choices:
+                continue
+            element = ctx.element(f"model:{model['name']}.{field['name']}")
+            if not element or not field.get('type', '').endswith('Field'):
+                continue
+            if re.search(r'encrypt|vault|tokeniz', field['type'], re.I):
+                continue
+            out.append(_match(ctx, DJANGO_AADHAAR, element, [*choices, field['source']]))
+    return out
+
+
+@rule(FASTAPI_AADHAAR)
+def fastapi_aadhaar_response(ctx):
+    out = []
+    for element in ctx.classified():
+        if element['kind'] != 'collection-field' or not re.search(r'aadhaar|aadhar', element['name'], re.I):
+            continue
+        if re.search(r'\b(?:mask|redact|encrypt|tokeniz)\w*\s*\(', _text(ctx, element['source']), re.I):
+            continue
+        for step in ctx.steps(element['id']):
+            if step['operation'] != 'Expose' or step.get('origin') != 'fastapi':
+                continue
+            # The analyser joins only an explicitly returned service result.
+            if re.search(r'\b(?:mask|redact|encrypt|tokeniz)\w*\s*\(', _text(ctx, step['source']), re.I):
+                continue
+            out.append(_match(ctx, FASTAPI_AADHAAR, element, [step['source'], element['source']], operation='Expose'))
+    return out
 
 
 @rule(ERROR)

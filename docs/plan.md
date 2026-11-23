@@ -197,7 +197,7 @@ Acceptance: a full Juice Shop demo runs live and in Replay Mode.
 
 ## P1.8 ai-kyc-platform (after the P1 exit, before P2)
 
-- Extend the analysers to Next.js and FastAPI, then scan it and produce its Report (Government Identifier and Biometric Findings, SEC-03).
+- Scan the pinned Secondary Target using the supported Next.js, Django and FastAPI idioms; see [Target layout, scan commands and limits](targets/ai-kyc-platform.md), the generated [Rules List](../RULES.md), and `reports/ai-kyc-platform/` for the four Report formats.
 
 Acceptance: `reports/ai-kyc-platform/` exists with Government Identifier Findings masked in Evidence.
 

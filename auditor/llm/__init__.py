@@ -20,6 +20,7 @@ def _mask_object(value):
         return {
             mask_for_egress(str(key)): (
                 '«SECRET»' if re.search(r'password|passwd|secret|token|api[_-]?key|private[_ -]?key', str(key), re.I)
+                else '«BIOMETRIC»' if re.search(r'face[_ -]?(?:encoding|template)|embedding|biometric|selfie|liveness[_ -]?frame|fingerprint|iris', str(key), re.I)
                 else _mask_object(item)
             )
             for key, item in value.items()

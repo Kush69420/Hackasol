@@ -1,6 +1,7 @@
 """Response exposure and CORS Rules linked to evidenced Personal Data Elements."""
 from __future__ import annotations
 
+import ast
 import re
 from pathlib import PurePosixPath
 
@@ -21,6 +22,7 @@ NESTED_DATA = _spec('SEC-08-ts-nested-records', 'SEC-08', 'Nested Personal Data 
 ACCOUNT = _spec('SEC-08-ts-account-list', 'SEC-08', 'Account list serializes Personal Data', AUTH_VECTOR, ('exposure-model-query',))
 REVIEW = _spec('SEC-08-ts-review-author', 'SEC-08', 'Review author Personal Data exposed')
 CORS = _spec('SEC-11-ts-wildcard-cors', 'SEC-11', 'Wildcard CORS on Personal Data response routes')
+FASTAPI_CORS = RuleSpec('SEC-11-fastapi-wildcard-cors', 'SEC-11', 'Wildcard CORS on FastAPI Personal Data routes', 'python-ast', 'technical', VECTOR, ('python',))
 
 
 def _text(ctx, file):
@@ -190,3 +192,47 @@ def detect_cors(ctx):
                 group[3].append(ev)
     return [_make(ctx, CORS, route, source, elements, route_evidence)
             for source, route, elements, route_evidence in by_middleware.values()]
+
+
+@rule(FASTAPI_CORS)
+def detect_fastapi_cors(ctx):
+    out = []
+    for file in ctx.files:
+        if file.suffix != '.py':
+            continue
+        try:
+            tree = ast.parse(file.read_text(encoding='utf-8'))
+        except (OSError, UnicodeError, SyntaxError):
+            continue
+        rel = file.relative_to(ctx.root).as_posix()
+        for call in ast.walk(tree):
+            if not (isinstance(call, ast.Call) and isinstance(call.func, ast.Attribute)
+                    and call.func.attr == 'add_middleware' and call.args
+                    and isinstance(call.args[0], ast.Name) and call.args[0].id == 'CORSMiddleware'):
+                continue
+            origins = next((k.value for k in call.keywords if k.arg == 'allow_origins'), None)
+            if not isinstance(origins, (ast.List, ast.Tuple)) or not any(
+                    isinstance(v, ast.Constant) and v.value == '*' for v in origins.elts):
+                continue
+            source = {'file': rel, 'start_line': call.lineno, 'end_line': call.end_lineno}
+            for route in ctx.routes():
+                if route.get('origin') != 'fastapi' or route['registration']['file'] != rel:
+                    continue
+                receiver = ast.unparse(call.func.value)
+                if not re.search(r'@' + re.escape(receiver) + r'\.(?:get|post|put|patch|delete)\s*\(',
+                                 _text(ctx, rel).splitlines()[route['registration']['start_line'] - 1], re.I):
+                    continue
+                prefix = f"param:{route['method']} {route['normalised_path']}#body."
+                elements = [e for e in ctx.classified() if e['id'].startswith(prefix)
+                            and e['data_category'] == 'Biometric']
+                if not elements:
+                    continue
+                ev = [ctx.evidence(source), ctx.evidence(route['registration']),
+                      *[ctx.evidence(e['source']) for e in elements]]
+                first = elements[0]
+                out.append(Match(FASTAPI_CORS.id, FASTAPI_CORS.issue_type, ev,
+                    FASTAPI_CORS.classification, FASTAPI_CORS.base_vector,
+                    ctx.schema_element(first['id']), first['data_category'], ('Biometric',),
+                    'Collect', ctx.flow_steps(first['id']), ctx.route_exposure(route),
+                    nexus_elements=tuple(e['id'] for e in elements)))
+    return out

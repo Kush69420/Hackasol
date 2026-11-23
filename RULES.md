@@ -27,6 +27,26 @@ app.get('/password', change())
 
 ## SEC-02 — Tier A/B Personal Data Elements without field-level protection at rest; disk- or volume-level encryption lowers severity, it does not clear the Finding
 
+### SEC-02-django-plain-fields — Django Personal Data Elements without field-level protection
+
+- Engine: python-ast
+- Languages / file kind: python
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: Section 43A; CWE-311
+- CWE: CWE-311
+
+Labelled Corpus example: `corpus/SEC-02-django-plain-fields/positive/backend/records/models.py`
+
+```
+from django.db import models
+
+class Record(models.Model):
+    aadhaar_number = models.CharField(max_length=20)
+```
+
 ### SEC-02-sequelize-plain-fields — Personal Data Elements without field-level protection
 
 - Engine: ts-ast
@@ -47,6 +67,59 @@ Card.init({ cardNum: { type: DataTypes.INTEGER } }, { sequelize })
 ```
 
 ## SEC-03 — Aadhaar number stored outside a vault or displayed unmasked
+
+### SEC-03-django-aadhaar-storage — Django Aadhaar number stored without field protection
+
+- Engine: python-ast
+- Languages / file kind: python
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: Section 29; Aadhaar (Sharing of Information) Regulations 2016
+- CWE: None
+
+Labelled Corpus example: `corpus/SEC-03-django-aadhaar-storage/positive/backend/records/models.py`
+
+```
+from django.db import models
+
+class DocumentType(models.TextChoices):
+    AADHAAR = 'aadhaar', 'Aadhaar'
+    PAN = 'pan', 'PAN'
+
+class Document(models.Model):
+    document_type = models.CharField(max_length=20, choices=DocumentType.choices)
+    document_number = models.CharField(max_length=100)
+```
+
+### SEC-03-fastapi-aadhaar-response — FastAPI returns unmasked Aadhaar
+
+- Engine: python-ast
+- Languages / file kind: python
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: None
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: Section 29; Aadhaar (Sharing of Information) Regulations 2016
+- CWE: None
+
+Labelled Corpus example: `corpus/SEC-03-fastapi-aadhaar-response/positive/main.py`
+
+```
+from fastapi import FastAPI
+
+app = FastAPI()
+
+class OCRService:
+    def extract(self):
+        data = {}
+        data['aadhaar_number'] = 'synthetic'
+        return data
+
+ocr = OCRService()
+
+```
 
 ### SEC-03-sequelize-aadhaar-storage — Aadhaar stored outside a vault
 
@@ -273,6 +346,30 @@ class RequestInterceptor implements HttpInterceptor {
 ```
 
 ## SEC-11 — Insecure transport, cookie flags or CORS wildcard on Personal Data routes
+
+### SEC-11-fastapi-wildcard-cors — Wildcard CORS on FastAPI Personal Data routes
+
+- Engine: python-ast
+- Languages / file kind: python
+- Classification: technical
+- Base CVSS vector: CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+- Gate: nexus
+- Primary Provision: Rule 6(1)(a) (`DPDP-Rule-6(1)(a)`)
+- Related Provisions: CWE-319; CWE-614; CWE-942
+- CWE: CWE-319, CWE-614, CWE-942
+
+Labelled Corpus example: `corpus/SEC-11-fastapi-wildcard-cors/positive/main.py`
+
+```
+from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
+app = FastAPI()
+app.add_middleware(CORSMiddleware, allow_origins=['*'])
+@app.post('/face/match')
+async def match(selfie_image: UploadFile = File(...)):
+    content = await selfie_image.read()
+    return face_service.match_faces(content)
+```
 
 ### SEC-11-ts-wildcard-cors — Wildcard CORS on Personal Data response routes
 

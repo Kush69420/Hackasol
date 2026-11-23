@@ -73,6 +73,19 @@ def _element(identity, name, kind, source, *, model=None, field=None, detail=Non
                 signals.append(f'{label_key}:{label_match}')
                 if not category:
                     category = label_category
+    # "face" alone (a face image upload, a face-match score) does not establish biometric processing;
+    # it needs processing evidence. Explicit biometric terms (fingerprint, iris, biometric) still classify.
+    if category == 'Biometric' and not re.search(r'fingerprint|iris|biometric', _normalise(name)):
+        category = None
+    if re.search(r'(?:face_match|liveness).*score|score.*(?:face_match|liveness)', _normalise(name)):
+        category = 'Profile'
+        signals.append('derived:verification-score')
+    elif detail.get('biometric_evidence'):
+        category = 'Biometric'
+        signals.append('processing:biometric')
+    if detail.get('government_identifier_evidence'):
+        category = 'Government Identifier'
+        signals.append('choices:government-identifier')
     input_type = str(detail.get('input_type') or '').lower()
     if input_type in ('email', 'password', 'tel'):
         signals.append(f'input_type:{input_type}')

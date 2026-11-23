@@ -10,6 +10,7 @@ from auditor.rules import RuleSpec, rule
 from auditor.severity import TIER_BY_CATEGORY
 
 SEC = RuleSpec('SEC-02-sequelize-plain-fields', 'SEC-02', 'Personal Data Elements without field-level protection', 'ts-ast', 'technical', 'CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N', ('typescript',))
+DJANGO_SEC = RuleSpec('SEC-02-django-plain-fields', 'SEC-02', 'Django Personal Data Elements without field-level protection', 'python-ast', 'technical', 'CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N', ('python',))
 RET = RuleSpec('RET-02-express-erasure-request', 'RET-02', 'Erasure request records a flag without erasure', 'ts-ast', 'compliance-gap', None, ('typescript',))
 ACCESS = RuleSpec('RIG-01-express-incomplete-export', 'RIG-01', 'Access summary omits Personal Data Elements', 'ts-ast', 'compliance-gap', None, ('typescript',))
 CORRECT = RuleSpec('RIG-02-express-email-correction', 'RIG-02', 'No evidenced email correction path', 'ts-ast', 'compliance-gap', None, ('typescript',))
@@ -104,6 +105,23 @@ def plain_fields(ctx):
                 continue
             evidence = [_ev(ctx, field['source']), *infra]
             out.append(_match(ctx, SEC, element, evidence, severity_note=note))
+    return out
+
+@rule(DJANGO_SEC)
+def django_plain_fields(ctx):
+    out = []
+    for model in ctx.inventory.get('models', []):
+        for field in model.get('fields', []):
+            if not field['source']['file'].startswith('backend/') or not field['source']['file'].endswith('.py'):
+                continue
+            element = ctx.element(f"model:{model['name']}.{field['name']}")
+            if not element or TIER_BY_CATEGORY.get(element['data_category']) not in ('A', 'B'):
+                continue
+            if not field.get('type', '').endswith('Field') or re.search(r'encrypt|vault|tokeniz', field['type'], re.I):
+                continue
+            evidence = [_ev(ctx, field['source'])]
+            evidence.extend(_ev(ctx, c['source']) for c in field.get('government_identifier_evidence', []))
+            out.append(_match(ctx, DJANGO_SEC, element, evidence))
     return out
 
 

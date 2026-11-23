@@ -83,6 +83,27 @@ def test_masking_modes_and_line_anchors():
         assert value not in report and value not in egress
     assert '«AADHAAR»' in report
 
+def test_biometric_masking_payloads_and_keyed_arrays(tmp_path):
+    payload = 'A' * 240
+    image = 'data:image/png;base64,' + payload
+    for mask in (mask_for_report, mask_for_egress):
+        assert payload not in mask(image)
+        assert '«BIOMETRIC_PAYLOAD»' in mask(image)
+        assert '«BINARY»' in mask(payload)
+    sent = []
+    class Provider:
+        name = 'ollama'
+        model = 'synthetic'
+        def available(self): return True, None
+        def complete(self, system, user):
+            sent.append(user)
+            return json.dumps(VALUE)
+    session = LLMSession(tmp_path, Provider())
+    session.probe()
+    session.ask('triage', image, {'Face_Encoding': [0.123456, 0.987654], 'selfie': 'synthetic-face'})
+    assert sent and payload not in sent[0] and 'synthetic-face' not in sent[0]
+    assert '0.123456' not in sent[0] and '«BIOMETRIC»' in sent[0]
+
 
 def test_invalid_provider_response_is_not_assessed(tmp_path):
     class Invalid:
