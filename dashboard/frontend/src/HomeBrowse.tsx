@@ -103,9 +103,8 @@ function TargetCard({ target: t }: { target: TargetSummary }) {
   return (
     <li>
       <article className="target-card" aria-labelledby={titleId}>
-        <div className="target-head">
+        <div>
           <h3 id={titleId} className="target-title">{t.label}</h3>
-          {t.replay_available && <span className="badge badge-recorded">Recorded</span>}
         </div>
 
         <dl className="target-meta">
