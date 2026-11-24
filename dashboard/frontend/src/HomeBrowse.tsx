@@ -98,6 +98,7 @@ function TargetCard({ target: t }: { target: TargetSummary }) {
 
   const busy = pending !== null;
   const severityLabel = `Findings by severity, ${t.label}`;
+  const bands = BANDS.filter((band) => t.counts[band] > 0);
 
   return (
     <li>
@@ -114,19 +115,28 @@ function TargetCard({ target: t }: { target: TargetSummary }) {
           </div>
         </dl>
 
-        <ul className="chips home-counts" aria-label={severityLabel}>
-          {BANDS.map((band) => (
-            <li key={band}>
-              <span className={`badge sev sev-${band}`}>
-                <span className={`dot dot-${band}`} aria-hidden="true" />
-                {`${t.counts[band]} ${band}`}
-              </span>
-            </li>
-          ))}
-          <li>
-            <span className="chip">{`${t.counts.total} total`}</span>
-          </li>
-        </ul>
+        {t.counts.total === 0 ? (
+          <p className="target-total target-total-none">No Findings</p>
+        ) : (
+          <>
+            <p className="target-total">
+              <span className="target-total-n">{t.counts.total}</span> {t.counts.total === 1 ? "Finding" : "Findings"}
+            </p>
+            <div className="sevbar" aria-hidden="true">
+              {bands.map((band) => (
+                <span key={band} style={{ flex: t.counts[band], background: `var(--sev-${band})` }} />
+              ))}
+            </div>
+            <ul className="target-bands" aria-label={severityLabel}>
+              {bands.map((band) => (
+                <li key={band}>
+                  <span className={`dot dot-${band}`} aria-hidden="true" />
+                  {`${t.counts[band]} ${band}`}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
         <div className="target-actions">
           {t.replay_available && (

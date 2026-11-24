@@ -576,7 +576,11 @@ td .mono { color: var(--ink); }
 .target-meta > div { display: contents; }
 .target-meta dt { color: var(--ink-3); }
 .target-meta dd { margin: 0; color: var(--ink-2); overflow-wrap: anywhere; }
-.home-counts { margin: 0; padding: 0; }
+.target-total { display: flex; align-items: baseline; gap: 0.35rem; margin: 0; font-size: 0.875rem; color: var(--ink-2); }
+.target-total-n { font-size: 1.75rem; line-height: 1.1; font-weight: 620; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--ink); }
+.target-total-none { color: var(--ink-3); }
+.target-bands { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; margin: 0; padding: 0; list-style: none; font-size: 0.8125rem; color: var(--ink-2); }
+.target-bands li { display: inline-flex; align-items: center; gap: 0.35rem; text-transform: none; }
 .target-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }
 .target-card .home-error { font-size: 0.8125rem; }
 

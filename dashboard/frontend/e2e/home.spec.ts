@@ -147,11 +147,15 @@ test("home renders a card per Target Application with the counts and scan date f
     const card = targetCard(page, t.label);
     await expect(card).toBeVisible();
     expect(t.counts, `counts for ${t.label}`).not.toBeNull();
-    const chips = await card.locator(".home-counts li").allTextContents();
-    expect(chips).toEqual([
-      ...BANDS.map((band) => `${t.counts[band]} ${band}`),
-      `${t.counts.total} total`,
-    ]);
+    const { total } = t.counts;
+    const bands = BANDS.filter((band) => t.counts[band] > 0);
+    await expect(card.locator(".target-total")).toHaveText(
+      total > 0 ? `${total} ${total === 1 ? "Finding" : "Findings"}` : "No Findings",
+    );
+    await expect(card.locator(".sevbar")).toHaveCount(total > 0 ? 1 : 0);
+    await expect(card.locator(".sevbar > span")).toHaveCount(bands.length);
+    const legend = await card.locator(".target-bands li").allTextContents();
+    expect(legend).toEqual(bands.map((band) => `${t.counts[band]} ${band}`));
     expect(await card.locator("dl.target-meta dd").nth(0).textContent()).toBe(formatScanDate(t.scan_date));
   }
 });
