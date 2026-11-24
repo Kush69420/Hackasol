@@ -260,8 +260,8 @@ Gently squared. Panels use an 8px radius, controls 5px, chips 4px, the brand mar
 
 ### Buttons
 - **Shape:** 5px radius, 2.1rem minimum height, 1px border (`Hairline Strong`).
-- **Primary:** Signal Indigo fill, on-accent text, 0.35rem by 0.8rem padding; one per context (Replay or Scan). Hover deepens the fill. Disabled drops to Pressed Sheet with Ink Subtle text.
-- **Secondary:** White Sheet with ink text; hover to Pressed Sheet. Report downloads and Replay actions use this.
+- **Primary:** Signal Indigo fill, on-accent text, 0.35rem by 0.8rem padding; one per context (Audit on the Home form, Replay on a Target card, Scan in the dashboard). Hover deepens the fill. Disabled drops to Sunken Sheet with Ink Muted text and a dashed Hairline Strong border, never opacity, so it stays legible as a button.
+- **Secondary:** White Sheet with ink text; hover to Pressed Sheet. Report downloads and Scan live on a Target card use this.
 - **Icon button:** 2.1rem square; `aria-pressed` fills Indigo Wash with an indigo border (theme and large-type toggles).
 - **Press:** 1px downward translate on `:active`; transitions 150ms on `cubic-bezier(0.2, 0.7, 0.2, 1)`.
 

@@ -141,7 +141,7 @@ function TargetCard({ target: t }: { target: TargetSummary }) {
           {t.replay_available && (
             <button
               type="button"
-              className="btn btn-sm"
+              className="btn btn-sm btn-primary"
               disabled={busy}
               aria-busy={pending === "replay"}
               aria-label={`Replay recorded scan: ${t.label}`}

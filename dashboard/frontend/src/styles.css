@@ -176,7 +176,7 @@ button, input, select { font: inherit; color: inherit; }
 .btn:disabled { color: var(--ink-3); background: var(--surface-2); border-color: var(--line); cursor: not-allowed; }
 .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .btn-primary:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
-.btn-primary:disabled { background: var(--surface-3); border-color: var(--line); color: var(--ink-3); }
+.btn-primary:disabled { background: var(--surface-2); border: 1px dashed var(--line-strong); color: var(--ink-2); cursor: not-allowed; }
 .btn-icon { width: 2.1rem; padding: 0; }
 .btn[aria-pressed="true"] { background: var(--accent-bg); border-color: var(--accent); color: var(--accent-ink); }
 .btn-sm { min-height: 1.8rem; padding: 0.2rem 0.6rem; font-size: 0.8125rem; }
