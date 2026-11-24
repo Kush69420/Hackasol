@@ -22,7 +22,7 @@ from auditor.report import write_reports
 from dashboard.backend import inputs as inputs_module
 from dashboard.backend import replay as replay_module
 from dashboard.backend.replay import ARTIFACTS, Clock, RecordingError, SystemClock
-from dashboard.backend.targets import label_for
+from dashboard.backend.targets import input_kind, label_for
 
 STAGES = ("inventory", "elements", "data_flows", "findings")
 MEDIA_TYPES = {"json": "application/json", "md": "text/markdown",
@@ -222,7 +222,8 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
     @app.get("/api/scans/{run_id}")
     def scan_status(run_id: str):
         run = get_run(run_id)
-        return {"run_id": run.run_id, "mode": run.mode, "status": run.status, "target": run.target}
+        return {"run_id": run.run_id, "mode": run.mode, "status": run.status, "target": run.target,
+                "input": input_kind(run.target)}
 
     @app.get("/api/scans/{run_id}/events")
     async def scan_events(run_id: str):

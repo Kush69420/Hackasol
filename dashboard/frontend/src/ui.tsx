@@ -29,6 +29,14 @@ const TARGET_LABELS: Record<string, string> = {
 export function targetLabel(name: string): string {
   return TARGET_LABELS[name] ?? name;
 }
+
+/** Names a run by its input: a snippet or upload run by the kind of input, any other run by its Target Application. */
+export function runName(target: string | null): string {
+  if (target === "snippet") return "Code snippet";
+  if (target === "upload") return "Uploaded file";
+  if (target === null) return "Unnamed run";
+  return targetLabel(target);
+}
 /** Lead with the two Targets the demo features, keep the rest in their served order. */
 export function orderRecordings(names: string[]): string[] {
   const lead = ["juice-shop", "ai-kyc-platform"];

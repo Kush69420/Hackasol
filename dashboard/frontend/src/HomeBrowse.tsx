@@ -1,6 +1,6 @@
 import { useEffect, useId, useState } from "react";
 import { navigate } from "./route";
-import { provenance, targetLabel } from "./ui";
+import { provenance, runName } from "./ui";
 import { BANDS, type Band } from "./types";
 
 type Counts = Record<Band, number> & { total: number };
@@ -227,14 +227,6 @@ export function AuditPipeline() {
 
 /** Runs listed before "Show all". */
 const DEFAULT_RUN_ROWS = 5;
-
-/** Names a run by its source: the Target Application, or the kind of input it audited. */
-function runName(target: string | null): string {
-  if (target === "snippet") return "Code snippet";
-  if (target === "upload") return "Uploaded file";
-  if (target === null) return "Unnamed run";
-  return targetLabel(target);
-}
 
 /** The Finding count shown at the right of a run row. */
 function findingsText(count: number | null): string {

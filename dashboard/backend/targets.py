@@ -88,16 +88,23 @@ def _finding_count(events) -> int | None:
 _SNIPPET_GLOBS = ("snippet.*", "backend/snippet.*", "models/snippet.*")  # see inputs.SNIPPET_FOLDERS
 
 
+def input_kind(source) -> str | None:
+    """"snippet" or "upload" when the source folder sits under uploads/, else None."""
+    if not isinstance(source, str) or Path(source).parent.name != "uploads":
+        return None
+    directory = Path(source)
+    try:
+        is_snippet = any(any(directory.glob(pattern)) for pattern in _SNIPPET_GLOBS)
+    except OSError:
+        is_snippet = False
+    return "snippet" if is_snippet else "upload"
+
+
 def _persisted_target(report: dict) -> str | None:
     target = report.get("target") if isinstance(report.get("target"), dict) else {}
-    source = target.get("source")
-    if isinstance(source, str) and Path(source).parent.name == "uploads":
-        directory = Path(source)
-        try:
-            is_snippet = any(any(directory.glob(pattern)) for pattern in _SNIPPET_GLOBS)
-        except OSError:
-            is_snippet = False
-        return "snippet" if is_snippet else "upload"
+    kind = input_kind(target.get("source"))
+    if kind is not None:
+        return kind
     return label_for(target.get("name"))
 
 

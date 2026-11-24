@@ -12,7 +12,7 @@ import { ConsentAssessment } from "./ConsentAssessment";
 import { Overview } from "./Overview";
 import { Findings, pickHeadlineFinding } from "./Findings";
 import { PersonalDataMap } from "./PersonalDataMap";
-import { orderRecordings, provenance, targetLabel } from "./ui";
+import { orderRecordings, provenance, runName, targetLabel } from "./ui";
 import { useTheme } from "./theme";
 
 const STAGES: [string, string][] = [
@@ -49,6 +49,7 @@ export function App() {
   const [selected, setSelected] = useState<string | null>(null);
   const [bandFilter, setBandFilter] = useState<Band | null>(null);
   const [activeReplay, setActiveReplay] = useState<string | null>(null);
+  const [runInput, setRunInput] = useState<string | null>(null); // "snippet" or "upload" for those runs
   const [recordings, setRecordings] = useState<string[]>([]);
   const [theme, toggleTheme] = useTheme();
   const [compact, setCompact] = useState<boolean>(() => readPref("dpdp-type-scale") === "compact");
@@ -74,6 +75,7 @@ export function App() {
   const terminal = events.find((e) => e.type !== "stage");
   const status = !runId ? null : terminal ? terminal.type : "running";
   const mode = events.length ? events[events.length - 1].mode : undefined;
+  const inputName = runInput ? runName(runInput) : null;
 
   // The Legal View feeds both the overview summary and its own section, so it is fetched once here.
   useEffect(() => {
@@ -99,6 +101,7 @@ export function App() {
     setSelected(null);
     setBandFilter(null);
     setRunId(null);
+    setRunInput(null);
     setActiveReplay(replay);
   }
 
@@ -108,6 +111,10 @@ export function App() {
     resetRun(replay);
     runIdRef.current = id;
     setRunId(id);
+    fetch(`/api/scans/${id}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d: { input?: string | null } | null) => { if (runIdRef.current === id) setRunInput(d?.input ?? null); })
+      .catch(() => {});
     navigate(`/dashboard?run=${encodeURIComponent(id)}`, true);
     let received = false;
     const es = new EventSource(`/api/scans/${id}/events`);
@@ -270,7 +277,7 @@ export function App() {
               <div className="run-top">
                 <div className="stack" style={{ gap: "0.4rem" }}>
                   <div className="run-title">
-                    <h1>{report ? targetLabel(report.target.name) : activeReplay ? targetLabel(activeReplay) : "Scanning…"}</h1>
+                    <h1>{inputName ?? (report ? targetLabel(report.target.name) : activeReplay ? targetLabel(activeReplay) : "Scanning…")}</h1>
                     {provenance(mode) && (
                       <span className={`badge badge-${mode}`} data-testid="provenance">{provenance(mode)}</span>
                     )}
@@ -278,7 +285,7 @@ export function App() {
                   <div className="run-meta">
                     {report && (
                       <span>
-                        Target Application: <span className="mono">{report.target.name}</span>
+                        Target Application: <span className="mono">{inputName ?? report.target.name}</span>
                         {report.target.commit ? <> @ <span className="mono">{report.target.commit.slice(0, 12)}</span></> : null}
                       </span>
                     )}
