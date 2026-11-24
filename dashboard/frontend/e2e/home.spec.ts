@@ -123,14 +123,12 @@ type TargetSummary = {
   counts: Record<(typeof BANDS)[number], number> & { total: number };
 };
 
-/** Mirrors ui.ts formatDate so the card text can be compared exactly. */
+/** Mirrors HomeBrowse.tsx formatDateTime so the card text can be compared exactly. */
 function formatScanDate(iso: string | null): string {
-  if (!iso) return "not stated";
-  const d = new Date(`${iso}T00:00:00Z`);
+  if (!iso) return "not stated";
+  const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  return d
-    .toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" })
-    .replace(/ /g, " ");
+  return d.toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
 function targetCard(page: Page, label: string) {

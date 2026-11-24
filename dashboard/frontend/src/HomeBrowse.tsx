@@ -1,6 +1,6 @@
 import { useEffect, useId, useState } from "react";
 import { navigate } from "./route";
-import { formatDate, provenance, targetLabel } from "./ui";
+import { provenance, targetLabel } from "./ui";
 import { BANDS, type Band } from "./types";
 
 type Counts = Record<Band, number> & { total: number };
@@ -62,6 +62,13 @@ async function failureMessage(res: Response): Promise<string> {
   return `Request rejected (${res.status})`;
 }
 
+function formatDateTime(iso: string | null): string {
+  if (!iso) return "not stated";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+}
+
 function TargetCard({ target: t }: { target: TargetSummary }) {
   const titleId = useId();
   const liveHintId = useId();
@@ -104,7 +111,7 @@ function TargetCard({ target: t }: { target: TargetSummary }) {
         <dl className="target-meta">
           <div>
             <dt>Scan date</dt>
-            <dd>{formatDate(t.scan_date)}</dd>
+            <dd>{formatDateTime(t.scan_date)}</dd>
           </div>
           <div>
             <dt>LLM</dt>
@@ -214,13 +221,6 @@ export function AuditPipeline() {
   );
 }
 
-function formatStarted(iso: string | null): string {
-  if (!iso) return "not stated";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
-}
-
 export function RecentRuns() {
   const list = useList<RunSummary>("/api/runs?limit=10");
   return (
@@ -254,7 +254,7 @@ export function RecentRuns() {
                     <span className="run-meta">
                       <span>{provenance(run.mode) ?? run.mode}</span>
                       <span>{findings}</span>
-                      <span>{formatStarted(run.started_at)}</span>
+                      <span>{formatDateTime(run.started_at)}</span>
                     </span>
                   </a>
                 </li>
