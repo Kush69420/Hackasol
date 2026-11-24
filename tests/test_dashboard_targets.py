@@ -254,6 +254,20 @@ def test_persisted_upload_and_snippet_runs_are_labelled_by_their_input(tmp_path)
     assert by_id[f"{5:032x}"] == "Juice Shop"
 
 
+@pytest.mark.parametrize("snippet_path", ["backend/snippet.py", "models/snippet.ts"])
+def test_persisted_snippet_in_subfolder_is_labelled_snippet(tmp_path, snippet_path):
+    reports, targets = tmp_path / "runs", tmp_path / "targets"
+    snippet_dir = targets / "uploads" / uuid.uuid4().hex
+    (snippet_dir / snippet_path).parent.mkdir(parents=True)
+    (snippet_dir / snippet_path).write_text("x = 1\n", encoding="utf-8")
+    write_run(reports, 6, "2020-01-06T00:00:00+00:00", body={
+        "scan": {"started_at": "2020-01-06T00:00:00+00:00"}, "findings": [],
+        "target": {"name": snippet_dir.name, "source": str(snippet_dir)}})
+    client = TestClient(create_app(reports_dir=reports, cache_dir=tmp_path / "cache", targets_dir=targets))
+    by_id = {r["run_id"]: r["target"] for r in client.get("/api/runs").json()}
+    assert by_id[f"{6:032x}"] == "snippet"
+
+
 def test_runs_include_replays_and_each_live_run_once(client, scans, tmp_path):
     if not (replay_module.RECORDINGS_DIR / "trackmyrupee" / "recording.json").is_file():
         pytest.skip("no shipped trackmyrupee recording")

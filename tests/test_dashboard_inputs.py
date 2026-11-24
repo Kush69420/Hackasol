@@ -2,6 +2,7 @@
 
 import io
 import json
+import shutil
 import stat
 import uuid
 import zipfile
@@ -11,8 +12,10 @@ import pytest
 from fastapi.testclient import TestClient
 
 from auditor import scan as scan_module
+from auditor.rules.context import build_context
 from dashboard.backend import app as app_module
 from dashboard.backend.app import STAGES, create_app
+from dashboard.backend.inputs import write_snippet
 from dashboard.backend.replay import ARTIFACTS
 
 
@@ -80,8 +83,36 @@ def test_snippet_happy_path_writes_file_and_starts_scan(client, scans, tmp_path)
     assert len(scans) == 1
     dest = Path(scans[0])
     assert dest.parent == uploads_root(tmp_path) and uuid.UUID(dest.name).version == 4
-    assert (dest / "snippet.py").read_bytes() == code.encode("utf-8")
-    assert sorted(p.name for p in dest.iterdir()) == ["snippet.py"]
+    assert (dest / "backend" / "snippet.py").read_bytes() == code.encode("utf-8")
+    assert sorted(p.name for p in dest.iterdir()) == ["backend"]
+    assert sorted(p.name for p in (dest / "backend").iterdir()) == ["snippet.py"]
+
+
+def test_typescript_snippet_lands_under_models(tmp_path):
+    code = "export const x = 1\n"
+    dest = write_snippet(code, "TypeScript", tmp_path / "targets")
+    assert (dest / "models" / "snippet.ts").read_bytes() == code.encode("utf-8")
+    assert sorted(p.name for p in dest.iterdir()) == ["models"]
+
+
+def test_other_language_snippet_stays_at_top_level(tmp_path):
+    code = "plain notes\n"
+    dest = write_snippet(code, "other", tmp_path / "targets")
+    assert (dest / "snippet.txt").read_bytes() == code.encode("utf-8")
+    assert sorted(p.name for p in dest.iterdir()) == ["snippet.txt"]
+
+
+SEQUELIZE_SNIPPET = """import { Model, DataTypes } from 'sequelize';
+class Customer extends Model {}
+Customer.init({ aadhaar: DataTypes.STRING, pan: DataTypes.STRING }, { sequelize, modelName: 'Customer' });
+"""
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node is not installed")
+def test_typescript_snippet_yields_personal_data_elements(tmp_path):
+    dest = write_snippet(SEQUELIZE_SNIPPET, "typescript", tmp_path / "targets")
+    ctx = build_context(dest, "snippet")
+    assert {e["name"] for e in ctx.elements} & {"aadhaar", "pan"}
 
 
 def test_snippet_unknown_language_is_422_and_starts_nothing(client, scans, tmp_path):

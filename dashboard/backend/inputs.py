@@ -27,6 +27,8 @@ SNIPPET_EXTENSIONS = {
     "ruby": "rb", "php": "php", "sql": "sql", "yaml": "yaml", "json": "json", "env": "env",
     "other": "txt",
 }
+# Analysers discover models only under these folders (Django: backend/, Sequelize: models/).
+SNIPPET_FOLDERS = {"py": "backend", "js": "models", "ts": "models"}
 
 _UNSAFE_CHARS = re.compile(r"[^A-Za-z0-9._-]+")
 _DRIVE = re.compile(r"^[A-Za-z]:")
@@ -48,7 +50,10 @@ def new_input_dir(targets_dir: Path) -> Path:
 
 
 def write_snippet(code: str, language: str, targets_dir: Path) -> Path:
-    """Write a pasted snippet to snippet.<ext> in a fresh input directory and return that directory."""
+    """Write a pasted snippet to snippet.<ext> in a fresh input directory and return that directory.
+
+    The file sits in its SNIPPET_FOLDERS subfolder when it has one, otherwise at the top level.
+    """
     if not code.strip():
         raise InputRejected(422, "code must not be empty")
     if len(code.encode("utf-8")) > MAX_SNIPPET_BYTES:
@@ -58,7 +63,9 @@ def write_snippet(code: str, language: str, targets_dir: Path) -> Path:
         raise InputRejected(422, f"unknown language {language!r}; expected one of: "
                                  f"{', '.join(SNIPPET_EXTENSIONS)}")
     dest = new_input_dir(targets_dir)
-    (dest / f"snippet.{ext}").write_bytes(code.encode("utf-8"))
+    folder = dest / SNIPPET_FOLDERS.get(ext, "")
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / f"snippet.{ext}").write_bytes(code.encode("utf-8"))
     return dest
 
 
