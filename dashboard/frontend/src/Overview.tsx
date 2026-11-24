@@ -38,11 +38,6 @@ export function Overview(props: {
           <p className="lede" data-testid="overview-summary">
             <strong className="num">{findings.length}</strong> {findings.length === 1 ? "Finding" : "Findings"} across{" "}
             <strong className="num">{withFinding}</strong> of <span className="num">{elements}</span> Personal Data Elements.
-            {top ? (
-              <>
-                {" "}The highest applicable Penalty Ceiling is <strong>{formatCrore(top.amount_inr_crore)}</strong> ({provisionText}).
-              </>
-            ) : null}
             {next ? (
               <>
                 {" "}Further obligations become enforceable on <strong>{formatDate(next.enforceable_from)}</strong>.
