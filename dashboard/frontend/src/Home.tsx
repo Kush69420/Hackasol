@@ -187,139 +187,144 @@ export function Home() {
       </header>
 
       <main className="home-main">
-        <section className="home-hero" aria-labelledby="home-title">
-          <h1 id="home-title">Find where Personal Data is mishandled</h1>
-          <p className="lede">
-            Audit a Target Application from a Git repository, a single file or a code snippet. Each Finding is traced
-            from a Personal Data Element to a Processing Operation and mapped to the DPDP Act and Rules.
-          </p>
-        </section>
+        <div className="home-top-grid">
+          <div className="home-lead">
+            <section className="home-hero" aria-labelledby="home-title">
+              <h1 id="home-title">Find where Personal Data is mishandled</h1>
+              <p className="lede">
+                Audit a Target Application from a Git repository, a single file or a code snippet. Each Finding is traced
+                from a Personal Data Element to a Processing Operation and mapped to the DPDP Act and Rules.
+              </p>
+            </section>
 
-        <section className="panel home-panel" aria-labelledby="home-form-title">
-          <div className="panel-head">
-            <h2 id="home-form-title">Target Application</h2>
-            <p>Choose one input type, then start the audit.</p>
-          </div>
-
-          <form className="home-form" onSubmit={submit} noValidate>
-            <div className="tabs home-tabs" role="tablist" aria-label="Input type">
-              {TABS.map(({ id, label, icon: Icon }, i) => (
-                <button
-                  key={id}
-                  ref={(el) => { tabRefs.current[id] = el; }}
-                  type="button"
-                  role="tab"
-                  id={`home-tab-${id}`}
-                  aria-selected={tab === id}
-                  aria-controls={`home-panel-${id}`}
-                  tabIndex={tab === id ? 0 : -1}
-                  className="tab"
-                  onClick={() => selectTab(id)}
-                  onKeyDown={(e) => onTabKey(e, i)}
-                >
-                  <Icon size={15} aria-hidden="true" />
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            <div className="home-pane" role="tabpanel" id="home-panel-git" aria-labelledby="home-tab-git" hidden={tab !== "git"}>
-              <label className="home-label" htmlFor="home-url">Git URL</label>
-              <input
-                id="home-url"
-                className="field home-input"
-                type="url"
-                inputMode="url"
-                autoComplete="off"
-                spellCheck={false}
-                placeholder="https://github.com/owner/repo"
-                value={url}
-                onChange={(e) => { setUrl(e.target.value); setError(null); }}
-                aria-invalid={urlError ? true : undefined}
-                aria-describedby={urlError ? "home-url-error" : "home-url-hint"}
-              />
-              {urlError
-                ? <p id="home-url-error" className="home-error">{urlError}</p>
-                : <p id="home-url-hint" className="home-hint">Must start with https://. Public repositories or URLs your account can read.</p>}
-            </div>
-
-            <div className="home-pane" role="tabpanel" id="home-panel-file" aria-labelledby="home-tab-file" hidden={tab !== "file"}>
-              <span className="home-label" id="home-file-label">Source or config file, or .zip</span>
-              <div
-                className="home-drop"
-                data-over={dragOver}
-                onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-                onDragLeave={() => setDragOver(false)}
-                onDrop={onDrop}
-              >
-                <input
-                  ref={fileInput}
-                  id="home-file"
-                  className="sr-only file-input"
-                  type="file"
-                  aria-labelledby="home-file-label"
-                  aria-describedby="home-file-hint"
-                  accept={FILE_EXTENSIONS.join(",")}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => chooseFile(e.target.files)}
-                />
-                <p>Drop one file here, or</p>
-                <label className="btn btn-sm" htmlFor="home-file">Choose file</label>
-                <p id="home-file-hint" className="home-hint">Up to 20 MB. One file per audit.</p>
+            <section className="panel home-panel" aria-labelledby="home-form-title">
+              <div className="panel-head">
+                <h2 id="home-form-title">Target Application</h2>
+                <p>Choose one input type, then start the audit.</p>
               </div>
-              {file && (
-                <div className="home-file" role="group" aria-label="Selected file">
-                  <FileUp size={16} aria-hidden="true" />
-                  <span className="mono">{file.name}</span>
-                  <span className="home-file-meta">{formatBytes(file.size)}</span>
-                  <button type="button" className="btn btn-sm" onClick={clearFile}>
-                    <X size={14} aria-hidden="true" />
-                    Remove
+
+              <form className="home-form" onSubmit={submit} noValidate>
+                <div className="tabs home-tabs" role="tablist" aria-label="Input type">
+                  {TABS.map(({ id, label, icon: Icon }, i) => (
+                    <button
+                      key={id}
+                      ref={(el) => { tabRefs.current[id] = el; }}
+                      type="button"
+                      role="tab"
+                      id={`home-tab-${id}`}
+                      aria-selected={tab === id}
+                      aria-controls={`home-panel-${id}`}
+                      tabIndex={tab === id ? 0 : -1}
+                      className="tab"
+                      onClick={() => selectTab(id)}
+                      onKeyDown={(e) => onTabKey(e, i)}
+                    >
+                      <Icon size={15} aria-hidden="true" />
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="home-pane" role="tabpanel" id="home-panel-git" aria-labelledby="home-tab-git" hidden={tab !== "git"}>
+                  <label className="home-label" htmlFor="home-url">Git URL</label>
+                  <input
+                    id="home-url"
+                    className="field home-input"
+                    type="url"
+                    inputMode="url"
+                    autoComplete="off"
+                    spellCheck={false}
+                    placeholder="https://github.com/owner/repo"
+                    value={url}
+                    onChange={(e) => { setUrl(e.target.value); setError(null); }}
+                    aria-invalid={urlError ? true : undefined}
+                    aria-describedby={urlError ? "home-url-error" : "home-url-hint"}
+                  />
+                  {urlError
+                    ? <p id="home-url-error" className="home-error">{urlError}</p>
+                    : <p id="home-url-hint" className="home-hint">Must start with https://. Public repositories or URLs your account can read.</p>}
+                </div>
+
+                <div className="home-pane" role="tabpanel" id="home-panel-file" aria-labelledby="home-tab-file" hidden={tab !== "file"}>
+                  <span className="home-label" id="home-file-label">Source or config file, or .zip</span>
+                  <div
+                    className="home-drop"
+                    data-over={dragOver}
+                    onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                    onDragLeave={() => setDragOver(false)}
+                    onDrop={onDrop}
+                  >
+                    <input
+                      ref={fileInput}
+                      id="home-file"
+                      className="sr-only file-input"
+                      type="file"
+                      aria-labelledby="home-file-label"
+                      aria-describedby="home-file-hint"
+                      accept={FILE_EXTENSIONS.join(",")}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => chooseFile(e.target.files)}
+                    />
+                    <p>Drop one file here, or</p>
+                    <label className="btn btn-sm" htmlFor="home-file">Choose file</label>
+                    <p id="home-file-hint" className="home-hint">Up to 20 MB. One file per audit.</p>
+                  </div>
+                  {file && (
+                    <div className="home-file" role="group" aria-label="Selected file">
+                      <FileUp size={16} aria-hidden="true" />
+                      <span className="mono">{file.name}</span>
+                      <span className="home-file-meta">{formatBytes(file.size)}</span>
+                      <button type="button" className="btn btn-sm" onClick={clearFile}>
+                        <X size={14} aria-hidden="true" />
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                  {fileProblem && <p className="home-error" role="alert">{fileProblem}</p>}
+                </div>
+
+                <div className="home-pane" role="tabpanel" id="home-panel-snippet" aria-labelledby="home-tab-snippet" hidden={tab !== "snippet"}>
+                  <label className="home-label" htmlFor="home-lang">Language</label>
+                  <select
+                    id="home-lang"
+                    className="field home-select"
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                  >
+                    {LANGUAGES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                  </select>
+                  <label className="home-label" htmlFor="home-code">Code</label>
+                  <textarea
+                    id="home-code"
+                    className="home-code"
+                    spellCheck={false}
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    placeholder="Paste the code to audit"
+                    value={code}
+                    onChange={(e) => { setCode(e.target.value); setError(null); }}
+                    aria-invalid={codeTooLarge ? true : undefined}
+                    aria-describedby="home-code-count"
+                  />
+                  <p id="home-code-count" className="home-counter" data-over={codeTooLarge}>
+                    {(codeBytes / 1024).toFixed(1)} of 200 KB
+                  </p>
+                  {codeTooLarge && <p className="home-error" role="alert">The snippet is larger than 200 KB. Remove some code to continue.</p>}
+                </div>
+
+                <div className="home-actions">
+                  {error && <p className="callout" role="alert">{error}</p>}
+                  <button type="submit" className="btn btn-primary home-submit" disabled={!ready || submitting} aria-busy={submitting}>
+                    {submitting ? "Starting audit…" : "Audit"}
+                    {!submitting && <ArrowRight size={15} aria-hidden="true" />}
                   </button>
                 </div>
-              )}
-              {fileProblem && <p className="home-error" role="alert">{fileProblem}</p>}
-            </div>
+              </form>
+            </section>
+          </div>
 
-            <div className="home-pane" role="tabpanel" id="home-panel-snippet" aria-labelledby="home-tab-snippet" hidden={tab !== "snippet"}>
-              <label className="home-label" htmlFor="home-lang">Language</label>
-              <select
-                id="home-lang"
-                className="field home-select"
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-              >
-                {LANGUAGES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-              </select>
-              <label className="home-label" htmlFor="home-code">Code</label>
-              <textarea
-                id="home-code"
-                className="home-code"
-                spellCheck={false}
-                autoCapitalize="off"
-                autoCorrect="off"
-                placeholder="Paste the code to audit"
-                value={code}
-                onChange={(e) => { setCode(e.target.value); setError(null); }}
-                aria-invalid={codeTooLarge ? true : undefined}
-                aria-describedby="home-code-count"
-              />
-              <p id="home-code-count" className="home-counter" data-over={codeTooLarge}>
-                {(codeBytes / 1024).toFixed(1)} of 200 KB
-              </p>
-              {codeTooLarge && <p className="home-error" role="alert">The snippet is larger than 200 KB. Remove some code to continue.</p>}
-            </div>
+          <TargetApplications />
+        </div>
 
-            <div className="home-actions">
-              {error && <p className="callout" role="alert">{error}</p>}
-              <button type="submit" className="btn btn-primary home-submit" disabled={!ready || submitting} aria-busy={submitting}>
-                {submitting ? "Starting audit…" : "Audit"}
-                {!submitting && <ArrowRight size={15} aria-hidden="true" />}
-              </button>
-            </div>
-          </form>
-        </section>
-
-        <TargetApplications />
         <AuditPipeline />
         <RecentRuns />
       </main>

@@ -512,7 +512,9 @@ td .mono { color: var(--ink); }
 .home { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); }
 .home-top { display: flex; align-items: center; padding: 0.9rem 2rem; background: var(--surface-2); border-bottom: 1px solid var(--line); }
 .home-theme { margin-left: auto; }
-.home-main { flex: 1; width: 100%; max-width: 46rem; margin: 0 auto; padding: 2.5rem 2rem 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+.home-main { flex: 1; width: 100%; max-width: 72rem; margin: 0 auto; padding: 2.5rem 2rem 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+.home-top-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+.home-lead { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
 .home-hero { display: flex; flex-direction: column; gap: 0.75rem; }
 .home-hero h1 { font-size: clamp(1.6rem, 4vw, 2.1rem); }
 .home-panel { overflow: hidden; }
@@ -561,9 +563,14 @@ td .mono { color: var(--ink); }
 .home-submit { align-self: flex-end; min-width: 9rem; }
 
 /* Homepage sections below the input form: Target Applications, audit pipeline, recent runs */
-.home-browse-body { padding: 1rem 1.25rem 1.25rem; }
+.home-browse { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+.home-main > .home-browse { padding-top: 1.5rem; border-top: 1px solid var(--line); }
+.home-section-head { display: flex; flex-direction: column; gap: 0.2rem; }
+.home-section-head p { font-size: 0.875rem; color: var(--ink-3); }
+.home-browse-body { padding: 0; }
 .home-browse-body > .muted { font-size: 0.875rem; }
 .target-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0.75rem; margin: 0; padding: 0; }
+.home-top-grid .target-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .target-grid > li { display: flex; min-width: 0; }
 .target-card {
   flex: 1; display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; padding: 1rem;
@@ -613,6 +620,10 @@ td .mono { color: var(--ink); }
 .run-meta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.1rem 0.9rem; font-size: 0.8125rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .run-list + .run-note { margin-top: 0.75rem; }
 .run-toggle { margin-top: 0.75rem; }
+@media (max-width: 60rem) {
+  .home-top-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .home-top-grid .target-grid { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+}
 @media (max-width: 52rem) {
   .home-top { padding: 0.8rem 16px; }
   .home-main { padding: 1.5rem 16px 2.5rem; }

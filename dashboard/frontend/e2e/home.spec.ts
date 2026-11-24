@@ -326,7 +326,7 @@ test("with the Target Applications list failing, the unavailable note shows and 
   );
   await page.goto("/");
   await expect(
-    page.getByText("Target Applications are unavailable right now. The form above still works."),
+    page.getByText("Target Applications are unavailable right now. The audit form still works."),
   ).toBeVisible();
   await expect(page.locator("article.target-card")).toHaveCount(0);
 

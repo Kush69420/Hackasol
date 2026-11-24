@@ -176,14 +176,14 @@ function TargetCard({ target: t }: { target: TargetSummary }) {
 export function TargetApplications() {
   const list = useList<TargetSummary>("/api/targets");
   return (
-    <section className="panel home-browse" aria-labelledby="home-targets-title">
-      <div className="panel-head">
+    <section className="home-browse" aria-labelledby="home-targets-title">
+      <div className="home-section-head">
         <h2 id="home-targets-title">Target Applications</h2>
         <p>Replay a recorded scan, or scan a clone live.</p>
       </div>
       <div className="home-browse-body">
         {list.status === "loading" && <p className="muted">Loading Target Applications…</p>}
-        {list.status === "error" && <p className="muted">Target Applications are unavailable right now. The form above still works.</p>}
+        {list.status === "error" && <p className="muted">Target Applications are unavailable right now. The audit form still works.</p>}
         {list.status === "ok" && list.items.length === 0 && <p className="muted">No Target Applications are configured.</p>}
         {list.status === "ok" && list.items.length > 0 && (
           <ul className="target-grid">
@@ -204,8 +204,8 @@ const STAGES: { name: string; line: string }[] = [
 
 export function AuditPipeline() {
   return (
-    <section className="panel home-browse" aria-labelledby="home-pipeline-title">
-      <div className="panel-head">
+    <section className="home-browse" aria-labelledby="home-pipeline-title">
+      <div className="home-section-head">
         <h2 id="home-pipeline-title">How an audit works</h2>
         <p>Four stages, run in order on the code itself.</p>
       </div>
@@ -252,8 +252,8 @@ export function RecentRuns() {
   const shown = expanded ? runs : defaultRuns;
   const canExpand = runs.length > defaultRuns.length;
   return (
-    <section className="panel home-browse" aria-labelledby="home-runs-title">
-      <div className="panel-head">
+    <section className="home-browse" aria-labelledby="home-runs-title">
+      <div className="home-section-head">
         <h2 id="home-runs-title">Recent runs</h2>
         <p>Open a run to read its Report.</p>
       </div>
