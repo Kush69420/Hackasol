@@ -1,6 +1,6 @@
-# DPDP Compliance Auditor
+# Project Sauron
 
-The Auditor scans a Target Application and maps Personal Data mishandling to India's DPDP Act 2023 and DPDP Rules 2025. It produces a schema-valid JSON Report with a Personal Data Map and source-anchored Findings.
+Project Sauron is a DPDP Compliance Auditor. The Auditor scans a Target Application and maps Personal Data mishandling to India's DPDP Act 2023 and DPDP Rules 2025. It produces a schema-valid JSON Report with a Personal Data Map and source-anchored Findings.
 
 ## Targets
 
