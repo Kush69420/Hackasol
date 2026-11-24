@@ -337,8 +337,10 @@ def test_replay_events_offsets_and_report_match_the_recording(name, isolated, tm
 
 
 def test_replay_mode_is_labelled_in_the_dashboard_and_the_script():
-    app_source = (ROOT / "dashboard" / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
-    assert 'mode === "recorded") return "Replay Mode"' in app_source
+    src = ROOT / "dashboard" / "frontend" / "src"
+    app_source = (src / "App.tsx").read_text(encoding="utf-8")
+    ui_source = (src / "ui.tsx").read_text(encoding="utf-8")
+    assert 'mode === "recorded") return "Replay Mode"' in ui_source
     assert "/api/replays/${name}" in app_source
     assert "Replay Mode" in (ROOT / "demo" / "script.md").read_text(encoding="utf-8")
 
