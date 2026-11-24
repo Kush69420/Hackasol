@@ -45,7 +45,7 @@ Open the three Indian Target Applications first. All three are Secondary Targets
 
 Juice Shop, the Reference Target, is the benchmark for accuracy: `dpdp-audit accuracy` scores its Findings against the ground truth in `accuracy/juice-shop.json`.
 
-**Live:** enter `targets/juice-shop` and start the scan (about 20 s cache-only; longer with a reachable provider). To see the cache-only disclosure without a provider, start the service with `DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1`.
+**Live:** on Home (`/`), click **Scan live** on the Juice Shop card to scan `targets/juice-shop` (about 20 s cache-only; longer with a reachable provider). To see the cache-only disclosure without a provider, start the service with `DPDP_LLM_PROVIDER=ollama OLLAMA_HOST=http://127.0.0.1:1`.
 **Recorded:** click **Replay Mode (recorded Juice Shop scan)**.
 **Expected state:** the stages `inventory`, `elements`, `data_flows`, `findings` complete in that order, the run ends `completed`, Findings are listed by Severity band, and the Report downloads (json, md, html, pdf) are offered. The recorded run shows the **Replay Mode** badge and 53 Findings, four with historical Live Probe outcomes (step 6). The Ollama offline example can show 52 because it does not use the cached Opus classification of `SecurityQuestionId`.
 

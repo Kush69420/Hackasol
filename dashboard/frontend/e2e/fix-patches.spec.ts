@@ -20,9 +20,10 @@ test("Open PR requires authorization, fork destination, and shows review context
     await route.fulfill({ json: { url: "https://example.invalid/pr/1" } });
   });
 
-  await page.goto("/dashboard");
-  await page.getByLabel("Target Application").fill("targets/juice-shop");
-  await page.getByRole("button", { name: "Scan", exact: true }).click();
+  const res = await page.request.post("/api/scans", { data: { target: "targets/juice-shop" } });
+  expect(res.status()).toBe(202);
+  const { run_id } = (await res.json()) as { run_id: string };
+  await page.goto(`/dashboard?run=${run_id}`);
   await expect(page.getByTestId("run-status")).toHaveAttribute("data-status", "completed", { timeout: 120_000 });
   expect(publishCalls).toHaveLength(0); // a scan alone opens no branch or PR
 

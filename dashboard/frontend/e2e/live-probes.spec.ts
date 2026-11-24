@@ -20,9 +20,10 @@ test("Live Probe outcomes show masked Evidence", async ({ page }) => {
       delay(10_000, undefined, { ref: false }).then(() => { throw new Error("Synthetic Live Probe server did not start"); }),
     ]);
     if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("Invalid synthetic server port");
-    await page.goto("/dashboard");
-    await page.getByLabel("Target Application").fill("targets/juice-shop");
-    await page.getByRole("button", { name: "Scan", exact: true }).click();
+    const res = await page.request.post("/api/scans", { data: { target: "targets/juice-shop" } });
+    expect(res.status()).toBe(202);
+    const { run_id } = (await res.json()) as { run_id: string };
+    await page.goto(`/dashboard?run=${run_id}`);
     await expect(page.getByTestId("run-status")).toHaveAttribute("data-status", "completed", { timeout: 120_000 });
     await page.getByLabel("Live Probe origin").fill(`http://127.0.0.1:${port}`);
     await page.getByLabel("I authorize probing this dedicated synthetic instance").check();

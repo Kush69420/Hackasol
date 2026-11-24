@@ -39,7 +39,6 @@ function clearPref(key: string) {
 }
 
 export function App() {
-  const [target, setTarget] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [runId, setRunId] = useState<string | null>(null);
@@ -138,19 +137,15 @@ export function App() {
     };
   }
 
-  /** Starts a new run with a POST, then attaches to it. */
-  async function start(url: string, body?: unknown, replay?: string) {
+  /** Starts a Replay Mode run with a POST, then attaches to it. */
+  async function start(url: string, replay: string) {
     source.current?.close();
-    resetRun(replay ?? null);
+    resetRun(replay);
     try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: body === undefined ? undefined : JSON.stringify(body),
-      });
+      const res = await fetch(url, { method: "POST" });
       if (!res.ok) throw new Error(`Request rejected (${res.status})`);
       const { run_id } = (await res.json()) as { run_id: string };
-      attach(run_id, replay ?? null);
+      attach(run_id, replay);
     } catch (e) {
       setError((e as Error).message);
       setBusy(false);
@@ -245,32 +240,13 @@ export function App() {
                   disabled={busy}
                   aria-pressed={activeReplay === name}
                   aria-label={`Replay Mode (recorded ${targetLabel(name)} scan)`}
-                  onClick={() => void start(`/api/replays/${name}`, undefined, name)}
+                  onClick={() => void start(`/api/replays/${name}`, name)}
                 >
                   {targetLabel(name)}
                 </button>
               ))}
             </div>
           </div>
-          <form
-            className="scan-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (target.trim()) void start("/api/scans", { target: target.trim() });
-            }}
-          >
-            <input
-              className="field"
-              aria-label="Target Application"
-              placeholder="Local path or https Git URL"
-              value={target}
-              onChange={(e) => setTarget(e.target.value)}
-            />
-            <button type="submit" className="btn btn-primary" disabled={busy || !target.trim()}>
-              <ScanSearch size={15} aria-hidden="true" />
-              Scan
-            </button>
-          </form>
         </header>
 
         <main className="content">
@@ -282,7 +258,7 @@ export function App() {
                 <span className="start-icon"><ScanSearch size={22} aria-hidden="true" /></span>
                 <h1>Find where Personal Data is mishandled</h1>
                 <p>
-                  Pick a recorded scan above to replay it at its original pace, or enter a Target Application to scan.
+                  Pick a recorded scan above to replay it at its original pace, or start a live scan from Home.
                   Each Finding is traced from a Personal Data Element to a Processing Operation and mapped to the DPDP Act and Rules.
                 </p>
               </div>

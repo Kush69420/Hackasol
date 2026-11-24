@@ -50,9 +50,10 @@ async function assertReportContent(page: Page) {
 }
 
 test("live dashboard", async ({ page }) => {
-  await page.goto("/dashboard");
-  await page.getByLabel("Target Application").fill("targets/juice-shop");
-  await page.getByRole("button", { name: "Scan", exact: true }).click();
+  const res = await page.request.post("/api/scans", { data: { target: "targets/juice-shop" } });
+  expect(res.status()).toBe(202);
+  const { run_id } = (await res.json()) as { run_id: string };
+  await page.goto(`/dashboard?run=${run_id}`);
   await expect(page.getByTestId("provenance")).toHaveText(/Live|Cache-only/, { timeout: 120_000 });
   await expect(page.getByTestId("run-status")).toHaveAttribute("data-status", "completed", {
     timeout: 120_000,

@@ -10,7 +10,6 @@ const criterion = {
 async function showReport(page: Page, withProbes: boolean, replay: boolean) {
   await page.route("**/api/replays", (route) => route.fulfill({ json: { recordings: [] } }));
   await page.route("**/api/replays/juice-shop", (route) => route.fulfill({ json: { run_id: "mock" } }));
-  await page.route("**/api/scans", (route) => route.fulfill({ json: { run_id: "mock" } }));
   await page.route("**/api/scans/mock/events", (route) => route.fulfill({
     contentType: "text/event-stream",
     body: `data: ${JSON.stringify({ run_id: "mock", ordinal: 1, mode: replay ? "recorded" : "live", type: "completed", elapsed_ms: 1, finding_count: 0 })}\n\n`,
@@ -27,12 +26,9 @@ async function showReport(page: Page, withProbes: boolean, replay: boolean) {
       ...(withProbes ? { live_probe_run: { target: "Example", commit: "1234567890abcdef1234567890abcdef12345678", observed_at: "2026-01-01T12:00:00Z" } } : {}),
     },
   } }));
-  await page.goto("/dashboard");
+  // Live uses the mocked "mock" run: page.request bypasses page.route, so a POST would reach the real backend.
+  await page.goto(replay ? "/dashboard" : "/dashboard?run=mock");
   if (replay) await page.getByRole("button", { name: /Replay Mode \(recorded Juice Shop scan\)/ }).click();
-  else {
-    await page.getByLabel("Target Application").fill("targets/example");
-    await page.getByRole("button", { name: "Scan", exact: true }).click();
-  }
   await expect(page.getByTestId("consent-assessment")).toBeVisible();
 }
 

@@ -193,9 +193,6 @@ input[type="checkbox"] { width: 1rem; height: 1rem; min-height: 0; accent-color:
 .check { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.875rem; color: var(--ink-2); }
 .check input { margin-top: 0.2rem; }
 
-.scan-form { display: flex; gap: 0.5rem; align-items: center; }
-.scan-form .field { width: min(16rem, 24vw); min-width: 11rem; }
-
 /* Recorded scans switcher */
 .switcher { display: flex; align-items: center; gap: 0.6rem; min-width: 0; flex-wrap: wrap; }
 .switcher-label { font-size: 0.8125rem; font-weight: 500; color: var(--ink-3); }
@@ -445,7 +442,6 @@ td .mono { color: var(--ink); }
   .sidebar-foot { margin: 0 0 0 auto; flex-direction: row; }
   .topbar { position: static; padding: 0.7rem 1rem; }
   .content { padding: 1rem 1rem 3rem; }
-  .scan-form { width: 100%; } .scan-form .field { flex: 1; width: auto; }
   .sev-legend { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cat-row { grid-template-columns: 7rem minmax(0, 1fr) 1.75rem; }
   .timeline li { grid-template-columns: 1fr; gap: 0.15rem; }
