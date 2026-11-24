@@ -350,7 +350,8 @@ def test_replay_cannot_write_probe_or_open_a_pull_request(isolated, tmp_path):
     run_id = client.post("/api/replays/juice-shop-fork").json()["run_id"]
     sse(client.get(f"/api/scans/{run_id}/events"))
     assert client.get(f"/api/scans/{run_id}").json() == {
-        "run_id": run_id, "mode": "recorded", "status": "completed", "target": "juice-shop-fork"}
+        "run_id": run_id, "mode": "recorded", "status": "completed", "target": "juice-shop-fork",
+        "input": None}
     before = tree_digest(RECORDINGS)
     pr = client.post(f"/api/scans/{run_id}/fix-patches/publish",
                      json={"authorized": True, "finding_ids": [], "destination": "x", "branch": "b"})
