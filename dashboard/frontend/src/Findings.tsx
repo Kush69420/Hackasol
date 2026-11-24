@@ -76,14 +76,38 @@ export function findingTitle(f: Finding): string {
   return verb ? `${subject} ${verb} ${place}` : `${subject} in ${place}`;
 }
 
+/** Lower weight opens first: Government Identifier and Authentication Secret, then the other high-risk categories. */
+function categoryWeight(category: string): number {
+  if (category === "Government Identifier" || category === "Authentication Secret") return 0;
+  if (category === "Financial" || category === "Health" || category === "Biometric" || category === "Child Data") return 1;
+  return 2;
+}
+
 /**
- * The Finding to open first: the highest band, then Risk Matrix order within it.
- * Prefers a Finding with a traced Data Flow and a Personal Data Element; otherwise the first Finding of the highest band.
+ * The Finding to open first: one with a traced Data Flow and a Personal Data Element (so the detail pane has a flow to
+ * show); then the highest band; then the more sensitive Data Category; then stored Personal Data ahead of request
+ * parameters; then report order.
  */
 export function pickHeadlineFinding(findings: Finding[]): string | null {
-  const ranked = [...findings].sort((a, b) => BANDS.indexOf(a.severity.band) - BANDS.indexOf(b.severity.band));
-  const headline = ranked.find((f) => f.data_flow.length > 0 && f.personal_data_element !== null) ?? ranked[0];
-  return headline?.id ?? null;
+  const ranked = findings
+    .map((finding, index) => ({
+      finding,
+      index,
+      band: BANDS.indexOf(finding.severity.band),
+      untraced: finding.data_flow.length > 0 && finding.personal_data_element !== null ? 0 : 1,
+      weight: categoryWeight(finding.data_category),
+      param: finding.personal_data_element?.name.startsWith("param:") ? 1 : 0,
+    }))
+    .sort((a, b) => {
+      return (
+        a.untraced - b.untraced ||
+        a.band - b.band ||
+        a.weight - b.weight ||
+        a.param - b.param ||
+        a.index - b.index
+      );
+    });
+  return ranked[0]?.finding.id ?? null;
 }
 
 function matches(f: Finding, q: string): boolean {
