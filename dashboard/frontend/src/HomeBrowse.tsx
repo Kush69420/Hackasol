@@ -17,7 +17,7 @@ type TargetSummary = {
 type RunSummary = {
   run_id: string;
   mode: string;
-  target: string;
+  target: string | null;
   status: string;
   started_at: string | null;
   finding_count: number | null;
@@ -225,8 +225,32 @@ export function AuditPipeline() {
   );
 }
 
+/** Runs listed before "Show all". */
+const DEFAULT_RUN_ROWS = 5;
+
+/** Names a run by its source: the Target Application, or the kind of input it audited. */
+function runName(target: string | null): string {
+  if (target === "snippet") return "Code snippet";
+  if (target === "upload") return "Uploaded file";
+  if (target === null) return "Unnamed run";
+  return targetLabel(target);
+}
+
+/** The Finding count shown at the right of a run row. */
+function findingsText(count: number | null): string {
+  if (count === null) return "not assessed";
+  if (count === 0) return "No Findings";
+  return `${count} ${count === 1 ? "Finding" : "Findings"}`;
+}
+
 export function RecentRuns() {
-  const list = useList<RunSummary>("/api/runs?limit=10");
+  const list = useList<RunSummary>("/api/runs?limit=20");
+  const [expanded, setExpanded] = useState(false);
+  const runs = list.status === "ok" ? list.items : [];
+  // A run with 0 Findings is folded away; one whose count is not assessed (null) stays listed.
+  const defaultRuns = runs.filter((run) => run.finding_count !== 0).slice(0, DEFAULT_RUN_ROWS);
+  const shown = expanded ? runs : defaultRuns;
+  const canExpand = runs.length > defaultRuns.length;
   return (
     <section className="panel home-browse" aria-labelledby="home-runs-title">
       <div className="panel-head">
@@ -240,31 +264,47 @@ export function RecentRuns() {
           <p className="muted">No runs yet. Start an audit above or replay a Target Application.</p>
         )}
         {list.status === "ok" && list.items.length > 0 && (
-          <ul className="run-list">
-            {list.items.map((run) => {
-              const href = `/dashboard?run=${encodeURIComponent(run.run_id)}`;
-              const findings = run.finding_count === null
-                ? "not assessed"
-                : `${run.finding_count} ${run.finding_count === 1 ? "Finding" : "Findings"}`;
-              return (
-                <li key={run.run_id}>
-                  <a
-                    className="run-link"
-                    href={href}
-                    onClick={(e) => { e.preventDefault(); navigate(href); }}
-                  >
-                    <span className="run-target">{targetLabel(run.target)}</span>
-                    <span className="run-status">{run.status}</span>
-                    <span className="run-meta">
-                      <span>{provenance(run.mode) ?? run.mode}</span>
-                      <span>{findings}</span>
-                      <span>{formatDateTime(run.started_at)}</span>
-                    </span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
+          <>
+            {shown.length > 0 && (
+              <ul className="run-list">
+                {shown.map((run) => {
+                  const href = `/dashboard?run=${encodeURIComponent(run.run_id)}`;
+                  const muted = run.finding_count === null || run.finding_count === 0;
+                  const status = run.status.charAt(0).toUpperCase() + run.status.slice(1);
+                  return (
+                    <li key={run.run_id}>
+                      <a
+                        className="run-link"
+                        href={href}
+                        onClick={(e) => { e.preventDefault(); navigate(href); }}
+                      >
+                        <span className="run-target">{runName(run.target)}</span>
+                        <span className={muted ? "run-count run-count-none" : "run-count"}>{findingsText(run.finding_count)}</span>
+                        <span className="run-meta">
+                          <span>{provenance(run.mode === "replay" ? "recorded" : run.mode) ?? run.mode}</span>
+                          {run.status !== "completed" && (
+                            <span className="run-status-alert" data-status={run.status}>{status}</span>
+                          )}
+                          <span>{formatDateTime(run.started_at)}</span>
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+            {defaultRuns.length === 0 && <p className="muted run-note">No runs with Findings yet.</p>}
+            {canExpand && (
+              <button
+                type="button"
+                className="btn btn-sm run-toggle"
+                aria-expanded={expanded}
+                onClick={() => setExpanded((open) => !open)}
+              >
+                {expanded ? "Show fewer" : `Show all ${runs.length} ${runs.length === 1 ? "run" : "runs"}`}
+              </button>
+            )}
+          </>
         )}
       </div>
     </section>

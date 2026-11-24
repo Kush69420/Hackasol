@@ -241,6 +241,78 @@ test("a replay started from Home is listed under Recent runs with a link to its 
   await expect(link).toContainText("Juice Shop");
 });
 
+type RunSummary = {
+  run_id: string;
+  mode: string;
+  target: string | null;
+  status: string;
+  started_at: string | null;
+  finding_count: number | null;
+};
+
+/** Answers the Recent runs list with the given rows, newest first as the server returns them. */
+function stubRuns(page: Page, runs: RunSummary[]) {
+  return page.route(
+    (url) => url.pathname === "/api/runs",
+    (route) => route.fulfill({ json: runs }),
+  );
+}
+
+test("Recent runs names each run by its source and shows its Finding count, folding away runs with no Findings", async ({ page }) => {
+  const at = "2026-11-20T09:00:00Z";
+  await stubRuns(page, [
+    { run_id: "run01", mode: "replay", target: "juice-shop", status: "completed", started_at: at, finding_count: 53 },
+    { run_id: "run02", mode: "live", target: "snippet", status: "completed", started_at: at, finding_count: 0 },
+    { run_id: "run03", mode: "live", target: "upload", status: "failed", started_at: at, finding_count: null },
+    { run_id: "run04", mode: "live", target: null, status: "running", started_at: at, finding_count: null },
+    { run_id: "run05", mode: "live", target: "trackmyrupee", status: "completed", started_at: at, finding_count: 1 },
+    { run_id: "run06", mode: "live", target: "snippet", status: "completed", started_at: at, finding_count: 0 },
+    { run_id: "run07", mode: "live", target: "ai-kyc-platform", status: "completed", started_at: at, finding_count: 7 },
+    { run_id: "run08", mode: "live", target: "singharya-e-kyc", status: "completed", started_at: at, finding_count: 4 },
+    { run_id: "run09", mode: "live", target: "upload", status: "completed", started_at: at, finding_count: 0 },
+  ]);
+  await page.goto("/");
+  const recent = page.getByRole("region", { name: "Recent runs" });
+
+  // The first five runs not known to have no Findings; the rest wait behind "Show all".
+  await expect(recent.locator(".run-target")).toHaveText([
+    "Juice Shop", "Uploaded file", "Unnamed run", "TrackMyRupee", "ai-kyc-platform",
+  ]);
+  await expect(recent.locator(".run-count")).toHaveText([
+    "53 Findings", "not assessed", "not assessed", "1 Finding", "7 Findings",
+  ]);
+  await expect(recent.locator(".run-status-alert")).toHaveText(["Failed", "Running"]);
+
+  const toggle = recent.getByRole("button", { name: "Show all 9 runs" });
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await toggle.click();
+  await expect(recent.getByRole("button", { name: "Show fewer" })).toHaveAttribute("aria-expanded", "true");
+  await expect(recent.locator(".run-target")).toHaveText([
+    "Juice Shop", "Code snippet", "Uploaded file", "Unnamed run", "TrackMyRupee",
+    "Code snippet", "ai-kyc-platform", "singharya E-KYC", "Uploaded file",
+  ]);
+  await expect(recent.locator(".run-count")).toHaveText([
+    "53 Findings", "No Findings", "not assessed", "not assessed", "1 Finding",
+    "No Findings", "7 Findings", "4 Findings", "No Findings",
+  ]);
+});
+
+test("Recent runs with no Findings says so, and lists those runs only after Show all", async ({ page }) => {
+  const at = "2026-11-20T09:00:00Z";
+  await stubRuns(page, [
+    { run_id: "run11", mode: "live", target: "snippet", status: "completed", started_at: at, finding_count: 0 },
+    { run_id: "run12", mode: "live", target: "upload", status: "completed", started_at: at, finding_count: 0 },
+  ]);
+  await page.goto("/");
+  const recent = page.getByRole("region", { name: "Recent runs" });
+  await expect(recent.getByText("No runs with Findings yet.")).toBeVisible();
+  await expect(recent.locator("a.run-link")).toHaveCount(0);
+
+  await recent.getByRole("button", { name: "Show all 2 runs" }).click();
+  await expect(recent.locator("a.run-link")).toHaveCount(2);
+  await expect(recent.getByRole("button", { name: "Show fewer" })).toBeVisible();
+});
+
 test("with the Target Applications list failing, the unavailable note shows and the form still works", async ({ page }) => {
   await page.route("**/api/targets", (route) =>
     route.fulfill({ status: 500, contentType: "text/plain", body: "internal error" }),

@@ -606,8 +606,13 @@ td .mono { color: var(--ink); }
 .run-link:hover { background: var(--surface-2); }
 .run-link:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .run-target { font-weight: 620; overflow-wrap: anywhere; }
-.run-status { font-size: 0.8125rem; color: var(--ink-2); text-transform: capitalize; }
+.run-count { font-weight: 620; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+.run-count-none { color: var(--ink-3); font-weight: 500; }
+.run-status-alert { color: var(--ink-2); font-weight: 500; }
+.run-status-alert[data-status="failed"] { color: var(--bad); }
 .run-meta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.1rem 0.9rem; font-size: 0.8125rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.run-list + .run-note { margin-top: 0.75rem; }
+.run-toggle { margin-top: 0.75rem; }
 @media (max-width: 52rem) {
   .home-top { padding: 0.8rem 16px; }
   .home-main { padding: 1.5rem 16px 2.5rem; }
