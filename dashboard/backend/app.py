@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import datetime as dt
 import json
 import re
 import threading
@@ -21,6 +22,7 @@ from auditor.report import write_reports
 from dashboard.backend import inputs as inputs_module
 from dashboard.backend import replay as replay_module
 from dashboard.backend.replay import ARTIFACTS, Clock, RecordingError, SystemClock
+from dashboard.backend.targets import label_for
 
 STAGES = ("inventory", "elements", "data_flows", "findings")
 MEDIA_TYPES = {"json": "application/json", "md": "text/markdown",
@@ -55,9 +57,11 @@ def validate_target(value: str) -> str:
 class ScanRun:
     """One run's ordered events. Written by one worker thread, read by SSE streams."""
 
-    def __init__(self, run_id: str, target: str, mode: str = "live"):
+    def __init__(self, run_id: str, target: str, mode: str = "live", display: str | None = None):
         self.run_id = run_id
         self.target = target
+        self.display = display or target
+        self.started_at = dt.datetime.now(dt.timezone.utc).isoformat()
         self.mode = mode
         self.status = "running"
         self.events: list[dict] = []
@@ -114,6 +118,8 @@ class ReplayRun:
     def __init__(self, run_id: str, recording, clock: Clock):
         self.run_id = run_id
         self.target = recording.target["name"]
+        self.display = label_for(self.target)
+        self.started_at = dt.datetime.now(dt.timezone.utc).isoformat()
         self.mode = "recorded"
         self.recording = recording
         self.clock = clock
@@ -152,9 +158,9 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
     from dashboard.backend.fixpatch import router as fixpatch_router; app.include_router(fixpatch_router(get_run))
     from dashboard.backend.legal import router as legal_router; app.include_router(legal_router(get_run))
 
-    def launch(target: str) -> dict:
+    def launch(target: str, display: str | None = None) -> dict:
         run_id = uuid.uuid4().hex
-        run = ScanRun(run_id, target)
+        run = ScanRun(run_id, target, display=display)
         runs[run_id] = run
         threading.Thread(target=execute_scan, daemon=True, name=f"scan-{run_id}",
                          args=(run, target, Path(reports_dir) / run_id),
@@ -175,7 +181,7 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
             directory = inputs_module.store_upload(file.filename, file.file, Path(targets_dir))
         except inputs_module.InputRejected as exc:
             raise HTTPException(exc.status, exc.message)
-        return launch(str(directory))
+        return launch(str(directory), display="upload")
 
     @app.post("/api/scans/snippet", status_code=202)
     def start_snippet_scan(body: SnippetRequest):
@@ -183,7 +189,7 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
             directory = inputs_module.write_snippet(body.code, body.language, Path(targets_dir))
         except inputs_module.InputRejected as exc:
             raise HTTPException(exc.status, exc.message)
-        return launch(str(directory))
+        return launch(str(directory), display="snippet")
 
     def bundle_for(name: str) -> Path:
         if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", name):
@@ -191,6 +197,11 @@ def create_app(*, clock: Clock | None = None, reports_dir: Path = Path("reports/
         if name == replay_module.REFERENCE_TARGET and bundle_dir is not None:
             return Path(bundle_dir)
         return Path(recordings_dir) / name
+
+    from dashboard.backend.targets import router as targets_router
+    app.include_router(targets_router(runs=runs, launch=launch, targets_dir=Path(targets_dir),
+                                      recordings_dir=Path(recordings_dir), bundle_for=bundle_for,
+                                      reports_dir=Path(reports_dir)))
 
     @app.get("/api/replays")
     def list_replays():

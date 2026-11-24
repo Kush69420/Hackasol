@@ -3,7 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
     <title>DPDP Compliance Auditor</title>
+    <script>
+      // Apply the saved theme before first paint. Dark is the default; only a stored "light" gives light.
+      (function () {
+        var theme = "dark";
+        try {
+          if (window.localStorage.getItem("dpdp-theme") === "light") theme = "light";
+        } catch (e) { /* storage unavailable */ }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

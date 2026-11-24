@@ -3,7 +3,11 @@ import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import { Home } from "./Home";
 import { navigate, useLocation } from "./route";
+import { getTheme, setTheme } from "./theme";
 import "./styles.css";
+
+// Fallback to the inline script in index.html: re-applies the stored theme (dark by default).
+setTheme(getTheme());
 
 function Root() {
   const { pathname } = useLocation();

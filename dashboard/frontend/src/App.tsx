@@ -13,6 +13,7 @@ import { Overview } from "./Overview";
 import { Findings, pickHeadlineFinding } from "./Findings";
 import { PersonalDataMap } from "./PersonalDataMap";
 import { orderRecordings, provenance, targetLabel } from "./ui";
+import { useTheme } from "./theme";
 
 const STAGES: [string, string][] = [
   ["inventory", "Inventory"],
@@ -27,7 +28,6 @@ const FORMATS = [
   ["pdf", "PDF"],
 ] as const;
 
-type Theme = "light" | "dark";
 function readPref(key: string): string | null {
   try { return window.localStorage.getItem(key); } catch { return null; }
 }
@@ -51,17 +51,13 @@ export function App() {
   const [bandFilter, setBandFilter] = useState<Band | null>(null);
   const [activeReplay, setActiveReplay] = useState<string | null>(null);
   const [recordings, setRecordings] = useState<string[]>([]);
-  const [theme, setTheme] = useState<Theme>(() => (readPref("dpdp-theme") === "dark" ? "dark" : "light"));
+  const [theme, toggleTheme] = useTheme();
   const [compact, setCompact] = useState<boolean>(() => readPref("dpdp-type-scale") === "compact");
   const source = useRef<EventSource | null>(null);
   const runIdRef = useRef<string | null>(null);
   const location = useLocation();
   const runParam = new URLSearchParams(location.search).get("run");
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    writePref("dpdp-theme", theme);
-  }, [theme]);
   useEffect(() => {
     document.documentElement.dataset.scale = compact ? "compact" : "presentation";
     writePref("dpdp-type-scale", compact ? "compact" : "presentation");
@@ -209,7 +205,7 @@ export function App() {
               className="btn btn-icon"
               aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
               title={theme === "dark" ? "Light theme" : "Dark theme"}
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={toggleTheme}
             >
               {theme === "dark" ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
             </button>

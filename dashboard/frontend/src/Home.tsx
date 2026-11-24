@@ -1,6 +1,8 @@
 import { useRef, useState, type ChangeEvent, type DragEvent, type FormEvent, type KeyboardEvent } from "react";
-import { ArrowRight, Code, FileUp, Globe, ShieldCheck, X } from "lucide-react";
+import { ArrowRight, Code, FileUp, Globe, Moon, ShieldCheck, Sun, X } from "lucide-react";
 import { navigate } from "./route";
+import { AuditPipeline, RecentRuns, TargetApplications } from "./HomeBrowse";
+import { useTheme } from "./theme";
 
 type Tab = "git" | "file" | "snippet";
 
@@ -161,6 +163,8 @@ export function Home() {
     }
   }
 
+  const [theme, toggleTheme] = useTheme();
+
   return (
     <div className="home">
       <header className="home-top">
@@ -171,6 +175,15 @@ export function Home() {
             <div className="brand-sub">Act 2023 · Rules 2025</div>
           </div>
         </div>
+        <button
+          type="button"
+          className="btn btn-icon home-theme"
+          aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+          title={theme === "dark" ? "Light theme" : "Dark theme"}
+          onClick={toggleTheme}
+        >
+          {theme === "dark" ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
+        </button>
       </header>
 
       <main className="home-main">
@@ -305,6 +318,10 @@ export function Home() {
             </div>
           </form>
         </section>
+
+        <TargetApplications />
+        <AuditPipeline />
+        <RecentRuns />
 
         <p className="home-foot">
           Already have a report?{" "}
