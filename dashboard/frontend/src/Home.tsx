@@ -9,7 +9,7 @@ type Tab = "git" | "file" | "snippet";
 const TABS: { id: Tab; label: string; icon: typeof Globe }[] = [
   { id: "git", label: "Git URL", icon: Globe },
   { id: "file", label: "File", icon: FileUp },
-  { id: "snippet", label: "Code snippet", icon: Code },
+  { id: "snippet", label: "Snippet", icon: Code },
 ];
 const LANGUAGES: [string, string][] = [
   ["python", "Python"], ["javascript", "JavaScript"], ["typescript", "TypeScript"], ["java", "Java"],

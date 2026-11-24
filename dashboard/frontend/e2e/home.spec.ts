@@ -36,7 +36,7 @@ test("home shows the three input tabs and keeps Audit disabled until the input i
   await page.goto("/");
   await expect(page.getByRole("tab", { name: "Git URL" })).toBeVisible();
   await expect(page.getByRole("tab", { name: "File" })).toBeVisible();
-  await expect(page.getByRole("tab", { name: "Code snippet" })).toBeVisible();
+  await expect(page.getByRole("tab", { name: "Snippet", exact: true })).toBeVisible();
 
   const audit = page.getByRole("button", { name: "Audit", exact: true });
   await expect(audit).toBeDisabled();
@@ -73,7 +73,7 @@ test("Git URL submit posts the target and navigates to the dashboard run", async
 
 test("code snippet audit navigates to the dashboard and renders progress and Findings", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("tab", { name: "Code snippet" }).click();
+  await page.getByRole("tab", { name: "Snippet", exact: true }).click();
   await page.getByLabel("Language", { exact: true }).selectOption("python");
   await page.getByLabel("Code", { exact: true }).fill(SNIPPET);
   await page.getByRole("button", { name: "Audit", exact: true }).click();
