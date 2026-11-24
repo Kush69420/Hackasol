@@ -322,14 +322,6 @@ export function Home() {
         <TargetApplications />
         <AuditPipeline />
         <RecentRuns />
-
-        <p className="home-foot">
-          Already have a report?{" "}
-          <a href="/dashboard" onClick={(e) => { e.preventDefault(); navigate("/dashboard"); }}>
-            Open the dashboard
-          </a>{" "}
-          to replay a recorded scan.
-        </p>
       </main>
     </div>
   );

@@ -559,7 +559,6 @@ td .mono { color: var(--ink); }
 .home-code[aria-invalid="true"] { border-color: var(--bad); }
 .home-actions { display: flex; flex-direction: column; gap: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--line); }
 .home-submit { align-self: flex-end; min-width: 9rem; }
-.home-foot { font-size: 0.875rem; color: var(--ink-2); }
 
 /* Homepage sections below the input form: Target Applications, audit pipeline, recent runs */
 .home-browse-body { padding: 1rem 1.25rem 1.25rem; }
