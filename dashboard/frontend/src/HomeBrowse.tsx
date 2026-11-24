@@ -11,7 +11,6 @@ type TargetSummary = {
   replay_available: boolean;
   live_available: boolean;
   scan_date: string | null;
-  llm: { provider: string; model: string };
   counts: Counts;
 };
 
@@ -112,10 +111,6 @@ function TargetCard({ target: t }: { target: TargetSummary }) {
           <div>
             <dt>Scan date</dt>
             <dd>{formatDateTime(t.scan_date)}</dd>
-          </div>
-          <div>
-            <dt>LLM</dt>
-            <dd className="mono">{`${t.llm.provider} · ${t.llm.model}`}</dd>
           </div>
         </dl>
 
